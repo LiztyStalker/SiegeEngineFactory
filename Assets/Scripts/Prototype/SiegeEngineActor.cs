@@ -9,31 +9,26 @@ public interface ITarget
     void DecreaseHealth(int value);
 }
 
-public class SiegeEngine : MonoBehaviour, ITarget
+public class SiegeEngineActor : MonoBehaviour, ITarget
 {
-    [SerializeField]
-    private int _health;
+
+    private SiegeEngineData _data;
+
+    private SiegeEngineLine _line;
 
     private int _nowHealth;
-
-    [SerializeField]
-    private float _attackTime;
-
-    [SerializeField]
-    private int _attackDamage;
-
 
     Building _target;
 
     float _nowTime = 0;
 
-
-    private void Start()
+    public void SetData(SiegeEngineData data, SiegeEngineLine line)
     {
-        _nowHealth = _health;
+        _data = data;
+        _line = line;
     }
 
-    private void Update()
+    public void Process()
     {
         if (_target == null)
         {
@@ -43,9 +38,9 @@ public class SiegeEngine : MonoBehaviour, ITarget
         else
         {
             _nowTime += Time.deltaTime;
-            if (_nowTime > _attackTime)
+            if (_nowTime > _data.GetAttackTime(_line))
             {
-                GameManager.Current.CreateBullet(transform.position, _target, _attackDamage);
+                GameManager.Current.CreateBullet(transform.position, _target, _data.GetAttackDamage(_line));
                 _nowTime = 0;
             }
         }
@@ -54,6 +49,7 @@ public class SiegeEngine : MonoBehaviour, ITarget
 
     public void Activate()
     {
+        _nowHealth = _data.GetHealth(_line);
         gameObject.SetActive(true);
     }
 

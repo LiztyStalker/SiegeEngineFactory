@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public struct SiegeEngineLine
+{
+    private int _upgrade;
+
+    public int Upgrade => _upgrade;
+
+    public void AddUpgrade()
+    {
+        _upgrade++;
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
 
@@ -26,12 +39,30 @@ public class GameManager : MonoBehaviour
     private Building _building;
 
     [SerializeField]
-    private SiegeEngine _siegeEngine;
+    private SiegeEngineActor _siegeEngine;
+
+    private SiegeEngineData _siegeEngineData = new SiegeEngineData();
+
+    private SiegeEngineLine _siegeEngineLine;
 
     [SerializeField]
     private Bullet _bullet;
 
     private int _gold = 0;
+
+    private int Gold
+    {
+        get
+        {
+            return _gold;
+        }
+
+        set
+        {
+            _gold = value;
+            _uiGame.SetData(_gold, _level, _wave);
+        }
+    }
 
     private int _level = 1;
 
@@ -39,12 +70,20 @@ public class GameManager : MonoBehaviour
 
     private float _nowTime = 0f;
 
+    private float _createTime = 0f;
 
     private int _population = 10;
 
     List<Building> _buildList = new List<Building>();
-    List<SiegeEngine> _siegeEngineList = new List<SiegeEngine>();
+    List<SiegeEngineActor> _siegeEngineList = new List<SiegeEngineActor>();
     Dictionary<ITarget, List<Bullet>> _bulletDic = new Dictionary<ITarget, List<Bullet>>();
+
+    private void Awake()
+    {
+        _uiGame.SetOnUpgaradeListener(UpgradeEvent);
+
+        _uiGame.Initialize();
+    }
 
 
     private void Start()
@@ -56,23 +95,40 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         _nowTime += Time.deltaTime;
-        if(_nowTime > 1f)
+        _createTime += Time.deltaTime;
+        if (_nowTime > 1f)
         {
-            _gold++;
-            CreateSiegeEngine();
+            Gold++;
+//            _gold++;
             _nowTime -= 1f;
-            _uiGame.SetData(_gold, _level, _wave);
+//            _uiGame.SetData(_gold, _level, _wave);
+        }
+
+        if(_createTime > 2f)
+        {
+            CreateSiegeEngine();
+            _createTime -= 2f;
+        }
+
+        for(int i = 0; i < _siegeEngineList.Count; i++)
+        {
+            _siegeEngineList[i].Process();
+        }
+
+        for(int i = 0; i < _buildList.Count; i++)
+        {
+            _buildList[i].Process();
         }
     }
 
-    public SiegeEngine FindSiegeEngine(Building building)
+    public SiegeEngineActor FindSiegeEngine(Building building)
     {
         if (_siegeEngineList.Count > 0)
             return _siegeEngineList[UnityEngine.Random.Range(0, _siegeEngineList.Count)];
         return null;
     }
 
-    public Building FindBuilding(SiegeEngine engine)
+    public Building FindBuilding(SiegeEngineActor engine)
     {
         if (_buildList.Count > 0)
             return _buildList[UnityEngine.Random.Range(0, _buildList.Count)];
@@ -103,10 +159,11 @@ public class GameManager : MonoBehaviour
         return building;
     }
 
-    public SiegeEngine CreateSiegeEngine(Vector2 position)
+    public SiegeEngineActor CreateSiegeEngine(Vector2 position)
     {
         var engine = Instantiate(_siegeEngine);
         engine.transform.position = position;
+        engine.SetData(_siegeEngineData, _siegeEngineLine);
         engine.Activate();
         AddSiegeEngine(engine);
         return engine;
@@ -133,7 +190,7 @@ public class GameManager : MonoBehaviour
     private void AddBuilding(Building building)
     {
         _buildList.Add(building);
-        _uiGame.SetData(_gold, _level, _wave);
+        //_uiGame.SetData(_gold, _level, _wave);
     }
 
     public void RemoveBuilding(Building building)
@@ -142,22 +199,23 @@ public class GameManager : MonoBehaviour
         {
             building.SetOnHitEvent(null);
             _buildList.Remove(building);
-            _gold += building.gold;
+            //_gold += building.gold;
+            Gold += building.gold;
             AddWave();
 
-            CreateSiegeEngine();
+//            CreateSiegeEngine();
 
             CreateBuilding(new Vector2(2f, 2.6f));
         }
     }
 
-    public void AddSiegeEngine(SiegeEngine engine)
+    public void AddSiegeEngine(SiegeEngineActor engine)
     {
         _siegeEngineList.Add(engine);
         RefreshPopulation();
     }
 
-    public void RemoveSiegeEngine(SiegeEngine engine)
+    public void RemoveSiegeEngine(SiegeEngineActor engine)
     {
         if (_siegeEngineList.Contains(engine))
         {
@@ -196,11 +254,24 @@ public class GameManager : MonoBehaviour
 
     private void CreateSiegeEngine()
     {
-        if (_gold > 10 && IsPopulation())
+        if (IsPopulation())
         {
-            _gold -= 10;
             CreateSiegeEngine(new Vector2(-2f, 2.5f));
         }
+    }
+
+    private UpgradeResult UpgradeEvent()
+    {
+        var result = new UpgradeResult();
+        if(_gold > 10 + _siegeEngineLine.Upgrade)
+        {
+            Gold -= 10 + _siegeEngineLine.Upgrade;
+            _siegeEngineLine.AddUpgrade();
+            result.currect = true;
+        }
+        result.upgrade = _siegeEngineLine.Upgrade;
+        result.gold = 10 + _siegeEngineLine.Upgrade;
+        return result;
     }
 
 }

@@ -21,6 +21,22 @@ public class UIGame : MonoBehaviour
     private Text _populationText;
 
 
+    [SerializeField]
+    private Text _siegeEngineLevelText;
+
+    [SerializeField]
+    public Button _upgradeBtn;
+
+          
+
+    public void Initialize()
+    {
+        _upgradeBtn.onClick.AddListener(UpgradeEvent);
+        UpgradeEvent();
+
+    }
+
+
     public void SetData(int gold, int level, int wave)
     {
         _goldText.text = $"재화 : {gold}";
@@ -38,4 +54,43 @@ public class UIGame : MonoBehaviour
     {
         _populationText.text = $"인구 : {population} / {max}";
     }
+
+
+    private void UpgradeEvent()
+    {
+        var result = _upgradeEvent();
+        if (result.currect)
+        {
+            _upgradedEvent?.Invoke();
+        }
+        ShowUpgrade(result.upgrade, result.gold);
+    }
+
+    private void ShowUpgrade(int upgrade, int gold)
+    {
+        _siegeEngineLevelText.text = $"레벨 : {upgrade}";
+        _upgradeBtn.GetComponentInChildren<Text>().text = $"업그레이드\n{gold}";
+    }
+
+
+    #region ##### Listener #####
+
+    public System.Func<UpgradeResult> _upgradeEvent;
+    public void SetOnUpgaradeListener(System.Func<UpgradeResult> act) => _upgradeEvent = act;
+
+    public System.Action _upgradedEvent;
+    public void AddOnUpgradedListener(System.Action act) => _upgradedEvent += act;
+    public void RemoveOnUpgradedListener(System.Action act) => _upgradedEvent -= act;
+
+
+    #endregion
+
+
+}
+
+public struct UpgradeResult
+{
+    public int upgrade;
+    public int gold;
+    public bool currect;
 }

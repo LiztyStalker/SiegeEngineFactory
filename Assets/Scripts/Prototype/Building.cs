@@ -14,7 +14,7 @@ public class Building : MonoBehaviour, ITarget
 
     private float _nowTime;
 
-    SiegeEngine _target;
+    SiegeEngineActor _target;
 
     [SerializeField]
     private int _attackDamage;
@@ -27,7 +27,7 @@ public class Building : MonoBehaviour, ITarget
     public int gold => _gold + _level;
 
 
-    private void Update()
+    public void Process()
     {
         if (_target == null)
         {
