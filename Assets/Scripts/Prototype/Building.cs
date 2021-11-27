@@ -45,10 +45,24 @@ public class Building : MonoBehaviour, ITarget
         }
     }
 
-    public void SetData(int level, int wave)
+    public void SetData(int level, int wave, TYPE_ROUND typeRound)
     {
         _level = level;
-        _nowHealth = _health * level + (wave * level * 10);
+
+        switch (typeRound)
+        {
+            case TYPE_ROUND.Level_Boss:
+                _nowHealth = _health * level * 100;
+                break;
+            case TYPE_ROUND.Wave_Boss:
+                _nowHealth = _health * level * 10;
+                break;
+            default:
+                _nowHealth = _health * level + (wave * level * 10);
+                break;
+        }
+
+
     }
 
     public void Activate()

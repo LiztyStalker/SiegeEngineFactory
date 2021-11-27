@@ -27,6 +27,8 @@ public class UIGame : MonoBehaviour
     [SerializeField]
     public Button _upgradeBtn;
 
+    [SerializeField]
+    public Text _alarmBossText;
           
 
     public void Initialize()
@@ -72,6 +74,39 @@ public class UIGame : MonoBehaviour
         _upgradeBtn.GetComponentInChildren<Text>().text = $"업그레이드\n{gold}";
     }
 
+    public void AlarmBoss(TYPE_ROUND typeRound)
+    {
+        switch (typeRound)
+        {
+            case TYPE_ROUND.Wave_Boss:
+                _alarmBossText.text = "WaveBoss";
+                break;
+            case TYPE_ROUND.Level_Boss:
+                _alarmBossText.text = "LevelBoss";
+                break;
+            default:
+                _alarmBossText.text = null;
+                break;
+        }
+
+        if (!string.IsNullOrEmpty(_alarmBossText.text))
+        {
+            if (_bossCoroutine != null)
+                StopCoroutine(_bossCoroutine);
+
+            _bossCoroutine = StartCoroutine(BossCoroutine());
+        }
+    }
+
+    private Coroutine _bossCoroutine = null;
+
+    private IEnumerator BossCoroutine()
+    {
+        _alarmBossText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        _alarmBossText.gameObject.SetActive(false);
+        _bossCoroutine = null;
+    }
 
     #region ##### Listener #####
 

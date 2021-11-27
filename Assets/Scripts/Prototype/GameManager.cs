@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+public enum TYPE_ROUND { Normal, Wave_Boss, Level_Boss}
+//Normal wave
+//Wave_Boss = Wave == 10
+//Level_Boss = Level == 10 Wave == 10
+
 public struct SiegeEngineLine
 {
     private int _upgrade;
@@ -64,6 +69,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public const int GAME_BOSS_LEVEL = 10;
+    public const int GAME_BOSS_WAVE = 10;
+
     private int _level = 1;
 
     private int _wave = 1;
@@ -90,6 +99,7 @@ public class GameManager : MonoBehaviour
     {
         CreateBuilding(new Vector2(2f, 2.6f));
         CreateSiegeEngine(new Vector2(-2f, 2.5f));
+        _uiGame.AlarmBoss(GetTypeRound());
     }
 
     private void Update()
@@ -152,7 +162,7 @@ public class GameManager : MonoBehaviour
     {
         var building = Instantiate(_building);
         building.transform.position = position;
-        building.SetData(_level, _wave);
+        building.SetData(_level, _wave, GetTypeRound());
         building.SetOnHitEvent(HealthEvent);
         building.Activate();
         AddBuilding(building);
@@ -236,7 +246,7 @@ public class GameManager : MonoBehaviour
 
     private void AddWave()
     {
-        if (_wave + 1 < 10)
+        if (_wave + 1 <= GAME_BOSS_WAVE)
         {
             _wave++;
         }
@@ -245,7 +255,27 @@ public class GameManager : MonoBehaviour
             _wave = 1;
             _level++;
         }
+
+        //보스 이벤트
+        _uiGame.AlarmBoss(GetTypeRound());
     }
+
+
+    private TYPE_ROUND GetTypeRound()
+    {
+        if(_level % GAME_BOSS_LEVEL == 0 && _wave % GAME_BOSS_WAVE == 0)
+        {
+            return TYPE_ROUND.Level_Boss;
+        }
+        else if(_wave % GAME_BOSS_WAVE == 0)
+        {
+            return TYPE_ROUND.Wave_Boss;
+        }
+        return TYPE_ROUND.Normal;
+    }
+
+
+
 
     private void HealthEvent(int health)
     {
