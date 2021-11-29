@@ -6,8 +6,8 @@
 + C#
 + Window 10 64bit
 # 3. 사용기술
-+ Unity Dots
-+ Unity UI Toolkit
++ Unity DOTS - Todo
++ Unity UI Toolkit - Todo
 # 4. 실행방법
 + Todo
 # 5. 개발단계
