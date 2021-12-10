@@ -8,7 +8,6 @@ using SEF.UI.Toolkit;
 public class UICommonTest
 {
     private Camera _camera;
-    private UIPopup _uiPopup;
 
 
     private void CreateCamera()
@@ -25,27 +24,49 @@ public class UICommonTest
         Object.DestroyImmediate(_camera.gameObject);
     }
 
+
+    private UIPopup CreateUIPopup()
+    {
+        var _uiPopup = UIPopup.Create();
+        _uiPopup.Initialize();
+        return _uiPopup;
+    }
+
+    private void DestoryUIPopup(UIPopup uiPopup)
+    {
+        uiPopup.CleanUp();
+    }
+
+    private UISettings CreateUISettings()
+    {
+        var _uiSettings = UISettings.Create();
+        _uiSettings.Initialize();
+        return _uiSettings;
+    }
+
+    private void DestoryUISettings(UISettings uiSettings)
+    {
+        uiSettings.CleanUp();
+    }
+
     [SetUp]
     public void SetUp()
     {
         CreateCamera();
-        _uiPopup = UIPopup.Create();
-        _uiPopup.Initialize();
     }
 
     [TearDown]
     public void TearDown()
     {
         DestoryCamera();
-        _uiPopup.CleanUp();
-        _uiPopup = null;
     }
 
     [UnityTest]
     public IEnumerator UICommonTest_UIPopup_Normal()
     {
         bool isClicked = false;
-        _uiPopup.ShowPopup("UIPopup Normal Test", delegate
+        var uiPopup = CreateUIPopup();
+        uiPopup.ShowPopup("UIPopup Normal Test", delegate
         {
             Debug.Log("Normal ClosedEvent Callback");
             isClicked = true;
@@ -54,13 +75,15 @@ public class UICommonTest
         while (!isClicked) {
             yield return null;
         }
+        DestoryUIPopup(uiPopup);
     }
 
     [UnityTest]
     public IEnumerator UICommonTest_UIPopup_Apply()
     {
         bool isClicked = false;
-        _uiPopup.ShowPopup("UIPopup Apply Test", "확인", delegate
+        var uiPopup = CreateUIPopup();
+        uiPopup.ShowPopup("UIPopup Apply Test", "확인", delegate
         {
             Debug.Log("Apply Callback");
             isClicked = true;
@@ -69,13 +92,15 @@ public class UICommonTest
         {
             yield return null;
         }
+        DestoryUIPopup(uiPopup);
     }
 
     [UnityTest]
     public IEnumerator UICommonTest_UIPopup_ApplyCancel()
     {
         bool isClicked = false;
-        _uiPopup.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate {
+        var uiPopup = CreateUIPopup();
+        uiPopup.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate {
             Debug.Log("Apply Callback");
             isClicked = true;
         }, delegate {
@@ -86,7 +111,25 @@ public class UICommonTest
         {
             yield return null;
         }
+        DestoryUIPopup(uiPopup);
     }
 
+    [UnityTest]
+    public IEnumerator UICommonTest_UISettings_Show()
+    {
+        bool isClicked = false;
+        var uiSettings = CreateUISettings();
+        uiSettings.Initialize();
+        uiSettings.Show(delegate {
+            Debug.Log("Apply Callback");
+            isClicked = true;
+        });
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        DestoryUISettings(uiSettings);
+
+    }
 
 }

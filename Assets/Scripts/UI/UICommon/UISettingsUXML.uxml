@@ -1,0 +1,45 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="UISettingsUSS.uss" />
+    <ui:VisualElement name="window" class="window">
+        <ui:VisualElement name="background" class="background" />
+        <ui:Button display-tooltip-when-elided="true" name="exit_button" class="exit_button" />
+        <ui:VisualElement name="panel" class="panel">
+            <ui:Label text="옵션" display-tooltip-when-elided="true" name="title_label" style="color: rgb(0, 0, 0); -unity-text-align: middle-center; font-size: 36px;" />
+            <ui:Label text="v0.00" display-tooltip-when-elided="true" name="version_label" style="color: rgb(0, 0, 0); -unity-text-align: middle-right; font-size: 12px; position: absolute; flex-direction: column; align-items: stretch; justify-content: space-around; left: auto; width: 100%;" />
+            <ui:VisualElement name="panel_layout" class="panel_layout">
+                <ui:VisualElement name="bgm_slider_panel" class="slider_panel">
+                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="bgm_slider" class="slider text" />
+                    <ui:Label text="Label" display-tooltip-when-elided="true" name="bgm_slider_value_label" class="text" />
+                </ui:VisualElement>
+                <ui:VisualElement name="sfx_slider_panel" class="slider_panel">
+                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="sfx_slider" class="slider text" />
+                    <ui:Label text="Label" display-tooltip-when-elided="true" name="sfx_slider_value_label" class="text" />
+                </ui:VisualElement>
+                <ui:VisualElement name="frame_slider_panel" class="slider_panel">
+                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="frame_slider" class="slider text" />
+                    <ui:Label text="Label" display-tooltip-when-elided="true" name="frame_slider_value_label" class="text" />
+                </ui:VisualElement>
+                <ui:VisualElement name="lang_panel" class="lang_panel">
+                    <ui:Label text="Label" display-tooltip-when-elided="true" name="lang_label" class="text" style="-unity-text-align: middle-center;" />
+                    <ui:VisualElement name="lang_focus_panel" class="focus_panel" style="flex-direction: row;">
+                        <ui:Button text="&lt;" display-tooltip-when-elided="true" name="lang_left_button" class="arrow_button" />
+                        <ui:Label text="Label" display-tooltip-when-elided="true" name="lang_value_label" class="text" style="-unity-text-align: middle-center;" />
+                        <ui:Button text="&gt;" display-tooltip-when-elided="true" name="lang_right_button" class="arrow_button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="toggle_panel" class="slider_panel">
+                    <ui:Toggle label="Toggle" name="hit_toggle" class="toggle text" />
+                    <ui:Toggle label="Toggle" name="effect_toggle" class="toggle text" />
+                </ui:VisualElement>
+                <ui:VisualElement name="saveload_panel" class="slider_panel">
+                    <ui:Button text="Save" display-tooltip-when-elided="true" name="save_button" class="button text" />
+                    <ui:Button text="Load" display-tooltip-when-elided="true" name="load_button" class="button text" />
+                </ui:VisualElement>
+                <ui:VisualElement name="order_panel" class="slider_panel">
+                    <ui:Button text="gpgs" display-tooltip-when-elided="true" name="gpgs_button" class="button text" />
+                    <ui:Button text="qna" display-tooltip-when-elided="true" name="qna_button" class="button text" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
