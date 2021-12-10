@@ -123,8 +123,6 @@ namespace SEF.UI.Toolkit
 
             Load();
 
-
-
             _versionLabel.text = Application.version;
 
             RegisterEvents();
@@ -145,15 +143,15 @@ namespace SEF.UI.Toolkit
 
         private void RegisterEvents()
         {
-            _bgmSlider.RegisterCallback<ChangeEvent<float>>(e => OnBGMEvent(e.newValue));
-            _sfxSlider.RegisterCallback<ChangeEvent<float>>(e => OnSFXEvent(e.newValue));
-            _frameSlider.RegisterCallback<ChangeEvent<float>>(e => OnFrameEvent(e.newValue));
+            _bgmSlider.RegisterValueChangedCallback(e => OnBGMEvent(e.newValue));
+            _sfxSlider.RegisterValueChangedCallback(e => OnSFXEvent(e.newValue));
+            _frameSlider.RegisterValueChangedCallback(e => OnFrameEvent(e.newValue));
 
             _langLeftButton.RegisterCallback<ClickEvent>(e => OnLeftLanguageEvent());
             _langRightButton.RegisterCallback<ClickEvent>(e => OnRightLanguageEvent());
 
-            _uiHitActivateToggle.RegisterCallback<ChangeEvent<bool>>(e => OnHitToggleEvent(e.newValue));
-            _effectActivateToggle.RegisterCallback<ChangeEvent<bool>>(e => OnEffectToggleEvent(e.newValue));
+            _uiHitActivateToggle.RegisterValueChangedCallback(e => OnHitToggleEvent(e.newValue));
+            _effectActivateToggle.RegisterValueChangedCallback(e => OnEffectToggleEvent(e.newValue));
 
             _saveButton.RegisterCallback<ClickEvent>(e => OnSaveEvent());
             _loadButton.RegisterCallback<ClickEvent>(e => OnLoadEvent());
@@ -165,15 +163,15 @@ namespace SEF.UI.Toolkit
 
         private void UnRegisterEvents()
         {
-            _bgmSlider.UnregisterCallback<ChangeEvent<float>>(e => OnBGMEvent(e.newValue));
-            _sfxSlider.UnregisterCallback<ChangeEvent<float>>(e => OnSFXEvent(e.newValue));
-            _frameSlider.UnregisterCallback<ChangeEvent<float>>(e => OnFrameEvent(e.newValue));
+            _bgmSlider.UnregisterValueChangedCallback(e => OnBGMEvent(e.newValue));
+            _sfxSlider.UnregisterValueChangedCallback(e => OnSFXEvent(e.newValue));
+            _frameSlider.UnregisterValueChangedCallback(e => OnFrameEvent(e.newValue));
 
             _langLeftButton.UnregisterCallback<ClickEvent>(e => OnLeftLanguageEvent());
             _langRightButton.UnregisterCallback<ClickEvent>(e => OnRightLanguageEvent());
 
-            _uiHitActivateToggle.UnregisterCallback<ChangeEvent<bool>>(e => OnHitToggleEvent(e.newValue));
-            _effectActivateToggle.UnregisterCallback<ChangeEvent<bool>>(e => OnEffectToggleEvent(e.newValue));
+            _uiHitActivateToggle.UnregisterValueChangedCallback(e => OnHitToggleEvent(e.newValue));
+            _effectActivateToggle.UnregisterValueChangedCallback(e => OnEffectToggleEvent(e.newValue));
 
             _saveButton.UnregisterCallback<ClickEvent>(e => OnSaveEvent());
             _loadButton.UnregisterCallback<ClickEvent>(e => OnLoadEvent());
@@ -185,6 +183,7 @@ namespace SEF.UI.Toolkit
 
         private void OnBGMEvent(float value)
         {
+            Debug.Log(value);
             _bgmVolumeLabel.text = value.ToString();
         }
 

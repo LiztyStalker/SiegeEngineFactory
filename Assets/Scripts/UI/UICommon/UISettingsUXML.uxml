@@ -8,15 +8,15 @@
             <ui:Label text="v0.00" display-tooltip-when-elided="true" name="version_label" style="color: rgb(0, 0, 0); -unity-text-align: middle-right; font-size: 12px; position: absolute; flex-direction: column; align-items: stretch; justify-content: space-around; left: auto; width: 100%;" />
             <ui:VisualElement name="panel_layout" class="panel_layout">
                 <ui:VisualElement name="bgm_slider_panel" class="slider_panel">
-                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="bgm_slider" class="slider text" />
+                    <ui:Slider name="bgm_slider" high-value="100" label="BGM" value="100" class="slider text" />
                     <ui:Label text="Label" display-tooltip-when-elided="true" name="bgm_slider_value_label" class="text" />
                 </ui:VisualElement>
                 <ui:VisualElement name="sfx_slider_panel" class="slider_panel">
-                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="sfx_slider" class="slider text" />
+                    <ui:Slider value="100" high-value="100" name="sfx_slider" label="SFX" class="slider text" style="overflow: visible; visibility: visible;" />
                     <ui:Label text="Label" display-tooltip-when-elided="true" name="sfx_slider_value_label" class="text" />
                 </ui:VisualElement>
                 <ui:VisualElement name="frame_slider_panel" class="slider_panel">
-                    <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="frame_slider" class="slider text" />
+                    <ui:Slider picking-mode="Ignore" label="Frame" value="100" high-value="100" name="frame_slider" class="slider text" />
                     <ui:Label text="Label" display-tooltip-when-elided="true" name="frame_slider_value_label" class="text" />
                 </ui:VisualElement>
                 <ui:VisualElement name="lang_panel" class="lang_panel">
