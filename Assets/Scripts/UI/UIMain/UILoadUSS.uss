@@ -1,0 +1,7 @@
+.load_label {
+}
+
+.window {
+    justify-content: flex-end;
+    align-items: center;
+}
