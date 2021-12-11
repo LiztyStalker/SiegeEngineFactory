@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="UICreditsUSS.uss" />
+    <ui:VisualElement name="window" class="window" style="align-items: center; justify-content: center;">
+        <ui:VisualElement name="background" class="background" />
+        <ui:Button display-tooltip-when-elided="true" name="exit_button" class="exit_button" />
+        <ui:VisualElement name="panel" class="panel">
+            <ui:VisualElement name="credit">
+                <ui:Label text="크레딧" display-tooltip-when-elided="true" name="title_label" style="-unity-text-align: middle-center; color: rgba(0, 0, 0, 255); font-size: 28px;" />
+                <ui:Label text="Lizty" display-tooltip-when-elided="true" name="credit_label" style="-unity-text-align: middle-center; color: rgba(0, 0, 0, 255); font-size: 24px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
