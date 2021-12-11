@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="UICommonUSS.uss" />
+    <Style src="UIPopupUSS.uss" />
     <ui:VisualElement name="window" class="window">
         <ui:VisualElement name="background" class="background" style="background-color: rgba(0, 0, 0, 0.5);" />
         <ui:Button display-tooltip-when-elided="true" name="exit_button" class="exit_button" style="background-color: rgba(0, 0, 0, 0);" />
