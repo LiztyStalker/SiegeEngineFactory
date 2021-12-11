@@ -1,258 +1,271 @@
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
-using SEF.UI;
-using SEF.UI.Toolkit;
-
-public class UICommonTest
+#if UNITY_EDITOR && UNITY_INCLUDE_TESTS
+namespace SEF.UI.Test
 {
-    private Camera _camera;
+    using System.Collections;
+    using NUnit.Framework;
+    using UnityEngine;
+    using UnityEngine.TestTools;
+    using SEF.UI;
+    using SEF.UI.Toolkit;
 
-
-    private void CreateCamera()
+    public class UICommonTest
     {
-        var obj = new GameObject();
-        obj.name = "Camera";
-        obj.transform.position = Vector3.back * 10f;
-        _camera = obj.AddComponent<Camera>();
-        
-    }
-
-    private void DestoryCamera()
-    {
-        Object.DestroyImmediate(_camera.gameObject);
-    }
+        private Camera _camera;
 
 
-    private UIPopup CreateUIPopup()
-    {
-        var _uiPopup = UIPopup.Create();
-        _uiPopup.Initialize();
-        return _uiPopup;
-    }
-
-    private void DestoryUIPopup(UIPopup uiPopup)
-    {
-        uiPopup.CleanUp();
-    }
-
-    private UISettings CreateUISettings()
-    {
-        var _uiSettings = UISettings.Create();
-        _uiSettings.Initialize();
-        return _uiSettings;
-    }
-
-    private void DestoryUISettings(UISettings uiSettings)
-    {
-        uiSettings.CleanUp();
-    }
-
-    private UICredits CreateUICredits()
-    {
-        var uiCredits = UICredits.Create();
-        uiCredits.Initialize();
-        return uiCredits;
-    }
-
-    private void DestoryUICredits(UICredits uiCredits)
-    {
-        uiCredits.CleanUp();
-    }
-
-    [SetUp]
-    public void SetUp()
-    {
-        CreateCamera();
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        DestoryCamera();
-    }
-
-    [UnityTest]
-    public IEnumerator UICommonTest_UIPopup_Normal()
-    {
-        bool isClicked = false;
-        var uiPopup = CreateUIPopup();
-        uiPopup.ShowPopup("UIPopup Normal Test", delegate
+        private void CreateCamera()
         {
-            Debug.Log("Normal ClosedEvent Callback");
-            isClicked = true;
-        });
+            var obj = new GameObject();
+            obj.name = "Camera";
+            obj.transform.position = Vector3.back * 10f;
+            _camera = obj.AddComponent<Camera>();
 
-        while (!isClicked) {
-            yield return null;
         }
-        DestoryUIPopup(uiPopup);
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UIPopup_Apply()
-    {
-        bool isClicked = false;
-        var uiPopup = CreateUIPopup();
-        uiPopup.ShowPopup("UIPopup Apply Test", "확인", delegate
+        private void DestoryCamera()
         {
-            Debug.Log("Apply Callback");
-            isClicked = true;
-        });
-        while (!isClicked)
-        {
-            yield return null;
+            Object.DestroyImmediate(_camera.gameObject);
         }
-        DestoryUIPopup(uiPopup);
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UIPopup_ApplyCancel()
-    {
-        bool isClicked = false;
-        var uiPopup = CreateUIPopup();
-        uiPopup.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate {
-            Debug.Log("Apply Callback");
-            isClicked = true;
-        }, delegate {
-            Debug.Log("Cancel Callback");
-            isClicked = true;
-        });
-        while (!isClicked)
+
+        private UIPopup CreateUIPopup()
         {
-            yield return null;
+            var _uiPopup = UIPopup.Create();
+            _uiPopup.Initialize();
+            return _uiPopup;
         }
-        DestoryUIPopup(uiPopup);
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UISettings_Show()
-    {
-        bool isClicked = false;
-        var uiSettings = CreateUISettings();
-        uiSettings.Initialize();
-        uiSettings.Show(delegate {
-            Debug.Log("closed Callback");
-            isClicked = true;
-        });
-        while (!isClicked)
+        private void DestoryUIPopup(UIPopup uiPopup)
         {
-            yield return null;
+            uiPopup.CleanUp();
         }
-        DestoryUISettings(uiSettings);
 
-    }
-
-    [UnityTest]
-    public IEnumerator UICommonTest_UICredits_Show()
-    {
-        bool isClicked = false;
-        var uiCredits = CreateUICredits();
-        uiCredits.Initialize();
-        uiCredits.Show(delegate {
-            Debug.Log("closed Callback");
-            isClicked = true;
-        });
-        while (!isClicked)
+        private UISettings CreateUISettings()
         {
-            yield return null;
+            var _uiSettings = UISettings.Create();
+            _uiSettings.Initialize();
+            return _uiSettings;
         }
-        DestoryUICredits(uiCredits);
 
-    }
-
-
-    [UnityTest]
-    public IEnumerator UICommonTest_UICommonToPopupNormal()
-    {
-
-        bool isClicked = false;
-        UICommon.Current.ShowPopup("UIPopup Normal Test", delegate
+        private void DestoryUISettings(UISettings uiSettings)
         {
-            Debug.Log("Normal ClosedEvent Callback");
-            isClicked = true;
-        });
-
-        while (!isClicked)
-        {
-            yield return null;
+            uiSettings.CleanUp();
         }
-        UICommon.Current.CleanUp();
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UICommonToPopupApply()
-    {
-
-        bool isClicked = false;
-        UICommon.Current.ShowPopup("UIPopup Apply Test", "확인", delegate
+        private UICredits CreateUICredits()
         {
-            Debug.Log("Apply Callback");
-            isClicked = true;
-        });
-
-        while (!isClicked)
-        {
-            yield return null;
+            var uiCredits = UICredits.Create();
+            uiCredits.Initialize();
+            return uiCredits;
         }
-        UICommon.Current.CleanUp();
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UICommonToPopupApplyCancel()
-    {
-
-        bool isClicked = false;
-        UICommon.Current.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate {
-            Debug.Log("Apply Callback");
-            isClicked = true;
-        }, delegate {
-            Debug.Log("Cancel Callback");
-            isClicked = true;
-        });
-
-        while (!isClicked)
+        private void DestoryUICredits(UICredits uiCredits)
         {
-            yield return null;
+            uiCredits.CleanUp();
         }
-        UICommon.Current.CleanUp();
-    }
 
-
-
-    [UnityTest]
-    public IEnumerator UICommonTest_UICommonToSettings()
-    {
-
-        bool isClicked = false;
-        UICommon.Current.ShowSettings(delegate {
-            Debug.Log("closed Callback");
-            isClicked = true;
-        });
-
-        while (!isClicked)
+        [SetUp]
+        public void SetUp()
         {
-            yield return null;
+            CreateCamera();
         }
-        UICommon.Current.CleanUp();
-    }
 
-    [UnityTest]
-    public IEnumerator UICommonTest_UICommonToCredits()
-    {
-
-        bool isClicked = false;
-        UICommon.Current.ShowCredits(delegate {
-            Debug.Log("closed Callback");
-            isClicked = true;
-        });
-
-        while (!isClicked)
+        [TearDown]
+        public void TearDown()
         {
-            yield return null;
+            DestoryCamera();
         }
-        UICommon.Current.CleanUp();
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UIPopup_Normal()
+        {
+            bool isClicked = false;
+            var uiPopup = CreateUIPopup();
+            uiPopup.ShowPopup("UIPopup Normal Test", delegate
+            {
+                Debug.Log("Normal ClosedEvent Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            DestoryUIPopup(uiPopup);
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UIPopup_Apply()
+        {
+            bool isClicked = false;
+            var uiPopup = CreateUIPopup();
+            uiPopup.ShowPopup("UIPopup Apply Test", "확인", delegate
+            {
+                Debug.Log("Apply Callback");
+                isClicked = true;
+            });
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            DestoryUIPopup(uiPopup);
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UIPopup_ApplyCancel()
+        {
+            bool isClicked = false;
+            var uiPopup = CreateUIPopup();
+            uiPopup.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate
+            {
+                Debug.Log("Apply Callback");
+                isClicked = true;
+            }, delegate
+            {
+                Debug.Log("Cancel Callback");
+                isClicked = true;
+            });
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            DestoryUIPopup(uiPopup);
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UISettings_Show()
+        {
+            bool isClicked = false;
+            var uiSettings = CreateUISettings();
+            uiSettings.Initialize();
+            uiSettings.Show(delegate
+            {
+                Debug.Log("closed Callback");
+                isClicked = true;
+            });
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            DestoryUISettings(uiSettings);
+
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICredits_Show()
+        {
+            bool isClicked = false;
+            var uiCredits = CreateUICredits();
+            uiCredits.Initialize();
+            uiCredits.Show(delegate
+            {
+                Debug.Log("closed Callback");
+                isClicked = true;
+            });
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            DestoryUICredits(uiCredits);
+
+        }
+
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICommonToPopupNormal()
+        {
+
+            bool isClicked = false;
+            UICommon.Current.ShowPopup("UIPopup Normal Test", delegate
+            {
+                Debug.Log("Normal ClosedEvent Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            UICommon.Current.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICommonToPopupApply()
+        {
+
+            bool isClicked = false;
+            UICommon.Current.ShowPopup("UIPopup Apply Test", "확인", delegate
+            {
+                Debug.Log("Apply Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            UICommon.Current.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICommonToPopupApplyCancel()
+        {
+
+            bool isClicked = false;
+            UICommon.Current.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate
+            {
+                Debug.Log("Apply Callback");
+                isClicked = true;
+            }, delegate
+            {
+                Debug.Log("Cancel Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            UICommon.Current.CleanUp();
+        }
+
+
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICommonToSettings()
+        {
+
+            bool isClicked = false;
+            UICommon.Current.ShowSettings(delegate
+            {
+                Debug.Log("closed Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            UICommon.Current.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UICommonToCredits()
+        {
+
+            bool isClicked = false;
+            UICommon.Current.ShowCredits(delegate
+            {
+                Debug.Log("closed Callback");
+                isClicked = true;
+            });
+
+            while (!isClicked)
+            {
+                yield return null;
+            }
+            UICommon.Current.CleanUp();
+        }
     }
 }
+#endif
