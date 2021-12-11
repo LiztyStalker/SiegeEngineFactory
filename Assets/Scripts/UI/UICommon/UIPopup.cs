@@ -31,20 +31,7 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            if(_root == null)
-            {
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-                var _uiDocument = GetComponent<UIDocument>();
-                _uiDocument.panelSettings = DataStorage.LoadAssetAtPath<PanelSettings>(PATH_DEFAULT_SETTING);
-
-                var asset = DataStorage.LoadAssetAtPath<VisualTreeAsset>(PATH_UI_POPUP_UXML);
-                _uiDocument.visualTreeAsset = asset;
-                _root = _uiDocument.rootVisualElement;
-                Debug.Assert(_root != null, $"{PATH_UI_POPUP_UXML} UI를 구성하지 못했습니다");
-#else
-        
-#endif
-            }
+            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_POPUP_UXML);
 
             _msgLabel = _root.Q<Label>("msg_text");
             _applyButton = _root.Q<Button>("apply_button");
