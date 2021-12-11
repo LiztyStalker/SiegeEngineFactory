@@ -43,8 +43,18 @@ namespace Storage
             //InitializeDataFromAssetBundle<BattleFieldData>("data");
 
             InitializeDataFromAssetBundle<GameObject>("prefab", null);
+        }
 
-
+        public static void Initialize(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        {
+            var obj = new GameObject();
+            obj.name = "AssetLoader";
+            var loader = obj.AddComponent<AssetLoader>();
+            loader.Load(loadCallback, result => 
+            {
+                endCallback?.Invoke(result);
+                Object.DestroyImmediate(obj);
+            });
         }
 
         public static void Dispose()
