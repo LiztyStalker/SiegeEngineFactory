@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using SEF.UI;
 using SEF.UI.Toolkit;
 
 public class UICommonTest
@@ -47,6 +48,18 @@ public class UICommonTest
     private void DestoryUISettings(UISettings uiSettings)
     {
         uiSettings.CleanUp();
+    }
+
+    private UICredits CreateUICredits()
+    {
+        var uiCredits = UICredits.Create();
+        uiCredits.Initialize();
+        return uiCredits;
+    }
+
+    private void DestoryUICredits(UICredits uiCredits)
+    {
+        uiCredits.CleanUp();
     }
 
     [SetUp]
@@ -121,7 +134,7 @@ public class UICommonTest
         var uiSettings = CreateUISettings();
         uiSettings.Initialize();
         uiSettings.Show(delegate {
-            Debug.Log("Apply Callback");
+            Debug.Log("closed Callback");
             isClicked = true;
         });
         while (!isClicked)
@@ -132,4 +145,114 @@ public class UICommonTest
 
     }
 
+    [UnityTest]
+    public IEnumerator UICommonTest_UICredits_Show()
+    {
+        bool isClicked = false;
+        var uiCredits = CreateUICredits();
+        uiCredits.Initialize();
+        uiCredits.Show(delegate {
+            Debug.Log("closed Callback");
+            isClicked = true;
+        });
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        DestoryUICredits(uiCredits);
+
+    }
+
+
+    [UnityTest]
+    public IEnumerator UICommonTest_UICommonToPopupNormal()
+    {
+
+        bool isClicked = false;
+        UICommon.Current.ShowPopup("UIPopup Normal Test", delegate
+        {
+            Debug.Log("Normal ClosedEvent Callback");
+            isClicked = true;
+        });
+
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        UICommon.Current.CleanUp();
+    }
+
+    [UnityTest]
+    public IEnumerator UICommonTest_UICommonToPopupApply()
+    {
+
+        bool isClicked = false;
+        UICommon.Current.ShowPopup("UIPopup Apply Test", "확인", delegate
+        {
+            Debug.Log("Apply Callback");
+            isClicked = true;
+        });
+
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        UICommon.Current.CleanUp();
+    }
+
+    [UnityTest]
+    public IEnumerator UICommonTest_UICommonToPopupApplyCancel()
+    {
+
+        bool isClicked = false;
+        UICommon.Current.ShowPopup("UIPopup ApplyCancel Test", "확인", "취소", delegate {
+            Debug.Log("Apply Callback");
+            isClicked = true;
+        }, delegate {
+            Debug.Log("Cancel Callback");
+            isClicked = true;
+        });
+
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        UICommon.Current.CleanUp();
+    }
+
+
+
+    [UnityTest]
+    public IEnumerator UICommonTest_UICommonToSettings()
+    {
+
+        bool isClicked = false;
+        UICommon.Current.ShowSettings(delegate {
+            Debug.Log("closed Callback");
+            isClicked = true;
+        });
+
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        UICommon.Current.CleanUp();
+    }
+
+    [UnityTest]
+    public IEnumerator UICommonTest_UICommonToCredits()
+    {
+
+        bool isClicked = false;
+        UICommon.Current.ShowCredits(delegate {
+            Debug.Log("closed Callback");
+            isClicked = true;
+        });
+
+        while (!isClicked)
+        {
+            yield return null;
+        }
+        UICommon.Current.CleanUp();
+    }
 }
