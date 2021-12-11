@@ -100,6 +100,7 @@ namespace SEF.UI.Toolkit
         public void ShowPopup(string msg, string applyText, string cancelText, System.Action applyCallback = null, System.Action cancelCallback = null, System.Action closedCallback = null)
         {
             SetPopup(msg, applyText, cancelText, applyCallback, cancelCallback, closedCallback);
+            _applyButton.style.display = DisplayStyle.Flex;
             _cancelButton.style.display = DisplayStyle.Flex;
             _exitButton.style.display = DisplayStyle.None;
             Activate();
