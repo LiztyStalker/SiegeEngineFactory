@@ -18,11 +18,18 @@ namespace Storage
     };
 
 
-    public class AssetLoader : MonoBehaviour
+    public class DataLoader : MonoBehaviour
     {
 
         private readonly string PATH_ASSET_BUNDLE = "Address";
 
+
+        public static DataLoader Create()
+        {
+            var obj = new GameObject();
+            obj.name = "AssetLoader";
+            return obj.AddComponent<DataLoader>();
+        }
 
         public void Load(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
@@ -32,37 +39,14 @@ namespace Storage
         private IEnumerator LoadCoroutine(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
 
-#if UNITY_EDITOR
-            //TestCode
-            var nowTime = 0f;
-
-            while (true)
-            {
-                nowTime += Time.deltaTime;
-                if (nowTime < 1f)
-                {
-                    loadCallback?.Invoke(nowTime);
-                }
-                else
-                {
-                    endCallback?.Invoke(TYPE_IO_RESULT.Success);
-                    break;
-                }
-                yield return null;
-            }
-
-#else
-
-
-
             UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(PATH_ASSET_BUNDLE);
             UnityWebRequestAsyncOperation op = www.SendWebRequest();
-            
+
             Debug.Assert(www.result == UnityWebRequest.Result.Success, $"bundle Load ½ÇÆÐ {www.error}");
 
             while (true)
             {
-                if(op.progress < 1f)
+                if (op.progress < 1f)
                 {
                     loadCallback?.Invoke(op.progress);
                 }
@@ -91,7 +75,40 @@ namespace Storage
                     break;
             }
             yield return null;
-#endif
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void LoadTest(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        {
+            StartCoroutine(LoadTestCoroutine(loadCallback, endCallback));
+        }
+
+
+        private IEnumerator LoadTestCoroutine(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        {
+
+            //TestCode
+            var nowTime = 0f;
+
+            while (true)
+            {
+                nowTime += Time.deltaTime;
+                if (nowTime < 1f)
+                {
+                    loadCallback?.Invoke(nowTime);
+                }
+                else
+                {
+                    endCallback?.Invoke(TYPE_IO_RESULT.Success);
+                    break;
+                }
+                yield return null;
+            }
+        }
+
+#endif
+
+
     }
 }

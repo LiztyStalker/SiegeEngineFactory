@@ -47,13 +47,11 @@ namespace Storage
 
         public static void Initialize(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            var obj = new GameObject();
-            obj.name = "AssetLoader";
-            var loader = obj.AddComponent<AssetLoader>();
+            var loader = DataLoader.Create();
             loader.Load(loadCallback, result => 
             {
                 endCallback?.Invoke(result);
-                Object.DestroyImmediate(obj);
+                Object.DestroyImmediate(loader.gameObject);
             });
         }
 

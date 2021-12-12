@@ -9,6 +9,7 @@ namespace SEF.UI.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using SEF.UI.Toolkit;
+    using Storage;
 
     public class UIMainTest
     {
@@ -87,6 +88,40 @@ namespace SEF.UI.Test
             var uiMain = CreateUIMain();
             yield return null;
         }
+
+        [UnityTest]
+        public IEnumerator UIMainTest_DataLoader_LoadTest()
+        {
+            bool isClosed = true;
+            var loader = DataLoader.Create();
+            loader.LoadTest(progress => Debug.Log(progress), result => {
+                isClosed = false;
+                Debug.Log(result); 
+            });
+            while (isClosed)
+            {
+                yield return null;
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator UIMainTest_DataLoader_LoadAssetBundle()
+        {
+            bool isClosed = true;
+            var loader = DataLoader.Create();
+            loader.Load(progress => Debug.Log(progress), result => {
+                isClosed = false;
+                Debug.Log(result);
+            });
+            while (isClosed)
+            {
+                yield return null;
+            }
+        }
+        //AssetBundle
+        //데이터불러오기
+        //게임 시작
+
 
         [UnityTest]
         public IEnumerator UIMainTest_UIStart()
