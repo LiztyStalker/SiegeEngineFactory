@@ -84,6 +84,7 @@ namespace SEF.UI.Toolkit
 
             var parent = _root.Q<VisualElement>("window");
 
+
             _uiStart = GetComponentInChildren<UIStart>(true);
 
             if (_uiStart == null)

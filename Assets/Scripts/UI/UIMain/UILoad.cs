@@ -6,12 +6,12 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Storage;
 
-    [RequireComponent(typeof(UIDocument))]
     public class UILoad : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        private readonly string PATH_UI_LOAD_UXML = "Assets/Scripts/UI/UIMain/UILoadUXML.uxml";
+        private readonly static string NAME_UI_LOAD_UXML = "UILoadUXML";
+        private readonly static string PATH_UI_LOAD_UXML = $"Assets/Scripts/UI/UIMain/{NAME_UI_LOAD_UXML}.uxml";
 #endif
 
 
@@ -29,7 +29,16 @@ namespace SEF.UI.Toolkit
 
         public void Initialize(VisualElement parent)
         {
-            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_LOAD_UXML);
+            _root = parent.Q<TemplateContainer>(NAME_UI_LOAD_UXML);
+
+            if (_root == null)
+            {
+                _root = UIUXML.GetVisualElement(gameObject, PATH_UI_LOAD_UXML);
+                if (parent != null)
+                {
+                    parent.Add(_root);
+                }
+            }
 
             _loadLabel = _root.Q<Label>("load_label");
             _loadValueLabel = _root.Q<Label>("load_value_label");
@@ -37,7 +46,6 @@ namespace SEF.UI.Toolkit
             _loadLabel.text = "·ÎµùÁß";
             _loadValueLabel.text = "0";
 
-            if (parent != null) parent.Add(_root);
             Hide();
 
         }

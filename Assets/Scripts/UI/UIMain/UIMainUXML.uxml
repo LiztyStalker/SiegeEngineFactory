@@ -1,6 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UILoadUXML" src="UILoadUXML.uxml" />
+    <ui:Template name="UIStartUXML" src="UIStartUXML.uxml" />
     <Style src="UIMainUSS.uss" />
-    <ui:VisualElement name="window" class="window" style="background-color: rgba(120, 120, 120, 255);">
+    <ui:VisualElement name="window" class="window" style="background-color: rgb(120, 120, 120);">
         <ui:VisualElement name="background" class="background" />
+        <ui:Instance template="UILoadUXML" name="UILoadUXML" class="window" />
+        <ui:Instance template="UIStartUXML" name="UIStartUXML" class="window" />
     </ui:VisualElement>
 </ui:UXML>

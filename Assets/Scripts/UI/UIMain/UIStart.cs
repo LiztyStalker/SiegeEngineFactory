@@ -9,7 +9,8 @@ namespace SEF.UI.Toolkit
     public class UIStart : MonoBehaviour
     {
 #if UNITY_EDITOR
-        private readonly string PATH_UI_START_UXML = "Assets/Scripts/UI/UIMain/UIStartUXML.uxml";
+        private readonly static string NAME_UI_START_UXML = "UIStartUXML";
+        private readonly static string PATH_UI_START_UXML = $"Assets/Scripts/UI/UIMain/{NAME_UI_START_UXML}.uxml";
 #endif
 
         private VisualElement _root = null;
@@ -28,13 +29,22 @@ namespace SEF.UI.Toolkit
 
         public void Initialize(VisualElement parent)
         {
-            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_START_UXML);
+
+            _root = parent.Q<TemplateContainer>(NAME_UI_START_UXML);
+
+
+            if (_root == null)
+            {
+                _root = UIUXML.GetVisualElement(gameObject, PATH_UI_START_UXML);
+                if (parent != null)
+                {
+                    parent.Add(_root);
+                }
+            }
 
             _startButton = _root.Q<Button>("start_button");
 
             _startButton.RegisterCallback<ClickEvent>(e => OnStartEvent());
-
-            if(parent != null) parent.Add(_root);
 
             Hide();
         }
