@@ -5,6 +5,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using UnityEditor;
     using Storage;
+    using SEF.Account;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIMain : MonoBehaviour
@@ -33,23 +34,55 @@ namespace SEF.UI.Toolkit
 
         private void Start()
         {
-            //AssetBundle 불러오기
-            DataStorage.Initialize(_uiLoad.ShowLoad, delegate
-            {
-                _uiLoad.Hide();
-                _uiStart.ShowStart(GameStart);
-            });
-
-
-            //데이터 불러오기
-            //Start 띄우기
-
+            InitializeAssetBundle();
         }
 
+        private void InitializeAssetBundle()
+        {
+            //AssetBundle 불러오기
+            DataStorage.Initialize(_uiLoad.ShowLoad, result =>
+            {
+                if (result == TYPE_IO_RESULT.Success)
+                {
+                    InitializeAccount();
+                }
+                else
+                {
+                    //Success가 아니면 메시지 출력
+                    ShowPopup(result);
+                }
+
+            });
+        }
+
+        private void InitializeAccount()
+        {
+            //데이터 불러오기
+            Account.Current.Load(_uiLoad.ShowLoad, result =>
+            {
+                if (result == TYPE_IO_RESULT.Success)
+                {
+                    _uiLoad.Hide();
+                    _uiStart.ShowStart(GameStart);
+                }
+                else
+                {
+                    //Success가 아니면 메시지 출력
+                    ShowPopup(result);
+                }
+            });
+        }
+
+        private void ShowPopup(TYPE_IO_RESULT result)
+        {
+            UICommon.Current.ShowPopup(result.ToString(), Quit);
+        }
 
         public void Initialize()
         {
             _root = UIUXML.GetVisualElement(gameObject, PATH_UI_LOAD_UXML);
+
+            var parent = _root.Q<VisualElement>("window");
 
             _uiStart = GetComponentInChildren<UIStart>(true);
 
@@ -59,7 +92,7 @@ namespace SEF.UI.Toolkit
                 _uiStart.transform.SetParent(transform);
             }
 
-            _uiStart.Initialize(_root);
+            _uiStart.Initialize(parent);
 
 
 
@@ -70,7 +103,7 @@ namespace SEF.UI.Toolkit
                 _uiLoad = UILoad.Create();
                 _uiLoad.transform.SetParent(transform);
             }
-            _uiLoad.Initialize(_root);
+            _uiLoad.Initialize(parent);
         }
 
      
@@ -79,6 +112,10 @@ namespace SEF.UI.Toolkit
             Debug.Log("GameStart");
         }
 
+        private void Quit()
+        {
+            Application.Quit();
+        }
 
         public void CleanUp()
         {

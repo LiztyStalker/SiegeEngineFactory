@@ -38,6 +38,7 @@ namespace SEF.UI.Toolkit
             _loadValueLabel.text = "0";
 
             if (parent != null) parent.Add(_root);
+            Hide();
 
         }
 

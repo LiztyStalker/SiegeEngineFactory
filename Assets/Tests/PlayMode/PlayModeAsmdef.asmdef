@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "UIAsmdef",
-        "StorageAsmdef"
+        "StorageAsmdef",
+        "AccountAsmdef"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

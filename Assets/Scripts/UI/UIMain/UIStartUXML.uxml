@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UIStartUSS.uss" />
-    <ui:VisualElement name="window" class="window" style="width: 100%; height: 100%; display: flex; visibility: visible;">
+    <ui:VisualElement name="window" class="window_start" style="width: 100%; height: 100%; display: flex; visibility: visible;">
         <ui:Button text="Start" display-tooltip-when-elided="true" name="start_button" class="start_button" />
     </ui:VisualElement>
 </ui:UXML>

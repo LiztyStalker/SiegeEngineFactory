@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UILoadUSS.uss" />
-    <ui:VisualElement name="window" class="window" style="width: 100%; height: 100%; display: flex;">
-        <ui:Label text="로딩중...(00/00)" display-tooltip-when-elided="true" name="load_label" class="load_label" style="-unity-text-align: middle-center; font-size: 36px; color: rgba(0, 0, 0, 255);" />
-        <ui:Label text="0" display-tooltip-when-elided="true" name="load_value_label" class="load_label" style="-unity-text-align: middle-center; font-size: 36px; color: rgba(0, 0, 0, 255);" />
+    <ui:VisualElement name="window" class="window_load">
+        <ui:Label text="로딩중...(00/00)" display-tooltip-when-elided="true" name="load_label" class="load_label" style="-unity-text-align: middle-center; font-size: 36px; color: rgb(0, 0, 0);" />
+        <ui:Label text="0" display-tooltip-when-elided="true" name="load_value_label" class="load_label" style="-unity-text-align: middle-center; font-size: 36px; color: rgb(0, 0, 0);" />
     </ui:VisualElement>
 </ui:UXML>

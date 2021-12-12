@@ -10,6 +10,7 @@ namespace SEF.UI.Test
     using UnityEngine.TestTools;
     using SEF.UI.Toolkit;
     using Storage;
+    using SEF.Account;
 
     public class UIMainTest
     {
@@ -117,9 +118,39 @@ namespace SEF.UI.Test
             {
                 yield return null;
             }
+            loader.Dispose();
         }
-        //AssetBundle
-        //데이터불러오기
+
+        [UnityTest]
+        public IEnumerator UIMainTest_Account_Load()
+        {            
+            bool isClosed = true;
+            Account.Current.Load(progress => Debug.Log(progress), result => {
+                isClosed = false;
+                Debug.Log(result);
+            });
+            while (isClosed)
+            {
+                yield return null;
+            }
+        }
+
+
+        [UnityTest]
+        public IEnumerator UIMainTest_Account_Save()
+        {
+            bool isClosed = true;
+            Account.Current.Save(null, delegate
+            {
+                Debug.Log("Save End");
+                isClosed = false;
+            });
+            while (isClosed)
+            {
+                yield return null;
+            }
+        }
+
         //게임 시작
 
 
