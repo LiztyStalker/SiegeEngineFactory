@@ -31,6 +31,11 @@ namespace Storage
             return obj.AddComponent<DataLoader>();
         }
 
+        public void Dispose()
+        {
+            DestroyImmediate(gameObject);
+        }
+
         public void Load(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
             StartCoroutine(LoadCoroutine(loadCallback, endCallback));
@@ -62,25 +67,25 @@ namespace Storage
                 case UnityWebRequest.Result.Success:
                     AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
                     Debug.Log("bundle Load 완료");
-                    endCallback?.Invoke((TYPE_IO_RESULT)www.result);
                     yield break;
                 case UnityWebRequest.Result.ConnectionError:
                 case UnityWebRequest.Result.DataProcessingError:
                 case UnityWebRequest.Result.InProgress:
                 case UnityWebRequest.Result.ProtocolError:
                     Debug.LogError($"bundle Load 실패 {www.error}");
-                    endCallback?.Invoke((TYPE_IO_RESULT)www.result);
                     break;
                 default:
                     break;
             }
             yield return null;
+            endCallback?.Invoke((TYPE_IO_RESULT)www.result);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
         public void LoadTest(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
+            Debug.LogError("LoadTest 실행");
             StartCoroutine(LoadTestCoroutine(loadCallback, endCallback));
         }
 
@@ -100,11 +105,11 @@ namespace Storage
                 }
                 else
                 {
-                    endCallback?.Invoke(TYPE_IO_RESULT.Success);
                     break;
                 }
                 yield return null;
             }
+            endCallback?.Invoke(TYPE_IO_RESULT.Success);
         }
 
 #endif
