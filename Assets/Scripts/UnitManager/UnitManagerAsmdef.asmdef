@@ -1,0 +1,16 @@
+{
+    "name": "UnitManagerAsmdef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f9c9ef73e341d4b42b6ab39de2997410"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
