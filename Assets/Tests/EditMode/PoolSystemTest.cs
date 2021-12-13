@@ -11,7 +11,7 @@ namespace SEF.Test
 
     public class PoolElement_Test : IPoolElement
     {
-        public IPoolElement Create()
+        public static PoolElement_Test Create()
         {
             return new PoolElement_Test();
         }
@@ -29,7 +29,7 @@ namespace SEF.Test
         public void SetUp()
         {
             _pool = PoolSystem<PoolElement_Test>.Create();
-            _pool.Initialize();
+            _pool.Initialize(PoolElement_Test.Create);
         }
 
         [TearDown]
