@@ -33,7 +33,6 @@ namespace SEF.Test
         {
             CreateCamera();
             _unitManager = UnitManager.Create();
-            _unitManager.InitializeUnitManager_Test();
         }
 
         [TearDown]
@@ -46,8 +45,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_Initialize ()
         {
-            _unitManager.InitializeUnitManager_Test();
-            _unitManager.InitializeEnemyActor_Test();
+            _unitManager.Initialize();
             yield return null;
 
             Assert.IsNotNull(_unitManager.NowEnemy, "NowEnemy 가 적용되지 않았습니다");
@@ -55,10 +53,25 @@ namespace SEF.Test
             yield return null;
         }
 
+        [UnityTest]
+        public IEnumerator UnitManagerTest_CreateAndChange()
+        {
+
+            yield return UnitManagerTest_Initialize();
+            _unitManager.NowEnemy.DecreaseHealth();
+            yield return null;
+
+            Assert.IsNotNull(_unitManager.NowEnemy, "NowEnemy 가 적용되지 않았습니다");
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 2, "UnitActor 가 생성되지 않았습니다");
+            yield return null;
+
+        }
+
 
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_UnitActor_1()
         {
+            _unitManager.InitializeUnitManager_Test();
             var unitActor = _unitManager.CreateUnitActor();
             yield return null;
             Assert.IsTrue(unitActor != null, "UnitActor가 생성되지 않았습니다");
@@ -68,6 +81,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_UnitActor_10()
         {
+            _unitManager.InitializeUnitManager_Test();
             for (int i = 0; i < 10; i++)
             {
                 _unitManager.CreateUnitActor();
@@ -80,6 +94,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_UnitActor_10_Retrieve_5()
         {
+            _unitManager.InitializeUnitManager_Test();
             UnitActor[] arr = new UnitActor[5];
             for (int i = 0; i < 10; i++)
             {
@@ -103,6 +118,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_EnemyActor_1()
         {
+            _unitManager.InitializeUnitManager_Test();
             var enemyActor = _unitManager.CreateEnemyActor();
             yield return null;
             Assert.IsTrue(enemyActor != null, "enemyActor 가 생성되지 않았습니다");
@@ -112,6 +128,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_EnemyActor_10()
         {
+            _unitManager.InitializeUnitManager_Test();
             for (int i = 0; i < 10; i++)
             {
                 _unitManager.CreateEnemyActor();

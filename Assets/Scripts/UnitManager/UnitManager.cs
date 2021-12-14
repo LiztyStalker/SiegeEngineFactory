@@ -18,6 +18,7 @@ namespace SEF.Unit
         private EnemyActor _nowEnemy;
         private Queue<EnemyActor> _waitEnemyQueue;
 
+        //LevelWaveData - max LevelWaveData waitEnemyQueue
 
         public int UnitCount => _unitDic.Count;
         public int WaitEnemyCount => _waitEnemyQueue.Count;
@@ -33,9 +34,9 @@ namespace SEF.Unit
         {
             InitializeUnitManager();
 
-            InitializeUnitActor();
+            InitializeUnitActor(/*AccountData*/);
 
-            InitializeEnemyActor();
+            InitializeEnemyActor(/*AccountData*/);
 
         }
 
@@ -81,19 +82,19 @@ namespace SEF.Unit
 
         //UnitActor 생산 - new or load
 
-        private void InitializeUnitActor()
+        private void InitializeUnitActor(/*AccountData*/)
         {
 
         }
 
         //EnemyActor 생산 - new or load
-        private void InitializeEnemyActor()
+        private void InitializeEnemyActor(/*AccountData*/)
         {
             while (true)
             {
                 CreateEnemyActor();//SetPosition
                 ChangeNowEnemy();
-                if (WaitEnemyCount == 2)
+                if (WaitEnemyCount == MAX_WAIT_ENEMY_COUNT)
                 {
                     break;
                 }
@@ -135,7 +136,7 @@ namespace SEF.Unit
         {
             var enemyActor = _poolEnemyActor.GiveElement();
 
-            enemyActor.SetData();
+            enemyActor.SetData(); // EnemyData, LevelWaveData
             enemyActor.SetParent(_gameObject.transform);
 
             _waitEnemyQueue.Enqueue(enemyActor);
@@ -143,7 +144,6 @@ namespace SEF.Unit
             enemyActor.InActivate();
 
             return enemyActor;
-
         }
 
         public void RetrieveUnitActor(UnitActor unitActor)
@@ -179,7 +179,12 @@ namespace SEF.Unit
             _nowEnemy.RunProcess(deltaTime);
         }
 
-
+        private void CreateAndChangeEnemyActor()
+        {
+            CreateEnemyActor();
+            ChangeNowEnemy();
+            //LevelWave++;
+        }
 
         public void ChangeNowEnemy()
         {
@@ -240,7 +245,8 @@ namespace SEF.Unit
                     break;
             }
             _destroyEvent?.Invoke(playActor);
-            ChangeNowEnemy();
+            _nowEnemy = null;
+            CreateAndChangeEnemyActor();
         }
         #endregion
 
