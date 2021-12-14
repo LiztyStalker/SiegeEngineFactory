@@ -22,9 +22,14 @@ namespace SEF.Unit
             _target = target;
         }
 
-        protected void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+        public void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
         {
             _typeUnitState = typeUnitState;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            transform.position = position;
         }
 
         public bool IsActionState() => _typeUnitState == TYPE_UNIT_STATE.Action;

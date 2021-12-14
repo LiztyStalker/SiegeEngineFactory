@@ -60,6 +60,7 @@ namespace SEF.Unit
         {
             base.Activate();
             transform.position = UNIT_APPEAR_POSITION;
+            _nowAttackTime = 0f;
         }
 
         public void SetData()
@@ -75,18 +76,17 @@ namespace SEF.Unit
                     SetTypeUnitState(TYPE_UNIT_STATE.Appear);
                     break;
                 case TYPE_UNIT_STATE.Appear:
+                    //Appear
                     AppearRunProcess(deltaTime);
                     break;
                 case TYPE_UNIT_STATE.Action:
+                    //Action
                     ActionRunProcess(deltaTime);
                     break;
                 case TYPE_UNIT_STATE.Destory:
+                    //Destroy
                     break;
             }
-            //상태
-            //Appear
-            //Action
-            //Destroy
         }
 
 
@@ -108,13 +108,19 @@ namespace SEF.Unit
         }
 
 
+        private float _nowAttackTime = 0f;
         protected override void ActionRunProcess(float deltaTime)
         {
             if(Target != null)
             {
-                Debug.Log("Attack");
+                _nowAttackTime += deltaTime;
+                if (_nowAttackTime > 1f)
+                {
+                    Debug.Log("Attack");
+                    Target.DecreaseHealth();
+                    _nowAttackTime = 0f;
+                }
             }
-            //적 공격
         }
 
     }

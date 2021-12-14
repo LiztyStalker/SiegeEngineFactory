@@ -12,6 +12,19 @@ namespace SEF.Test
 
     public class UnitManagerTest
     {
+
+        public class DummyTarget : ITarget
+        {
+            public int hitCount;
+            public void DecreaseHealth()
+            {
+                hitCount++;
+                Debug.Log("Hit");
+            }
+        }
+
+
+
         private UnitManager _unitManager;
         private Camera _camera;
         private Light2D _light;
@@ -187,6 +200,31 @@ namespace SEF.Test
             }
 
             Assert.IsTrue(unitActor.IsActionState(), "unitActor가 Action 상태가 아닙니다");
+            yield return null;
+        }
+
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitActor_Attack()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var dummy = new DummyTarget();
+            var unitActor = _unitManager.CreateUnitActor();
+            unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+            unitActor.SetPosition(new Vector2(-2f, 3f));
+            unitActor.SetTarget(dummy);
+            yield return null;
+            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+
+            while (true)
+            {
+                unitActor.RunProcess(Time.deltaTime);
+                if(dummy.hitCount > 5)
+                {
+                    break;
+                }
+                yield return null;
+            }
             yield return null;
         }
 
