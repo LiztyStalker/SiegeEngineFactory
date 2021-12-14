@@ -9,12 +9,12 @@ namespace SEF.Unit
 
         public void Activate()
         {
-
+            gameObject.SetActive(true);
         }
 
         public void InActivate()
         {
-
+            gameObject.SetActive(false);
         }
 
         public void SetParent(Transform parent)
@@ -61,6 +61,7 @@ namespace SEF.Unit
 
         protected void DestoryActor()
         {
+            //애니메이션 후 destoryEvent 실행
             _destoryEvent?.Invoke(this);
         }
 
