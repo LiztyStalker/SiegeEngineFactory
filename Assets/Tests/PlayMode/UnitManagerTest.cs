@@ -33,7 +33,7 @@ namespace SEF.Test
         {
             CreateCamera();
             _unitManager = UnitManager.Create();
-            _unitManager.Initialize();
+            _unitManager.InitializeUnitManager_Test();
         }
 
         [TearDown]
@@ -42,6 +42,19 @@ namespace SEF.Test
             _unitManager.CleanUp();
             DestoryCamera();
         }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_Initialize ()
+        {
+            _unitManager.InitializeUnitManager_Test();
+            _unitManager.InitializeEnemyActor_Test();
+            yield return null;
+
+            Assert.IsNotNull(_unitManager.NowEnemy, "NowEnemy 가 적용되지 않았습니다");
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 2, "UnitActor 가 생성되지 않았습니다");
+            yield return null;
+        }
+
 
         [UnityTest]
         public IEnumerator UnitManagerTest_Create_UnitActor_1()
@@ -86,6 +99,31 @@ namespace SEF.Test
             Assert.IsTrue(_unitManager.UnitCount == 5, $"UnitActor가 모두 반납되지 않았습니다 {_unitManager.UnitCount}");
             yield return new WaitForSeconds(1f);
         }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_Create_EnemyActor_1()
+        {
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            Assert.IsTrue(enemyActor != null, "enemyActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_Create_EnemyActor_10()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                _unitManager.CreateEnemyActor();
+            }
+            yield return null;
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 9, "enemyActor 가 모두 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+        }
+
+        
+
+
     }
 }
 #endif

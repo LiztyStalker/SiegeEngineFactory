@@ -6,6 +6,9 @@ namespace SEF.Unit
 
     public class UnitManager
     {
+
+        private const int MAX_WAIT_ENEMY_COUNT = 2;
+
         private GameObject _gameObject;
 
         private PoolSystem<UnitActor> _poolUnitActor;
@@ -13,11 +16,13 @@ namespace SEF.Unit
 
         private Dictionary<int, UnitActor> _unitDic;
         private EnemyActor _nowEnemy;
-        private Queue<EnemyActor> _nextEnemies;
-
+        private Queue<EnemyActor> _waitEnemyQueue;
 
 
         public int UnitCount => _unitDic.Count;
+        public int WaitEnemyCount => _waitEnemyQueue.Count;
+
+        public EnemyActor NowEnemy => _nowEnemy;
 
         public static UnitManager Create()
         {
@@ -25,6 +30,37 @@ namespace SEF.Unit
         }
 
         public void Initialize(/*AccountData*/)
+        {
+            InitializeUnitManager();
+
+            InitializeUnitActor();
+
+            InitializeEnemyActor();
+
+        }
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void InitializeUnitManager_Test()
+        {
+            InitializeUnitManager();
+        }
+
+        public void InitializeUnitActor_Test()
+        {
+            InitializeUnitActor();
+        }
+
+        public void InitializeEnemyActor_Test()
+        {
+            InitializeEnemyActor();
+        }
+#endif
+
+
+
+        private void InitializeUnitManager()
         {
             _gameObject = new GameObject();
             _gameObject.name = "Manager@UnitManager";
@@ -39,7 +75,30 @@ namespace SEF.Unit
 
             _unitDic = new Dictionary<int, UnitActor>();
             _nowEnemy = null;
-            _nextEnemies = new Queue<EnemyActor>();
+            _waitEnemyQueue = new Queue<EnemyActor>();
+
+        }
+
+        //UnitActor 생산 - new or load
+
+        private void InitializeUnitActor()
+        {
+
+        }
+
+        //EnemyActor 생산 - new or load
+        private void InitializeEnemyActor()
+        {
+            while (true)
+            {
+                CreateEnemyActor();//SetPosition
+                ChangeNowEnemy();
+                if (WaitEnemyCount == 2)
+                {
+                    break;
+                }
+                //LevelWave++;
+            }
         }
 
         public void CleanUp()
@@ -49,7 +108,7 @@ namespace SEF.Unit
 
             _unitDic.Clear();
             _nowEnemy = null;
-            _nextEnemies.Clear();
+            _waitEnemyQueue.Clear();
 
             Object.DestroyImmediate(_gameObject);
         }
@@ -71,6 +130,7 @@ namespace SEF.Unit
             return unitActor;
 
         }
+
         public EnemyActor CreateEnemyActor(/*EnemyData*/)
         {
             var enemyActor = _poolEnemyActor.GiveElement();
@@ -78,16 +138,10 @@ namespace SEF.Unit
             enemyActor.SetData();
             enemyActor.SetParent(_gameObject.transform);
 
-            _nextEnemies.Enqueue(enemyActor);
+            _waitEnemyQueue.Enqueue(enemyActor);
 
-            if (_nowEnemy == null)
-            {
-                ChangeNowEnemy();
-            }
-            else
-            {
-                enemyActor.InActivate();
-            }
+            enemyActor.InActivate();
+
             return enemyActor;
 
         }
@@ -129,13 +183,15 @@ namespace SEF.Unit
 
         public void ChangeNowEnemy()
         {
-            _nowEnemy = _nextEnemies.Dequeue();
+            if (_nowEnemy == null)
+            {
+                _nowEnemy = _waitEnemyQueue.Dequeue();
 
-            _nowEnemy.AddOnHitListener(OnHitEvent);
-            _nowEnemy.AddOnDestoryListener(OnDestroyEvent);
+                _nowEnemy.AddOnHitListener(OnHitEvent);
+                _nowEnemy.AddOnDestoryListener(OnDestroyEvent);
 
-            _nowEnemy.Activate();
-
+                _nowEnemy.Activate();
+            }
         }
 
 
@@ -184,6 +240,7 @@ namespace SEF.Unit
                     break;
             }
             _destroyEvent?.Invoke(playActor);
+            ChangeNowEnemy();
         }
         #endregion
 
