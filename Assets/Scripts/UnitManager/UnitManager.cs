@@ -57,6 +57,25 @@ namespace SEF.Unit
         {
             InitializeEnemyActor();
         }
+
+        public void InitializeUnitManager_PositionTest()
+        {          
+            _gameObject = new GameObject();
+            _gameObject.name = "Manager@UnitManager";
+            _gameObject.transform.position = Vector3.zero;
+            _gameObject.transform.localScale = Vector3.one;
+
+            _poolUnitActor = PoolSystem<UnitActor>.Create();
+            _poolUnitActor.Initialize(UnitActor.Create_Test);
+
+            _poolEnemyActor = PoolSystem<EnemyActor>.Create();
+            _poolEnemyActor.Initialize(EnemyActor.Create);
+
+            _unitDic = new Dictionary<int, UnitActor>();
+            _nowEnemy = null;
+            _waitEnemyQueue = new Queue<EnemyActor>();
+
+        }
 #endif
 
 

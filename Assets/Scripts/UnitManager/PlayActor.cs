@@ -4,11 +4,35 @@ namespace SEF.Unit
     using System.Collections.Generic;
     using UnityEngine;
 
+    public enum TYPE_UNIT_STATE { Idle, Appear, Action, Destory}
+
     public abstract class PlayActor : MonoBehaviour
     {
+        protected readonly static Vector2 ACTOR_CREATE_POSITION = new Vector2(10f, 3f);
 
-        public void Activate()
+        private ITarget _target;
+        protected ITarget Target => _target;
+
+
+        private TYPE_UNIT_STATE _typeUnitState;
+        protected TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
+
+        public void SetTarget(ITarget target)
         {
+            _target = target;
+        }
+
+        protected void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+        {
+            _typeUnitState = typeUnitState;
+        }
+
+        public bool IsActionState() => _typeUnitState == TYPE_UNIT_STATE.Action;
+
+
+        public virtual void Activate()
+        {
+            _typeUnitState = TYPE_UNIT_STATE.Idle;
             gameObject.SetActive(true);
         }
 
@@ -17,20 +41,22 @@ namespace SEF.Unit
             gameObject.SetActive(false);
         }
 
+
+
         public void SetParent(Transform parent)
         {
             transform.SetParent(parent);
         }
 
 
-        public void RunProcess(float deltaTime)
-        {
+        public abstract void RunProcess(float deltaTime);
+        protected abstract void AppearRunProcess(float deltaTime);
+        protected abstract void ActionRunProcess(float deltaTime);
 
-        }
-               
+
         public void CleanUp()
         {
-
+            DestroyImmediate(gameObject);
         }
 
         #region ##### Data #####

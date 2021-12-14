@@ -7,12 +7,14 @@ namespace SEF.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using SEF.Unit;
+    using UnityEngine.Experimental.Rendering.Universal;
+    using UnityEngine.Rendering.Universal;
 
     public class UnitManagerTest
     {
         private UnitManager _unitManager;
         private Camera _camera;
-
+        private Light2D _light;
 
         private void CreateCamera()
         {
@@ -20,7 +22,8 @@ namespace SEF.Test
             obj.name = "Camera";
             obj.transform.position = Vector3.back * 10f;
             _camera = obj.AddComponent<Camera>();
-
+            _camera.clearFlags = CameraClearFlags.SolidColor;
+            _camera.backgroundColor = Color.black;
         }
 
         private void DestoryCamera()
@@ -28,10 +31,25 @@ namespace SEF.Test
             Object.DestroyImmediate(_camera.gameObject);
         }
 
+        private void CreateLight()
+        {
+            var obj = new GameObject();
+            obj.name = "Light@Global";
+            obj.transform.position = Vector3.zero;
+            _light = obj.AddComponent<Light2D>();
+            _light.lightType = Light2D.LightType.Global;
+        }
+
+        private void DestoryLight()
+        {
+            Object.DestroyImmediate(_light.gameObject);
+        }
+
         [SetUp]
         public void SetUp()
         {
             CreateCamera();
+            CreateLight();
             _unitManager = UnitManager.Create();
         }
 
@@ -39,7 +57,9 @@ namespace SEF.Test
         public void TearDown()
         {
             _unitManager.CleanUp();
+            DestoryLight();
             DestoryCamera();
+
         }
 
         [UnityTest]
@@ -138,8 +158,37 @@ namespace SEF.Test
             yield return new WaitForSeconds(1f);
         }
 
-        
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitActor_AppearPosition()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            _unitManager.CreateUnitActor();
+            yield return null;
+            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+        }
 
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitActor_AppearToActionPosition()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var unitActor = _unitManager.CreateUnitActor();
+            yield return null;
+            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+
+            while (true)
+            {
+                unitActor.RunProcess(Time.deltaTime);
+                if (unitActor.IsActionState())
+                {
+                    break;
+                }
+                yield return null;
+            }
+
+            Assert.IsTrue(unitActor.IsActionState(), "unitActor가 Action 상태가 아닙니다");
+            yield return null;
+        }
 
     }
 }

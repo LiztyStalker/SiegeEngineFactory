@@ -6,13 +6,36 @@ namespace SEF.Unit {
 
     public class EnemyActor : PlayActor, ITarget, IPoolElement
     {
+        private readonly static Vector2 ENEMY_APPEAR_POSITION = new Vector2(4f, 3f);
+        private readonly static Vector2 ENEMY_READY_POSITION = new Vector2(3f, 3f);
+        private readonly static Vector2 ENEMY_ACTION_POSITION = new Vector2(2f, 3f);
+
+
+
         public static EnemyActor Create()
         {
             var obj = new GameObject();
+            obj.transform.position = ACTOR_CREATE_POSITION;
             obj.name = "Actor@Enemy";
+            obj.AddComponent<SpriteRenderer>();
             var enemyActor = obj.AddComponent<EnemyActor>();
             enemyActor.InActivate();
             return enemyActor;
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+            transform.position = ENEMY_APPEAR_POSITION;
+        }
+
+        public override void RunProcess(float deltaTime)
+        {
+            //ป๓ลย
+            //Idle
+            //Appear
+            //Action
+            //Destroy
         }
 
         public void SetData()
@@ -20,5 +43,12 @@ namespace SEF.Unit {
 
         }
 
+        protected override void ActionRunProcess(float deltaTime)
+        {
+        }
+
+        protected override void AppearRunProcess(float deltaTime)
+        {
+        }
     }
 }

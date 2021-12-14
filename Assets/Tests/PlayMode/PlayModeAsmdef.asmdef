@@ -7,7 +7,10 @@
         "UIAsmdef",
         "StorageAsmdef",
         "AccountAsmdef",
-        "UnitManagerAsmdef"
+        "UnitManagerAsmdef",
+        "Unity.RenderPipelines.Universal.Shaders",
+        "Unity.RenderPipeline.Universal.ShaderLibrary",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
