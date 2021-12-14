@@ -13,10 +13,10 @@ namespace SEF.Unit
 
         public static UnitActor Create()
         {
-            var obj = new GameObject();
-            obj.transform.position = ACTOR_CREATE_POSITION;
+            var obj = new GameObject(); 
             obj.name = "Actor@Unit";
             var unitActor = obj.AddComponent<UnitActor>();
+            unitActor.SetPosition(ACTOR_CREATE_POSITION);
             obj.AddComponent<SpriteRenderer>();
             unitActor.InActivate();
             return unitActor;
@@ -29,9 +29,10 @@ namespace SEF.Unit
         public static UnitActor Create_Test()
         {
             var obj = new GameObject();
-            obj.transform.position = ACTOR_CREATE_POSITION;
             obj.name = "Actor@Unit";
             var unitActor = obj.AddComponent<UnitActor>();
+            unitActor.SetPosition(ACTOR_CREATE_POSITION);
+
             var sprite = obj.AddComponent<SpriteRenderer>();
 
 
@@ -59,7 +60,7 @@ namespace SEF.Unit
         public override void Activate()
         {
             base.Activate();
-            transform.position = UNIT_APPEAR_POSITION;
+            SetPosition(UNIT_APPEAR_POSITION);
             _nowAttackTime = 0f;
         }
 
@@ -97,7 +98,7 @@ namespace SEF.Unit
             if (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) > 0.1f)
             {
                 //목표까지 이동
-                transform.position = Vector2.MoveTowards(transform.position, UNIT_ACTION_POSITION, deltaTime);
+                SetPosition(Vector2.MoveTowards(transform.position, UNIT_ACTION_POSITION, deltaTime));
             }
             else
             {

@@ -22,12 +22,25 @@ namespace SEF.Unit
             _target = target;
         }
 
-        public void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void SetTypeUnitState_Test(TYPE_UNIT_STATE typeUnitState)
+        {
+            SetTypeUnitState(typeUnitState);
+        }
+
+        public void SetPosition_Test(Vector2 position)
+        {
+            SetPosition(position);
+        }
+#endif
+
+        protected void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
         {
             _typeUnitState = typeUnitState;
         }
 
-        public void SetPosition(Vector2 position)
+        protected void SetPosition(Vector2 position)
         {
             transform.position = position;
         }
@@ -89,13 +102,49 @@ namespace SEF.Unit
             DestoryActor();
         }
 
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void Destroy_Test(System.Action endCallback)
+        {
+            DestoryActor_Test(endCallback);
+        }
+
+        protected void DestoryActor_Test(System.Action endCallback)
+        {
+            StartCoroutine(DestroyCoroutine(endCallback));
+        }
+
+        private IEnumerator DestroyCoroutine(System.Action endCallback)
+        {
+            Debug.Log("Destroy Start");
+            var deadTime = 0f;
+            while (true)
+            {
+                deadTime += Time.deltaTime;
+                if (deadTime > 1f)
+                {
+                    break;
+                }
+                yield return null;
+            }
+            Debug.Log("Destroy End");
+            OnDestroyEvent();
+            endCallback?.Invoke();
+            yield return null;
+        }
+#endif
+
 
         protected void DestoryActor()
         {
             //애니메이션 후 destoryEvent 실행
-            _destoryEvent?.Invoke(this);
+            SetTypeUnitState(TYPE_UNIT_STATE.Destory);
+            OnDestroyEvent();
         }
 
+        private void OnDestroyEvent()
+        {
+            _destoryEvent?.Invoke(this);
+        }
 
         #region ##### Listener #####
 

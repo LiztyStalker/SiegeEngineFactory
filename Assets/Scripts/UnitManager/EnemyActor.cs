@@ -15,10 +15,10 @@ namespace SEF.Unit {
         public static EnemyActor Create()
         {
             var obj = new GameObject();
-            obj.transform.position = ACTOR_CREATE_POSITION;
             obj.name = "Actor@Enemy";
             obj.AddComponent<SpriteRenderer>();
             var enemyActor = obj.AddComponent<EnemyActor>();
+            enemyActor.SetPosition(ACTOR_CREATE_POSITION);
             enemyActor.InActivate();
             return enemyActor;
         }
@@ -26,7 +26,7 @@ namespace SEF.Unit {
         public override void Activate()
         {
             base.Activate();
-            transform.position = ENEMY_APPEAR_POSITION;
+            SetPosition(ENEMY_APPEAR_POSITION);
         }
 
         public override void RunProcess(float deltaTime)
