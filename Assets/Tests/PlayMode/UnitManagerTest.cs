@@ -240,7 +240,7 @@ namespace SEF.Test
             _unitManager.InitializeUnitManager_PositionTest();
             var dummy = new DummyTarget();
             var unitActor = _unitManager.CreateUnitActor();
-            unitActor.SetTypeUnitState_Test(TYPE_UNIT_STATE.Action);
+            unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
             unitActor.SetPosition_Test(new Vector2(-2f, 3f));
             unitActor.SetTarget(dummy);
             yield return null;
@@ -285,6 +285,106 @@ namespace SEF.Test
             _unitManager.CleanUp();
         }
 
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyActor_State_Idle()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            enemyActor.Activate();
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyActor_State_Ready()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            enemyActor.Activate();
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+            while (true)
+            {
+                enemyActor.RunProcess(Time.deltaTime);
+                if (enemyActor.IsArriveReady())
+                    break;
+                yield return null;
+            }
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyActor_State_Appear()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            enemyActor.Activate();
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+            while (true)
+            {
+                enemyActor.RunProcess(Time.deltaTime);
+                if (enemyActor.IsArriveAction())
+                    break;
+                yield return null;
+            }
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyActor_State_Action()
+        {
+            var dummy = new DummyTarget();
+
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            enemyActor.Activate();
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+            enemyActor.SetOnFindTargetListener(() => dummy);
+            while (true)
+            {
+                enemyActor.RunProcess(Time.deltaTime);
+                if (dummy.hitCount == 5)
+                    break;
+                yield return null;
+            }
+            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyActor_State_Destroy()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            yield return null;
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+
+            _unitManager.ChangeNowEnemy();
+
+            bool isRun = true;
+            enemyActor.Destroy_Test(delegate
+            {
+                isRun = false;
+            });
+            while (isRun)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
     }
 }
 #endif

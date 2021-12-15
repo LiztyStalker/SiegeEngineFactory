@@ -4,11 +4,13 @@ namespace SEF.Unit
     using System.Collections.Generic;
     using UnityEngine;
 
-    public enum TYPE_UNIT_STATE { Idle, Appear, Action, Destory}
+    public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destory}
 
     public abstract class PlayActor : MonoBehaviour
     {
         protected readonly static Vector2 ACTOR_CREATE_POSITION = new Vector2(10f, 3f);
+
+        protected readonly static float ACTOR_ARRIVE_DISTANCE = 0.1f;
 
         private ITarget _target;
         protected ITarget Target => _target;
@@ -24,18 +26,13 @@ namespace SEF.Unit
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
-        public void SetTypeUnitState_Test(TYPE_UNIT_STATE typeUnitState)
-        {
-            SetTypeUnitState(typeUnitState);
-        }
-
         public void SetPosition_Test(Vector2 position)
         {
             SetPosition(position);
         }
 #endif
 
-        protected void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+        public void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
         {
             _typeUnitState = typeUnitState;
         }
