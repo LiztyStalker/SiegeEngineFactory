@@ -95,7 +95,7 @@ namespace SEF.Unit
         protected override void AppearRunProcess(float deltaTime)
         {
 
-            if (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) > 0.1f)
+            if (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) > ACTOR_ARRIVE_DISTANCE)
             {
                 //목표까지 이동
                 SetPosition(Vector2.MoveTowards(transform.position, UNIT_ACTION_POSITION, deltaTime));
