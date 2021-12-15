@@ -69,7 +69,7 @@ namespace SEF.Unit
             _poolUnitActor.Initialize(UnitActor.Create_Test);
 
             _poolEnemyActor = PoolSystem<EnemyActor>.Create();
-            _poolEnemyActor.Initialize(EnemyActor.Create);
+            _poolEnemyActor.Initialize(EnemyActor.Create_Test);
 
             _unitDic = new Dictionary<int, UnitActor>();
             _nowEnemy = null;
@@ -160,7 +160,7 @@ namespace SEF.Unit
 
             _waitEnemyQueue.Enqueue(enemyActor);
 
-            enemyActor.InActivate();
+            enemyActor.Activate();
 
             return enemyActor;
         }
@@ -214,7 +214,7 @@ namespace SEF.Unit
                 _nowEnemy.AddOnHitListener(OnHitEvent);
                 _nowEnemy.AddOnDestoryListener(OnDestroyEvent);
 
-                _nowEnemy.Activate();
+                _nowEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
             }
         }
 
