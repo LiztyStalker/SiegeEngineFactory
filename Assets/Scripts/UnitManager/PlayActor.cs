@@ -8,7 +8,7 @@ namespace SEF.Unit
 
     public abstract class PlayActor : MonoBehaviour
     {
-        protected readonly static Vector2 ACTOR_CREATE_POSITION = new Vector2(10f, 3f);
+        protected readonly static Vector2 ACTOR_CREATE_POSITION = new Vector2(10f, 2f);
 
         protected readonly static float ACTOR_ARRIVE_DISTANCE = 0.1f;
 
@@ -41,9 +41,6 @@ namespace SEF.Unit
         {
             transform.position = position;
         }
-
-        public bool IsActionState() => _typeUnitState == TYPE_UNIT_STATE.Action;
-
 
         public virtual void Activate()
         {

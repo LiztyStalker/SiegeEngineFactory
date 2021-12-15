@@ -37,6 +37,8 @@ namespace SEF.Test
             _camera = obj.AddComponent<Camera>();
             _camera.clearFlags = CameraClearFlags.SolidColor;
             _camera.backgroundColor = Color.black;
+            _camera.orthographic = true;
+            _camera.orthographicSize = 5f;
         }
 
         private void DestoryCamera()
@@ -200,48 +202,37 @@ namespace SEF.Test
         }
 
         [UnityTest]
-        public IEnumerator UnitManagerTest_UnitActor_AppearPosition()
-        {
-            _unitManager.InitializeUnitManager_PositionTest();
-            _unitManager.CreateUnitActor();
-            yield return null;
-            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
-            yield return new WaitForSeconds(1f);
-            _unitManager.CleanUp();
-        }
-
-        [UnityTest]
-        public IEnumerator UnitManagerTest_UnitActor_AppearToActionPosition()
+        public IEnumerator UnitManagerTest_UnitActor_Appear()
         {
             _unitManager.InitializeUnitManager_PositionTest();
             var unitActor = _unitManager.CreateUnitActor();
             yield return null;
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+            yield return new WaitForSeconds(1f);
 
             while (true)
             {
                 unitActor.RunProcess(Time.deltaTime);
-                if (unitActor.IsActionState())
+                if (unitActor.IsArriveAction())
                 {
                     break;
                 }
                 yield return null;
             }
-
-            Assert.IsTrue(unitActor.IsActionState(), "unitActor가 Action 상태가 아닙니다");
             yield return null;
             _unitManager.CleanUp();
         }
 
 
         [UnityTest]
-        public IEnumerator UnitManagerTest_UnitActor_Attack()
+        public IEnumerator UnitManagerTest_UnitActor_Action()
         {
-            _unitManager.InitializeUnitManager_PositionTest();
             var dummy = new DummyTarget();
+
+            _unitManager.InitializeUnitManager_PositionTest();
             var unitActor = _unitManager.CreateUnitActor();
             unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
-            unitActor.SetPosition_Test(new Vector2(-2f, 3f));
+            unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
             unitActor.SetTarget(dummy);
             yield return null;
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
@@ -267,7 +258,7 @@ namespace SEF.Test
 
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
 
-            unitActor.SetPosition_Test(new Vector2(-2f, 3f));
+            unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
 
             bool isRun = true;
             unitActor.Destroy_Test(delegate
@@ -305,6 +296,7 @@ namespace SEF.Test
             yield return null;
             enemyActor.Activate();
             enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+            yield return new WaitForSeconds(1f);
             while (true)
             {
                 enemyActor.RunProcess(Time.deltaTime);
@@ -324,7 +316,9 @@ namespace SEF.Test
             var enemyActor = _unitManager.CreateEnemyActor();
             yield return null;
             enemyActor.Activate();
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_READY_POSITION_TEST);
             enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+            yield return new WaitForSeconds(1f);
             while (true)
             {
                 enemyActor.RunProcess(Time.deltaTime);
@@ -381,6 +375,23 @@ namespace SEF.Test
             {
                 yield return null;
             }
+
+            yield return new WaitForSeconds(1f);
+            _unitManager.CleanUp();
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitAndEnemy_Position()
+        {
+            _unitManager.InitializeUnitManager_PositionTest();
+            var enemyActor = _unitManager.CreateEnemyActor();
+            var unitActor = _unitManager.CreateUnitActor();
+            yield return null;
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+
+            unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
+            unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
 
             yield return new WaitForSeconds(1f);
             _unitManager.CleanUp();

@@ -6,9 +6,9 @@ namespace SEF.Unit {
 
     public class EnemyActor : PlayActor, ITarget, IPoolElement
     {
-        private readonly static Vector2 ENEMY_IDLE_POSITION = new Vector2(4f, 3f);
-        private readonly static Vector2 ENEMY_READY_POSITION = new Vector2(3f, 3f);
-        private readonly static Vector2 ENEMY_ACTION_POSITION = new Vector2(2f, 3f);
+        private readonly static Vector2 ENEMY_IDLE_POSITION = new Vector2(3.5f, 2f);
+        private readonly static Vector2 ENEMY_READY_POSITION = new Vector2(2.5f, 2f);
+        private readonly static Vector2 ENEMY_ACTION_POSITION = new Vector2(1.5f, 2f);
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public readonly static Vector2 ENEMY_IDLE_POSITION_TEST = ENEMY_IDLE_POSITION;
@@ -57,7 +57,7 @@ namespace SEF.Unit {
                         texture.SetPixel(x, y, Color.white);
                     }
                 }
-                _instanceSprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), Vector2.zero);
+                _instanceSprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), Vector2.one * 0.5f);
             }
 
             sprite.sprite = _instanceSprite;

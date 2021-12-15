@@ -7,8 +7,14 @@ namespace SEF.Unit
 
     public class UnitActor : PlayActor, ITarget, IPoolElement
     {
-        private readonly static Vector2 UNIT_APPEAR_POSITION = new Vector2(-3.5f, 3f);
-        private readonly static Vector2 UNIT_ACTION_POSITION = new Vector2(-2f, 3f);
+        private readonly static Vector2 UNIT_APPEAR_POSITION = new Vector2(-3.5f, 2f);
+        private readonly static Vector2 UNIT_ACTION_POSITION = new Vector2(-1.5f, 2f);
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public readonly static Vector2 UNIT_APPEAR_POSITION_TEST = UNIT_APPEAR_POSITION;
+        public readonly static Vector2 UNIT_ACTION_POSITION_TEST = UNIT_ACTION_POSITION;
+#endif
+        public bool IsArriveAction() => (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
 
         public static UnitActor Create()
@@ -47,7 +53,7 @@ namespace SEF.Unit
                         texture.SetPixel(x, y, Color.white);
                     }
                 }
-                _instanceSprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), Vector2.zero);
+                _instanceSprite = Sprite.Create(texture, new Rect(0, 0, 100, 100), Vector2.one * 0.5f);
             }
 
             sprite.sprite = _instanceSprite;
@@ -95,7 +101,7 @@ namespace SEF.Unit
         protected override void AppearRunProcess(float deltaTime)
         {
 
-            if (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) > ACTOR_ARRIVE_DISTANCE)
+            if (!IsArriveAction())
             {
                 //목표까지 이동
                 SetPosition(Vector2.MoveTowards(transform.position, UNIT_ACTION_POSITION, deltaTime));
