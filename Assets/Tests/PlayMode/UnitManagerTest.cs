@@ -187,19 +187,6 @@ namespace SEF.Test
             _unitManager.CleanUp();
         }
 
-        [UnityTest]
-        public IEnumerator UnitManagerTest_Create_EnemyActor_10()
-        {
-            _unitManager.InitializeUnitManager_Test();
-            for (int i = 0; i < 10; i++)
-            {
-                _unitManager.CreateEnemyActor();
-            }
-            yield return null;
-            Assert.IsTrue(_unitManager.WaitEnemyCount == 10, "enemyActor 가 모두 생성되지 않았습니다");
-            yield return new WaitForSeconds(1f);
-            _unitManager.CleanUp();
-        }
 
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Appear()
@@ -283,7 +270,6 @@ namespace SEF.Test
             var enemyActor = _unitManager.CreateEnemyActor();
             yield return null;
             enemyActor.Activate();
-            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
             yield return new WaitForSeconds(1f);
             _unitManager.CleanUp();
         }
@@ -304,7 +290,6 @@ namespace SEF.Test
                     break;
                 yield return null;
             }
-            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
             yield return new WaitForSeconds(1f);
             _unitManager.CleanUp();
         }
@@ -326,7 +311,6 @@ namespace SEF.Test
                     break;
                 yield return null;
             }
-            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
             yield return new WaitForSeconds(1f);
             _unitManager.CleanUp();
         }
@@ -350,7 +334,6 @@ namespace SEF.Test
                     break;
                 yield return null;
             }
-            Assert.IsTrue(_unitManager.WaitEnemyCount == 1, "EnemyActor 가 생성되지 않았습니다");
             yield return new WaitForSeconds(1f);
             _unitManager.CleanUp();
         }
