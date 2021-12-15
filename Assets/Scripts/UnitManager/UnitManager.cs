@@ -7,23 +7,113 @@ namespace SEF.Unit
     public class UnitManager
     {
 
-        private const int MAX_WAIT_ENEMY_COUNT = 2;
+        #region ##### EnemyQueueData #####
+
+        private struct EnemyQueueData
+        {
+            private PoolSystem<EnemyActor> _poolEnemyActor;
+
+            private EnemyActor _nowEnemy;
+            private EnemyActor _readyEnemy;
+            private EnemyActor _idleEnemy;
+
+            public EnemyActor NowEnemy => _nowEnemy;
+
+            public int Count { 
+                get
+                {
+                    var count = 0;
+                    if (_readyEnemy != null) count++;
+                    if (_idleEnemy != null) count++;
+                    return count;
+                } 
+            }
+
+
+            private bool IsFull()
+            {
+                return _nowEnemy != null && _readyEnemy != null && _idleEnemy != null;
+            }
+
+            public void Initialize(/* LevelWaveData */Transform parent)
+            {
+                _poolEnemyActor = PoolSystem<EnemyActor>.Create();
+                _poolEnemyActor.Initialize(EnemyActor.Create);
+
+                while (true)
+                {
+                    var enemyActor = CreateEnemyActor(parent);//SetPosition
+                    ChangeEnemyActor(enemyActor);
+                    if (IsFull())
+                    {
+                        break;
+                    }
+                    //LevelWave++;
+                }
+            }
+
+            public void ChangeEnemyActor(EnemyActor enemyActor)
+            {
+                _nowEnemy = _readyEnemy;
+                if(_nowEnemy != null) _nowEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+                _readyEnemy = _idleEnemy;
+                if(_readyEnemy != null) _readyEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+                _idleEnemy = enemyActor;
+            }
+
+            public void RunProcess(float deltaTime)
+            {
+                if (IsFull())
+                {
+                    _nowEnemy.RunProcess(deltaTime);
+                    _readyEnemy.RunProcess(deltaTime);
+                    _idleEnemy.RunProcess(deltaTime);
+                }
+            }
+
+
+
+            public EnemyActor CreateEnemyActor(/*EnemyData*/Transform parent)
+            {
+                var enemyActor = _poolEnemyActor.GiveElement();
+
+                enemyActor.SetData(); // EnemyData, LevelWaveData
+                enemyActor.SetParent(parent);
+
+                enemyActor.Activate();
+
+                return enemyActor;
+            }
+
+            public void RetrieveEnemyActor(EnemyActor enemyActor)
+            {
+                _poolEnemyActor.RetrieveElement(enemyActor);
+            }
+
+            public void CleanUp()
+            {
+                _poolEnemyActor.CleanUp();
+                _nowEnemy = null;
+                _readyEnemy = null;
+                _idleEnemy = null;
+            }
+        }
+
+        #endregion
 
         private GameObject _gameObject;
 
         private PoolSystem<UnitActor> _poolUnitActor;
-        private PoolSystem<EnemyActor> _poolEnemyActor;
 
         private Dictionary<int, UnitActor> _unitDic;
-        private EnemyActor _nowEnemy;
-        private Queue<EnemyActor> _waitEnemyQueue;
+        private EnemyQueueData _enemyQueueData;
 
         //LevelWaveData - max LevelWaveData waitEnemyQueue
 
         public int UnitCount => _unitDic.Count;
-        public int WaitEnemyCount => _waitEnemyQueue.Count;
+        public int WaitEnemyCount => _enemyQueueData.Count;
 
-        public EnemyActor NowEnemy => _nowEnemy;
+        public EnemyActor NowEnemy => _enemyQueueData.NowEnemy;
 
         public static UnitManager Create()
         {
@@ -68,12 +158,8 @@ namespace SEF.Unit
             _poolUnitActor = PoolSystem<UnitActor>.Create();
             _poolUnitActor.Initialize(UnitActor.Create_Test);
 
-            _poolEnemyActor = PoolSystem<EnemyActor>.Create();
-            _poolEnemyActor.Initialize(EnemyActor.Create_Test);
-
             _unitDic = new Dictionary<int, UnitActor>();
-            _nowEnemy = null;
-            _waitEnemyQueue = new Queue<EnemyActor>();
+            _enemyQueueData.Initialize(_gameObject.transform);
 
         }
 #endif
@@ -90,12 +176,8 @@ namespace SEF.Unit
             _poolUnitActor = PoolSystem<UnitActor>.Create();
             _poolUnitActor.Initialize(UnitActor.Create);
 
-            _poolEnemyActor = PoolSystem<EnemyActor>.Create();
-            _poolEnemyActor.Initialize(EnemyActor.Create);
-
             _unitDic = new Dictionary<int, UnitActor>();
-            _nowEnemy = null;
-            _waitEnemyQueue = new Queue<EnemyActor>();
+            _enemyQueueData.Initialize(_gameObject.transform);
 
         }
 
@@ -109,26 +191,15 @@ namespace SEF.Unit
         //EnemyActor »ý»ê - new or load
         private void InitializeEnemyActor(/*AccountData*/)
         {
-            while (true)
-            {
-                CreateEnemyActor();//SetPosition
-                ChangeNowEnemy();
-                if (WaitEnemyCount == MAX_WAIT_ENEMY_COUNT)
-                {
-                    break;
-                }
-                //LevelWave++;
-            }
+            _enemyQueueData.Initialize(/*AccountData*/_gameObject.transform);
         }
 
         public void CleanUp()
         {
             _poolUnitActor.CleanUp();
-            _poolEnemyActor.CleanUp();
 
             _unitDic.Clear();
-            _nowEnemy = null;
-            _waitEnemyQueue.Clear();
+            _enemyQueueData.CleanUp();
 
             Object.DestroyImmediate(_gameObject);
         }
@@ -151,19 +222,6 @@ namespace SEF.Unit
 
         }
 
-        public EnemyActor CreateEnemyActor(/*EnemyData*/)
-        {
-            var enemyActor = _poolEnemyActor.GiveElement();
-
-            enemyActor.SetData(); // EnemyData, LevelWaveData
-            enemyActor.SetParent(_gameObject.transform);
-
-            _waitEnemyQueue.Enqueue(enemyActor);
-
-            enemyActor.Activate();
-
-            return enemyActor;
-        }
 
         public void RetrieveUnitActor(UnitActor unitActor)
         {
@@ -180,11 +238,10 @@ namespace SEF.Unit
         public void RetrieveEnemyActor(EnemyActor enemyActor)
         {
             enemyActor.InActivate();
-
             enemyActor.RemoveOnHitListener(OnHitEvent);
             enemyActor.RemoveOnDestoryListener(OnDestroyEvent);
 
-            _poolEnemyActor.RetrieveElement(enemyActor);
+            _enemyQueueData.RetrieveEnemyActor(enemyActor);
         }
 
 
@@ -195,7 +252,7 @@ namespace SEF.Unit
                 unit.RunProcess(deltaTime);
             }
 
-            _nowEnemy.RunProcess(deltaTime);
+            _enemyQueueData.RunProcess(deltaTime);
         }
 
         private void CreateAndChangeEnemyActor()
@@ -205,17 +262,18 @@ namespace SEF.Unit
             //LevelWave++;
         }
 
+        public EnemyActor CreateEnemyActor()
+        {
+            return _enemyQueueData.CreateEnemyActor(_gameObject.transform);
+        }
+
         public void ChangeNowEnemy()
         {
-            if (_nowEnemy == null)
-            {
-                _nowEnemy = _waitEnemyQueue.Dequeue();
+            var enemyActor = _enemyQueueData.CreateEnemyActor(_gameObject.transform);
+            _enemyQueueData.ChangeEnemyActor(enemyActor);
 
-                _nowEnemy.AddOnHitListener(OnHitEvent);
-                _nowEnemy.AddOnDestoryListener(OnDestroyEvent);
-
-                _nowEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
-            }
+            _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
+            _enemyQueueData.NowEnemy.AddOnDestoryListener(OnDestroyEvent);
         }
 
 
@@ -264,7 +322,6 @@ namespace SEF.Unit
                     break;
             }
             _destroyEvent?.Invoke(playActor);
-            _nowEnemy = null;
             CreateAndChangeEnemyActor();
         }
         #endregion
