@@ -50,7 +50,7 @@ namespace UtilityManager
         public void Inactivate()
         {
             gameObject.SetActive(false);
-            _inactivateEvent?.Invoke(this);
+            _inactiveEvent?.Invoke(this);
         }
 
         private void Update()
@@ -65,10 +65,10 @@ namespace UtilityManager
 
 
         private System.Action<AudioActor> _stoppedEvent;
-        private System.Action<AudioActor> _inactivateEvent;
+        private System.Action<AudioActor> _inactiveEvent;
 
         public void SetOnStoppedListener(System.Action<AudioActor> act) => _stoppedEvent = act;
-        public void SetOnInactivateListener(System.Action<AudioActor> act) => _inactivateEvent = act;
+        public void SetOnInactiveListener(System.Action<AudioActor> act) => _inactiveEvent = act;
 
         #endregion
 

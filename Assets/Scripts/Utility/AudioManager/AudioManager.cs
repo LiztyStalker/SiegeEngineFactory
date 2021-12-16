@@ -113,6 +113,9 @@ namespace UtilityManager
             return null;
         }
 
+
+
+        [System.Obsolete("개발중")]
         /// <summary>
         /// AudioData를 GameObject Instance화 합니다
         /// EditMode : 실행되지 않습니다
@@ -122,7 +125,7 @@ namespace UtilityManager
         /// <param name="position"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public AudioActor Activate(AudioClip clip, TYPE_AUDIO typeAudio, TYPE_AUDIO_CHANGE_MODE typeAudioChangeMode, float changeTime, bool isLoop = false, System.Action<AudioActor> inactivateCallback = null)
+        public AudioActor Activate(AudioClip clip, TYPE_AUDIO typeAudio, TYPE_AUDIO_CHANGE_MODE typeAudioChangeMode, float changeTime, bool isLoop = false, System.Action<AudioActor> inactiveCallback = null)
         {
             if (Application.isPlaying)
             {
@@ -131,13 +134,20 @@ namespace UtilityManager
                     var actor = _pool.GiveElement();// GetActor(typeAudio);
                     actor.name = $"AudioActor_{typeAudio}_{clip.name}";
                     actor.SetData(clip, typeAudio, isLoop);
-                    actor.SetOnInactivateListener(actor =>
+                    actor.SetOnStoppedListener(OnStoppedEvent);
+                    actor.SetOnInactiveListener(actor =>
                     {
-                        inactivateCallback?.Invoke(actor);
+                        inactiveCallback?.Invoke(actor);
                         OnRetrieveEvent(actor);
                     });
-                    actor.SetOnStoppedListener(OnStoppedEvent);
                     actor.Activate();
+
+                    if (!_dic.ContainsKey(typeAudio))
+                        _dic.Add(typeAudio, new List<AudioActor>());
+
+                    _dic[typeAudio].Add(actor);
+
+
                     //과거 - 줄이기
                     //현재 - 키우기
                     return actor;
@@ -146,6 +156,10 @@ namespace UtilityManager
             return null;
         }
 
+
+
+        //개발중
+        #region ##### Fader #####
 
         private class AudioFader
         {
@@ -178,6 +192,7 @@ namespace UtilityManager
 
         private Queue<AudioFader> _faderQueue = new Queue<AudioFader>();
 
+        #endregion
 
 
 
@@ -210,6 +225,7 @@ namespace UtilityManager
             }
         }
 
+        //Fader 적용 개발중
         private void OnStoppedEvent(AudioActor actor)
         {
             Inactivate(actor);

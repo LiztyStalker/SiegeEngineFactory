@@ -74,7 +74,7 @@ namespace UtilityManager
         /// <param name="position"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public EffectActor Activate(EffectData effectData, Vector3 position, System.Action<EffectActor> inactivateCallback = null)
+        public EffectActor Activate(EffectData effectData, Vector3 position, System.Action<EffectActor> inactiveCallback = null)
         {
             if (Application.isPlaying)
             {
@@ -82,11 +82,12 @@ namespace UtilityManager
                 {
                     var actor = _pool.GiveElement();
                     actor.SetData(effectData);
-                    actor.SetInactiveCallback(actor => {
-                        inactivateCallback?.Invoke(actor);
+                    actor.SetOnInactiveListener(actor => {
+                        inactiveCallback?.Invoke(actor);
                         RetrieveActor(actor);
                     });
                     actor.Activate(position);
+                    _list.Add(actor);
                     return actor;
                 }
             }

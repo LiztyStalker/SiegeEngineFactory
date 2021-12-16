@@ -14,7 +14,6 @@ namespace UtilityManager
 
         private ParticleSystem[] _particles { get; set; }
 
-        private System.Action<EffectActor> _inactiveCallback { get; set; }
 
         private void SetName()
         {
@@ -27,7 +26,6 @@ namespace UtilityManager
             SetName();
         }
 
-        public void SetInactiveCallback(System.Action<EffectActor> callback) => _inactiveCallback = callback;
 
         public bool IsEffectData(EffectData effectData) => _data == effectData;
 
@@ -83,8 +81,8 @@ namespace UtilityManager
         public void Inactivate()
         {
             gameObject.SetActive(false);
-            _inactiveCallback?.Invoke(this);
-            _inactiveCallback = null;
+            _inactiveEvent?.Invoke(this);
+            _inactiveEvent = null;
         }
 
         public void CleanUp()
@@ -92,8 +90,19 @@ namespace UtilityManager
             DestroyImmediate(_prefab);
             _data = null;
             _particles = null;
-            _inactiveCallback = null;
+            _inactiveEvent = null;
         }
+
+
+
+        #region ##### Listener #####
+
+        private System.Action<EffectActor> _inactiveEvent { get; set; }
+        public void SetOnInactiveListener(System.Action<EffectActor> callback) => _inactiveEvent = callback;
+
+        #endregion
+
+
 
     }
 }

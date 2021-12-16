@@ -69,6 +69,7 @@ namespace UtilityManager
 
             sprite.sprite = _instanceSprite;
             _bulletPrefab = obj;
+            _bulletPrefab.gameObject.SetActive(false);
         }
 #endif
 

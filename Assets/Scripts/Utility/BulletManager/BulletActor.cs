@@ -14,7 +14,7 @@ namespace UtilityManager
         private BulletData _data;
 
         private System.Action<BulletActor> _arrivedEvent;
-        private System.Action<BulletActor> _inactivateEvent;
+        private System.Action<BulletActor> _inactiveEvent;
 
         private Vector2 _startPos;
         private Vector2 _arrivePos;
@@ -44,7 +44,7 @@ namespace UtilityManager
         }
 
         public void SetOnArrivedListener(System.Action<BulletActor> act) => _arrivedEvent = act;
-        public void SetOnInactivateListener(System.Action<BulletActor> act) => _inactivateEvent = act;
+        public void SetOnInactiveListener(System.Action<BulletActor> act) => _inactiveEvent = act;
 
         public bool Contains(BulletData data) => _data == data;
 
@@ -59,6 +59,7 @@ namespace UtilityManager
                 _prefab = Instantiate(_data.prefab);
                 _prefab.transform.SetParent(transform);
                 _prefab.transform.localPosition = Vector3.zero;
+                _prefab.gameObject.SetActive(true);
             }
 
             transform.position = _startPos;
@@ -94,7 +95,7 @@ namespace UtilityManager
             _startPos = Vector2.zero;
             _arrivePos = Vector2.zero;
             _nowTime = 0f;
-            _inactivateEvent?.Invoke(this);
+            _inactiveEvent?.Invoke(this);
         }
 
         public void CleanUp()
@@ -102,7 +103,7 @@ namespace UtilityManager
             DestroyImmediate(_prefab);
             _data = null;
             _arrivedEvent = null;
-            _inactivateEvent = null;
+            _inactiveEvent = null;
             _startPos = Vector2.zero;
             _arrivePos = Vector2.zero;
             _prefab = null;
