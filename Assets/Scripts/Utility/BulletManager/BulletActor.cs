@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PoolSystem;
 
-
-public class BulletActor : MonoBehaviour
+public class BulletActor : MonoBehaviour, IPoolElement
 {
+
+    private const float ARRIVE_DISTANCE = 0.1f;
+
     private GameObject _prefab;
     private BulletData _data;
 
-    private System.Action<BulletActor> _arrivedCallback;
+    private System.Action<BulletActor> _arrivedEvent;
+    private System.Action<BulletActor> _inactivateEvent;
 
     private Vector2 _startPos;
     private Vector2 _arrivePos;
@@ -37,18 +41,19 @@ public class BulletActor : MonoBehaviour
         _arrivePos = arrivePos;
     }
 
-    public void SetArrivedCallback(System.Action<BulletActor> callback) => _arrivedCallback = callback;
+    public void SetOnArrivedListener(System.Action<BulletActor> act) => _arrivedEvent = act;
+    public void SetOnInactivateListener(System.Action<BulletActor> act) => _inactivateEvent = act;
 
-    public bool IsData(BulletData data) => _data == data;
+    public bool Contains(BulletData data) => _data == data;
 
     public void Activate()
     {
         _nowTime = 0f;
-        gameObject.SetActive(true);
         _isEffectActivate = false;
 
         if (_prefab == null)
         {
+            //flyweight ÇÊ¿ä
             _prefab = Instantiate(_data.prefab);
             _prefab.transform.SetParent(transform);
             _prefab.transform.localPosition = Vector3.zero;
@@ -56,27 +61,29 @@ public class BulletActor : MonoBehaviour
 
         transform.position = _startPos;
 
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
         if (_spriteRenderer != null)
         {
-            _spriteRenderer.sortingLayerName = "FrontEffect";
-            _spriteRenderer.sortingOrder = (int)-transform.position.y - 5;
+            //_spriteRenderer.sortingLayerName = "FrontEffect";
+            //_spriteRenderer.sortingOrder = (int)-transform.position.y - 5;
             _spriteRenderer.enabled = true;
         }
 
-        _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
-        if (_particles != null)
-        {
-            for (int i = 0; i < _particles.Length; i++)
-            {
-                var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
-                if(psRenderer != null)
-                {
-                    psRenderer.sortingLayerName = "FrontEffect";
-                    psRenderer.sortingOrder = (int)-transform.position.y + 10;
-                }
-            }
-        }
+        _particles = _prefab.GetComponentsInChildren<ParticleSystem>(true);
+        //if (_particles != null)
+        //{
+        //    for (int i = 0; i < _particles.Length; i++)
+        //    {
+        //        var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
+        //        if(psRenderer != null)
+        //        {
+        //            psRenderer.sortingLayerName = "FrontEffect";
+        //            psRenderer.sortingOrder = (int)-transform.position.y + 10;
+        //        }
+        //    }
+        //}
+        gameObject.SetActive(true);
+
     }
 
     public void Inactivate()
@@ -85,13 +92,15 @@ public class BulletActor : MonoBehaviour
         _startPos = Vector2.zero;
         _arrivePos = Vector2.zero;
         _nowTime = 0f;
+        _inactivateEvent?.Invoke(this);
     }
 
     public void CleanUp()
     {
         DestroyImmediate(_prefab);
         _data = null;
-        _arrivedCallback = null;
+        _arrivedEvent = null;
+        _inactivateEvent = null;
         _startPos = Vector2.zero;
         _arrivePos = Vector2.zero;
         _prefab = null;
@@ -105,12 +114,14 @@ public class BulletActor : MonoBehaviour
     
         if(_data.IsRotate) transform.eulerAngles = GetEuler(_startPos, _arrivePos, _nowTime);
 
-        if (Vector2.Distance(transform.position, _arrivePos) < 0.1f)
+        //Debug.Log(transform.position + " " + _startPos + " " + _arrivePos + " " + _nowTime);
+
+        if (Vector2.Distance(transform.position, _arrivePos) < ARRIVE_DISTANCE)
         {
             if (!_isEffectActivate)
             {
                 OnArriveEvent();
-                EffectManager.ActivateEffect(_data.ArriveEffectData, transform.position);
+                EffectManager.Activate(_data.ArriveEffectData, transform.position);
                 _isEffectActivate = true;
             }
         }
@@ -214,8 +225,7 @@ public class BulletActor : MonoBehaviour
 
     private void OnArriveEvent()
     {
-        _arrivedCallback?.Invoke(this);
-        _arrivedCallback = null;
+        _arrivedEvent?.Invoke(this);
     }
 
    
