@@ -1,94 +1,99 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-//public enum TYPE_EFFECT_LIFESPAN { }
-
-public class EffectActor : MonoBehaviour
+namespace UtilityManager
 {
-    private GameObject _prefab { get; set; }
-    private EffectData _data { get; set; }
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using PoolSystem;
 
-    private ParticleSystem[] _particles { get; set; }
+    //public enum TYPE_EFFECT_LIFESPAN { }
 
-    private System.Action<EffectActor> _inactiveCallback { get; set; }
-
-    private void SetName()
+    public class EffectActor : MonoBehaviour, IPoolElement
     {
-        gameObject.name = $"EffectActor_{_data.name}";
-    }
+        private GameObject _prefab { get; set; }
+        private EffectData _data { get; set; }
 
-    public void SetData(EffectData effectData)
-    {
-        _data = effectData;
-        SetName();
-    }
+        private ParticleSystem[] _particles { get; set; }
 
-    public void SetInactiveCallback(System.Action<EffectActor> callback) => _inactiveCallback = callback;
+        private System.Action<EffectActor> _inactiveCallback { get; set; }
 
-    public bool IsEffectData(EffectData effectData) => _data == effectData;
-
-    public void Activate(Vector2 position)
-    {
-        gameObject.SetActive(true);
-
-        if (_prefab == null)
+        private void SetName()
         {
-            _prefab = Instantiate(_data.effectPrefab);
-            _prefab.transform.SetParent(transform);
-            _prefab.transform.localPosition = Vector3.zero;
-            _prefab.transform.localScale = Vector3.one * 0.1f;
+            gameObject.name = $"EffectActor_{_data.name}";
         }
 
-        transform.position = position;
-
-        _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
-        if (_particles != null)
+        public void SetData(EffectData effectData)
         {
-            for (int i = 0; i < _particles.Length; i++)
+            _data = effectData;
+            SetName();
+        }
+
+        public void SetInactiveCallback(System.Action<EffectActor> callback) => _inactiveCallback = callback;
+
+        public bool IsEffectData(EffectData effectData) => _data == effectData;
+
+        public void Activate(Vector2 position)
+        {
+            gameObject.SetActive(true);
+
+            if (_prefab == null)
             {
-                var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
-                if (psRenderer != null)
+                _prefab = Instantiate(_data.effectPrefab);
+                _prefab.transform.SetParent(transform);
+                _prefab.transform.localPosition = Vector3.zero;
+                _prefab.transform.localScale = Vector3.one * 0.1f;
+                _prefab.gameObject.SetActive(true);
+            }
+
+            transform.position = position;
+
+            _particles = _prefab.GetComponentsInChildren<ParticleSystem>();
+            if (_particles != null)
+            {
+                for (int i = 0; i < _particles.Length; i++)
                 {
-                    psRenderer.sortingLayerName = "FrontEffect";
+                    var psRenderer = _particles[i].GetComponent<ParticleSystemRenderer>();
+                    if (psRenderer != null)
+                    {
+                        psRenderer.sortingLayerName = "FrontEffect";
+                    }
                 }
             }
         }
-    }
 
-    private void Update()
-    {
-        if (_particles != null)
+        private void Update()
         {
-            int cnt = 0;
-            for (int i = 0; i < _particles.Length; i++)
+            if (_particles != null)
             {
-                if (!_particles[i].isPlaying)
+                int cnt = 0;
+                for (int i = 0; i < _particles.Length; i++)
                 {
-                    cnt++;
+                    if (!_particles[i].isPlaying)
+                    {
+                        cnt++;
+                    }
+                }
+
+                if (cnt == _particles.Length)
+                {
+                    Inactivate();
                 }
             }
-
-            if (cnt == _particles.Length)
-            {
-                Inactivate();
-            }
         }
-    }
 
-    public void Inactivate()
-    {
-        gameObject.SetActive(false);
-        _inactiveCallback?.Invoke(this);
-        _inactiveCallback = null;
-    }
+        public void Inactivate()
+        {
+            gameObject.SetActive(false);
+            _inactiveCallback?.Invoke(this);
+            _inactiveCallback = null;
+        }
 
-    public void CleanUp()
-    {
-        DestroyImmediate(_prefab);
-        _data = null;
-        _particles = null;
-        _inactiveCallback = null;
-    }
+        public void CleanUp()
+        {
+            DestroyImmediate(_prefab);
+            _data = null;
+            _particles = null;
+            _inactiveCallback = null;
+        }
 
+    }
 }
