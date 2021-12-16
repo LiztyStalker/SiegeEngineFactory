@@ -9,6 +9,7 @@ namespace SEF.Test
     using SEF.Unit;
     using UnityEngine.Experimental.Rendering.Universal;
     using UnityEngine.Rendering.Universal;
+    using UtilityManager.Test;
 
     public class UnitManagerTest
     {
@@ -23,48 +24,15 @@ namespace SEF.Test
             }
         }
 
-
-
         private UnitManager _unitManager;
         private Camera _camera;
         private Light2D _light;
 
-        private void CreateCamera()
-        {
-            var obj = new GameObject();
-            obj.name = "Camera";
-            obj.transform.position = Vector3.back * 10f;
-            _camera = obj.AddComponent<Camera>();
-            _camera.clearFlags = CameraClearFlags.SolidColor;
-            _camera.backgroundColor = Color.black;
-            _camera.orthographic = true;
-            _camera.orthographicSize = 5f;
-        }
-
-        private void DestoryCamera()
-        {
-            Object.DestroyImmediate(_camera.gameObject);
-        }
-
-        private void CreateLight()
-        {
-            var obj = new GameObject();
-            obj.name = "Light@Global";
-            obj.transform.position = Vector3.zero;
-            _light = obj.AddComponent<Light2D>();
-            _light.lightType = Light2D.LightType.Global;
-        }
-
-        private void DestoryLight()
-        {
-            Object.DestroyImmediate(_light.gameObject);
-        }
-
         [SetUp]
         public void SetUp()
         {
-            CreateCamera();
-            CreateLight();
+            _camera = PlayTestUtility.CreateCamera();
+            _light = PlayTestUtility.CreateLight();
             _unitManager = UnitManager.Create();
         }
 
@@ -72,9 +40,8 @@ namespace SEF.Test
         public void TearDown()
         {
             _unitManager.CleanUp();
-            DestoryLight();
-            DestoryCamera();
-
+            PlayTestUtility.DestroyLight(_light);
+            PlayTestUtility.DestroyCamera(_camera);
         }
 
         [UnityTest]
