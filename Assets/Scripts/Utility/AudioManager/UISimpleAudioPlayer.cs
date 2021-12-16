@@ -1,11 +1,14 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
-public class UISimpleAudioPlayer : MonoBehaviour, IPointerUpHandler
+namespace UtilityManager
 {
-    [SerializeField]
-    private string _audioKey;
-    public void OnPointerUp(PointerEventData eventData)
+    using UnityEngine;
+    using UnityEngine.EventSystems;
+    public class UISimpleAudioPlayer : MonoBehaviour, IPointerUpHandler
     {
-        AudioManager.Activate(_audioKey, AudioManager.TYPE_AUDIO.SFX, false);
+        [SerializeField]
+        private string _audioKey;
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            AudioManager.Current.Activate(_audioKey, AudioManager.TYPE_AUDIO.SFX, false);
+        }
     }
 }
