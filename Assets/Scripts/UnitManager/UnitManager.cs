@@ -177,8 +177,6 @@ namespace SEF.Unit
             _poolUnitActor.Initialize(UnitActor.Create);
 
             _unitDic = new Dictionary<int, UnitActor>();
-            _enemyQueueData.Initialize(_gameObject.transform);
-
         }
 
         //UnitActor »ý»ê - new or load
