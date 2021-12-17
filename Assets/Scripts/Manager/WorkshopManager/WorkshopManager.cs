@@ -20,14 +20,16 @@ namespace SEF.Manager
             if (accountData == null)
             {
                 //null이면 초기화
-                //null이 아니면 accountData 적용
+
                 _list = new List<WorkshopLine>();
                 var line = CreateLine();
                 //line 기본 유닛 적용
                 _list.Add(CreateLine());
+
             }
             else
             {
+                //null이 아니면 accountData 적용
                 UnityEngine.Debug.Log("AccountData Load");
             }
         }
@@ -48,7 +50,6 @@ namespace SEF.Manager
                 _list[i].RunProcess(deltaTime);
             }
         }
-
 
         public void UpgradeWorkshop(int index) 
         {
@@ -99,11 +100,13 @@ namespace SEF.Manager
         #endregion
 
 
+
         #region ##### Data #####
         public IAccountData GetAccountData()
         {
             return null;
         }
+
         #endregion
 
 
@@ -111,6 +114,10 @@ namespace SEF.Manager
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public int Count => _list.Count;
 
+        /// <summary>
+        /// 초기화 테스트
+        /// </summary>
+        /// <param name="accountData"></param>
         public void Initialize_Test(IAccountData accountData)
         {
             if (accountData == null)
@@ -125,6 +132,9 @@ namespace SEF.Manager
             }
         }
 
+        /// <summary>
+        /// 증축 테스트
+        /// </summary>
         public void ExpendWorkshop_Test()
         {
             var line = CreateLine();
