@@ -2,12 +2,12 @@
 namespace SEF.Test
 {
     using System.Collections;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using SEF.Manager;
-    using SEF.Data;
+    using Manager;
+    using Data;
+    using Entity;
 
     public class WorkshopManagerTest
     {

@@ -1,7 +1,8 @@
 namespace SEF.Manager
 {
     using System.Collections.Generic;
-    using SEF.Account;
+    using Account;
+    using Entity;
     using Data;
 
     public class WorkshopManager
@@ -67,6 +68,7 @@ namespace SEF.Manager
         private WorkshopLine CreateLine()
         {
             var workshopLine = WorkshopLine.Create();
+            workshopLine.Initialize();
             workshopLine.SetOnProductUnitListener(OnProductUnitEvent);
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
             _list.Add(workshopLine);
