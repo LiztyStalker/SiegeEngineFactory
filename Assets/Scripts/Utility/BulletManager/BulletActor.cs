@@ -13,8 +13,6 @@ namespace UtilityManager
         private GameObject _prefab;
         private BulletData _data;
 
-        private System.Action<BulletActor> _arrivedEvent;
-        private System.Action<BulletActor> _inactiveEvent;
 
         private Vector2 _startPos;
         private Vector2 _arrivePos;
@@ -43,8 +41,6 @@ namespace UtilityManager
             _arrivePos = arrivePos;
         }
 
-        public void SetOnArrivedListener(System.Action<BulletActor> act) => _arrivedEvent = act;
-        public void SetOnInactiveListener(System.Action<BulletActor> act) => _inactiveEvent = act;
 
         public bool Contains(BulletData data) => _data == data;
 
@@ -226,11 +222,23 @@ namespace UtilityManager
             }
         }
 
+
+
+
+        #region ##### Listener #####
+
+        private System.Action<BulletActor> _arrivedEvent;
+        private System.Action<BulletActor> _inactiveEvent;
+
+        public void SetOnArrivedListener(System.Action<BulletActor> act) => _arrivedEvent = act;
+        public void SetOnInactiveListener(System.Action<BulletActor> act) => _inactiveEvent = act;
+
+
         private void OnArriveEvent()
         {
             _arrivedEvent?.Invoke(this);
         }
-
+        #endregion
 
 
     }

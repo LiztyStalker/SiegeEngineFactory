@@ -27,7 +27,7 @@ namespace UtilityManager
         }
 
 
-        public bool IsEffectData(EffectData effectData) => _data == effectData;
+        public bool Contains(EffectData effectData) => _data == effectData;
 
         public void Activate(Vector2 position)
         {

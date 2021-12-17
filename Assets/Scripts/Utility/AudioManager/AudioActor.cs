@@ -27,11 +27,18 @@ namespace UtilityManager
 
         public bool IsPlaying() => AudioSource.isPlaying;
 
+        private void SetName()
+        {
+            gameObject.name = $"AudioActor_{_audioSource.clip.name}";
+        }
+
+
         public void SetData(AudioClip clip, AudioManager.TYPE_AUDIO typeAudio, bool isLoop = false)
         {
             AudioSource.clip = clip;
             AudioSource.loop = isLoop;
             _typeAudio = typeAudio;
+            SetName();
         }
 
         public void Activate()

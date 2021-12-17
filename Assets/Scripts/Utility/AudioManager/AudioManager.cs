@@ -138,7 +138,7 @@ namespace UtilityManager
                     actor.SetOnInactiveListener(actor =>
                     {
                         inactiveCallback?.Invoke(actor);
-                        OnRetrieveEvent(actor);
+                        RetrieveActor(actor);
                     });
                     actor.Activate();
 
@@ -215,7 +215,7 @@ namespace UtilityManager
             return actor;
         }
 
-        private void OnRetrieveEvent(AudioActor actor)
+        private void RetrieveActor(AudioActor actor)
         {
             if (_dic.ContainsKey(actor.typeAudio))
             {
