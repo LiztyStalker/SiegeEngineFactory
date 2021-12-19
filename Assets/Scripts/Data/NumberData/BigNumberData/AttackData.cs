@@ -4,15 +4,23 @@ namespace SEF.Data
 
     public class AttackData : BigNumberData
     {
+        public AttackData() : base() { }
+        protected AttackData(BigNumberData value) : base(value) { }
+
+        public override INumberData Clone()
+        {
+            return new AttackData(this);
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static AttackData Create_Test()
         {
             var data = new AttackData();
-            data.Clear();
-            data.Value.Add("0", 100);
+            data.Value = 100;
             return data;
         }
+
+       
 #endif
     }
 }
