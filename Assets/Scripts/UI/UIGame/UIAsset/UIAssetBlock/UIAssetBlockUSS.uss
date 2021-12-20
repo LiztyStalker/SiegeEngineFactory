@@ -1,0 +1,24 @@
+#UIAssetBlockUXML {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    letter-spacing: 0;
+    word-spacing: 0;
+    background-color: rgba(255, 255, 255, 255);
+    align-items: center;
+    width: 25%;
+    height: auto;
+}
+
+.asset-value {
+    font-size: 48px;
+    color: rgba(0, 0, 0, 255);
+}
+
+.asset_icon {
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    flex-direction: row;
+    align-items: center;
+}

@@ -1,0 +1,15 @@
+.window {
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#UISystemUXML {
+}
+
+#UIAssetUXML {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

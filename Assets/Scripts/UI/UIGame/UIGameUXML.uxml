@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UIAssetUXML" src="UIAsset/UIAssetUXML.uxml" />
+    <ui:Template name="UISystemUXML" src="UISystem/UISystemUXML.uxml" />
+    <Style src="UIGameUSS.uss" />
+    <ui:VisualElement name="window" class="window" style="align-items: center; justify-content: space-between;">
+        <ui:Instance template="UIAssetUXML" name="UIAssetUXML" />
+        <ui:Instance template="UISystemUXML" name="UISystemUXML" style="height: 60%; width: 100%; justify-content: space-around; align-items: center;" />
+    </ui:VisualElement>
+</ui:UXML>
