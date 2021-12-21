@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="UIWorkshopLine" src="UIWorkshopLine.uxml" />
-    <Style src="UIWorkshop.uss" />
-    <ui:ScrollView name="scrollview" horizontal-page-size="0" horizontal-scroller-visibility="Hidden" touch-scroll-type="Clamped" style="width: 100%; height: 100%;">
-        <ui:Instance template="UIWorkshopLine" name="UIWorkshopLine" />
-    </ui:ScrollView>
-</ui:UXML>

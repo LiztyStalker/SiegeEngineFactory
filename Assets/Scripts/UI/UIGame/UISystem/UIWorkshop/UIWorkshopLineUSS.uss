@@ -58,8 +58,9 @@
 }
 
 #progressbar {
-    height: 5%;
+    height: 100%;
     width: 100%;
+    position: absolute;
 }
 
 #button_panel {
@@ -71,4 +72,18 @@
     border-right-width: 10px;
     border-top-width: 10px;
     border-bottom-width: 10px;
+}
+
+UIWorkshopLine {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    height: 120px;
+    flex-wrap: wrap;
+}
+
+.dps_label {
+    font-size: 18px;
 }

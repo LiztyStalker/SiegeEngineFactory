@@ -89,13 +89,15 @@ namespace SEF.Manager
 
 
 
-        private System.Action<UnitEntity> _refreshEvent;
-        public void AddRefreshListener(System.Action<UnitEntity> act) => _refreshEvent += act;
-        public void RemoveRefreshListener(System.Action<UnitEntity> act) => _refreshEvent -= act;
-        private void OnRefreshEvent(UnitEntity unitEntity)
+        private System.Action<int, UnitEntity, float> _refreshEvent;
+        public void AddRefreshListener(System.Action<int, UnitEntity, float> act) => _refreshEvent += act;
+        public void RemoveRefreshListener(System.Action<int, UnitEntity, float> act) => _refreshEvent -= act;
+        private void OnRefreshEvent(int index, UnitEntity unitEntity, float nowTime)
         {
-            _refreshEvent?.Invoke(unitEntity);
+            _refreshEvent?.Invoke(index, unitEntity, nowTime);
         }
+
+        //LineEvent
 
         #endregion
 

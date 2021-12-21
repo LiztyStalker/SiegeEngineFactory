@@ -6,6 +6,7 @@ namespace SEF.Manager
         
     public class WorkshopLine
     {
+        private int _index;
         private UnitEntity _unitEntity;
         private float _nowTime;
 
@@ -25,6 +26,11 @@ namespace SEF.Manager
             _nowTime = 0;
             _productUnitEvent = null;
             _refreshEvent = null;
+        }
+
+        public void SetIndex(int index)
+        {
+            _index = index;
         }
 
         public void RunProcess(float deltaTime)
@@ -66,11 +72,11 @@ namespace SEF.Manager
         }
 
 
-        private System.Action<UnitEntity> _refreshEvent;
-        public void SetOnRefreshListener(System.Action<UnitEntity> act) => _refreshEvent = act;
+        private System.Action<int, UnitEntity, float> _refreshEvent;
+        public void SetOnRefreshListener(System.Action<int, UnitEntity, float> act) => _refreshEvent = act;
         private void OnRefreshEvent()
         {
-            _refreshEvent?.Invoke(_unitEntity);
+            _refreshEvent?.Invoke(_index, _unitEntity, _nowTime);
         }
         #endregion
 

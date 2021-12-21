@@ -11,6 +11,12 @@ namespace SEF.UI.Toolkit
 
         private readonly static string PATH_DEFAULT_SETTING = "Assets/UIToolkit/DefaultPanelSettings.asset";
 
+        public static T GetVisualElement<T>(string uxmlPath) where T : VisualElement
+        {
+            var element = DataStorage.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
+            var container = element.CloneTree();
+            return container.Q<T>();
+        }
 
         public static VisualElement GetVisualElement(GameObject gameObject, string uxmlPath)
         {
