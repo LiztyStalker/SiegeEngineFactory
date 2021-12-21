@@ -1,7 +1,11 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UIAssetBlockUSS.uss" />
-    <ui:VisualElement name="asset-icon" class="asset_icon" style="background-image: url(&apos;/Assets/Clean Vector Icons/T_2_scroll_open_.png&apos;);" />
-    <ui:Label text="1" display-tooltip-when-elided="true" name="max-value" class="asset-value" style="align-items: center; display: none;" />
-    <ui:Label text="/" display-tooltip-when-elided="true" name="slider" class="asset-value" style="align-items: center; display: none;" />
-    <ui:Label text="1.000A" display-tooltip-when-elided="true" name="now-value" class="asset-value" style="align-items: stretch;" />
+    <ui:VisualElement name="block_panel">
+        <ui:VisualElement name="asset_icon" class="asset_icon" style="background-image: url(&apos;/Assets/Clean Vector Icons/T_4_eye_bleed_.png&apos;);" />
+        <ui:VisualElement name="value_panel" style="align-items: flex-end;">
+            <ui:Label text="1.000A" display-tooltip-when-elided="true" name="now_value_label" class="asset-value" />
+            <ui:Label text="/" display-tooltip-when-elided="true" name="slider" class="asset-value" style="display: none;" />
+            <ui:Label text="0" display-tooltip-when-elided="true" name="max_value_label" class="asset-value" style="display: none;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>
