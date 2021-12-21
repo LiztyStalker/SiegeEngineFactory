@@ -102,7 +102,7 @@ namespace SEF.Data
 
             var digit = capacity;
 
-            Debug.Log(digit);
+//            Debug.Log(digit);
 
             while (true)
             {
