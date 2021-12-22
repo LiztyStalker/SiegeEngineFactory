@@ -22,13 +22,13 @@ namespace SEF.UI.Test
 
         private void CreateUIGame()
         {
-            var obj = new GameObject();
-            obj.name = "UIGame";
-            _uiGame = obj.AddComponent<UIGame>();
+            _uiGame = UIGame.Create();
+            _uiGame.Initialize();
         }
 
         private void DestroyUIGame()
         {
+            _uiGame.CleanUp();
             Object.DestroyImmediate(_uiGame.gameObject);
         }
 
