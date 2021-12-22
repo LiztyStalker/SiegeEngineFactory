@@ -1,0 +1,33 @@
+#progressbar_panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#progressbar_label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+    color: rgba(0, 0, 0, 255);
+}
+
+UIProgressbar {
+    width: 100%;
+    height: 100%;
+}
+
+#progressbar_background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 255);
+    background-color: rgb(130, 130, 130);
+}
+
+#progressbar {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(20, 255, 150);
+}
