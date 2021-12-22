@@ -11,11 +11,22 @@ namespace SEF.UI.Toolkit
 
         private readonly static string PATH_DEFAULT_SETTING = "Assets/UIToolkit/DefaultPanelSettings.asset";
 
+        /// <summary>
+        /// path를 가지고 container를 생성하고 VisualElement를 가져옵니다
+        /// </summary>
+        /// <typeparam name="T">VisualElement</typeparam>
+        /// <param name="uxmlPath">UxmlPath</param>
+        /// <returns></returns>
         public static T GetVisualElement<T>(string uxmlPath) where T : VisualElement
         {
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
             var element = DataStorage.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
             var container = element.CloneTree();
             return container.Q<T>();
+#else
+            Debug.Assert(false, "GetVisualElement ReleaseMode가 적용되지 않았습니다");
+            return null;
+#endif
         }
 
         public static VisualElement GetVisualElement(GameObject gameObject, string uxmlPath)
