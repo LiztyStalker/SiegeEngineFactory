@@ -83,6 +83,30 @@ namespace SEF.UI.Test
             workshop.Dispose();
         }
 
+        [UnityTest]
+        public IEnumerator UISystemTest_Initialize()
+        {
+            var uisystem = UISystem_Test.Create();
+            uisystem.Initialize();
+            yield return new WaitForSeconds(1f);
+            uisystem.Dispose();
+        }
+
+        [UnityTest]
+        public IEnumerator UISystemTest_RefreshWorkshop()
+        {
+            UnitEntity unitEntity;
+            unitEntity.Initialize();
+            unitEntity.UpTech(UnitData.Create_Test());
+
+            var uisystem = UISystem_Test.Create();
+            uisystem.Initialize();
+            uisystem.Instance.RefreshUnit(0, unitEntity, 0f);
+            yield return new WaitForSeconds(1f);
+
+            uisystem.Dispose();
+        }
+
     }
 }
 #endif
