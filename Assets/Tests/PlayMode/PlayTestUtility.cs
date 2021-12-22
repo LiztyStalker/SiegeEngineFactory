@@ -13,7 +13,7 @@ namespace UtilityManager.Test {
             obj.transform.position = Vector3.back * 10f;
             var camera = obj.AddComponent<Camera>();
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = Color.black;
+            camera.backgroundColor = Color.cyan;
             camera.orthographic = true;
             camera.orthographicSize = 5f;
             return camera;
