@@ -22,10 +22,10 @@ namespace SEF.UI.Toolkit
         //UIResearch
 
 
-        public static UISystem Create()
-        {
-            return UIUXML.GetVisualElement<UISystem>(PATH_UI_SYSTEM_UXML);
-        }
+        //public static UISystem Create()
+        //{
+        //    return UIUXML.GetVisualElement<UISystem>(PATH_UI_SYSTEM_UXML);
+        //}
 
         public void Initialize()
         {
@@ -44,10 +44,7 @@ namespace SEF.UI.Toolkit
 
 
 
-        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
-        {
-            _uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
-        }
+        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
     }
 
 
