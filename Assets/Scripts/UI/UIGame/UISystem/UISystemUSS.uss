@@ -22,7 +22,7 @@
     height: 90%;
 }
 
-#UIWorkshop {
+UISystem {
     width: 100%;
     height: 100%;
 }

@@ -1,13 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="UIWorkshop" src="UIWorkshop/UIWorkshop.uxml" />
+    <ui:Template name="UIWorkshopUXML" src="UIWorkshop/UIWorkshopUXML.uxml" />
     <Style src="UISystemUSS.uss" />
-    <ui:VisualElement name="menu_panel">
-        <ui:Button text="제작소" display-tooltip-when-elided="true" name="workshop_button" class="menu_button" />
-        <ui:Button text="대장간" display-tooltip-when-elided="true" name="blacksmith_button" class="menu_button" />
-        <ui:Button text="마을" display-tooltip-when-elided="true" name="village_button" class="menu_button" />
-        <ui:Button text="연구" display-tooltip-when-elided="true" name="research_button" class="menu_button" />
-    </ui:VisualElement>
-    <ui:VisualElement name="menu_window">
-        <ui:Instance template="UIWorkshop" name="UIWorkshop" />
-    </ui:VisualElement>
+    <SEF.UI.Toolkit.UISystem>
+        <ui:VisualElement name="menu_panel">
+            <ui:Button text="제작소" display-tooltip-when-elided="true" name="workshop_button" class="menu_button" />
+            <ui:Button text="대장간" display-tooltip-when-elided="true" name="blacksmith_button" class="menu_button" />
+            <ui:Button text="마을" display-tooltip-when-elided="true" name="village_button" class="menu_button" />
+            <ui:Button text="연구" display-tooltip-when-elided="true" name="research_button" class="menu_button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="menu_window">
+            <ui:Instance template="UIWorkshopUXML" name="UIWorkshopUXML" style="position: absolute; width: 100%; height: 100%;" />
+        </ui:VisualElement>
+    </SEF.UI.Toolkit.UISystem>
 </ui:UXML>
