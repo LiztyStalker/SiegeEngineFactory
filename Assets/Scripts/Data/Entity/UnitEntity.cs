@@ -1,6 +1,6 @@
 namespace SEF.Entity
 {
-    using SEF.Data;
+    using Data;
     public struct UnitEntity
     {
         private UnitData _unitData;
