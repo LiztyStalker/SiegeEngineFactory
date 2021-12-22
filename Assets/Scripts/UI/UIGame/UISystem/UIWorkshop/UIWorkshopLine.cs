@@ -39,6 +39,8 @@ namespace SEF.UI.Toolkit
         private Label _attackTypeLabel;
         private Label _attackTypeValueLabel;
 
+        private UIProgressbar _uiProgressbar;
+
         private Button _upgradeButton;
         private VisualElement _upgradeAssetIcon;
         private Label _upgradeValueLabel;
@@ -81,6 +83,8 @@ namespace SEF.UI.Toolkit
             _attackDelayLabel = this.Q<Label>("attack_delay_label");
             _attackDelayValueLabel = this.Q<Label>("attack_delay_value_label");
 
+            _uiProgressbar = this.Q<UIProgressbar>();
+
             _upgradeButton = this.Q<Button>("upgrade_button");
             _upgradeAssetIcon = this.Q<VisualElement>("upgrade_asset_icon");
             _upgradeValueLabel = this.Q<Label>("upgrade_asset_value_label");
@@ -106,6 +110,7 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
+            Debug.Assert(_uiProgressbar != null, "_uiProgressbar element 를 찾지 못했습니다");
 
 
             //_icon
@@ -125,6 +130,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = "1";
             _attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
+            _uiProgressbar.nowValue = 0;
 
             _upgradeButton.RegisterCallback<ClickEvent>(OnUpgradeEvent);
             _techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
@@ -142,7 +148,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            //unitData.ProductTime / nowTime;
+            _uiProgressbar.nowValue = nowTime / unitData.ProductTime;
         }
 
         public void CleanUp()

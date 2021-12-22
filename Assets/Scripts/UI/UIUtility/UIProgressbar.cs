@@ -36,6 +36,8 @@ namespace SEF.UI.Toolkit
             {
                 base.Init(ve, bag, cc);
                 ((UIProgressbar)ve).nowValue = _nowValue.GetValueFromBag(bag, cc);
+                ((UIProgressbar)ve).minValue = _minValue.GetValueFromBag(bag, cc);
+                ((UIProgressbar)ve).maxValue = _maxValue.GetValueFromBag(bag, cc);
             }
         }
 
@@ -51,21 +53,34 @@ namespace SEF.UI.Toolkit
 
         public float nowValue { 
             get { return _nowValue; } 
-            set { 
-                _nowValue = value;
+            set {
+                var tmpValue = value;
+                if (tmpValue < _minValue) tmpValue = _minValue;
+                if (tmpValue > _maxValue) tmpValue = _maxValue;
+                _nowValue = tmpValue;
                 SetProgressValue();
                 SetLabel();
             } 
         }
-        public float minValue => _minValue;
-        public float maxValue => _maxValue;
-
-        public void SetRange(float minValue, float maxValue)
-        {
-            _minValue = minValue;
-            _maxValue = maxValue;
+        public float minValue { 
+            get { return _minValue; }
+            set {
+                _minValue = value;
+                SetProgressValue();
+                SetLabel();
+            } 
         }
 
+        public float maxValue {
+            get { return _maxValue; }
+            set {
+                _maxValue = value;
+                SetProgressValue();
+                SetLabel();
+            }
+        }
+
+        
         private void SetProgressValue()
         {
             // nowValue / maxValue;
@@ -79,10 +94,10 @@ namespace SEF.UI.Toolkit
         {
             pickingMode = PickingMode.Ignore;
 
-            this.AddToClassList("unity-slider");
-            this.AddToClassList("unity-base-slider");
-            this.AddToClassList("unity-base-field");
-            this.AddToClassList("unity-base-slider--horizontal");
+            AddToClassList("unity-slider");
+            AddToClassList("unity-base-slider");
+            AddToClassList("unity-base-field");
+            AddToClassList("unity-base-slider--horizontal");
 
 
             var progressbar = new VisualElement();
@@ -103,6 +118,8 @@ namespace SEF.UI.Toolkit
             progressbar.Add(_progressbar);
             Add(progressbar);
             Add(_progressLabel);
+
+            _progressLabel.style.display = DisplayStyle.None;
         }
     }
 }
