@@ -75,7 +75,7 @@
 }
 
 UIWorkshopLine {
-    position: absolute;
+    position: relative;
     align-items: center;
     justify-content: center;
     flex-direction: row;
