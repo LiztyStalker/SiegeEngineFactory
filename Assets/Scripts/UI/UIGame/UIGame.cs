@@ -1,7 +1,5 @@
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
     using Entity;
@@ -20,12 +18,21 @@ namespace SEF.UI.Toolkit
         //private UIPlay _uiPlay;
         //private UIOfflineReward _uiOfflineReward;
 
-        private void Awake()
+        public static UIGame Create()
         {
-            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_GAME_UXML);            
+            var uiGame = FindObjectOfType<UIGame>();
+            if (uiGame == null)
+            {
+                var obj = new GameObject();
+                obj.name = "UI@Game";
+                uiGame = obj.AddComponent<UIGame>();
+            }
+            return uiGame;
         }
-        private void Start()
+
+        public void Initialize()
         {
+            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_GAME_UXML);
 
             _uiAsset = UIAsset.Create();
             _uiSystem = _root.Q<UISystem>();
@@ -34,12 +41,11 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
 
             _uiAsset.Initialize(_root.Q<VisualElement>("UIAssetUXML"));
-            _uiSystem.Initialize();
-            
+            _uiSystem.Initialize();            
         }
 
-        private void OnDestroy()
-        {
+        public void CleanUp()
+        {            
             _uiAsset.CleanUp();
             _uiSystem.CleanUp();
         }
