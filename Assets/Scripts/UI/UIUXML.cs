@@ -31,20 +31,25 @@ namespace SEF.UI.Toolkit
 
         public static VisualElement GetVisualElement(GameObject gameObject, string uxmlPath)
         {
+
             var uiDocument = gameObject.GetComponent<UIDocument>();
             if(uiDocument == null)
             {
                 uiDocument = gameObject.AddComponent<UIDocument>();
             }
 
-
+            if (uiDocument.visualTreeAsset == null)
+            {
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-            uiDocument.panelSettings = DataStorage.LoadAssetAtPath<PanelSettings>(PATH_DEFAULT_SETTING);
-            var asset = DataStorage.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
+                uiDocument.panelSettings = DataStorage.LoadAssetAtPath<PanelSettings>(PATH_DEFAULT_SETTING);
+                var asset = DataStorage.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
 #else
-            //AssetBundle 적용
+                //AssetBundle 적용
+                Debug.Assert(false, "GetVisualElement AssetBundle이 적용되지 않았습니다");
+                VisualTreeAsset asset = null;
 #endif
-            uiDocument.visualTreeAsset = asset;
+                uiDocument.visualTreeAsset = asset;
+            }
 
             var root = uiDocument.rootVisualElement;
 
