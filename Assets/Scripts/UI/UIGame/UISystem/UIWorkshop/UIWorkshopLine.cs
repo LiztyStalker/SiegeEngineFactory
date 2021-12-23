@@ -177,6 +177,9 @@ namespace SEF.UI.Toolkit
 
         }
 
+
+        private UnitEntity _unitEntity;
+
         public void RefreshUnit(UnitEntity unitEntity, float nowTime)
         {
             if(_activatePanel.style.display == DisplayStyle.None)
@@ -184,6 +187,8 @@ namespace SEF.UI.Toolkit
                 _activatePanel.style.display = DisplayStyle.Flex;
                 _inactivatePanel.style.display = DisplayStyle.None;
             }
+
+            _unitEntity = unitEntity;
 
             var unitData = unitEntity.UnitData;
             _nameLabel.text = unitData.name;
@@ -201,6 +206,12 @@ namespace SEF.UI.Toolkit
             _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
 
             //Debug.Log(_index + " " + _uiProgressbar.FillAmount);
+        }
+
+        public void RefreshAsset(AssetEntity assetEntity)
+        {
+            var isEnough = assetEntity.IsEnough(_unitEntity.GetUpgradeAssetData());
+            _upgradeButton.SetEnabled(isEnough);
         }
 
         public void CleanUp()
@@ -221,7 +232,6 @@ namespace SEF.UI.Toolkit
         public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(ClickEvent e)
         {
-            Debug.Log("UpgradeEvent");
             _upgradeEvent?.Invoke(_index);
         }
 
@@ -230,7 +240,6 @@ namespace SEF.UI.Toolkit
         public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uptechEvent -= act;
         private void OnUpTechEvent(ClickEvent e) 
         {
-            Debug.Log("UpTechEvent");
             _uptechEvent?.Invoke(_index, UnitData.Create_Test());
         }
 
@@ -239,7 +248,6 @@ namespace SEF.UI.Toolkit
         public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
         private void OnExpendEvent(ClickEvent e)
         {
-            Debug.Log("ExpendEvent");
             _expendEvent?.Invoke();
         }
 

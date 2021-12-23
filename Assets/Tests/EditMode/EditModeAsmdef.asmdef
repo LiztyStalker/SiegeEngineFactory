@@ -5,8 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "UtilityAsmdef",
+        "AccountAsmdef",
         "DataAsmdef",
-        "AccountAsmdef"
+        "Unity.Mathematics"
     ],
     "includePlatforms": [
         "Editor"

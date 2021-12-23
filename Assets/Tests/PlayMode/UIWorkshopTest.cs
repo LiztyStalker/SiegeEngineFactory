@@ -86,6 +86,53 @@ namespace SEF.UI.Test
             yield return new WaitForSeconds(0.5f);
             workshop.Dispose();
         }
+
+        [UnityTest]
+        public IEnumerator UIWorkshopLineTest_UpgradeButton_Disable()
+        {
+
+            UnitEntity unitEntity;
+            unitEntity.Initialize();
+            unitEntity.UpTech(UnitData.Create_Test());
+
+            AssetEntity assetEntity = AssetEntity.Create();
+            assetEntity.Initialize();
+
+
+            var line = UIWorkshopLine_Test.Create();
+            line.Initialize();
+            line.Instance.RefreshUnit(unitEntity, 0.5f);
+
+
+            line.Instance.RefreshAsset(assetEntity);
+            yield return new WaitForSeconds(1f);
+            line.Dispose();
+        }
+
+        [UnityTest]
+        public IEnumerator UIWorkshopLineTest_UpgradeButton_Enable()
+        {
+
+            UnitEntity unitEntity;
+            unitEntity.Initialize();
+            unitEntity.UpTech(UnitData.Create_Test());
+
+            AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 500);
+
+            AssetEntity assetEntity = AssetEntity.Create();
+            assetEntity.Initialize();
+            assetEntity.Add(assetData);
+
+
+            var line = UIWorkshopLine_Test.Create();
+            line.Initialize();
+            line.Instance.RefreshUnit(unitEntity, 0.5f);
+
+
+            line.Instance.RefreshAsset(assetEntity);
+            yield return new WaitForSeconds(1f);
+            line.Dispose();
+        }
     }
 }
 #endif

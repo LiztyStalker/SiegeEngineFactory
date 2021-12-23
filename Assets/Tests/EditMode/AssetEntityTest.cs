@@ -35,7 +35,7 @@ namespace SEF.Test
         [Test]
         public void AssetEntityTest_Initialize()
         {
-            _entity.Refresh();
+            _entity.RefreshAssets();
         }
 
         [Test]
@@ -179,6 +179,31 @@ namespace SEF.Test
             Assert.IsFalse(_entity.IsEnough(data4), "재화값이 충분합니다");
 
         }
+
+        [Test]
+        public void AssetEntityTest_GetUpgradeAssetData()
+        {
+            UnitEntity unitEntity;
+            unitEntity.Initialize();
+            unitEntity.UpTech(UnitData.Create_Test());
+
+            var upgradeAssetData = unitEntity.GetUpgradeAssetData();
+
+            Debug.Log(upgradeAssetData.GetValue());
+            Assert.IsTrue(upgradeAssetData.GetValue() == "100", "재화 계산이 잘못되었습니다");
+
+            unitEntity.UpgradeData.IncreaseNumber();
+            upgradeAssetData = unitEntity.GetUpgradeAssetData();
+            Debug.Log(upgradeAssetData.GetValue());
+            Assert.IsTrue(upgradeAssetData.GetValue() == "201", "재화 계산이 잘못되었습니다");
+
+            unitEntity.UpgradeData.IncreaseNumber();
+            upgradeAssetData = unitEntity.GetUpgradeAssetData();
+            Debug.Log(upgradeAssetData.GetValue());
+            Assert.IsTrue(upgradeAssetData.GetValue() == "302", "재화 계산이 잘못되었습니다");
+
+        }
+
     }
 }
 #endif
