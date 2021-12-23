@@ -24,7 +24,10 @@ namespace SEF.Manager
                 _list = new List<WorkshopLine>();
                 var line = CreateLine();
                 //line 기본 유닛 적용
-                _list.Add(CreateLine());
+                //AssetBundle에서 가져오기 - Release
+                //AssetDatabases에서 가져오기 - Debug
+                line.UpTech(UnitData.Create_Test());
+                _list.Add(line);
 
             }
             else

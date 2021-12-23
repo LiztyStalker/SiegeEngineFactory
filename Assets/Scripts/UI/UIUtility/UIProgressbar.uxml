@@ -1,4 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UIProgressbar.uss" />
-    <SEF.UI.Toolkit.UIProgressbar nowValue="0" maxValue="100" />
+    <SEF.UI.Toolkit.UIProgressbar nowValue="2.93" maxValue="1" FillAmount="1.29" style="background-image: url(&apos;/Assets/UIToolkit/UnityThemes/UnityDefaultRuntimeTheme.tss&apos;); -unity-background-image-tint-color: rgba(255, 255, 255, 255);" />
 </ui:UXML>
