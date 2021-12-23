@@ -78,6 +78,7 @@ namespace SEF.Data
 
         private UnitData(string name = null)
         {
+
             _key = "Test";
             _group = TYPE_UNIT_GROUP.Thrower;
 
@@ -100,7 +101,10 @@ namespace SEF.Data
             //private AssetData[] _conditionTechTreeValue;
             _techTreeAsset = AssetData.Create_Test();
             _techTreeKeys = new string[0];
-        }   
+
+            UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
+
+        }
 
 #endif
     }
