@@ -88,7 +88,7 @@ namespace SEF.Data
             _productTime = 1f;
             _attackValue = AttackData.Create_Test();
             _increaseAttackValue = AttackData.Create_Test();
-            _increaseAttackRate = 0f;
+            _increaseAttackRate = 0.01f;
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
             _attackPopulation = 1;
             _attackCount = 1;
@@ -96,7 +96,7 @@ namespace SEF.Data
             _attackDelay[0] = 1f;
             _startUpgradeAsset = AssetData.Create_Test();
             _increaseUpgradeAssetValue = AssetData.Create_Test();
-            _increaseUpgradeAssetRate = 0f;
+            _increaseUpgradeAssetRate = 0.01f;
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;
             _techTreeAsset = AssetData.Create_Test();

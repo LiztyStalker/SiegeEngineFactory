@@ -133,12 +133,17 @@ namespace SEF.Data
             Value = 0;
         }
 
+        protected BigInteger Pow(BigInteger value, int exponent) => BigInteger.Pow(value, exponent);
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         protected void Clear()
         {
             Value = 0;
         }
 #endif
+
+
+
 
     }
 }

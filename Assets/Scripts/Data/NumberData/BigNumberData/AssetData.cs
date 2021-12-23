@@ -36,5 +36,18 @@ namespace SEF.Data
         }
 
 #endif
+
+        public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
+        {
+            SetTypeAsset(TYPE_ASSET.Gold);
+            var upgradeValue = upgradeData.Value - 1;
+            var increaseUpgradeAssetValue = unitData.IncreaseUpgradeAssetValue.Value;
+            var increaseUpgradeAssetRate = Mathf.RoundToInt(unitData.IncreaseUpgradeAssetRate * 100f);
+            //Value = unitData.StartUpgradeAsset.Value * Pow(increaseUpgradeAssetValue + increaseUpgradeAssetRate, upgradeValue); // 복리
+            Value = unitData.StartUpgradeAsset.Value + (increaseUpgradeAssetValue * upgradeValue) + (increaseUpgradeAssetValue * upgradeValue * increaseUpgradeAssetRate / 100); //단리
+        }
+
+        ///string to bigint 파싱 필요
+        ///1A => 1000
     }
 }

@@ -24,5 +24,12 @@ namespace SEF.Entity
             _unitData = unitData;
             _upgradeData.Initialize();
         }
+
+        public AssetData GetUpgradeAssetData()
+        {
+            var assetData = new AssetData();
+            assetData.SetAssetData(UnitData, UpgradeData);
+            return assetData;
+        }
     }
 }

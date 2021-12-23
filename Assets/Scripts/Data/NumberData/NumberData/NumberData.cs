@@ -6,7 +6,7 @@ namespace SEF.Data
     {
         private int _value;
 
-        protected int Value => _value;
+        public int Value => _value;
 
         protected NumberData()
         {
