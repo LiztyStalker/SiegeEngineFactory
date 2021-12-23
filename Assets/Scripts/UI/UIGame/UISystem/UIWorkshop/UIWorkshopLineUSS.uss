@@ -1,25 +1,25 @@
 .unit_name_label {
-    font-size: 24px;
-    color: rgba(0, 0, 0, 255);
+    font-size: 36px;
+    color: rgb(0, 0, 0);
 }
 
 .unit_information_label {
-    font-size: 16px;
-    color: rgba(0, 0, 0, 255);
+    font-size: 20px;
+    color: rgb(0, 0, 0);
 }
 
 .unit_upgrade_label {
-    color: rgba(0, 0, 0, 255);
+    color: rgb(0, 0, 0);
 }
 
 .unit_type_label {
-    font-size: 24px;
-    color: rgba(0, 0, 0, 255);
+    font-size: 28px;
+    color: rgb(0, 0, 0);
 }
 
 .dps_label {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 255);
+    font-size: 24px;
+    color: rgb(0, 0, 0);
 }
 
 #line_panel {
@@ -36,15 +36,27 @@
 }
 
 #upgrade_button {
-    width: 120px;
-    height: 100%;
+    width: 200px;
+    height: 80%;
 }
 
 #tech_button {
-    height: 100%;
-    width: 120px;
+    height: 80%;
+    width: 200px;
     align-items: center;
     justify-content: center;
+}
+
+#button_panel {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    align-items: center;
 }
 
 #information_panel {
@@ -55,22 +67,12 @@
     border-bottom-width: 0;
     align-items: stretch;
     justify-content: space-around;
+    height: 100%;
 }
 
 #line_icon {
-    width: 100px;
-    height: 100px;
-    border-left-width: 10px;
-    border-right-width: 10px;
-    border-top-width: 10px;
-    border-bottom-width: 10px;
-}
-
-#button_panel {
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
+    width: 180px;
+    height: 180px;
     border-left-width: 10px;
     border-right-width: 10px;
     border-top-width: 10px;
@@ -87,7 +89,7 @@ UIWorkshopLine {
     flex-wrap: wrap;
 }
 
-TemplateContainer {
+#UIProgressbar {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -109,8 +111,15 @@ TemplateContainer {
 
 #expend_button {
     width: 20%;
-    height: 75%;
+    height: 60%;
 }
 
 .expend_asset_value_label {
+}
+
+.value_panel {
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }

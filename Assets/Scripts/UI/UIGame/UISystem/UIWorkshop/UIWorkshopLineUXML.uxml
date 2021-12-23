@@ -1,52 +1,52 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UIProgressbar" src="/Assets/Scripts/UI/UIUtility/UIProgressbar.uxml" />
     <Style src="UIWorkshopLineUSS.uss" />
-    <SEF.UI.Toolkit.UIWorkshopLine>
+    <SEF.UI.Toolkit.UIWorkshopLine style="height: 200px;">
         <ui:Instance template="UIProgressbar" name="UIProgressbar" />
         <ui:VisualElement name="activate_panel" style="display: flex;">
             <ui:VisualElement name="line_panel">
                 <ui:VisualElement name="line_icon" style="background-color: rgb(255, 255, 255);" />
                 <ui:VisualElement name="information_panel">
-                    <ui:VisualElement name="name_type_panel" style="flex-direction: row;">
+                    <ui:VisualElement name="name_type_panel" style="flex-direction: row; align-items: flex-end;">
                         <ui:Label text="투창병" display-tooltip-when-elided="true" name="unit_name_label" class="unit_name_label" />
-                        <ui:Label text="투척" display-tooltip-when-elided="true" name="unit_group_label" class="unit_information_label unit_type_label" />
-                        <ui:Label text="직사" display-tooltip-when-elided="true" name="unit_type_label" class="unit_information_label unit_type_label" />
+                        <ui:Label text="투척" display-tooltip-when-elided="true" name="unit_group_label" class="unit_type_label" />
+                        <ui:Label text="직사" display-tooltip-when-elided="true" name="unit_type_label" class="unit_type_label" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="lv_dps_panel" style="flex-direction: row;">
+                    <ui:VisualElement name="lv_dps_panel" class="value_panel">
                         <ui:Label text="Lv" display-tooltip-when-elided="true" name="unit_lv_Label" class="dps_label" />
                         <ui:Label text="03" display-tooltip-when-elided="true" name="unit_lv_value_Label" class="dps_label" />
                         <ui:Label text="/" display-tooltip-when-elided="true" name="slider" class="dps_label" />
                         <ui:Label text="DPS" display-tooltip-when-elided="true" name="dps_label" class="dps_label" />
                         <ui:Label text="100" display-tooltip-when-elided="true" name="dps_value_label" class="dps_label" />
-                        <ui:Label text="(+10)" display-tooltip-when-elided="true" name="dps_up_label" enable-rich-text="true" class="dps_label" />
+                        <ui:Label text="(+10)" display-tooltip-when-elided="true" name="dps_up_label" enable-rich-text="true" class="unit_upgrade_label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="advanced_information_panel" style="flex-direction: row;">
                         <ui:VisualElement name="information_view" style="flex-direction: column; align-items: flex-start;">
-                            <ui:VisualElement name="health_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="health_panel" class="value_panel">
                                 <ui:Label text="체력" display-tooltip-when-elided="true" name="health_label" class="unit_information_label" />
                                 <ui:Label text="1000" display-tooltip-when-elided="true" name="health_value_label" class="unit_information_label" />
                                 <ui:Label text="(+330)" display-tooltip-when-elided="true" name="health_up_label" enable-rich-text="true" class="unit_upgrade_label" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="attack_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="attack_panel" class="value_panel">
                                 <ui:Label text="공격" display-tooltip-when-elided="true" name="attack_label" class="unit_information_label" />
                                 <ui:Label text="100" display-tooltip-when-elided="true" name="attack_value_label" class="unit_information_label" />
                                 <ui:Label text="(+10)" display-tooltip-when-elided="true" name="attack_up_label" enable-rich-text="true" class="unit_upgrade_label" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="product_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="product_panel" class="value_panel">
                                 <ui:Label text="생산" display-tooltip-when-elided="true" name="product_label" class="unit_information_label" />
                                 <ui:Label text="1.000s" display-tooltip-when-elided="true" name="product_value_label" class="unit_information_label" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="other_panel">
-                            <ui:VisualElement name="attacktype_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="attacktype_panel" class="value_panel">
                                 <ui:Label text="공격타입" display-tooltip-when-elided="true" name="attacktype_label" class="unit_information_label" />
                                 <ui:Label text="일반" display-tooltip-when-elided="true" name="attacktype_value_label" class="unit_information_label" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="attackcount_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="attackcount_panel" class="value_panel">
                                 <ui:Label text="공격횟수" display-tooltip-when-elided="true" name="attack_count_label" class="unit_information_label" />
                                 <ui:Label text="1" display-tooltip-when-elided="true" name="attack_count_value_label" class="unit_information_label" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="attackdelay_panel" style="flex-direction: row;">
+                            <ui:VisualElement name="attackdelay_panel" class="value_panel">
                                 <ui:Label text="딜레이" display-tooltip-when-elided="true" name="attack_delay_label" class="unit_information_label" />
                                 <ui:Label text="1s" display-tooltip-when-elided="true" name="attack_delay_value_label" class="unit_information_label" />
                             </ui:VisualElement>
