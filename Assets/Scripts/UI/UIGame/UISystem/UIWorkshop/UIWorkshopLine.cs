@@ -21,6 +21,7 @@ namespace SEF.UI.Toolkit
         private Label _groupLabel;
         private Label _typeLabel;
 
+        private Label _levelValueLabel;
         private Label _dpsValueLabel;
         private Label _dpsUpLabel;
 
@@ -72,6 +73,8 @@ namespace SEF.UI.Toolkit
             _groupLabel = this.Q<Label>("unit_group_label");
             _typeLabel = this.Q<Label>("unit_type_label");
 
+            _levelValueLabel = this.Q<Label>("unit_lv_value_Label");
+
             _dpsValueLabel = this.Q<Label>("dps_value_label");
             _dpsUpLabel = this.Q<Label>("dps_up_label");
 
@@ -115,6 +118,7 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
             Debug.Assert(_groupLabel != null, "_groupLabel element 를 찾지 못했습니다");
             Debug.Assert(_typeLabel != null, "_typeLabel element 를 찾지 못했습니다");
+            Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthValueLabel != null, "_healthValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
@@ -161,6 +165,8 @@ namespace SEF.UI.Toolkit
             //_expendAssetIcon = Texture
             _expendValueLabel.text = "0";
 
+            _levelValueLabel.text = "1";
+
             _upgradeButton.RegisterCallback<ClickEvent>(OnUpgradeEvent);
             _techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
             _expendButton.RegisterCallback<ClickEvent>(OnExpendEvent);
@@ -189,9 +195,12 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
+            var upgradeData = unitEntity.UpgradeData;
+            _levelValueLabel.text = upgradeData.GetValue();
+
             _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
 
-            Debug.Log(_index + " " + _uiProgressbar.FillAmount);
+            //Debug.Log(_index + " " + _uiProgressbar.FillAmount);
         }
 
         public void CleanUp()
