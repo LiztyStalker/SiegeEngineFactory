@@ -3,6 +3,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine;
     using UnityEngine.UIElements;
     using Entity;
+    using Data;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIGame : MonoBehaviour
@@ -55,6 +56,16 @@ namespace SEF.UI.Toolkit
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
 
 
+
+
+        #region ##### Listener #####
+        public void AddUpgradeListener(System.Action<int> act) => _uiSystem.AddUpgradeListener(act);
+        public void RemoveUpgradeListener(System.Action<int> act) => _uiSystem.RemoveUpgradeListener(act);
+        public void AddUpTechListener(System.Action<int, UnitData> act) => _uiSystem.AddUpTechListener(act);
+        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiSystem.RemoveUpTechListener(act);
+        public void AddExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
+        public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
+        #endregion
 
     }
 }

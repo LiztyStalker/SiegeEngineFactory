@@ -22,13 +22,7 @@ namespace SEF.Manager
                 //null이면 초기화
 
                 _list = new List<WorkshopLine>();
-                var line = CreateLine();
-                //line 기본 유닛 적용
-                //AssetBundle에서 가져오기 - Release
-                //AssetDatabases에서 가져오기 - Debug
-                line.UpTech(UnitData.Create_Test());
-                _list.Add(line);
-
+                CreateLine();
             }
             else
             {
@@ -73,9 +67,11 @@ namespace SEF.Manager
         {
             var workshopLine = WorkshopLine.Create();
             workshopLine.Initialize();
+            workshopLine.SetIndex(_list.Count);
             workshopLine.SetOnProductUnitListener(OnProductUnitEvent);
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
             _list.Add(workshopLine);
+            workshopLine.UpTech(UnitData.Create_Test());
             //기본 유닛 적용 workshopLine.UpTech()
             return workshopLine;
         }
@@ -130,6 +126,7 @@ namespace SEF.Manager
                 _list = new List<WorkshopLine>();
                 var line = CreateLine();
                 line.UpTech(UnitData.Create_Test());
+                line.SetIndex(Count);
             }
             else
             {

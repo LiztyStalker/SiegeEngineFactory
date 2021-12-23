@@ -53,9 +53,9 @@ namespace SEF.Manager
             return null;
         }
 
-        public void UpgradeWorkshop(WorkshopLine line) { }
-        public void ExpendWorkshop(WorkshopLine line) { }
-        public void UpTechWorkshop(WorkshopLine line) { }
+        public void UpgradeWorkshop(int index) => _workshopManager.UpgradeWorkshop(index);
+        public void ExpendWorkshop() => _workshopManager.ExpendWorkshop();
+        public void UpTechWorkshop(int index, UnitData unitData) => _workshopManager.UpTechWorkshop(index, unitData);
 
 
         #region ##### Listener #####

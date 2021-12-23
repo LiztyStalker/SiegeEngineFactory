@@ -1,17 +1,17 @@
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using Entity;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Entity;
-
+    using Data;
     public class UIWorkshopLine : VisualElement
     {
         public new class UxmlFactory : UxmlFactory<UIWorkshopLine, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
         internal static readonly string PATH_UI_WORKSHOP_LINE_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLineUXML.uxml";
+
+        private int _index;
 
         private VisualElement _activatePanel;
 
@@ -55,6 +55,8 @@ namespace SEF.UI.Toolkit
         private VisualElement _expendAssetIcon;
         private Label _expendValueLabel;
 
+        public void SetIndex(int index) => _index = index;
+
         public static UIWorkshopLine Create()
         {
              return UIUXML.GetVisualElement<UIWorkshopLine>(PATH_UI_WORKSHOP_LINE_UXML);
@@ -62,7 +64,6 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-
             _activatePanel = this.Q<VisualElement>("activate_panel");
 
             _icon = this.Q<VisualElement>("asset_icon");
@@ -189,6 +190,8 @@ namespace SEF.UI.Toolkit
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
             _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
+
+            Debug.Log(_index + " " + _uiProgressbar.FillAmount);
         }
 
         public void CleanUp()
@@ -204,22 +207,22 @@ namespace SEF.UI.Toolkit
         #region ##### Listener #####
 
 
-        private System.Action _upgradeEvent;
-        public void AddUpgradeListener(System.Action act) => _upgradeEvent += act;
-        public void RemoveUpgradeListener(System.Action act) => _upgradeEvent -= act;
+        private System.Action<int> _upgradeEvent;
+        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(ClickEvent e)
         {
             Debug.Log("UpgradeEvent");
-            _upgradeEvent?.Invoke();
+            _upgradeEvent?.Invoke(_index);
         }
 
-        private System.Action _uptechEvent;
-        public void AddUpTechListener(System.Action act) => _uptechEvent += act;
-        public void RemoveUpTechListener(System.Action act) => _uptechEvent -= act;
+        private System.Action<int, UnitData> _uptechEvent;
+        public void AddUpTechListener(System.Action<int, UnitData> act) => _uptechEvent += act;
+        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uptechEvent -= act;
         private void OnUpTechEvent(ClickEvent e) 
         {
             Debug.Log("UpTechEvent");
-            _uptechEvent?.Invoke();
+            _uptechEvent?.Invoke(_index, UnitData.Create_Test());
         }
 
         private System.Action _expendEvent;

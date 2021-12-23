@@ -5,6 +5,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine;
     using UnityEngine.UIElements;
     using Entity;
+    using Data;
 
     public class UISystem : VisualElement 
     {
@@ -45,6 +46,18 @@ namespace SEF.UI.Toolkit
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
+
+
+
+        #region ##### Listener #####
+        public void AddUpgradeListener(System.Action<int> act) => _uiWorkshop.AddUpgradeListener(act);
+        public void RemoveUpgradeListener(System.Action<int> act) => _uiWorkshop.RemoveUpgradeListener(act);
+        public void AddUpTechListener(System.Action<int, UnitData> act) => _uiWorkshop.AddUpTechListener(act);
+        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiWorkshop.RemoveUpTechListener(act);
+        public void AddExpendListener(System.Action act) => _uiWorkshop.AddExpendListener(act);
+        public void RemoveExpendListener(System.Action act) => _uiWorkshop.RemoveExpendListener(act);
+
+        #endregion
     }
 
 

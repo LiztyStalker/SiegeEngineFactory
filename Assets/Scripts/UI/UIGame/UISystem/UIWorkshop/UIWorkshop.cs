@@ -19,6 +19,7 @@ namespace SEF.UI.Toolkit
         private int _lineCount = 0;
 
         private UIWorkshopLine _expendWorkshopLine;
+        //prviate UIWorkshopExpendLine // 분리 필요
 
         private ScrollView _scrollView;
 
@@ -33,12 +34,32 @@ namespace SEF.UI.Toolkit
             CreateExpendWorkshopLine();
         }
 
+        public void CleanUp()
+        {
+            _expendWorkshopLine.RemoveExpendListener(OnExpendEvent);
+            _expendWorkshopLine.CleanUp();
+
+            foreach (var value in _dic.Values)
+            {
+                value.RemoveUpgradeListener(OnUpgradeEvent);
+                value.RemoveUpTechListener(OnUpTechEvent);
+                value.RemoveExpendListener(OnExpendEvent);
+                value.CleanUp();
+            }
+            _dic.Clear();
+            _scrollView = null;
+        }
+
+
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
         {
             if (!_dic.ContainsKey(index))
             {
                 var line = UIWorkshopLine.Create();
                 line.Initialize();
+                line.SetIndex(index);
+                line.AddUpgradeListener(OnUpgradeEvent);
+                line.AddUpTechListener(OnUpTechEvent);
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
@@ -50,6 +71,7 @@ namespace SEF.UI.Toolkit
         {
             _expendWorkshopLine = UIWorkshopLine.Create();
             _expendWorkshopLine.Initialize();
+            _expendWorkshopLine.AddExpendListener(OnExpendEvent);
             _scrollView.Insert(_scrollView.childCount, _expendWorkshopLine);
         }
 
@@ -63,11 +85,36 @@ namespace SEF.UI.Toolkit
             _lineCount = _scrollView.childCount;
         }
 
-        public void CleanUp()
+        #region ##### Listener #####
+
+
+        private System.Action<int> _upgradeEvent;
+        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
+        private void OnUpgradeEvent(int index)
         {
-            _dic.Clear();
-            _scrollView = null;
+            _upgradeEvent?.Invoke(index);
         }
+
+        private System.Action<int, UnitData> _uptechEvent;
+        public void AddUpTechListener(System.Action<int, UnitData> act) => _uptechEvent += act;
+        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uptechEvent -= act;
+        private void OnUpTechEvent(int index, UnitData unitData)
+        {
+            _uptechEvent?.Invoke(index, unitData);
+        }
+
+        private System.Action _expendEvent;
+        public void AddExpendListener(System.Action act) => _expendEvent += act;
+        public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
+        private void OnExpendEvent()
+        {
+            _expendEvent?.Invoke();
+        }
+
+        #endregion
+
+
     }
 
 
