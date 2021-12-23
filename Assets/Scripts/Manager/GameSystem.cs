@@ -24,6 +24,8 @@ namespace SEF.Manager
 
         public void Initialize() 
         {
+            _workshopManager = WorkshopManager.Create();
+
             _workshopManager.Initialize(null);
             //BlackSmithManager
             //VillageManager

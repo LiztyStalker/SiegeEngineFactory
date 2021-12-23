@@ -11,6 +11,12 @@ namespace SEF.Manager
         private UIGame _uiGame;
         private GameSystem _gameSystem;
 
+        public static GameManager Create()
+        {
+            var obj = new GameObject();
+            obj.name = "GameManager";
+            return obj.AddComponent<GameManager>();
+        }
 
         private void Awake()
         {
