@@ -130,7 +130,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = "1";
             _attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
-            _uiProgressbar.nowValue = 0;
+            _uiProgressbar.FillAmount = 0;
 
             _upgradeButton.RegisterCallback<ClickEvent>(OnUpgradeEvent);
             _techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
@@ -148,7 +148,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            _uiProgressbar.nowValue = nowTime / unitData.ProductTime;
+            _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
         }
 
         public void CleanUp()
