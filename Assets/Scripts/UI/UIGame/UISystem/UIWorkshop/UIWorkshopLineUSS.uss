@@ -92,3 +92,25 @@ TemplateContainer {
     width: 100%;
     height: 100%;
 }
+
+#activate_panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#inactivate_panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#expend_button {
+    width: 20%;
+    height: 75%;
+}
+
+.expend_asset_value_label {
+}

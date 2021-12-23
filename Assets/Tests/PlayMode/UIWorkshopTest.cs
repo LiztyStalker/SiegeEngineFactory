@@ -75,11 +75,15 @@ namespace SEF.UI.Test
             var workshop = UIWorkshop_Test.Create();
             workshop.Initialize();
             workshop.Instance.RefreshUnit(0, unitEntity, 0f);
+            yield return new WaitForSeconds(0.5f);
             workshop.Instance.RefreshUnit(1, unitEntity, 0f);
+            yield return new WaitForSeconds(0.5f);
             workshop.Instance.RefreshUnit(2, unitEntity, 0f);
+            yield return new WaitForSeconds(0.5f);
             workshop.Instance.RefreshUnit(3, unitEntity, 0f);
+            yield return new WaitForSeconds(0.5f);
             workshop.Instance.RefreshUnit(4, unitEntity, 0f);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             workshop.Dispose();
         }
     }

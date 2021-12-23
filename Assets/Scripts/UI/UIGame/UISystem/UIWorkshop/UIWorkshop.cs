@@ -16,6 +16,10 @@ namespace SEF.UI.Toolkit
 
         private Dictionary<int, UIWorkshopLine> _dic = new Dictionary<int, UIWorkshopLine>();
 
+        private int _lineCount = 0;
+
+        private UIWorkshopLine _expendWorkshopLine;
+
         private ScrollView _scrollView;
 
         public static UIWorkshop Create()
@@ -26,6 +30,7 @@ namespace SEF.UI.Toolkit
         public void Initialize()
         {
             _scrollView = this.Q<ScrollView>();
+            CreateExpendWorkshopLine();
         }
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
@@ -38,6 +43,24 @@ namespace SEF.UI.Toolkit
                 _dic.Add(index, line);
             }
             _dic[index].RefreshUnit(unitEntity, nowTime);
+            ChangeExpendWorkshopLine();
+        }
+
+        private void CreateExpendWorkshopLine()
+        {
+            _expendWorkshopLine = UIWorkshopLine.Create();
+            _expendWorkshopLine.Initialize();
+            _scrollView.Insert(_scrollView.childCount, _expendWorkshopLine);
+        }
+
+        private void ChangeExpendWorkshopLine()
+        {
+            if (_lineCount != _scrollView.childCount)
+            {
+                _scrollView.Remove(_expendWorkshopLine);
+                _scrollView.Insert(_scrollView.childCount, _expendWorkshopLine);
+            }
+            _lineCount = _scrollView.childCount;
         }
 
         public void CleanUp()

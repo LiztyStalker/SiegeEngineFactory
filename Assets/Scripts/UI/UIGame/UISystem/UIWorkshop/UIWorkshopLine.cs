@@ -13,6 +13,8 @@ namespace SEF.UI.Toolkit
 
         internal static readonly string PATH_UI_WORKSHOP_LINE_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLineUXML.uxml";
 
+        private VisualElement _activatePanel;
+
         private VisualElement _icon;
 
         private Label _nameLabel;
@@ -46,6 +48,13 @@ namespace SEF.UI.Toolkit
         private Label _upgradeValueLabel;
         private Button _techButton;
 
+
+
+        private VisualElement _inactivatePanel;
+        private Button _expendButton;
+        private VisualElement _expendAssetIcon;
+        private Label _expendValueLabel;
+
         public static UIWorkshopLine Create()
         {
              return UIUXML.GetVisualElement<UIWorkshopLine>(PATH_UI_WORKSHOP_LINE_UXML);
@@ -53,6 +62,8 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
+
+            _activatePanel = this.Q<VisualElement>("activate_panel");
 
             _icon = this.Q<VisualElement>("asset_icon");
 
@@ -90,6 +101,15 @@ namespace SEF.UI.Toolkit
             _upgradeValueLabel = this.Q<Label>("upgrade_asset_value_label");
             _techButton = this.Q<Button>("tech_button");
 
+
+
+            _inactivatePanel = this.Q<VisualElement>("inactivate_panel");
+            _expendButton = this.Q<Button>("expend_button");
+            _expendAssetIcon = this.Q<VisualElement>("expend_asset_icon");
+            _expendValueLabel = this.Q<Label>("expend_asset_value_label");
+
+
+            Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
             Debug.Assert(_groupLabel != null, "_groupLabel element 를 찾지 못했습니다");
@@ -112,6 +132,11 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
             Debug.Assert(_uiProgressbar != null, "_uiProgressbar element 를 찾지 못했습니다");
 
+            Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
+            Debug.Assert(_expendButton != null, "_expendButton element 를 찾지 못했습니다");
+            Debug.Assert(_expendAssetIcon != null, "_expendAssetIcon element 를 찾지 못했습니다");
+            Debug.Assert(_expendValueLabel != null, "_expendValueLabel element 를 찾지 못했습니다");
+
 
             //_icon
 
@@ -132,12 +157,27 @@ namespace SEF.UI.Toolkit
             _attackTypeValueLabel.text = "일반";
             _uiProgressbar.FillAmount = 0;
 
+            //_expendAssetIcon = Texture
+            _expendValueLabel.text = "0";
+
             _upgradeButton.RegisterCallback<ClickEvent>(OnUpgradeEvent);
             _techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
+            _expendButton.RegisterCallback<ClickEvent>(OnExpendEvent);
+
+
+            _activatePanel.style.display = DisplayStyle.None;
+            _inactivatePanel.style.display = DisplayStyle.Flex;
+
         }
 
         public void RefreshUnit(UnitEntity unitEntity, float nowTime)
         {
+            if(_activatePanel.style.display == DisplayStyle.None)
+            {
+                _activatePanel.style.display = DisplayStyle.Flex;
+                _inactivatePanel.style.display = DisplayStyle.None;
+            }
+
             var unitData = unitEntity.UnitData;
             _nameLabel.text = unitData.name;
             _groupLabel.text = unitData.Group.ToString();
@@ -155,21 +195,42 @@ namespace SEF.UI.Toolkit
         {
             _upgradeButton.UnregisterCallback<ClickEvent>(OnUpgradeEvent);
             _techButton.UnregisterCallback<ClickEvent>(OnUpTechEvent);
+            _expendButton.UnregisterCallback<ClickEvent>(OnExpendEvent);
             _icon = null;
         }
 
 
 
         #region ##### Listener #####
+
+
+        private System.Action _upgradeEvent;
+        public void AddUpgradeListener(System.Action act) => _upgradeEvent += act;
+        public void RemoveUpgradeListener(System.Action act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(ClickEvent e)
         {
-            Debug.Log("OnUpgradeEvent");
+            Debug.Log("UpgradeEvent");
+            _upgradeEvent?.Invoke();
         }
 
+        private System.Action _uptechEvent;
+        public void AddUpTechListener(System.Action act) => _uptechEvent += act;
+        public void RemoveUpTechListener(System.Action act) => _uptechEvent -= act;
         private void OnUpTechEvent(ClickEvent e) 
         {
-            Debug.Log("OnUpTechEvent");
+            Debug.Log("UpTechEvent");
+            _uptechEvent?.Invoke();
         }
+
+        private System.Action _expendEvent;
+        public void AddExpendListener(System.Action act) => _expendEvent += act;
+        public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
+        private void OnExpendEvent(ClickEvent e)
+        {
+            Debug.Log("ExpendEvent");
+            _expendEvent?.Invoke();
+        }
+
         #endregion
     }
 
