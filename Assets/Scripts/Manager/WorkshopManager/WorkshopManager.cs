@@ -56,6 +56,7 @@ namespace SEF.Manager
         public void ExpendWorkshop() 
         {
             CreateLine();
+            //return ExpendAssetData to Count
         }
 
         public void UpTechWorkshop(int index, UnitData unitData)
@@ -75,6 +76,10 @@ namespace SEF.Manager
             //기본 유닛 적용 workshopLine.UpTech()
             return workshopLine;
         }
+
+
+
+
 
         #region ##### Listener #####
 

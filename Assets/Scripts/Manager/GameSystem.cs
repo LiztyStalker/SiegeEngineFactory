@@ -59,10 +59,18 @@ namespace SEF.Manager
         {
             var assetData = _workshopManager.UpgradeWorkshop(index);
             _account.Subject(assetData);
-
         }
-        public void ExpendWorkshop() => _workshopManager.ExpendWorkshop();
-        public void UpTechWorkshop(int index, UnitData unitData) => _workshopManager.UpTechWorkshop(index, unitData);
+
+        public void ExpendWorkshop()
+        {
+            _workshopManager.ExpendWorkshop();
+            //AssetData Subject(ExpendAssetData)
+        }
+        public void UpTechWorkshop(int index, UnitData unitData)
+        {
+            _workshopManager.UpTechWorkshop(index, unitData);
+            //unitData TechAssetData ¼Òºñ
+        }
 
 
         #region ##### Listener #####

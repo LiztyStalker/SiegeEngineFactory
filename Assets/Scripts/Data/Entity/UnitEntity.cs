@@ -18,7 +18,7 @@ namespace SEF.Entity
             {
                 if(_upgradeAssetData == null)
                 {
-                    _upgradeAssetData = CalculateAssetData();
+                    _upgradeAssetData = CalculateUpgradeData();
                 }
                 return _upgradeAssetData;
             }
@@ -46,7 +46,7 @@ namespace SEF.Entity
             _upgradeAssetData = null;
         }
 
-        private AssetData CalculateAssetData()
+        private AssetData CalculateUpgradeData()
         {
             var assetData = new AssetData();
             assetData.SetAssetData(UnitData, _upgradeData);

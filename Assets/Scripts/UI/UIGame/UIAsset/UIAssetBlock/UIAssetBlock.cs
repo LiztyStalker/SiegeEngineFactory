@@ -6,7 +6,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Data;
 
-    public class UIAssetBlock
+    public class UIAssetBlock // VisualElement로 교체 예정
     {
         private VisualElement _root;
 

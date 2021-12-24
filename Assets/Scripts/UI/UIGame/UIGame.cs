@@ -51,11 +51,17 @@ namespace SEF.UI.Toolkit
             _uiSystem.CleanUp();
         }
 
+        //오프라인 보상
+        //public void CompensateOffline(AccountData)
+
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
+        //public void RefreshEnemy(EnemyActor)
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
-        public void RefreashAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
+        public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
+
+        //public void ShowHit(IUnitActor, AttackData)
 
 
 

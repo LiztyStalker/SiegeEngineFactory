@@ -6,7 +6,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Data;
 
-    public class UIAsset
+    public class UIAsset //VisualElement로 교체 예정
     {
         private Dictionary<TYPE_ASSET, UIAssetBlock> _dic = new Dictionary<TYPE_ASSET, UIAssetBlock>();
 

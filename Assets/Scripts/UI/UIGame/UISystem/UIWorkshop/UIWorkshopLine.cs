@@ -179,6 +179,9 @@ namespace SEF.UI.Toolkit
 
 
         private UnitEntity _unitEntity;
+        //UI가 오브젝트를 가지고 있으면 안됨
+        //차후에 WorkshopManager에서 가져오는 것을 목표로 함
+        //RefreshAssetEntity -> RefreshAssetData로 변경 예정
 
         public void RefreshUnit(UnitEntity unitEntity, float nowTime)
         {
