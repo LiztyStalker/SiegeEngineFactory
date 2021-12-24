@@ -46,7 +46,7 @@ namespace SEF.UI.Toolkit
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
-
+        public void RefreshAssetEntity(AssetEntity assetEntity) => _uiWorkshop.RefreshAssetEntity(assetEntity);
 
 
         #region ##### Listener #####

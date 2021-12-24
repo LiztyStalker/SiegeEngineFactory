@@ -20,7 +20,7 @@ namespace SEF.Test
         {
             _entity = AssetEntity.Create();
             _entity.Initialize();
-            _entity.AddRefreshListener(data =>
+            _entity.AddRefreshAssetDataListener(data =>
             {
                 Debug.Log($"{data.TypeAsset} : {data.GetValue()}");
             });
@@ -187,18 +187,18 @@ namespace SEF.Test
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 
-            var upgradeAssetData = unitEntity.GetUpgradeAssetData();
+            var upgradeAssetData = unitEntity.UpgradeAssetData;
 
             Debug.Log(upgradeAssetData.GetValue());
             Assert.IsTrue(upgradeAssetData.GetValue() == "100", "재화 계산이 잘못되었습니다");
 
-            unitEntity.UpgradeData.IncreaseNumber();
-            upgradeAssetData = unitEntity.GetUpgradeAssetData();
+            unitEntity.Upgrade();
+            upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
             Assert.IsTrue(upgradeAssetData.GetValue() == "201", "재화 계산이 잘못되었습니다");
 
-            unitEntity.UpgradeData.IncreaseNumber();
-            upgradeAssetData = unitEntity.GetUpgradeAssetData();
+            unitEntity.Upgrade();
+            upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
             Assert.IsTrue(upgradeAssetData.GetValue() == "302", "재화 계산이 잘못되었습니다");
 

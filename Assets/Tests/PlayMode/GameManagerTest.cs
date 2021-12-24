@@ -61,6 +61,30 @@ namespace SEF.Test
                     break;
             }
         }
+
+        [UnityTest]
+        public IEnumerator GameManagerTest_AssetRefresh_RunProcess_10seconds()
+        {
+            AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+            float nowTime = 0;
+            float secondTime = 0;
+            while (true)
+            {
+                nowTime += Time.deltaTime;
+                secondTime += Time.deltaTime;
+
+                if (secondTime > 1f)
+                {
+                    _gameManager.AddAssetData(assetData);
+                    secondTime -= 1f;
+                }
+
+                if (nowTime > 10f)
+                    break;
+                yield return null;
+            }
+            yield return null;
+        }
     }
 }
 #endif

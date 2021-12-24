@@ -104,8 +104,9 @@ namespace SEF.UI.Test
             line.Instance.RefreshUnit(unitEntity, 0.5f);
 
 
-            line.Instance.RefreshAsset(assetEntity);
+            line.Instance.RefreshAssetEntity(assetEntity);
             yield return new WaitForSeconds(1f);
+            assetEntity.CleanUp();
             line.Dispose();
         }
 
@@ -127,10 +128,12 @@ namespace SEF.UI.Test
             var line = UIWorkshopLine_Test.Create();
             line.Initialize();
             line.Instance.RefreshUnit(unitEntity, 0.5f);
-
-
-            line.Instance.RefreshAsset(assetEntity);
+            line.Instance.RefreshAssetEntity(assetEntity);
+            
             yield return new WaitForSeconds(1f);
+
+            unitEntity.CleanUp();
+            assetEntity.CleanUp();
             line.Dispose();
         }
     }

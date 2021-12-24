@@ -67,6 +67,14 @@ namespace SEF.UI.Toolkit
             ChangeExpendWorkshopLine();
         }
 
+        public void RefreshAssetEntity(AssetEntity assetEntity)
+        {
+            foreach(var value in _dic.Values)
+            {
+                value.RefreshAssetEntity(assetEntity);
+            }
+        }
+
         private void CreateExpendWorkshopLine()
         {
             _expendWorkshopLine = UIWorkshopLine.Create();

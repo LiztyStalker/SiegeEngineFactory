@@ -31,6 +31,8 @@ namespace SEF.Manager
 
             //Event 연결
             _gameSystem.AddRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.AddRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreashAssetData);
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
@@ -40,6 +42,8 @@ namespace SEF.Manager
         {
             //Event 해제
             _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.RemoveRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreashAssetData);
             _uiGame.RemoveUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
@@ -53,5 +57,13 @@ namespace SEF.Manager
         {
             _gameSystem.RunProcess(Time.deltaTime);
         }
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void AddAssetData(Data.AssetData assetData)
+        {
+            _gameSystem.AddAsset(assetData);
+        }
+#endif
     }
 }

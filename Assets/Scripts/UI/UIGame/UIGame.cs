@@ -54,7 +54,8 @@ namespace SEF.UI.Toolkit
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
-
+        public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
+        public void RefreashAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
 
 
 

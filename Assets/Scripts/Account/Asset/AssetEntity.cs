@@ -23,12 +23,13 @@ namespace SEF.Entity
                 assetData.SetTypeAsset((TYPE_ASSET)i);
                 _dic.Add((TYPE_ASSET)i, assetData);
             }
+            RefreshAssets();
         }
 
         public void CleanUp()
         {
             _dic.Clear();
-            _refreshEvent = null;
+            _refreshAssetEntityEvent = null;
         }
 
         public void Add(AssetData data)
@@ -36,7 +37,7 @@ namespace SEF.Entity
             var assetData = FindAssetData(data);
             Debug.Assert(assetData != null, "Account AssetData를 찾을 수 없습니다");
             assetData.Value += data.Value;
-            OnRefreshEvent(assetData);
+            RefreshAssets(assetData);
         }
 
         public void Subject(AssetData data)
@@ -44,24 +45,25 @@ namespace SEF.Entity
             var assetData = FindAssetData(data);
             Debug.Assert(assetData != null, "Account AssetData를 찾을 수 없습니다");
             assetData.Value -= data.Value;
-            OnRefreshEvent(assetData);
+            RefreshAssets(assetData);
         }
 
         public bool IsEnough(AssetData data)
         {
             var assetData = FindAssetData(data);
-            Debug.Assert(assetData != null, "Account AssetData를 찾을 수 없습니다");
+            if (assetData == null) return false;
             return assetData.Value >= data.Value;
+        }        
+
+        public void RefreshAssets()
+        {
+            OnRefreshAssetEntityEvent(this);
         }
 
-        
-
-        public void Refresh()
+        public void RefreshAssets(AssetData assetData)
         {
-            foreach(var value in _dic.Values)
-            {
-                OnRefreshEvent(value);
-            }
+            RefreshAssets();
+            OnRefreshAssetDataEvent(assetData);
         }
 
         public AssetData FindAssetData(AssetData data)
@@ -80,15 +82,17 @@ namespace SEF.Entity
 
         #region ##### Listener #####
 
-        private System.Action<AssetData> _refreshEvent;
+        private System.Action<AssetEntity> _refreshAssetEntityEvent;
+        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent += act;
+        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent -= act;
+        public void OnRefreshAssetEntityEvent(AssetEntity assetEntity) => _refreshAssetEntityEvent?.Invoke(assetEntity);
+        //차후에 리팩토링시 refreshAssetDataEvent만 사용할 가능성 있음
 
-        public void AddRefreshListener(System.Action<AssetData> act) => _refreshEvent += act;
-        public void RemoveRefreshListener(System.Action<AssetData> act) => _refreshEvent -= act;
 
-        public void OnRefreshEvent(AssetData assetData)
-        {
-            _refreshEvent?.Invoke(assetData);
-        }
+        private System.Action<AssetData> _refreshAssetDataEvent;
+        public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAssetDataEvent += act;
+        public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAssetDataEvent -= act;
+        public void OnRefreshAssetDataEvent(AssetData assetData) => _refreshAssetDataEvent?.Invoke(assetData);
 
         #endregion
 
