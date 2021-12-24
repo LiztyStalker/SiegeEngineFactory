@@ -116,7 +116,7 @@ namespace SEF.Test
 
         private void UpgradeMessageEvent(int index, UnitEntity unitEntity, float nowTime)
         {
-            Assert.IsTrue(unitEntity.UpgradeData.GetValue() == "2", "Upgrade 가 진행되지 않았습니다");
+            Assert.IsTrue(unitEntity.UpgradeValue == 2, "Upgrade 가 진행되지 않았습니다");
         }
 
 
@@ -133,7 +133,7 @@ namespace SEF.Test
             _workshopManager.AddRefreshListener((index, unit, time) =>
             {
                 Assert.IsTrue(unit.UnitData == newUnitData, "UpTech 가 진행되지 않았습니다");
-                Assert.IsTrue(unit.UpgradeData.GetValue() == "1", "Upgrade 초기화가 진행되지 않았습니다");
+                Assert.IsTrue(unit.UpgradeValue == 1, "Upgrade 초기화가 진행되지 않았습니다");
             });
             _workshopManager.UpTechWorkshop(0, newUnitData);
             yield return null;

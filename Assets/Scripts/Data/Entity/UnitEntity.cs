@@ -5,13 +5,28 @@ namespace SEF.Entity
     {
         private UnitData _unitData;
         private UpgradeData _upgradeData;
+        private AssetData _upgradeAssetData;
 
         public UnitData UnitData => _unitData;
-        public UpgradeData UpgradeData => _upgradeData;
+
+        public int UpgradeValue => _upgradeData.Value;
+//        public UpgradeData UpgradeData => _upgradeData;
+
+        public AssetData UpgradeAssetData
+        {
+            get
+            {
+                if(_upgradeAssetData == null)
+                {
+                    _upgradeAssetData = CalculateAssetData();
+                }
+                return _upgradeAssetData;
+            }
+        }
 
         public void Initialize()
         {
-            _upgradeData = NumberDataUtility.Create<UpgradeData>();
+            _upgradeData = NumberDataUtility.Create<UpgradeData>();            
         }
         public void CleanUp()
         {
@@ -25,10 +40,16 @@ namespace SEF.Entity
             _upgradeData.Initialize();
         }
 
-        public AssetData GetUpgradeAssetData()
+        public void Upgrade()
+        {
+            _upgradeData.IncreaseNumber();
+            _upgradeAssetData = null;
+        }
+
+        private AssetData CalculateAssetData()
         {
             var assetData = new AssetData();
-            assetData.SetAssetData(UnitData, UpgradeData);
+            assetData.SetAssetData(UnitData, _upgradeData);
             return assetData;
         }
     }

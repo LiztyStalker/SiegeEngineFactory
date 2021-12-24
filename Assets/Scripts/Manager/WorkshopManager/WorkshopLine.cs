@@ -44,10 +44,12 @@ namespace SEF.Manager
             OnRefreshEvent();
         }
 
-        public void Upgrade() 
+        public AssetData Upgrade() 
         {
-            _unitEntity.UpgradeData.IncreaseNumber();
+            var assetData = _unitEntity.UpgradeAssetData;
+            _unitEntity.Upgrade();            
             OnRefreshEvent();
+            return assetData;
         }
 
         public void UpTech(UnitData unitData) 

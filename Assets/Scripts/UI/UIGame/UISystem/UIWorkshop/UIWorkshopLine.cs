@@ -200,17 +200,19 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            var upgradeData = unitEntity.UpgradeData;
-            _levelValueLabel.text = upgradeData.GetValue();
+            var upgradeData = unitEntity.UpgradeValue;
+            _levelValueLabel.text = unitEntity.UpgradeValue.ToString();
 
             _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
+
+            _upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
 
             //Debug.Log(_index + " " + _uiProgressbar.FillAmount);
         }
 
-        public void RefreshAsset(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetEntity assetEntity)
         {
-            var isEnough = assetEntity.IsEnough(_unitEntity.GetUpgradeAssetData());
+            var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);
             _upgradeButton.SetEnabled(isEnough);
         }
 
