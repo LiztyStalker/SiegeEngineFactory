@@ -175,6 +175,68 @@ namespace SEF.Test {
         }
 
         [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_100()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("100");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "100");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_11111()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("11111");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "011A 111");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_1A()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("1A");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "001A 000");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_1B1A()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("1B1A");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "001B 001A 000");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_1000A()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("1000A");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "001B 000A 000");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_100A100B()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("100A100B");
+            Debug.Log(data.GetDigitValue());
+            Assert.IsTrue(data.GetDigitValue() == "100B 100A 000");
+        }
+
+        [Test]
+        public void BigNumberDataTest_ConvertStringToBigInt_A10A()
+        {
+            var data = NumberDataUtility.Create<TestBigNumber_Data>();
+            data.SetValue("A10A");
+            Debug.Log(data.GetDigitValue());
+        }
+
+        [Test]
         public void BigNumberDataTest_Sum()
         {
             var q11 = NumberDataUtility.Create<TestBigNumber_Data>();

@@ -19,12 +19,102 @@ namespace SEF.Data
             _value = data.Value;
         }
 
-        public string GetValue()
+        public void SetValue(string value)
         {
-            var str = _value.ToString();
-            int capacity = GetDigitCapacity();
 
-            if(capacity > 0)
+            var str = value;
+
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            int digit = 0;
+            string letter = null;
+
+            for(int i = 0; i < str.Length; i++)
+            {
+                var ch = str[i];
+                //숫자 - 배수 곱하기 1, 10, 100...
+                //문자 - 단위 넣기 A-Z 0-25 AA 26 ZZ 701
+
+                if (char.IsLetter(ch))
+                {
+                    //첫 위치에 문자가 들어오면 무조건 에러
+                    if (i == 0)
+                    {
+                        Debug.LogError("첫 위치에 문자가 들어올 수 없습니다");
+                        break;
+                    }
+
+                    letter += ch;
+                }
+                else if (char.IsDigit(ch))
+                {
+                    //조립
+                    if(digit > 0 && !string.IsNullOrEmpty(letter))
+                    {
+                        if (!dic.ContainsKey(letter))
+                            dic.Add(letter, digit);
+                        else
+                        {
+                            Debug.LogError($"{letter} 같은 자리수의 문자가 있습니다");
+                            break;
+                        }
+                        digit = 0;
+                        letter = null;
+                    }
+
+                    var tmpDigit = int.Parse(ch.ToString());
+                    if (digit == 0)
+                        digit = tmpDigit;
+                    else
+                    {
+                        digit *= 10;
+                        digit += tmpDigit;
+                    }
+                }
+            }
+
+            if(digit > 0 && !string.IsNullOrEmpty(letter))
+            {
+                dic.Add(letter, digit);
+            }
+            else if (digit > 0)
+            {
+                dic.Add("0", digit);
+            }
+
+
+            BigInteger bigint = new BigInteger();
+
+            foreach (var key in dic.Keys)
+            {
+                var result = BigInteger.Multiply(dic[key], GetDigit(key));
+                bigint = BigInteger.Add(bigint, result);
+            }
+
+            Value = bigint;
+        }
+
+        private BigInteger GetDigit(string letter)
+        {
+            int power = 1;
+            for(int i = 0; i < letter.Length; i++)
+            {
+                if (letter[i] == '0')
+                    power = 0;
+                else
+                    power *= ((int)letter[i] - 'A') * 3 + 3;
+            }
+
+            return BigInteger.Pow(10, power);
+        }
+
+        public string GetValue() => GetValue(_value);
+
+        private string GetValue(BigInteger bigInt)
+        {
+            var str = bigInt.ToString();
+            int capacity = GetDigitCapacity(bigInt);
+
+            if (capacity > 0)
             {
                 //자리수적용
                 string digit = GetDigit(capacity);
@@ -38,7 +128,7 @@ namespace SEF.Data
                 //1.000A 1 1
                 //10.00A 2 2
                 //100.0A 3 0
-                
+
                 var str1 = str.Substring(0, length);
                 var str2 = str.Substring(length, 4 - length);
                 return str1 + "." + str2 + digit;
@@ -48,9 +138,9 @@ namespace SEF.Data
             return str;
         }
 
-        private int GetDigitCapacity()
+        private int GetDigitCapacity(BigInteger bigInt)
         {
-            var value = _value;
+            var value = bigInt;
             var capacity = 0;
             while (true)
             {
@@ -64,17 +154,19 @@ namespace SEF.Data
             return capacity;
         }
 
-        public string GetDigitValue()
+        public string GetDigitValue() => GetDigitValue(_value);
+
+        public string GetDigitValue(BigInteger bigInt)
         {
             Stack<string> stack = new Stack<string>();
-            var value = _value;
-            while (true) 
+            var value = bigInt;
+            while (true)
             {
                 var digit = GetDigit(stack.Count);
                 var str = value % 1000;
                 stack.Push(string.Format("{0:d3}{1} ", str, digit));
                 value /= 1000;
-                if(value == 0)
+                if (value == 0)
                     break;
             }
 
