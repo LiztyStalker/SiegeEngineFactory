@@ -4,6 +4,10 @@ namespace SEF.Unit
     using System.Collections.Generic;
     using UnityEngine;
     using PoolSystem;
+    using Entity;
+    using Spine.Unity;
+    using Spine;
+    using Storage;
 
     public class UnitActor : PlayActor, ITarget, IPoolElement
     {
@@ -16,14 +20,48 @@ namespace SEF.Unit
 #endif
         public bool IsArriveAction() => (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
+        private UnitEntity _unitEntity;
+
+        private SkeletonAnimation _skeletonAnimation;
+        
+        private SkeletonAnimation SkeletonAnimation
+        {
+            get
+            {
+                if(_skeletonAnimation == null)
+                {
+                    _skeletonAnimation = GetComponent<SkeletonAnimation>();
+                }
+                return _skeletonAnimation;
+            }
+        }
+
+        private Spine.AnimationState _skeletonAnimationState;
+        
+        private Spine.AnimationState SkeletonAnimationState
+        {
+            get
+            {
+                if(_skeletonAnimationState == null)
+                {
+                    _skeletonAnimationState = SkeletonAnimation.AnimationState;
+                    _skeletonAnimationState.Start += delegate { };
+                    _skeletonAnimationState.Event += OnSpineEvent;
+                    _skeletonAnimationState.Complete += delegate { };
+                    _skeletonAnimationState.Dispose += delegate { };
+                    _skeletonAnimationState.End += delegate { };
+                }
+                return _skeletonAnimationState;
+            }
+        }
 
         public static UnitActor Create()
         {
             var obj = new GameObject(); 
             obj.name = "Actor@Unit";
+            obj.AddComponent<SkeletonAnimation>();
             var unitActor = obj.AddComponent<UnitActor>();
             unitActor.SetPosition(ACTOR_CREATE_POSITION);
-            obj.AddComponent<SpriteRenderer>();
             unitActor.InActivate();
             return unitActor;
         }
@@ -38,9 +76,7 @@ namespace SEF.Unit
             obj.name = "Actor@Unit";
             var unitActor = obj.AddComponent<UnitActor>();
             unitActor.SetPosition(ACTOR_CREATE_POSITION);
-
             var sprite = obj.AddComponent<SpriteRenderer>();
-
 
             if (_instanceSprite == null)
             {
@@ -70,8 +106,15 @@ namespace SEF.Unit
             _nowAttackTime = 0f;
         }
 
-        public void SetData()
+        public void SetData(UnitEntity unitEntity)
         {
+            _unitEntity = unitEntity;
+
+            if (SkeletonAnimation != null)
+            {
+                //À¯´Ö »ý¼º
+                SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
+            }
         }
 
         public override void RunProcess(float deltaTime)
@@ -129,6 +172,15 @@ namespace SEF.Unit
                 }
             }
         }
+
+
+
+        #region ##### Event #####
+        private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
+        {
+
+        }
+        #endregion
 
     }
 }
