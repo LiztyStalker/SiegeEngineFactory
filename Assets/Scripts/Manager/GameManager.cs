@@ -5,11 +5,13 @@ namespace SEF.Manager
     using UnityEngine;
     using SEF.UI.Toolkit;
     using Account;
+    using Unit;
 
     public class GameManager : MonoBehaviour
     {
         private UIGame _uiGame;
         private GameSystem _gameSystem;
+        private UnitManager _unitManager;
 
         public static GameManager Create()
         {
@@ -24,15 +26,23 @@ namespace SEF.Manager
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
 
+            _unitManager = UnitManager.Create();
+            _unitManager.Initialize();
+
             _uiGame = UIGame.Create();
             _uiGame.Initialize();
-
 
 
             //Event ¿¬°á
             _gameSystem.AddRefreshUnitListener(_uiGame.RefreshUnit);
             _gameSystem.AddRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
+            _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
+
+            //_unitManager.AddOnHitListener();
+            //_unitManager.AddOnDestoryListener();
+
+
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
@@ -44,12 +54,21 @@ namespace SEF.Manager
             _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
             _gameSystem.RemoveRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
+
+            //_unitManager.RemoveOnHitListener();
+            //_unitManager.RemoveOnDestoryListener();
+            _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
+
             _uiGame.RemoveUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
 
+
+
+
             //CleanUp
             _gameSystem.CleanUp();
+            _unitManager.CleanUp();
             _uiGame.CleanUp();
         }
 

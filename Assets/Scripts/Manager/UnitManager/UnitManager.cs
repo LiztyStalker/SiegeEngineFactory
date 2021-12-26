@@ -3,6 +3,7 @@ namespace SEF.Unit
     using System.Collections.Generic;
     using PoolSystem;
     using UnityEngine;
+    using Entity;
 
     public class UnitManager
     {
@@ -148,7 +149,7 @@ namespace SEF.Unit
             InitializeEnemyActor();
         }
 
-        public void InitializeUnitManager_PositionTest()
+        public void InitializeUnitManager_DummyTest()
         {          
             _gameObject = new GameObject();
             _gameObject.name = "Manager@UnitManager";
@@ -177,6 +178,7 @@ namespace SEF.Unit
             _poolUnitActor.Initialize(UnitActor.Create);
 
             _unitDic = new Dictionary<int, UnitActor>();
+            _enemyQueueData.Initialize(_gameObject.transform);
         }
 
         //UnitActor »ý»ê - new or load
@@ -203,11 +205,18 @@ namespace SEF.Unit
         }
 
 
-        public UnitActor CreateUnitActor(/*UnityEntity*/)
+        public void ProductUnitActor(UnitEntity unitEntity)
+        {
+            CreateUnitActor(unitEntity);
+        }
+
+        public UnitActor ProductUnitActor_Test(UnitEntity unitEntity) => CreateUnitActor(unitEntity);
+
+        private UnitActor CreateUnitActor(UnitEntity unitEntity)
         {
             var unitActor = _poolUnitActor.GiveElement();
 
-            unitActor.SetData();
+            unitActor.SetData(unitEntity);
             unitActor.SetParent(_gameObject.transform);
             unitActor.AddOnHitListener(OnHitEvent);
             unitActor.AddOnDestoryListener(OnDestroyEvent);
@@ -322,6 +331,9 @@ namespace SEF.Unit
             _destroyEvent?.Invoke(playActor);
             CreateAndChangeEnemyActor();
         }
+
+
+
         #endregion
 
 
