@@ -64,9 +64,20 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="UIWorkshopLine" substitutionGroup="engine:VisualElement" xmlns:q3="SEF.UI.Toolkit" type="q3:UIWorkshopLineType" />
+  <xs:simpleType name="UIProgressbar_TypeLabelView_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Hide" />
+      <xs:enumeration value="Now" />
+      <xs:enumeration value="Now_Max" />
+      <xs:enumeration value="Percent" />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="UIProgressbarType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="engine:VisualElement" />
+        </xs:sequence>
         <xs:attribute default="" name="name" type="xs:string" use="optional" />
         <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
         <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
@@ -77,12 +88,11 @@
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
-        <xs:attribute default="0" name="nowValue" type="xs:float" use="optional" />
-        <xs:attribute default="0" name="minValue" type="xs:float" use="optional" />
-        <xs:attribute default="0" name="maxValue" type="xs:float" use="optional" />
+        <xs:attribute default="0.5" name="FillAmount" type="xs:float" use="optional" />
+        <xs:attribute default="Hide" name="TypeLabelView" xmlns:q4="SEF.UI.Toolkit" type="q4:UIProgressbar_TypeLabelView_Type" use="optional" />
         <xs:anyAttribute processContents="lax" />
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UIProgressbar" substitutionGroup="engine:VisualElement" xmlns:q4="SEF.UI.Toolkit" type="q4:UIProgressbarType" />
+  <xs:element name="UIProgressbar" substitutionGroup="engine:VisualElement" xmlns:q5="SEF.UI.Toolkit" type="q5:UIProgressbarType" />
 </xs:schema>

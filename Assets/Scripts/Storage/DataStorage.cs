@@ -4,6 +4,7 @@ namespace Storage
     using UnityEditor;
     using UnityEngine;
     using System.IO;
+    using Spine.Unity;
 
     [ExecuteAlways]
     public class DataStorage
@@ -25,6 +26,9 @@ namespace Storage
 
         private DataStorage()
         {
+
+
+#if UNITY_ASSETBUNDLES
             InitializeDataFromAssetBundle<TextAsset>();
 
             //InitializeDataFromAssetBundle<SkeletonDataAsset>("spine", "data");
@@ -43,6 +47,10 @@ namespace Storage
             //InitializeDataFromAssetBundle<BattleFieldData>("data");
 
             InitializeDataFromAssetBundle<GameObject>("prefab", null);
+#elif UNITY_EDITOR
+            InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
+
+#endif
         }
 
 
@@ -73,6 +81,33 @@ namespace Storage
         {
             _instance = null;
         }
+
+
+
+        private void InitializeDatasFromAssetDatabase<T>(string path) where T : Object
+        {
+            var files = System.IO.Directory.GetFiles($"Assets/{path}");
+            for (int j = 0; j < files.Length; j++)
+            {
+                var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
+                //Debug.Log(files[j]);
+                if (data != null)
+                {
+                    AddDirectoryInData(data.name, data);
+                }
+            }
+
+            Debug.Log($"{typeof(T)} : {GetDataCount<T>()}");
+        }
+
+        private void InitializeDataFromAssetDatabase<T>(string path, string name) where T : Object
+        {
+            var data = AssetDatabase.LoadAssetAtPath<T>(path + "/" + name);
+            AddDirectoryInData(name, data);
+        }
+
+
+
 
         private void InitializeDataFromAssetBundle<T>(string path, string directory = null) where T : Object
         {
