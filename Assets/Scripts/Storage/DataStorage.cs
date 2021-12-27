@@ -5,6 +5,8 @@ namespace Storage
     using UnityEngine;
     using System.IO;
     using Spine.Unity;
+    using UtilityManager;
+    using SEF.Data;
 
     [ExecuteAlways]
     public class DataStorage
@@ -49,6 +51,10 @@ namespace Storage
             InitializeDataFromAssetBundle<GameObject>("prefab", null);
 #elif UNITY_EDITOR
             InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
+            InitializeDatasFromAssetDatabase<BulletData>("Data/Bullets");
+            InitializeDatasFromAssetDatabase<EnemyData>("Data/Enemies");
+            InitializeDatasFromAssetDatabase<UnitData>("Data/Units");
+            //            InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
 
 #endif
         }
@@ -83,6 +89,23 @@ namespace Storage
         }
 
 
+        private void InitializeDatasFromAssetDatabase(string key, string path)
+        {
+            var files = System.IO.Directory.GetFiles($"Assets/{path}");
+            for (int j = 0; j < files.Length; j++)
+            {
+                var data = AssetDatabase.LoadAssetAtPath<Object>(files[j]);
+                Debug.Log(data + " " + files[j]);
+                if (data != null)
+                {
+                    AddDirectoryInData(key, data.name, data);
+                }
+            }
+
+            Debug.Log($"{key} : {GetDataCount(key)}");
+        }
+
+
 
         private void InitializeDatasFromAssetDatabase<T>(string path) where T : Object
         {
@@ -90,7 +113,7 @@ namespace Storage
             for (int j = 0; j < files.Length; j++)
             {
                 var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
-                //Debug.Log(files[j]);
+                Debug.Log(data + " " + files[j]);
                 if (data != null)
                 {
                     AddDirectoryInData(data.name, data);
@@ -340,6 +363,7 @@ namespace Storage
         /// <param name="key"></param>
         /// <returns></returns>
         public bool IsHasData<T>(string key) where T : Object => IsHasData<T>(key, ToTypeString<T>(), null);
+        public bool IsHasData(string key, string name) => IsHasData(name, key, null, null);
 
 
         /// <summary>
@@ -360,7 +384,26 @@ namespace Storage
             return false;
         }
 
+        public bool IsHasData(string key, string name, string frontVerb, string lastVerb)
+        {
+            if (IsHasDataType(key))
+            {
+                var dic = _dataDic[key];
+                var cKey = GetConvertKey(name, frontVerb, lastVerb);
+                return dic.ContainsKey(cKey);
+            }
+            return false;
+        }
 
+
+        private int GetDataCount(string key)
+        {
+            if (IsHasDataType(key))
+            {
+                return _dataDic[key].Count;
+            }
+            return 0;
+        }
 
 
         private int GetDataCount<T>() where T : Object
@@ -372,6 +415,7 @@ namespace Storage
             return 0;
         }
 
+        private bool IsHasDataType(string key) => _dataDic.ContainsKey(key);
         private bool IsHasDataType<T>() where T : Object => _dataDic.ContainsKey(ToTypeString<T>());
         private T GetDataOrNull<T>(Dictionary<string, Object> dic, string key) where T : Object
         {
@@ -392,6 +436,15 @@ namespace Storage
 
             if (!IsHasData<T>(key))
                 _dataDic[ToTypeString<T>()].Add(key, data);
+        }
+
+        private void AddDirectoryInData(string key, string name, Object data)
+        {
+            if (!IsHasDataType(key))
+                _dataDic.Add(key, new Dictionary<string, Object>());
+
+            if (!IsHasData(key, name))
+                _dataDic[key].Add(name, data);
         }
 
 
