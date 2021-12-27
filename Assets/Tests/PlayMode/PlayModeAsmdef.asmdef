@@ -4,15 +4,10 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "StorageAsmdef",
-        "AccountAsmdef",
         "Unity.RenderPipelines.Universal.Shaders",
         "Unity.RenderPipeline.Universal.ShaderLibrary",
         "Unity.RenderPipelines.Universal.Runtime",
-        "UtilityAsmdef",
-        "ManagerAsmdef",
-        "DataAsmdef",
-        "UIAsmdef"
+        "ScriptAsmdef"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

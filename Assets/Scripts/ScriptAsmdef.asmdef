@@ -1,16 +1,18 @@
 {
-    "name": "AccountAsmdef",
+    "name": "ScriptAsmdef",
     "rootNamespace": "",
     "references": [
-        "GUID:0c706548627adde498c3b1eebfab7c6f",
-        "GUID:8df0710d88d84a540a2ed709b08216cc"
+        "GUID:72d1fea872bd7a449bf3818f2b0a6708",
+        "GUID:68765d262e2128e4ab49c983f3411946",
+        "GUID:173464ddf4cdb6640a4dfa8a9281ad69",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

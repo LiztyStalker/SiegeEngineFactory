@@ -4,10 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UtilityAsmdef",
-        "AccountAsmdef",
-        "DataAsmdef",
-        "Unity.Mathematics"
+        "Unity.Mathematics",
+        "ScriptAsmdef"
     ],
     "includePlatforms": [
         "Editor"
