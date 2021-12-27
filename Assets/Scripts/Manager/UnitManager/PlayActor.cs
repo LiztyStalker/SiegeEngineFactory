@@ -3,6 +3,7 @@ namespace SEF.Unit
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Data;
 
     public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destory}
 
@@ -18,6 +19,7 @@ namespace SEF.Unit
 
         private TYPE_UNIT_STATE _typeUnitState;
         protected TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
+        public Vector2 NowPosition => transform.position;
 
         public void SetTarget(ITarget target)
         {
@@ -89,7 +91,7 @@ namespace SEF.Unit
             return false;
         }
 
-        public void DecreaseHealth(/*AttackData*/)
+        public void DecreaseHealth(AttackData attackData)
         {
             _hitEvent?.Invoke(this);
             //체력이 0이면
@@ -97,6 +99,12 @@ namespace SEF.Unit
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void Destory_Test_Spine()
+        {
+            DestoryActor();
+        }
+
         public void Destroy_Test(System.Action endCallback)
         {
             DestoryActor_Test(endCallback);
@@ -121,23 +129,23 @@ namespace SEF.Unit
                 yield return null;
             }
             Debug.Log("Destroy End");
-            OnDestroyEvent();
+            OnDestroyedEvent();
             endCallback?.Invoke();
             yield return null;
         }
 #endif
 
 
-        protected void DestoryActor()
+        protected virtual void DestoryActor()
         {
             //애니메이션 후 destoryEvent 실행
             SetTypeUnitState(TYPE_UNIT_STATE.Destory);
-            OnDestroyEvent();
+            //OnDestroyedEvent();
         }
 
-        private void OnDestroyEvent()
+        protected void OnDestroyedEvent()
         {
-            _destoryEvent?.Invoke(this);
+            _destoryedEvent?.Invoke(this);
         }
 
         #region ##### Listener #####
@@ -147,9 +155,9 @@ namespace SEF.Unit
         public void RemoveOnHitListener(System.Action<PlayActor> act/*AttackData*/) => _hitEvent -= act;
 
 
-        protected System.Action<PlayActor> _destoryEvent;
-        public void AddOnDestoryListener(System.Action<PlayActor> act/*ITarget*/) => _destoryEvent += act;
-        public void RemoveOnDestoryListener(System.Action<PlayActor> act /*ITarget*/) => _destoryEvent -= act;
+        protected System.Action<PlayActor> _destoryedEvent;
+        public void AddOnDestoryedListener(System.Action<PlayActor> act/*ITarget*/) => _destoryedEvent += act;
+        public void RemoveOnDestoryedListener(System.Action<PlayActor> act /*ITarget*/) => _destoryedEvent -= act;
 
         #endregion
 

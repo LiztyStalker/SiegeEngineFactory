@@ -18,8 +18,10 @@ namespace SEF.Test
 
         public class DummyTarget : ITarget
         {
+            public Vector2 NowPosition => Vector2.zero;
+
             public int hitCount;
-            public void DecreaseHealth()
+            public void DecreaseHealth(AttackData attackData)
             {
                 hitCount++;
                 Debug.Log("Hit");
@@ -225,6 +227,31 @@ namespace SEF.Test
         }
 
         [UnityTest]
+        public IEnumerator UnitManagerTest_UnitActor_Action_Spine()
+        {
+            var dummy = new DummyTarget();
+
+            _unitManager.Initialize();
+            var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity);
+            unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+            unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
+            unitActor.SetTarget(dummy);
+            yield return null;
+            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+
+            while (true)
+            {
+                unitActor.RunProcess(Time.deltaTime);
+                if (dummy.hitCount > 5)
+                {
+                    break;
+                }
+                yield return null;
+            }
+            yield return null;
+        }
+
+        [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Destroy_Dummy()
         {
             _unitManager.InitializeUnitManager_DummyTest();
@@ -239,6 +266,33 @@ namespace SEF.Test
             {
                 isRun = false;
             });
+            yield return null;
+
+            while (isRun)
+            {
+                yield return null;
+            }
+
+            Assert.IsTrue(_unitManager.UnitCount == 0, "unitActor 가 제거되지 않았습니다");
+        }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitActor_Destroy_Spine()
+        {
+            _unitManager.Initialize();
+            var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity);
+
+            Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
+
+            unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
+
+            bool isRun = true;
+            unitActor.AddOnDestoryedListener(delegate
+            {
+                isRun = false;
+            });
+
+            unitActor.Destory_Test_Spine();
             yield return null;
 
             while (isRun)

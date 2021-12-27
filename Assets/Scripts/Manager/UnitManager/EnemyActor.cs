@@ -19,7 +19,6 @@ namespace SEF.Unit {
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
-
         public static EnemyActor Create()
         {
             var obj = new GameObject();
@@ -148,17 +147,19 @@ namespace SEF.Unit {
                 _nowActionTime += deltaTime;
                 if (_nowActionTime > 1f)
                 {
-                    Target.DecreaseHealth();
+                    Target.DecreaseHealth(null);
                     _nowActionTime = 0f;
                 }
                 
             }
         }
 
+
         #region ##### Listener #####
 
         private System.Func<ITarget> _findTargetEvent;
         public void SetOnFindTargetListener(System.Func<ITarget> act) => _findTargetEvent = act;
+
 
         #endregion
 

@@ -219,7 +219,7 @@ namespace SEF.Unit
             unitActor.SetData(unitEntity);
             unitActor.SetParent(_gameObject.transform);
             unitActor.AddOnHitListener(OnHitEvent);
-            unitActor.AddOnDestoryListener(OnDestroyEvent);
+            unitActor.AddOnDestoryedListener(OnDestroyEvent);
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
@@ -235,7 +235,7 @@ namespace SEF.Unit
             unitActor.InActivate();
 
             unitActor.RemoveOnHitListener(OnHitEvent);
-            unitActor.RemoveOnDestoryListener(OnDestroyEvent);
+            unitActor.RemoveOnDestoryedListener(OnDestroyEvent);
 
             _unitDic.Remove(unitActor.GetHashCode());
 
@@ -246,7 +246,7 @@ namespace SEF.Unit
         {
             enemyActor.InActivate();
             enemyActor.RemoveOnHitListener(OnHitEvent);
-            enemyActor.RemoveOnDestoryListener(OnDestroyEvent);
+            enemyActor.RemoveOnDestoryedListener(OnDestroyEvent);
 
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
         }
@@ -280,7 +280,7 @@ namespace SEF.Unit
             _enemyQueueData.ChangeEnemyActor(enemyActor);
 
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
-            _enemyQueueData.NowEnemy.AddOnDestoryListener(OnDestroyEvent);
+            _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyEvent);
         }
 
 

@@ -69,6 +69,11 @@ namespace SEF.Data
         public float[] AttackDelay => _attackDelay;
 
         [SerializeField]
+        private string _attackBulletKey;
+
+        public string AttackBulletKey => _attackBulletKey;
+
+        [SerializeField]
         private AssetData _startUpgradeAsset;
         public AssetData StartUpgradeAsset => _startUpgradeAsset;
 
@@ -109,6 +114,8 @@ namespace SEF.Data
             _key = "Test";
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_UNIT_GROUP.Thrower;
+
+            _attackBulletKey = "Arrow";
 
             _healthValue = HealthData.Create_Test();
             _increaseHealthValue = HealthData.Create_Test();

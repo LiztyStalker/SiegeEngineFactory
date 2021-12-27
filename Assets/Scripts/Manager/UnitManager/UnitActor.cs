@@ -8,7 +8,7 @@ namespace SEF.Unit
     using Spine.Unity;
     using Spine;
     using Storage;
-
+    using UtilityManager;
     public class UnitActor : PlayActor, ITarget, IPoolElement
     {
         private readonly static Vector2 UNIT_APPEAR_POSITION = new Vector2(-3.5f, 2f);
@@ -47,13 +47,15 @@ namespace SEF.Unit
                     _skeletonAnimationState = SkeletonAnimation.AnimationState;
                     _skeletonAnimationState.Start += delegate { };
                     _skeletonAnimationState.Event += OnSpineEvent;
-                    _skeletonAnimationState.Complete += delegate { };
+                    _skeletonAnimationState.Complete += OnEndEvent;
                     _skeletonAnimationState.Dispose += delegate { };
-                    _skeletonAnimationState.End += delegate { };
+                    //_skeletonAnimationState.End += OnEndEvent;
                 }
                 return _skeletonAnimationState;
             }
         }
+
+
 
         public static UnitActor Create()
         {
@@ -104,6 +106,7 @@ namespace SEF.Unit
             base.Activate();
             SetPosition(UNIT_APPEAR_POSITION);
             _nowAttackTime = 0f;
+            SetAnimation("Idle", true);
         }
 
         public void SetData(UnitEntity unitEntity)
@@ -117,6 +120,15 @@ namespace SEF.Unit
             }
         }
 
+        private void SetAnimation(string name, bool isLoop = false)
+        {
+            var animation = SkeletonAnimation.AnimationState.Data.SkeletonData.FindAnimation(name);
+            if (animation != null)
+                SkeletonAnimationState.SetAnimation(0, animation, isLoop);
+            else
+                Debug.Log($"{name} 애니메이션을 찾을 수 없습니다");
+        }
+
         public override void RunProcess(float deltaTime)
         {
 
@@ -124,6 +136,7 @@ namespace SEF.Unit
             {
                 case TYPE_UNIT_STATE.Idle:
                     SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+                    SetAnimation("Forward", true);
                     break;
                 case TYPE_UNIT_STATE.Appear:
                     //Appear
@@ -153,6 +166,7 @@ namespace SEF.Unit
             {
                 //목표에 도달했으면 Action으로 변환
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
+                SetAnimation("Idle", true);
             }
 
         }
@@ -166,21 +180,44 @@ namespace SEF.Unit
                 _nowAttackTime += deltaTime;
                 if (_nowAttackTime > 1f)
                 {
-                    Debug.Log("Attack");
-                    Target.DecreaseHealth();
+                    SetAnimation("Attack", false);
                     _nowAttackTime = 0f;
                 }
             }
         }
 
+        protected override void DestoryActor()
+        {
+            base.DestoryActor();
+            SetAnimation("Dead");
+        }
 
-
-        #region ##### Event #####
+        #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
+            if (Target != null)
+            {
+                //원거리
+                if (!string.IsNullOrEmpty(_unitEntity.UnitData.AttackBulletKey))
+                {
+                    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_unitEntity.UnitData.AttackBulletKey);
+                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { DecreaseHealth(_unitEntity.UnitData.AttackValue); });
+                }
+                //근거리
+                else
+                {
+                    Target.DecreaseHealth(_unitEntity.UnitData.AttackValue);
+                }
+            }
+        }
 
+        private void OnEndEvent(TrackEntry trackEntry)
+        {
+            if (trackEntry.Animation.Name == "Dead")
+                OnDestroyedEvent();
         }
         #endregion
+
 
     }
 }
