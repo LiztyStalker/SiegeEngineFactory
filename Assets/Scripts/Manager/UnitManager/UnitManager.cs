@@ -4,6 +4,9 @@ namespace SEF.Unit
     using PoolSystem;
     using UnityEngine;
     using Entity;
+    using Data;
+    using Storage;
+
 
     public class UnitManager
     {
@@ -14,32 +17,43 @@ namespace SEF.Unit
         {
             private PoolSystem<EnemyActor> _poolEnemyActor;
 
-            private EnemyActor _nowEnemy;
-            private EnemyActor _readyEnemy;
-            private EnemyActor _idleEnemy;
+            //private EnemyActor _nowEnemy;
+            //private EnemyActor _readyEnemy;
+            //private EnemyActor _idleEnemy;
 
-            public EnemyActor NowEnemy => _nowEnemy;
+            private List<EnemyActor> _list;
+
+            public EnemyActor NowEnemy => _list[0];
+
+            private LevelWaveData _nowLevelWaveData;
 
             public int Count { 
                 get
                 {
-                    var count = 0;
-                    if (_readyEnemy != null) count++;
-                    if (_idleEnemy != null) count++;
-                    return count;
+                    return _list.Count;
+                    //var count = 0;
+                    //if (_readyEnemy != null) count++;
+                    //if (_idleEnemy != null) count++;
+                    //return count;
                 } 
             }
 
 
             private bool IsFull()
             {
-                return _nowEnemy != null && _readyEnemy != null && _idleEnemy != null;
+                return Count == 3;
+//                return _nowEnemy != null && _readyEnemy != null && _idleEnemy != null;
+            }
+
+            private bool IsEmpty()
+            {
+                return Count == 0;
+//                return _nowEnemy == null && _readyEnemy == null && _idleEnemy == null;
             }
 
             public void Initialize(/* LevelWaveData */Transform parent)
             {
-                _poolEnemyActor = PoolSystem<EnemyActor>.Create();
-                _poolEnemyActor.Initialize(EnemyActor.Create);
+                InitializePoolSystem();
 
                 while (true)
                 {
@@ -53,32 +67,71 @@ namespace SEF.Unit
                 }
             }
 
+            public void InitializePoolSystem()
+            {
+                _list = new List<EnemyActor>();
+                _poolEnemyActor = PoolSystem<EnemyActor>.Create();
+                _poolEnemyActor.Initialize(EnemyActor.Create);
+            }
+
             public void ChangeEnemyActor(EnemyActor enemyActor)
             {
-                _nowEnemy = _readyEnemy;
-                if(_nowEnemy != null) _nowEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
-                _readyEnemy = _idleEnemy;
-                if(_readyEnemy != null) _readyEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Ready);
-                _idleEnemy = enemyActor;
+
+                _list.Add(enemyActor);
+                if(_list.Count > 0)
+                    _list[0].SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+                if (_list.Count > 1)
+                    _list[1].SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+
+                //if (IsEmpty())
+                //{
+                //    _nowEnemy = enemyActor;
+                //}
+                //else
+                //{
+                //    _nowEnemy = _readyEnemy;
+                //    if (_nowEnemy != null) _nowEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+                //    _readyEnemy = _idleEnemy;
+                //    if (_readyEnemy != null) _readyEnemy.SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+                //    _idleEnemy = enemyActor;
+                //}
             }
 
             public void RunProcess(float deltaTime)
             {
                 if (IsFull())
                 {
-                    _nowEnemy.RunProcess(deltaTime);
-                    _readyEnemy.RunProcess(deltaTime);
-                    _idleEnemy.RunProcess(deltaTime);
+                    for (int i = 0; i < _list.Count; i++)
+                    {
+                        _list[i].RunProcess(deltaTime);
+                    }
+                    //_nowEnemy.RunProcess(deltaTime);
+                    //_readyEnemy.RunProcess(deltaTime);
+                    //_idleEnemy.RunProcess(deltaTime);
                 }
             }
 
 
 
-            public EnemyActor CreateEnemyActor(/*EnemyData*/Transform parent)
+            public EnemyActor CreateEnemyActor_Test(EnemyEntity enemyEntity, Transform parent)
             {
                 var enemyActor = _poolEnemyActor.GiveElement();
+                enemyActor.SetData(enemyEntity); // EnemyData, LevelWaveData
+                enemyActor.SetParent(parent);
+                enemyActor.Activate();
+                return enemyActor;
+            }
 
-                enemyActor.SetData(); // EnemyData, LevelWaveData
+            public EnemyActor CreateEnemyActor(Transform parent)
+            {
+                var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
+                var data = arr[Random.Range(0, arr.Length)];
+
+                var enemyActor = _poolEnemyActor.GiveElement();
+
+                EnemyEntity enemyEntity = new EnemyEntity();
+                enemyEntity.SetData(data, _nowLevelWaveData);
+                enemyActor.SetData(enemyEntity); // EnemyData, LevelWaveData
                 enemyActor.SetParent(parent);
 
                 enemyActor.Activate();
@@ -93,10 +146,11 @@ namespace SEF.Unit
 
             public void CleanUp()
             {
-                _poolEnemyActor.CleanUp();
-                _nowEnemy = null;
-                _readyEnemy = null;
-                _idleEnemy = null;
+                _poolEnemyActor?.CleanUp();
+                _list.Clear();
+                //_nowEnemy = null;
+                //_readyEnemy = null;
+                //_idleEnemy = null;
             }
         }
 
@@ -112,7 +166,7 @@ namespace SEF.Unit
         //LevelWaveData - max LevelWaveData waitEnemyQueue
 
         public int UnitCount => _unitDic.Count;
-        public int WaitEnemyCount => _enemyQueueData.Count;
+        public int EnemyCount => _enemyQueueData.Count;
 
         public EnemyActor NowEnemy => _enemyQueueData.NowEnemy;
 
@@ -150,17 +204,13 @@ namespace SEF.Unit
         }
 
         public void InitializeUnitManager_DummyTest()
-        {          
-            _gameObject = new GameObject();
-            _gameObject.name = "Manager@UnitManager";
-            _gameObject.transform.position = Vector3.zero;
-            _gameObject.transform.localScale = Vector3.one;
-
-            _poolUnitActor = PoolSystem<UnitActor>.Create();
+        {
+            CreateGameObject();
+            CreatePoolSystem();
             _poolUnitActor.Initialize(UnitActor.Create_Test);
 
             _unitDic = new Dictionary<int, UnitActor>();
-            _enemyQueueData.Initialize(_gameObject.transform);
+            _enemyQueueData.InitializePoolSystem();
 
         }
 #endif
@@ -169,17 +219,28 @@ namespace SEF.Unit
 
         private void InitializeUnitManager()
         {
-            _gameObject = new GameObject();
-            _gameObject.name = "Manager@UnitManager";
-            _gameObject.transform.position = Vector3.zero;
-            _gameObject.transform.localScale = Vector3.one;
-
-            _poolUnitActor = PoolSystem<UnitActor>.Create();
+            CreateGameObject();
+            CreatePoolSystem();
             _poolUnitActor.Initialize(UnitActor.Create);
 
             _unitDic = new Dictionary<int, UnitActor>();
             _enemyQueueData.Initialize(_gameObject.transform);
         }
+
+
+        private void CreateGameObject()
+        {
+            _gameObject = new GameObject();
+            _gameObject.name = "Manager@UnitManager";
+            _gameObject.transform.position = Vector3.zero;
+            _gameObject.transform.localScale = Vector3.one;
+        }
+
+        private void CreatePoolSystem()
+        {
+            _poolUnitActor = PoolSystem<UnitActor>.Create();
+        }
+
 
         //UnitActor »ý»ê - new or load
 
@@ -210,7 +271,9 @@ namespace SEF.Unit
             CreateUnitActor(unitEntity);
         }
 
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public UnitActor ProductUnitActor_Test(UnitEntity unitEntity) => CreateUnitActor(unitEntity);
+#endif
 
         private UnitActor CreateUnitActor(UnitEntity unitEntity)
         {
@@ -274,11 +337,18 @@ namespace SEF.Unit
             return _enemyQueueData.CreateEnemyActor(_gameObject.transform);
         }
 
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public EnemyActor CreateEnemyActor_Test(EnemyEntity enemyEntity)
+        {
+            return _enemyQueueData.CreateEnemyActor_Test(enemyEntity, _gameObject.transform);
+        }
+#endif
+
         public void ChangeNowEnemy()
         {
             var enemyActor = _enemyQueueData.CreateEnemyActor(_gameObject.transform);
             _enemyQueueData.ChangeEnemyActor(enemyActor);
-
+                        
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyEvent);
         }

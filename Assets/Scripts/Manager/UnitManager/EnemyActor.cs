@@ -3,6 +3,11 @@ namespace SEF.Unit {
     using System.Collections.Generic;
     using UnityEngine;
     using PoolSystem;
+    using Spine.Unity;
+    using Spine;
+    using UtilityManager;
+    using Entity;
+    using Storage;
 
     public class EnemyActor : PlayActor, ITarget, IPoolElement
     {
@@ -16,6 +21,40 @@ namespace SEF.Unit {
         public readonly static Vector2 ENEMY_ACTION_POSITION_TEST = ENEMY_ACTION_POSITION;
 #endif
 
+        private EnemyEntity _enemyEntity;
+
+        private SkeletonAnimation _skeletonAnimation;
+
+        private SkeletonAnimation SkeletonAnimation
+        {
+            get
+            {
+                if (_skeletonAnimation == null)
+                {
+                    _skeletonAnimation = GetComponent<SkeletonAnimation>();
+                }
+                return _skeletonAnimation;
+            }
+        }
+
+        private Spine.AnimationState _skeletonAnimationState;
+
+        private Spine.AnimationState SkeletonAnimationState
+        {
+            get
+            {
+                if (_skeletonAnimationState == null)
+                {
+                    _skeletonAnimationState = SkeletonAnimation.AnimationState;
+                    _skeletonAnimationState.Start += delegate { };
+                    _skeletonAnimationState.Event += OnSpineEvent;
+                    _skeletonAnimationState.Complete += OnEndEvent;
+                    _skeletonAnimationState.Dispose += delegate { };
+                    //_skeletonAnimationState.End += OnEndEvent;
+                }
+                return _skeletonAnimationState;
+            }
+        }
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
@@ -23,7 +62,7 @@ namespace SEF.Unit {
         {
             var obj = new GameObject();
             obj.name = "Actor@Enemy";
-            obj.AddComponent<SpriteRenderer>();
+            obj.AddComponent<SkeletonAnimation>();
             var enemyActor = obj.AddComponent<EnemyActor>();
             enemyActor.SetPosition(ACTOR_CREATE_POSITION);
             enemyActor.InActivate();
@@ -96,10 +135,18 @@ namespace SEF.Unit {
             //Destroy
         }
 
-        public void SetData()
+        public void SetData(EnemyEntity enemyEntity)
         {
+            _enemyEntity = enemyEntity;
+
+            if (SkeletonAnimation != null)
+            {
+                //유닛 생성
+                SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
+            }
 
         }
+
         private void ReadyRunProcess(float deltaTime)
         {
             if (!IsArriveReady())
@@ -161,6 +208,33 @@ namespace SEF.Unit {
         public void SetOnFindTargetListener(System.Func<ITarget> act) => _findTargetEvent = act;
 
 
+        #endregion
+
+
+        #region ##### Spine Event #####
+        private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
+        {
+            if (Target != null)
+            {
+                //원거리
+                if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
+                {
+                    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
+                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue); });
+                }
+                //근거리
+                else
+                {
+                    Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue);
+                }
+            }
+        }
+
+        private void OnEndEvent(TrackEntry trackEntry)
+        {
+            if (trackEntry.Animation.Name == "Dead")
+                OnDestroyedEvent();
+        }
         #endregion
 
     }
