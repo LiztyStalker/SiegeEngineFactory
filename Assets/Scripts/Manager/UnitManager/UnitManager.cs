@@ -1,5 +1,6 @@
 namespace SEF.Unit
 {
+    using System.Linq;
     using System.Collections.Generic;
     using PoolSystem;
     using UnityEngine;
@@ -131,7 +132,7 @@ namespace SEF.Unit
 
                 EnemyEntity enemyEntity = new EnemyEntity();
                 enemyEntity.SetData(data, _nowLevelWaveData);
-                enemyActor.SetData(enemyEntity); // EnemyData, LevelWaveData
+                enemyActor.SetData(enemyEntity);
                 enemyActor.SetParent(parent);
 
                 enemyActor.Activate();
@@ -187,6 +188,16 @@ namespace SEF.Unit
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void Initialize_Empty()
+        {
+            CreateGameObject();
+            CreatePoolSystem();
+            _poolUnitActor.Initialize(UnitActor.Create);
+
+            _unitDic = new Dictionary<int, UnitActor>();
+            _enemyQueueData.InitializePoolSystem();
+        }
 
         public void InitializeUnitManager_Test()
         {
@@ -351,6 +362,18 @@ namespace SEF.Unit
                         
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyEvent);
+            _enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
+
+            foreach(var value in _unitDic.Values)
+            {
+                value.SetTarget(_enemyQueueData.NowEnemy);
+            }
+        }
+
+        private UnitActor FindUnitActor()
+        {
+            var arr = _unitDic.Values.ToArray();
+            return arr[UnityEngine.Random.Range(0, arr.Length)];
         }
 
 
@@ -401,7 +424,6 @@ namespace SEF.Unit
             _destroyEvent?.Invoke(playActor);
             CreateAndChangeEnemyActor();
         }
-
 
 
         #endregion

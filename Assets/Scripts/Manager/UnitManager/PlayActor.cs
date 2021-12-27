@@ -21,6 +21,15 @@ namespace SEF.Unit
         protected TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
         public Vector2 NowPosition => transform.position;
 
+        private HealthData _nowHealthData;
+
+        protected HealthData NowHealthData => _nowHealthData;
+
+        protected void SetHealthData(HealthData healthData)
+        {
+            _nowHealthData = healthData.Clone() as HealthData;
+        }
+
         public void SetTarget(ITarget target)
         {
             _target = target;
@@ -94,8 +103,12 @@ namespace SEF.Unit
         public void DecreaseHealth(AttackData attackData)
         {
             _hitEvent?.Invoke(this);
-            //체력이 0이면
-            DestoryActor();
+            _nowHealthData.Subject(attackData);
+
+            if (_nowHealthData.IsZero())
+            {
+                DestoryActor();
+            }
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

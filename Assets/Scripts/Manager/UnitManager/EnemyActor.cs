@@ -107,6 +107,9 @@ namespace SEF.Unit {
         {
             base.Activate();
             SetPosition(ENEMY_IDLE_POSITION);
+            SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+            PlayAnimation("Idle", true);
+            isDead = false;
         }
 
         public override void RunProcess(float deltaTime)
@@ -114,7 +117,7 @@ namespace SEF.Unit {
             switch (TypeUnitState)
             {
                 case TYPE_UNIT_STATE.Idle:
-                    //Idle
+                    //Idle                    
                     break;
                 case TYPE_UNIT_STATE.Ready:
                     ReadyRunProcess(deltaTime);
@@ -135,9 +138,24 @@ namespace SEF.Unit {
             //Destroy
         }
 
+
+        bool isDead = false;
+
+        protected override void DestoryActor()
+        {
+            if (!isDead)
+            {
+                base.DestoryActor();
+                PlayAnimation("Dead");
+                isDead = true;
+            }
+        }
+
         public void SetData(EnemyEntity enemyEntity)
         {
             _enemyEntity = enemyEntity;
+
+            SetHealthData(_enemyEntity.EnemyData.HealthValue);
 
             if (SkeletonAnimation != null)
             {
@@ -172,6 +190,7 @@ namespace SEF.Unit {
                 //목표에 도달했으면 Action으로 변환
                 Debug.Log("Action에 도달함");
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
+                PlayAnimation("Attack");
             }
         }
 
@@ -186,7 +205,8 @@ namespace SEF.Unit {
             //TestCode
             if (Target == null)
             {
-                Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
+                Debug.Log("find");
+                //Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
                 SetTarget(_findTargetEvent());
             }
             else
@@ -194,13 +214,41 @@ namespace SEF.Unit {
                 _nowActionTime += deltaTime;
                 if (_nowActionTime > 1f)
                 {
-                    Target.DecreaseHealth(null);
+                    if (IsHasAnimation("Attack"))
+                    {
+                        SetAnimation("Attack");
+                    }
+                    else
+                    {
+                        Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue);
+                    }
                     _nowActionTime = 0f;
                 }
                 
             }
         }
 
+
+        private void PlayAnimation(string name, bool isLoop = false)
+        {
+            if (IsHasAnimation(name))
+                SetAnimation(name, isLoop);
+        }
+
+        private bool IsHasAnimation(string name)
+        {
+            if (SkeletonAnimation != null && SkeletonAnimationState != null)
+            {
+                var animation = SkeletonAnimation.AnimationState.Data.SkeletonData.FindAnimation(name);
+                return animation != null;
+            }
+            return false;
+        }
+
+        private void SetAnimation(string name, bool isLoop = false)
+        {
+            SkeletonAnimationState.SetAnimation(0, name, isLoop);
+        }
 
         #region ##### Listener #####
 
@@ -232,6 +280,7 @@ namespace SEF.Unit {
 
         private void OnEndEvent(TrackEntry trackEntry)
         {
+            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }

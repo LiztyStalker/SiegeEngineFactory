@@ -17,6 +17,22 @@ namespace SEF.Data
             return Value.IsZero;
         }
 
+        public void Add(BigNumberData addNumberData, BigNumberData maxNumberData)
+        {
+            if (Value + addNumberData.Value > maxNumberData.Value)
+                Value = maxNumberData.Value;
+            else
+                Value += addNumberData.Value;
+        }
+
+        public void Subject(BigNumberData subjectNumberData) 
+        {
+            if (Value - subjectNumberData.Value < 0)
+                Value = 0;
+            else
+                Value -= subjectNumberData.Value;
+        }
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static HealthData Create_Test()
         {

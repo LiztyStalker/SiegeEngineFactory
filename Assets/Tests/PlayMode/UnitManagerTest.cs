@@ -186,7 +186,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Appear_Spine()
         {
-            _unitManager.Initialize();
+            _unitManager.Initialize_Empty();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             yield return null;
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
@@ -235,7 +235,7 @@ namespace SEF.Test
         {
             var dummy = new DummyTarget();
 
-            _unitManager.Initialize();
+            _unitManager.Initialize_Empty();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
             unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
@@ -283,7 +283,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Destroy_Spine()
         {
-            _unitManager.Initialize();
+            _unitManager.Initialize_Empty();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
 
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
@@ -434,6 +434,56 @@ namespace SEF.Test
 
             yield return new WaitForSeconds(1f);
         }
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_UnitAndEnemy_BattleTest()
+        {
+            _unitManager.Initialize_Empty();
+            var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
+            var unitActor1 = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
+            var unitActor2 = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
+            yield return null;
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+
+            unitActor1.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
+            unitActor1.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+
+            unitActor2.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
+            unitActor2.SetTypeUnitState(TYPE_UNIT_STATE.Action);
+
+            enemyActor.SetTarget(unitActor2);
+            unitActor1.SetTarget(enemyActor);
+            unitActor2.SetTarget(enemyActor);
+
+            bool isRun = true;
+            _unitManager.AddOnDestoryListener(actor =>
+            {
+                if (actor is EnemyActor)
+                {
+                    isRun = false;
+                    try
+                    {
+                        unitActor1.SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+                        unitActor2.SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+                    }
+                    catch { }
+                }
+                else
+                {
+                    Debug.Log($"{actor.name} 사망");
+                }
+            });
+
+            while (isRun)
+            {
+                _unitManager.RunProcess(Time.deltaTime);
+                yield return null;          
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
     }
 }
 #endif

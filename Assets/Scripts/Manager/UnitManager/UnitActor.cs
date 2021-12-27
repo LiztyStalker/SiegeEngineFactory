@@ -109,21 +109,25 @@ namespace SEF.Unit
             PlayAnimation("Idle", true);
         }
 
-        private void PlayAnimation(string name, bool isLoop = false)
-        {
-            if (IsHasAnimation(name))
-                SetAnimation(name, isLoop);
-        }
-
+       
         public void SetData(UnitEntity unitEntity)
         {
             _unitEntity = unitEntity;
+
+            SetHealthData(_unitEntity.UnitData.HealthValue);
 
             if (SkeletonAnimation != null)
             {
                 //À¯´Ö »ý¼º
                 SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
             }
+        }
+
+
+        private void PlayAnimation(string name, bool isLoop = false)
+        {
+            if (IsHasAnimation(name))
+                SetAnimation(name, isLoop);
         }
 
         private bool IsHasAnimation(string name)
@@ -232,6 +236,7 @@ namespace SEF.Unit
 
         private void OnEndEvent(TrackEntry trackEntry)
         {
+            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }
