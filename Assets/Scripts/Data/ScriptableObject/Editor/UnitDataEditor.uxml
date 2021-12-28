@@ -23,29 +23,29 @@
         <ui:VisualElement name="advanced_panel">
             <ui:VisualElement name="health_panel" class="advanced_element">
                 <ui:Label text="체력" display-tooltip-when-elided="true" name="Label" class="title_label" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <uie:FloatField label="Float Field" value="42.2" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_healthvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="starthealthvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increasehealthvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increasehealthrate_textfield" />
             </ui:VisualElement>
             <ui:VisualElement name="attack_panel" class="advanced_element">
                 <ui:Label text="공격" display-tooltip-when-elided="true" name="Label" class="title_label" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <uie:FloatField label="Float Field" value="42.2" />
-                <uie:IntegerField label="Int Field" value="42" />
-                <uie:EnumField label="Enum" value="Center" />
-                <uie:EnumField label="Enum" value="Center" />
-                <uie:FloatField label="Float Field" value="42.2" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_attackvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startattackvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaseattackvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increaseattackrate_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="attackcount_intfield" />
+                <uie:EnumField label="Enum" value="Center" name="typeattackrange_enumfield" />
+                <uie:EnumField label="Enum" value="Center" name="typeattackaction_enumfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="attackdelay_floatfield" />
             </ui:VisualElement>
             <ui:VisualElement name="upgrade_panel" class="advanced_element">
                 <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="Label" class="title_label" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <uie:FloatField label="Float Field" value="42.2" />
-                <uie:IntegerField label="Int Field" value="42" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_upgradevalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startupgradevalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaseupgradevalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increaseupgraderate_floatfield" />
+                <uie:IntegerField label="Int Field" value="42" name="maximumupgradevalue_intfield" />
             </ui:VisualElement>
             <ui:VisualElement name="tech_panel" class="advanced_element">
                 <ui:Label text="테크자원" display-tooltip-when-elided="true" class="title_label" />
@@ -64,9 +64,9 @@
             </ui:VisualElement>
             <ui:VisualElement name="spine_panel" class="advanced_element">
                 <ui:Label text="스파인" display-tooltip-when-elided="true" class="title_label" />
-                <uie:ObjectField label="Object Field" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
+                <uie:ObjectField label="Object Field" name="skeletondatasset_objectfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="spinemodelkey_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="spineskinkey_textfield" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

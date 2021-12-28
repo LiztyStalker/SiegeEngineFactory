@@ -1,6 +1,7 @@
 namespace SEF.Data
 {
     using UnityEngine;
+    using Spine.Unity;
 
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/UnitData")]    
     public class UnitData : ScriptableObject
@@ -17,6 +18,10 @@ namespace SEF.Data
         public string Key { get => _key; set => _key = value; }
 
         [SerializeField]
+        private SkeletonDataAsset _skeletonDataAsset;
+        public SkeletonDataAsset SkeletonDataAsset { get => _skeletonDataAsset; set => _skeletonDataAsset = value; }
+
+        [SerializeField]
         private string _spineModelKey;
         public string SpineModelKey { get => _spineModelKey; set => _spineModelKey = value; }
 
@@ -30,7 +35,7 @@ namespace SEF.Data
 
         [SerializeField]
         private HealthData _healthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData HealthValue { get => _healthValue; set => _healthValue = value; }
+        public HealthData StartHealthValue { get => _healthValue; set => _healthValue = value; }
 
         [SerializeField]
         private HealthData _increaseHealthValue = NumberDataUtility.Create<HealthData>();
@@ -46,7 +51,7 @@ namespace SEF.Data
 
         [SerializeField]
         private AttackData _attackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData AttackValue { get => _attackValue; set => _attackValue = value; }
+        public AttackData StartAttackValue { get => _attackValue; set => _attackValue = value; }
 
         [SerializeField]
         private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
@@ -69,8 +74,8 @@ namespace SEF.Data
         public int AttackCount { get => _attackCount; set => _attackCount = value; }
 
         [SerializeField]
-        private float[] _attackDelay;
-        public float[] AttackDelay { get => _attackDelay; set => _attackDelay = value; }
+        private float _attackDelay;
+        public float AttackDelay { get => _attackDelay; set => _attackDelay = value; }
 
         [SerializeField]
         private string _attackBulletKey;
@@ -89,6 +94,9 @@ namespace SEF.Data
         private float _increaseUpgradeAssetRate;
         public float IncreaseUpgradeAssetRate { get => _increaseUpgradeAssetRate; set => _increaseUpgradeAssetRate = value; }
 
+        [SerializeField]
+        private int _maximumUpgradeValue;
+        public int MaximumUpgradeValue { get => _maximumUpgradeValue; set => _maximumUpgradeValue = value; }
         //private string[] _conditionTechTree;
         //public string[] ConditionTechTree => _conditionTechTree;
 
@@ -131,8 +139,9 @@ namespace SEF.Data
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
             _attackPopulation = 1;
             _attackCount = 1;
-            _attackDelay = new float[1];
-            _attackDelay[0] = 1f;
+            //            _attackDelay = new float[1];
+            //            _attackDelay[0] = 1f;
+            _attackDelay = 1f;
             _startUpgradeAsset = AssetData.Create_Test();
             _increaseUpgradeAssetValue = AssetData.Create_Test();
             _increaseUpgradeAssetRate = 0.01f;
