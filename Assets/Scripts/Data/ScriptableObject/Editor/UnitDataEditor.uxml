@@ -4,8 +4,8 @@
         <ui:VisualElement name="default_panel">
             <ui:VisualElement name="icon_panel" class="default_element" style="align-items: center; justify-content: space-between;">
                 <ui:VisualElement name="icon_layout" class="icon_panel">
-                    <ui:VisualElement name="icon_background" style="width: 116px;" />
-                    <ui:VisualElement name="icon_field" style="width: 116px;" />
+                    <ui:VisualElement name="icon_background" style="width: 120px; height: 120px; position: absolute; background-color: rgb(26, 26, 26); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" />
+                    <ui:VisualElement name="icon_field" style="position: absolute;" />
                 </ui:VisualElement>
                 <uie:ObjectField allow-scene-objects="false" name="icon_objectfield" class="icon_object_field" />
             </ui:VisualElement>

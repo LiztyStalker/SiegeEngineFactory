@@ -26,7 +26,7 @@ namespace SEF.Data.Editor
         private int _nowUpgrade = 1;
         private bool _isModified = false;
 
-
+        private VisualElement _iconField;
         private ObjectField _spriteField;
 
         private EnumField _groupField;
@@ -104,8 +104,8 @@ namespace SEF.Data.Editor
         public override VisualElement CreateInspectorGUI()
         {
 
-            VisualElement iconBackground = _root.Query<VisualElement>("icon_background").First();
-            iconBackground.style.backgroundImage = _unitData.icon ? _unitData.icon.texture : null;
+            _iconField = _root.Query<VisualElement>("icon_field").First();
+            _iconField.style.backgroundImage = _unitData.icon ? _unitData.icon.texture : null;
 
 
 
@@ -116,9 +116,8 @@ namespace SEF.Data.Editor
                 e =>
                 {
                     _unitData.icon = (Sprite)e.newValue;
-                    iconBackground.style.backgroundImage = _unitData.icon.texture;
-                            // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
-                            EditorUtility.SetDirty(_unitData);
+                    _iconField.style.backgroundImage = _unitData.icon.texture;
+                    EditorUtility.SetDirty(_unitData);
                 }
             );
 

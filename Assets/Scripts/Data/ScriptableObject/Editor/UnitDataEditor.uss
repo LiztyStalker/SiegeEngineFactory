@@ -34,7 +34,7 @@
     border-bottom-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: rgba(77, 77, 77, 255);
+    background-color: rgb(77, 77, 77);
 }
 
 .icon_panel {
@@ -46,4 +46,9 @@
 
 .icon_object_field {
     width: 80%;
+}
+
+#icon_field {
+    width: 100px;
+    height: 100px;
 }
