@@ -149,9 +149,6 @@ namespace SEF.Unit
             {
                 _poolEnemyActor?.CleanUp();
                 _list.Clear();
-                //_nowEnemy = null;
-                //_readyEnemy = null;
-                //_idleEnemy = null;
             }
         }
 
@@ -416,13 +413,13 @@ namespace SEF.Unit
                     break;
                 case EnemyActor enemyActor:
                     RetrieveEnemyActor(enemyActor);
+                    CreateAndChangeEnemyActor();
                     break;
                 default:
                     Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
                     break;
             }
             _destroyEvent?.Invoke(playActor);
-            CreateAndChangeEnemyActor();
         }
 
 

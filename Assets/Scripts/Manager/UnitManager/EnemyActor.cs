@@ -45,12 +45,15 @@ namespace SEF.Unit {
             {
                 if (_skeletonAnimationState == null)
                 {
-                    _skeletonAnimationState = SkeletonAnimation.AnimationState;
-                    _skeletonAnimationState.Start += delegate { };
-                    _skeletonAnimationState.Event += OnSpineEvent;
-                    _skeletonAnimationState.Complete += OnEndEvent;
-                    _skeletonAnimationState.Dispose += delegate { };
-                    //_skeletonAnimationState.End += OnEndEvent;
+                    if (SkeletonAnimation != null)
+                    {
+                        _skeletonAnimationState = SkeletonAnimation.AnimationState;
+                        _skeletonAnimationState.Start += delegate { };
+                        _skeletonAnimationState.Event += OnSpineEvent;
+                        _skeletonAnimationState.Complete += OnEndEvent;
+                        _skeletonAnimationState.Dispose += delegate { };
+                        //_skeletonAnimationState.End += OnEndEvent;
+                    }
                 }
                 return _skeletonAnimationState;
             }

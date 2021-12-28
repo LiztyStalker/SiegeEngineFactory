@@ -27,7 +27,8 @@ namespace SEF.Unit
 
         protected void SetHealthData(HealthData healthData)
         {
-            _nowHealthData = healthData.Clone() as HealthData;
+            if(healthData != null)
+                _nowHealthData = healthData.Clone() as HealthData;
         }
 
         public void SetTarget(ITarget target)
