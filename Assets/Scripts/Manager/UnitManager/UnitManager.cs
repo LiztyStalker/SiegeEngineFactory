@@ -100,16 +100,13 @@ namespace SEF.Unit
 
             public void RunProcess(float deltaTime)
             {
-                if (IsFull())
+                for (int i = 0; i < _list.Count; i++)
                 {
-                    for (int i = 0; i < _list.Count; i++)
-                    {
-                        _list[i].RunProcess(deltaTime);
-                    }
-                    //_nowEnemy.RunProcess(deltaTime);
-                    //_readyEnemy.RunProcess(deltaTime);
-                    //_idleEnemy.RunProcess(deltaTime);
+                    _list[i].RunProcess(deltaTime);
                 }
+                //_nowEnemy.RunProcess(deltaTime);
+                //_readyEnemy.RunProcess(deltaTime);
+                //_idleEnemy.RunProcess(deltaTime);
             }
 
 
@@ -120,6 +117,9 @@ namespace SEF.Unit
                 enemyActor.SetData(enemyEntity); // EnemyData, LevelWaveData
                 enemyActor.SetParent(parent);
                 enemyActor.Activate();
+
+                _list.Add(enemyActor);
+
                 return enemyActor;
             }
 
@@ -134,8 +134,9 @@ namespace SEF.Unit
                 enemyEntity.SetData(data, _nowLevelWaveData);
                 enemyActor.SetData(enemyEntity);
                 enemyActor.SetParent(parent);
-
                 enemyActor.Activate();
+
+                _list.Add(enemyActor);
 
                 return enemyActor;
             }

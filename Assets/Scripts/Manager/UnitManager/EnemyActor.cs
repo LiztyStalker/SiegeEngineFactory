@@ -117,6 +117,7 @@ namespace SEF.Unit {
 
         public override void RunProcess(float deltaTime)
         {
+//            Debug.Log(TypeUnitState);
             switch (TypeUnitState)
             {
                 case TYPE_UNIT_STATE.Idle:
@@ -204,7 +205,7 @@ namespace SEF.Unit {
         {
             //적 공격자 행동
 
-
+            //Debug.Log(Target);
             //TestCode
             if (Target == null)
             {
@@ -283,7 +284,7 @@ namespace SEF.Unit {
 
         private void OnEndEvent(TrackEntry trackEntry)
         {
-            Debug.Log(trackEntry.Animation.Name);
+//            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }

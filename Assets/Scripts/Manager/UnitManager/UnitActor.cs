@@ -236,7 +236,7 @@ namespace SEF.Unit
 
         private void OnEndEvent(TrackEntry trackEntry)
         {
-            Debug.Log(trackEntry.Animation.Name);
+//            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }

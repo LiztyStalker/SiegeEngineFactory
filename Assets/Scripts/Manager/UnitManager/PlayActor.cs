@@ -83,12 +83,6 @@ namespace SEF.Unit
             DestroyImmediate(gameObject);
         }
 
-        #region ##### Data #####
-        //public AccountData GetData()
-        //{
-
-        //}
-        #endregion
 
 
         //public AssetData GetAssetData()
@@ -111,6 +105,14 @@ namespace SEF.Unit
                 DestoryActor();
             }
         }
+
+        #region ##### Data #####
+        //public AccountData GetData()
+        //{
+
+        //}
+        #endregion
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
