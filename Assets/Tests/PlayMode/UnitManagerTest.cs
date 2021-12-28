@@ -457,22 +457,9 @@ namespace SEF.Test
             unitActor2.SetTarget(enemyActor);
 
             bool isRun = true;
-            _unitManager.AddOnDestoryListener(actor =>
+            enemyActor.AddOnDestoryedListener(actor =>
             {
-                if (actor is EnemyActor)
-                {
-                    isRun = false;
-                    try
-                    {
-                        unitActor1.SetTypeUnitState(TYPE_UNIT_STATE.Idle);
-                        unitActor2.SetTypeUnitState(TYPE_UNIT_STATE.Idle);
-                    }
-                    catch { }
-                }
-                else
-                {
-                    Debug.Log($"{actor.name} »ç¸Á");
-                }
+                isRun = false;
             });
 
             while (isRun)
