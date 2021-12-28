@@ -2,6 +2,7 @@ namespace SEF.Data
 {
     using UnityEngine;
 
+    [System.Serializable]
     public class AttackData : BigNumberData
     {
         public AttackData() : base() { }

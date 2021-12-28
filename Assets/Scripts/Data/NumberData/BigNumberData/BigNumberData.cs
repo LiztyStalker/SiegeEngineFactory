@@ -6,10 +6,14 @@ namespace SEF.Data
     using UnityEngine;
     using System.Numerics;
 
+
+    [System.Serializable]
     public abstract class BigNumberData : INumberData
     {
-        private BigInteger _value;
+        [SerializeField]
+        private string _valueText;
 
+        private BigInteger _value;
         public BigInteger Value { get {return _value; } set {_value = value; } }
 
         public BigNumberData() { }
@@ -17,6 +21,7 @@ namespace SEF.Data
         protected BigNumberData(BigNumberData data)
         {
             _value = data.Value;
+            _valueText = GetDigitValue();
         }
 
         public void SetValue(string value)
@@ -91,6 +96,8 @@ namespace SEF.Data
             }
 
             Value = bigint;
+
+            _valueText = GetDigitValue();
         }
 
         private BigInteger GetDigit(string letter)
@@ -133,6 +140,8 @@ namespace SEF.Data
                 var str2 = str.Substring(length, 4 - length);
                 return str1 + "." + str2 + digit;
             }
+
+            _valueText = GetDigitValue();
 
             //Ãâ·Â
             return str;

@@ -9,81 +9,85 @@ namespace SEF.Data
         public enum TYPE_ATTACK_RANGE { Gun, Howitzer, Mortar, Melee}
 
         [SerializeField]
+        private Sprite _icon;
+        public Sprite icon { get => _icon; set => _icon = value; }
+
+        [SerializeField]
         private string _key;
-        public string Name => _key;
+        public string Key { get => _key; set => _key = value; }
 
         [SerializeField]
         private string _spineModelKey;
-        public string SpineModelKey => _spineModelKey;
+        public string SpineModelKey { get => _spineModelKey; set => _spineModelKey = value; }
 
         [SerializeField]
         private string _spineSkinKey;
-        public string SpineSkinKey => _spineSkinKey;
+        public string SpineSkinKey { get => _spineSkinKey; set => _spineSkinKey = value; }
 
         [SerializeField]
         private TYPE_UNIT_GROUP _group;
-        public TYPE_UNIT_GROUP Group => _group;
+        public TYPE_UNIT_GROUP Group { get => _group; set => _group = value; }
 
         [SerializeField]
-        private HealthData _healthValue;
-        public HealthData HealthValue => _healthValue;
+        private HealthData _healthValue = NumberDataUtility.Create<HealthData>();
+        public HealthData HealthValue { get => _healthValue; set => _healthValue = value; }
 
         [SerializeField]
-        private HealthData _increaseHealthValue;
-        public HealthData IncreaseHealthValue => _increaseHealthValue;
+        private HealthData _increaseHealthValue = NumberDataUtility.Create<HealthData>();
+        public HealthData IncreaseHealthValue { get => _increaseHealthValue; set => _increaseHealthValue = value; }
 
         [SerializeField]
         private float _increaseHealthRate;
-        public float IncreaseHealthRate => _increaseHealthRate;
+        public float IncreaseHealthRate { get => _increaseHealthRate; set => _increaseHealthRate = value; }
 
         [SerializeField]
         private float _productTime;
-        public float ProductTime => _productTime;
+        public float ProductTime { get => _productTime; set => _productTime = value; }
 
         [SerializeField]
-        private AttackData _attackValue;
-        public AttackData AttackValue => _attackValue;
+        private AttackData _attackValue = NumberDataUtility.Create<AttackData>();
+        public AttackData AttackValue { get => _attackValue; set => _attackValue = value; }
 
         [SerializeField]
-        private AttackData _increaseAttackValue;
-        public AttackData IncreaseAttackValue => _increaseAttackValue;
+        private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
+        public AttackData IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
 
         [SerializeField]
         private float _increaseAttackRate;
-        public float IncreaseAttackRate => _increaseAttackRate;
+        public float IncreaseAttackRate { get => _increaseAttackRate; set => _increaseAttackRate = value; }
 
         [SerializeField]
         private TYPE_ATTACK_RANGE _typeAttackRange;
-        public TYPE_ATTACK_RANGE TypeAttackRange => _typeAttackRange;
+        public TYPE_ATTACK_RANGE TypeAttackRange { get => _typeAttackRange; set => _typeAttackRange = value; }
 
         [SerializeField]
         private int _attackPopulation;
-        public int AttackPopulation => _attackPopulation;
+        public int AttackPopulation { get => _attackPopulation; set => _attackPopulation = value; }
 
         [SerializeField]
         private int _attackCount;
-        public int AttackCount => _attackCount;
+        public int AttackCount { get => _attackCount; set => _attackCount = value; }
 
         [SerializeField]
         private float[] _attackDelay;
-        public float[] AttackDelay => _attackDelay;
+        public float[] AttackDelay { get => _attackDelay; set => _attackDelay = value; }
 
         [SerializeField]
         private string _attackBulletKey;
 
-        public string AttackBulletKey => _attackBulletKey;
+        public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
 
         [SerializeField]
-        private AssetData _startUpgradeAsset;
-        public AssetData StartUpgradeAsset => _startUpgradeAsset;
+        private AssetData _startUpgradeAsset = NumberDataUtility.Create<AssetData>();
+        public AssetData StartUpgradeAsset { get => _startUpgradeAsset; set => _startUpgradeAsset = value; }
 
         [SerializeField]
-        private AssetData _increaseUpgradeAssetValue;
-        public AssetData IncreaseUpgradeAssetValue => _increaseUpgradeAssetValue;
+        private AssetData _increaseUpgradeAssetValue = NumberDataUtility.Create<AssetData>();
+        public AssetData IncreaseUpgradeAssetValue { get => _increaseUpgradeAssetValue; set => _increaseUpgradeAssetValue = value; }
 
         [SerializeField]
         private float _increaseUpgradeAssetRate;
-        public float IncreaseUpgradeAssetRate => _increaseUpgradeAssetRate;
+        public float IncreaseUpgradeAssetRate { get => _increaseUpgradeAssetRate; set => _increaseUpgradeAssetRate = value; }
 
         //private string[] _conditionTechTree;
         //public string[] ConditionTechTree => _conditionTechTree;
@@ -92,12 +96,12 @@ namespace SEF.Data
         //public AssetData[] ConditionTechTreeValue => _conditionTechTreeValue;
 
         [SerializeField]
-        private AssetData _techTreeAsset;
-        public AssetData TechTreeAsset => _techTreeAsset;
+        private AssetData _techTreeAsset = NumberDataUtility.Create<AssetData>();
+        public AssetData TechTreeAsset { get => _techTreeAsset; set => _techTreeAsset = value; }
 
         [SerializeField]
         private string[] _techTreeKeys;
-        public string[] TechTreeKeys => _techTreeKeys;
+        public string[] TechTreeKeys { get => _techTreeKeys; set => _techTreeKeys = value; }
 
 
 

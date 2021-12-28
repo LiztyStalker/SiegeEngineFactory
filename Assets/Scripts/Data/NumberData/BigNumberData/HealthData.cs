@@ -2,8 +2,10 @@ namespace SEF.Data
 {
     using UnityEngine;
 
+    [System.Serializable]
     public class HealthData : BigNumberData
     {
+        
         public HealthData() : base(){ }
         protected HealthData(BigNumberData value) : base(value) { }
 

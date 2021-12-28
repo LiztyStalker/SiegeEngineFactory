@@ -2,6 +2,8 @@ namespace SEF.Data
 {
     using UnityEngine;
     public enum TYPE_ASSET { Gold, Ore, Resource, Meteorite }
+
+    [System.Serializable]
     public class AssetData : BigNumberData
     {
 
