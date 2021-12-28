@@ -34,7 +34,7 @@ namespace UtilityManager
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static BulletData CreateTest()
         {
-            return new BulletData();
+            return new BulletData("Data@Bullet");
         }
 
         public void SetData(TYPE_BULLET_ACTION typeBulletAction, float movementSpeed, bool isRotate)
@@ -46,10 +46,10 @@ namespace UtilityManager
 
         private static Sprite _instanceSprite;
 
-        private BulletData()
+        private BulletData(string name)
         {
             var obj = new GameObject();
-            obj.name = "Data@Bullet";
+            obj.name = name;
             var sprite = obj.AddComponent<SpriteRenderer>();
 
 
