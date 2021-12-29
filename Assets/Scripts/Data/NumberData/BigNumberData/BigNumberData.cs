@@ -13,6 +13,7 @@ namespace SEF.Data
         [SerializeField]
         private string _valueText;
 
+        [SerializeField]
         private BigInteger _value;
         public BigInteger Value { get {return _value; } set {_value = value; } }
 
