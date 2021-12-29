@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="EnemyDataEditor.uss" />
+    <ui:VisualElement style="width: 100%; height: 100%;">
+        <ui:VisualElement name="information_panel" class="default_element">
+            <ui:Toggle label="Toggle" name="modified_toggle" />
+            <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="name_textfield" />
+            <uie:EnumField label="Enum" value="Center" name="group_enumfield" />
+            <uie:EnumField label="Enum" value="Center" name="theme_enumfield" />
+            <uie:IntegerField label="Int Field" value="42" name="level_intfield" />
+            <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="wave_sliderfield" />
+            <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="health_textfield" />
+            <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="dps_textfield" />
+        </ui:VisualElement>
+        <ui:VisualElement name="advanced_panel">
+            <ui:VisualElement name="health_panel" class="advanced_element">
+                <ui:Label text="체력" display-tooltip-when-elided="true" name="Label" class="title_label" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_healthvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="starthealthvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaselevelhealthvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increaselevelhealthrate_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increasewavehealthvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increasewavehealthrate_textfield" />
+            </ui:VisualElement>
+            <ui:VisualElement name="attack_panel" class="advanced_element">
+                <ui:Label text="공격" display-tooltip-when-elided="true" name="Label" class="title_label" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_attackvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startattackvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaseattackvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increaseattackrate_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="attackcount_intfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="attackdelay_floatfield" />
+                <ui:VisualElement />
+            </ui:VisualElement>
+            <ui:VisualElement name="asset_panel" class="advanced_element">
+                <ui:Label text="획득재화" display-tooltip-when-elided="true" name="Label" class="title_label" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_rewardassetvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startrewardassetvalue_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaselevelrewardassetvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increaselevelrewardassetrate_floatfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increasewaverewardassetvalue_textfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="increasewaverewardassetrate_floatfield" />
+            </ui:VisualElement>
+            <ui:VisualElement name="spine_panel" class="advanced_element">
+                <ui:Label text="스파인" display-tooltip-when-elided="true" class="title_label" />
+                <uie:ObjectField label="Object Field" name="skeletondatasset_objectfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="spinemodelkey_textfield" />
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="spineskinkey_textfield" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

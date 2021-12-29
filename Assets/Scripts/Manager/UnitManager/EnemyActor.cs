@@ -159,7 +159,7 @@ namespace SEF.Unit {
         {
             _enemyEntity = enemyEntity;
 
-            SetHealthData(_enemyEntity.EnemyData.HealthValue);
+            SetHealthData(_enemyEntity.EnemyData.StartHealthValue);
 
             if (SkeletonAnimation != null)
             {
@@ -224,7 +224,7 @@ namespace SEF.Unit {
                     }
                     else
                     {
-                        Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue);
+                        Target.DecreaseHealth(_enemyEntity.EnemyData.StartAttackValue);
                     }
                     _nowActionTime = 0f;
                 }
@@ -272,12 +272,12 @@ namespace SEF.Unit {
                 if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
                 {
                     var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
-                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue); });
+                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.EnemyData.StartAttackValue); });
                 }
                 //±Ù°Å¸®
                 else
                 {
-                    Target.DecreaseHealth(_enemyEntity.EnemyData.AttackValue);
+                    Target.DecreaseHealth(_enemyEntity.EnemyData.StartAttackValue);
                 }
             }
         }
