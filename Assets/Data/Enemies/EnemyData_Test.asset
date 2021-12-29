@@ -12,11 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
   m_Name: EnemyData_Test
   m_EditorClassIdentifier: 
-  _key: 
+  _key: EnemyData_Test
+  _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
   _spineModelKey: 
   _spineSkinKey: 
-  _increaseHealthRate: 0
-  _increaseAttackRate: 0
-  _attackCount: 0
-  _attackDelay: []
+  _group: 0
+  _typeLevelTheme: 0
+  _startHealthValue:
+    _valueText: '001A 000 '
+  _increaseLevelHealthValue:
+    _valueText: '100 '
+  _increaseLevelHealthRate: 0.1
+  _increaseWaveHealthValue:
+    _valueText: '000 '
+  _increaseWaveHealthRate: 0.1
+  _startAttackValue:
+    _valueText: '100 '
+  _increaseAttackValue:
+    _valueText: '010 '
+  _increaseAttackRate: 0.1
+  _attackCount: 1
+  _attackDelay: 1
   _attackBulletKey: 
+  _startRewardAssetValue:
+    _valueText: '010 '
+  _increaseLevelRewardAssetValue:
+    _valueText: '001 '
+  _increaseLevelRewardAssetRate: 1
+  _increaseWaveRewardAssetValue:
+    _valueText: '001 '
+  _increaseWaveRewardAssetRate: 1

@@ -115,6 +115,16 @@ namespace SEF.Unit {
             isDead = false;
         }
 
+        public override void InActivate()
+        {
+            base.InActivate();
+            SetPosition(ENEMY_IDLE_POSITION);
+            SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+
+            //_destoryedEvent = null;
+            //_hitEvent = null;
+        }
+
         public override void RunProcess(float deltaTime)
         {
 //            Debug.Log(TypeUnitState);
@@ -164,7 +174,10 @@ namespace SEF.Unit {
             if (SkeletonAnimation != null)
             {
                 //유닛 생성
-                SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
+                if (enemyEntity.EnemyData.SkeletonDataAsset != null)
+                    SkeletonAnimation.skeletonDataAsset = enemyEntity.EnemyData.SkeletonDataAsset;
+                else
+                    SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
             }
 
         }
@@ -176,10 +189,10 @@ namespace SEF.Unit {
                 //목표까지 이동
                 SetPosition(Vector2.MoveTowards(transform.position, ENEMY_READY_POSITION, deltaTime));
             }
-            else
-            {
-                Debug.Log("Ready에 도달함");
-            }
+            //else
+            //{
+            //    Debug.Log("Ready에 도달함");
+            //}
         }
 
         protected override void AppearRunProcess(float deltaTime)
@@ -192,7 +205,7 @@ namespace SEF.Unit {
             else
             {
                 //목표에 도달했으면 Action으로 변환
-                Debug.Log("Action에 도달함");
+                //Debug.Log("Action에 도달함");
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
                 PlayAnimation("Attack");
             }
@@ -209,7 +222,7 @@ namespace SEF.Unit {
             //TestCode
             if (Target == null)
             {
-                Debug.Log("find");
+                //Debug.Log("find");
                 //Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
                 SetTarget(_findTargetEvent());
             }

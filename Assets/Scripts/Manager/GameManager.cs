@@ -74,7 +74,9 @@ namespace SEF.Manager
 
         private void Update()
         {
-            _gameSystem.RunProcess(Time.deltaTime);
+            var deltaTime = Time.deltaTime;
+            _gameSystem.RunProcess(deltaTime);
+            _unitManager.RunProcess(deltaTime);
         }
 
 

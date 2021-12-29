@@ -404,7 +404,7 @@ namespace SEF.Test
             enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
             enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
 
-            _unitManager.ChangeNowEnemy();
+            _unitManager.ChangeNowEnemy(enemyActor);
 
             bool isRun = true;
             enemyActor.Destroy_Test(delegate

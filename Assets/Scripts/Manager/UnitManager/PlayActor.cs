@@ -60,7 +60,7 @@ namespace SEF.Unit
             gameObject.SetActive(true);
         }
 
-        public void InActivate()
+        public virtual void InActivate()
         {
             gameObject.SetActive(false);
         }
