@@ -34,12 +34,12 @@ namespace SEF.Data
         public TYPE_UNIT_GROUP Group { get => _group; set => _group = value; }
 
         [SerializeField]
-        private HealthData _healthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData StartHealthValue { get => _healthValue; set => _healthValue = value; }
+        private HealthData _startHealthValue = NumberDataUtility.Create<HealthData>();
+        public HealthData StartHealthValue => _startHealthValue;
 
         [SerializeField]
         private HealthData _increaseHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseHealthValue { get => _increaseHealthValue; set => _increaseHealthValue = value; }
+        public HealthData IncreaseHealthValue => _increaseHealthValue;
 
         [SerializeField]
         private float _increaseHealthRate;
@@ -51,11 +51,11 @@ namespace SEF.Data
 
         [SerializeField]
         private AttackData _attackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData StartAttackValue { get => _attackValue; set => _attackValue = value; }
+        public AttackData StartAttackValue => _attackValue;
 
         [SerializeField]
         private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
+        public AttackData IncreaseAttackValue => _increaseAttackValue;
 
         [SerializeField]
         private float _increaseAttackRate;
@@ -84,11 +84,11 @@ namespace SEF.Data
 
         [SerializeField]
         private AssetData _startUpgradeAsset = NumberDataUtility.Create<AssetData>();
-        public AssetData StartUpgradeAsset { get => _startUpgradeAsset; set => _startUpgradeAsset = value; }
+        public AssetData StartUpgradeAsset => _startUpgradeAsset;
 
         [SerializeField]
         private AssetData _increaseUpgradeAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseUpgradeAssetValue { get => _increaseUpgradeAssetValue; set => _increaseUpgradeAssetValue = value; }
+        public AssetData IncreaseUpgradeAssetValue => _increaseUpgradeAssetValue;
 
         [SerializeField]
         private float _increaseUpgradeAssetRate;
@@ -105,7 +105,7 @@ namespace SEF.Data
 
         [SerializeField]
         private AssetData _techTreeAsset = NumberDataUtility.Create<AssetData>();
-        public AssetData TechTreeAsset { get => _techTreeAsset; set => _techTreeAsset = value; }
+        public AssetData TechTreeAsset => _techTreeAsset;
 
         [SerializeField]
         private string[] _techTreeKeys;
@@ -129,7 +129,7 @@ namespace SEF.Data
 
             _attackBulletKey = "Arrow";
 
-            _healthValue = HealthData.Create_Test();
+            _startHealthValue = HealthData.Create_Test();
             _increaseHealthValue = HealthData.Create_Test();
             _increaseHealthRate = 0f;
             _productTime = 1f;

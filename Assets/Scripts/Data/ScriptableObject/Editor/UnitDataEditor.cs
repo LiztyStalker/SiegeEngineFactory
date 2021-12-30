@@ -10,16 +10,6 @@ namespace SEF.Data.Editor
     [CustomEditor(typeof(UnitData))]
     public class UnitDataEditor : Editor
     {
-
-        //public override void OnInspectorGUI()
-        //{
-        //    base.OnInspectorGUI();
-
-        //    //var property = serializedObject.FindProperty("_healthValue");
-        //    //EditorGUILayout.PropertyField(property, true);
-        //}
-
-
         private UnitData _unitData;
         private VisualElement _root;
 
@@ -173,7 +163,7 @@ namespace SEF.Data.Editor
             TextField totalHealthValue = _root.Query<TextField>("health_textfield").First();
             totalHealthValue.SetEnabled(false);
             totalHealthValue.label = "총체력";
-            totalHealthValue.value = _unitData.StartHealthValue.GetValue();
+            totalHealthValue.value = "";// _unitData.StartHealthValue.GetValue();
 
             TextField dpsField = _root.Query<TextField>("dps_textfield").First();
             dpsField.SetEnabled(false);
@@ -183,7 +173,7 @@ namespace SEF.Data.Editor
             TextField nextUpgradeAssetField = _root.Query<TextField>("next_upgrade_textfield").First();
             nextUpgradeAssetField.SetEnabled(false);
             nextUpgradeAssetField.label = "업글비용";
-            nextUpgradeAssetField.value = _unitData.StartUpgradeAsset.GetValue();
+            nextUpgradeAssetField.value = "";// _unitData.StartUpgradeAsset.GetValue();
 
             _productField = _root.Query<FloatField>("product_floatfield").First();
             _productField.label = "생산시간";
@@ -205,26 +195,26 @@ namespace SEF.Data.Editor
             TextField summaryHealthValueField = _root.Query<TextField>("summary_healthvalue_textfield").First();
             summaryHealthValueField.SetEnabled(false);
             summaryHealthValueField.label = "체력 요약";
-            summaryHealthValueField.value = _unitData.StartHealthValue.GetValue();
+            summaryHealthValueField.value = "";// _unitData.StartHealthValue.GetValue();
 
             _startHealthValueField = _root.Query<TextField>("starthealthvalue_textfield").First();
             _startHealthValueField.label = "시작체력";
-            _startHealthValueField.value = _unitData.StartHealthValue.GetValue();
+            _startHealthValueField.value = _unitData.StartHealthValue.ValueText;
             _startHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.StartHealthValue.SetValue(e.newValue);
+                    _unitData.StartHealthValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
 
             _increaseHealthValueField = _root.Query<TextField>("increasehealthvalue_textfield").First();
             _increaseHealthValueField.label = "체력증가량";
-            _increaseHealthValueField.value = _unitData.IncreaseHealthValue.GetValue();
+            _increaseHealthValueField.value = _unitData.IncreaseHealthValue.ValueText;
             _increaseHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseHealthValue.SetValue(e.newValue);
+                    _unitData.IncreaseHealthValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
@@ -246,27 +236,27 @@ namespace SEF.Data.Editor
             TextField summaryAttackValueField = _root.Query<TextField>("summary_attackvalue_textfield").First();
             summaryAttackValueField.SetEnabled(false);
             summaryAttackValueField.label = "공격 요약";
-            summaryAttackValueField.value = _unitData.StartAttackValue.GetValue();
+            summaryAttackValueField.value = "";// _unitData.StartAttackValue.GetValue();
 
 
             _startAttackValueField = _root.Query<TextField>("startattackvalue_textfield").First();
             _startAttackValueField.label = "기본공격력";
-            _startAttackValueField.value = _unitData.StartAttackValue.GetValue();
+            _startAttackValueField.value = _unitData.StartAttackValue.ValueText;
             _startAttackValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.StartAttackValue.SetValue(e.newValue);
+                    _unitData.StartAttackValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
 
             _increaseAttackValueField = _root.Query<TextField>("increaseattackvalue_textfield").First();
             _increaseAttackValueField.label = "공격증가량";
-            _increaseAttackValueField.value = _unitData.IncreaseAttackValue.GetValue();
+            _increaseAttackValueField.value = _unitData.IncreaseAttackValue.ValueText;
             _increaseAttackValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseAttackValue.SetValue(e.newValue);
+                    _unitData.IncreaseAttackValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
@@ -343,22 +333,22 @@ namespace SEF.Data.Editor
 
             _startUpgradeValueField = _root.Query<TextField>("startupgradevalue_textfield").First();
             _startUpgradeValueField.label = "기본업글자원";
-            _startUpgradeValueField.value = _unitData.StartUpgradeAsset.GetValue();
+            _startUpgradeValueField.value = _unitData.StartUpgradeAsset.ValueText;
             _startUpgradeValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.StartUpgradeAsset.SetValue(e.newValue);
+                    _unitData.StartUpgradeAsset.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
 
             _increaseUpgradeValueField = _root.Query<TextField>("increaseupgradevalue_textfield").First();
             _increaseUpgradeValueField.label = "업글증가량";
-            _increaseUpgradeValueField.value = _unitData.IncreaseUpgradeAssetValue.GetValue();
+            _increaseUpgradeValueField.value = _unitData.IncreaseUpgradeAssetValue.ValueText;
             _increaseUpgradeValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseUpgradeAssetValue.SetValue(e.newValue);
+                    _unitData.IncreaseUpgradeAssetValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );
@@ -424,84 +414,7 @@ namespace SEF.Data.Editor
                 }
             );
 
-
-            
-                
-
             UpdateFields();
-
-
-
-
-
-
-            //< ui:VisualElement name = "icon_background" style = "width: 116px;" />
-
-            //           < ui:VisualElement name = "icon_field" style = "width: 116px;" />
-
-            //      < uie:ObjectField allow-scene - objects = "false" name = "icon_objectfield" class="icon_object_field" />
-            //< ui:Toggle label = "Toggle" name = "modified_toggle" />
-
-            //       < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "name_textfield" />
-
-            //                < uie:EnumField label = "Enum" value = "Center" name = "group_enumfield" />
-
-            //                     < uie:IntegerField label = "Int Field" value = "42" name = "upgrade_intfield" />
-
-            //                          < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "health_textfield" />
-
-            //                                   < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "dps_textfield" />
-
-            //                                            < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "next_upgrade_textfield" />
-
-            //                                                     < uie:FloatField label = "Float Field" value = "42.2" name = "product_floatfield" />
-
-
-
-            //    #region Fields
-            //    // Find the visual element with the name "systemSprite" and make it display the star system sprite if it has one.
-            //    VisualElement systemSprite = rootElement.Query<VisualElement>("systemSprite").First();
-            //    systemSprite.style.backgroundImage = starSystem.sprite ? starSystem.sprite.texture : null;
-
-            //    // Find an object field with the name "systemSpriteField", set that it only accepts objects of type Sprite,
-            //    // set its initial value and register a callback that will occur if the value of the filed changes.
-            //    ObjectField spriteField = rootElement.Query<ObjectField>("systemSpriteField").First();
-            //    spriteField.objectType = typeof(Sprite);
-            //    spriteField.value = starSystem.sprite;
-            //    spriteField.RegisterCallback<ChangeEvent<Object>>(
-            //        e =>
-            //        {
-            //            starSystem.sprite = (Sprite)e.newValue;
-            //            systemSprite.style.backgroundImage = starSystem.sprite.texture;
-            //        // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
-            //        EditorUtility.SetDirty(starSystem);
-            //        }
-            //    );
-
-            //    FloatField scaleField = rootElement.Query<FloatField>("starScale").First();
-            //    scaleField.value = starSystem.scale;
-            //    scaleField.RegisterCallback<ChangeEvent<float>>(
-            //        e => {
-            //            starSystem.scale = e.newValue;
-            //            EditorUtility.SetDirty(starSystem);
-            //        }
-            //    );
-            //    #endregion
-
-            //    #region Display Planet Data 
-            //    // Store visual element that will contain the planet sub-inspectors.  
-            //    planetList = rootElement.Query<VisualElement>("planetList").First();
-            //    UpdatePlanets();
-            //    #endregion
-
-            //    #region Buttons
-            //    // Assign methods to the click events of the two buttons.
-            //    Button btnAddPlanet = rootElement.Query<Button>("btnAddNew").First();
-            //    btnAddPlanet.clickable.clicked += AddPlanet;
-
-            //    Button btnRemoveAllPlanets = rootElement.Query<Button>("btnRemoveAll").First();
-            //    btnRemoveAllPlanets.clickable.clicked += RemoveAll;
-            //    #endregion
 
             return _root;
         }

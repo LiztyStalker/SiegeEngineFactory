@@ -81,7 +81,6 @@ namespace SEF.Manager
                 case UnitActor unitActor:
                     break;
                 case EnemyActor enemyActor:
-                    Debug.Log(enemyActor.GetRewardAssetData().Value);
                     _account.AddAsset(enemyActor.GetRewardAssetData());
                     break;
             }

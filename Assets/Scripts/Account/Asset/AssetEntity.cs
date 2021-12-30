@@ -21,6 +21,7 @@ namespace SEF.Entity
             {
                 var assetData = NumberDataUtility.Create<AssetData>();
                 assetData.SetTypeAsset((TYPE_ASSET)i);
+                assetData.SetValue("0");
                 _dic.Add((TYPE_ASSET)i, assetData);
             }
             RefreshAssets();
