@@ -41,7 +41,7 @@ namespace SEF.Manager
 
             //_unitManager.AddOnHitListener();
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
-
+            _unitManager.AddOnNextEnemyListener(_uiGame.RefreshEnemyUnit);
 
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);

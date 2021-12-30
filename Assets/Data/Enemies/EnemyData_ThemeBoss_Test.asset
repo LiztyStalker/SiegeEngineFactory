@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
+  m_Name: EnemyData_ThemeBoss_Test
+  m_EditorClassIdentifier: 
+  _key: EnemyData_ThemeBoss_Test
+  _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
+  _spineModelKey: 
+  _spineSkinKey: 
+  _group: 2
+  _typeLevelTheme: 0
+  _startHealthValue:
+    _valueText: 1000
+  _increaseLevelHealthValue:
+    _valueText: 1
+  _increaseLevelHealthRate: 1
+  _increaseWaveHealthValue:
+    _valueText: 1
+  _increaseWaveHealthRate: 1
+  _startAttackValue:
+    _valueText: 100
+  _increaseAttackValue:
+    _valueText: 1
+  _increaseAttackRate: 1
+  _attackCount: 1
+  _attackDelay: 1
+  _attackBulletKey: 
+  _startRewardAssetValue:
+    _valueText: 100
+  _increaseLevelRewardAssetValue:
+    _valueText: 1
+  _increaseLevelRewardAssetRate: 1
+  _increaseWaveRewardAssetValue:
+    _valueText: 1
+  _increaseWaveRewardAssetRate: 1

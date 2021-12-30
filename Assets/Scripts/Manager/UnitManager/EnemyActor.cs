@@ -268,10 +268,9 @@ namespace SEF.Unit {
             SkeletonAnimationState.SetAnimation(0, name, isLoop);
         }
 
-        public AssetData GetRewardAssetData()
-        {
-            return _enemyEntity.GetRewardAssetData();
-        }
+        public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
+        public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
+
 
         #region ##### Listener #####
 

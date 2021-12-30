@@ -26,7 +26,9 @@ namespace SEF.Unit
 
             public EnemyActor NowEnemy => _list[0];
 
-            private LevelWaveData _nowLevelWaveData;
+            private LevelWaveData _levelWaveData;
+
+            public LevelWaveData NowLevelWaveData => NowEnemy.GetLevelWaveData();
 
             public int Count { 
                 get
@@ -75,6 +77,8 @@ namespace SEF.Unit
                 _list = new List<EnemyActor>();
                 _poolEnemyActor = PoolSystem<EnemyActor>.Create();
                 _poolEnemyActor.Initialize(EnemyActor.Create);
+
+                _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
             }
 
             public void ChangeEnemyActor(EnemyActor enemyActor)
@@ -113,16 +117,21 @@ namespace SEF.Unit
             {
                 var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
                 var data = arr[Random.Range(0, arr.Length)];
-                Debug.Log(data);
-                var enemyActor = _poolEnemyActor.GiveElement();
+
 
                 EnemyEntity enemyEntity = new EnemyEntity();
-                enemyEntity.SetData(data, _nowLevelWaveData);
+                var levelWaveData = _levelWaveData.Clone() as LevelWaveData;
+                Debug.Log(levelWaveData);
+                enemyEntity.SetData(data, levelWaveData);
+
+                var enemyActor = _poolEnemyActor.GiveElement();
                 enemyActor.SetData(enemyEntity);
                 enemyActor.SetParent(parent);
                 enemyActor.Activate();
 
                 //_list.Add(enemyActor);
+
+                _levelWaveData.IncreaseNumber();
 
                 return enemyActor;
             }
@@ -252,6 +261,7 @@ namespace SEF.Unit
         {
             _enemyQueueData.Initialize(/*AccountData*/_gameObject.transform);
             SetNowEnemyListener();
+            OnNextEnemyEvent(_enemyQueueData.NowEnemy);
         }
 
         public void CleanUp()
@@ -296,7 +306,6 @@ namespace SEF.Unit
 
         public void RetrieveUnitActor(UnitActor unitActor)
         {
-
             unitActor.RemoveOnHitListener(OnHitEvent);
             unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             unitActor.InActivate();
@@ -330,7 +339,6 @@ namespace SEF.Unit
         {
             var enemyActor = CreateEnemyActor();
             ChangeNowEnemy(enemyActor);
-            //LevelWave++;
         }
 
         public EnemyActor CreateEnemyActor()
@@ -359,11 +367,9 @@ namespace SEF.Unit
 
         private void SetNowEnemyListener()
         {
-
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
             _enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
-
         }
 
         private UnitActor FindUnitActor()
@@ -414,6 +420,7 @@ namespace SEF.Unit
                 case EnemyActor enemyActor:
                     RetrieveEnemyActor(enemyActor);
                     CreateAndChangeEnemyActor();
+                    OnNextEnemyEvent(_enemyQueueData.NowEnemy);
                     break;
                 default:
                     Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
@@ -421,6 +428,15 @@ namespace SEF.Unit
             }
         }
 
+        private System.Action<EnemyActor> _nextEvent;
+
+        public void AddOnNextEnemyListener(System.Action<EnemyActor> act) => _nextEvent += act;
+        public void RemoveOnNextEnemyListener(System.Action<EnemyActor> act) => _nextEvent += act;
+
+        private void OnNextEnemyEvent(EnemyActor enemyActor)
+        {
+            _nextEvent?.Invoke(enemyActor);
+        }
 
         #endregion
 

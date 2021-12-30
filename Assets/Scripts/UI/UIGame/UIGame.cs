@@ -4,6 +4,8 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Entity;
     using Data;
+    using Unit;
+
 
     [RequireComponent(typeof(UIDocument))]
     public class UIGame : MonoBehaviour
@@ -57,7 +59,10 @@ namespace SEF.UI.Toolkit
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
-        //public void RefreshEnemy(EnemyActor)
+        public void RefreshEnemyUnit(EnemyActor enemyActor) 
+        {
+            Debug.Log("Àû µîÀå " + enemyActor.GetLevelWaveData().GetValue());
+        }
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
         public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
 
@@ -72,6 +77,7 @@ namespace SEF.UI.Toolkit
         public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiSystem.RemoveUpTechListener(act);
         public void AddExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
         public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
+
         #endregion
 
     }
