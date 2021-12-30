@@ -137,6 +137,7 @@ namespace SEF.Data.Editor
             );
 
             _groupField = _root.Query<EnumField>("group_enumfield").First();
+            _groupField.BindProperty(serializedObject.FindProperty("_group"));
             _groupField.label = "그룹";
             _groupField.value = _unitData.Group;
             _groupField.RegisterCallback<ChangeEvent<System.Enum>>(
@@ -285,6 +286,7 @@ namespace SEF.Data.Editor
             );
 
             _typeAttackRangeField = _root.Query<EnumField>("typeattackrange_enumfield").First();
+            _typeAttackRangeField.BindProperty(serializedObject.FindProperty("_typeAttackRange"));
             _typeAttackRangeField.label = "공격타입";
             _typeAttackRangeField.value = _unitData.TypeAttackRange;
             _typeAttackRangeField.RegisterCallback<ChangeEvent<System.Enum>>(
@@ -297,6 +299,7 @@ namespace SEF.Data.Editor
 
 
             _typeAttackActionField = _root.Query<EnumField>("typeattackaction_enumfield").First();
+            //_typeAttackActionField.BindProperty(serializedObject.FindProperty("_typeAttackAction"));
             _typeAttackActionField.SetEnabled(false);
             _typeAttackActionField.label = "공격방식";
             //_typeAttackActionField.value = _unitData.TypeAttackAction;

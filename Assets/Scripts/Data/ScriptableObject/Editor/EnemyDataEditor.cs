@@ -133,7 +133,8 @@ namespace SEF.Data.Editor
             );
 
             _groupField = _root.Query<EnumField>("group_enumfield").First();
-            _groupField.label = "그룹";
+            _groupField.BindProperty(serializedObject.FindProperty("_group"));
+            _groupField.label = "타입";
             _groupField.value = _enemyData.Group;
             _groupField.RegisterCallback<ChangeEvent<System.Enum>>(
                 e =>
@@ -144,6 +145,7 @@ namespace SEF.Data.Editor
             );
 
             _themeField = _root.Query<EnumField>("theme_enumfield").First();
+            _themeField.BindProperty(serializedObject.FindProperty("_typeLevelTheme"));
             _themeField.label = "테마";
             _themeField.value = _enemyData.Group;
             _themeField.RegisterCallback<ChangeEvent<System.Enum>>(
