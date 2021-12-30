@@ -61,8 +61,24 @@ namespace SEF.UI.Toolkit
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshEnemyUnit(EnemyActor enemyActor) 
         {
-            Debug.Log("적 등장 " + enemyActor.GetLevelWaveData().GetValue());
+
+            switch (enemyActor.typeEnemyGroup) 
+            {
+                case TYPE_ENEMY_GROUP.Normal:
+                    Debug.Log("적 등장 " + enemyActor.GetLevelWaveData().GetValue());
+                    break;
+                case TYPE_ENEMY_GROUP.Boss:
+                    Debug.Log("보스 등장 " + enemyActor.GetLevelWaveData().GetValue());
+                    break;
+                case TYPE_ENEMY_GROUP.ThemeBoss:
+                    Debug.Log("테마 보스 등장 " + enemyActor.GetLevelWaveData().GetValue());
+                    break;
+                default:
+                    Debug.LogError($"{enemyActor.typeEnemyGroup} TypeEnemyGroup이 지정되지 않았습니다");
+                    break;
+            }
         }
+
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
         public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
 

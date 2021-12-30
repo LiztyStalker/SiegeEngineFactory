@@ -484,6 +484,60 @@ namespace SEF.Test
         }
 
 
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyData_Boss_10To100()
+        {
+            _unitManager.Initialize_Empty();
+            _enemyEntity_Dummy.Initialize();
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+
+
+            for (int i = 1; i < 11; i++)
+            {
+                levelWaveData.SetValue(10 * i);
+                _enemyEntity_Dummy.SetData(enemyData, levelWaveData);
+
+                Debug.Log(levelWaveData.IsBoss());
+                if (i == 10)
+                {
+                    Assert.IsFalse(levelWaveData.IsBoss());
+                }
+                else
+                {
+                    Assert.IsTrue(levelWaveData.IsBoss());
+                }
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
+
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyData_ThemeBoss_100To1000()
+        {
+            _unitManager.Initialize_Empty();
+            _enemyEntity_Dummy.Initialize();
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+
+
+
+            for(int i = 1; i < 11; i++)
+            {
+                levelWaveData.SetValue(100 * i);
+                _enemyEntity_Dummy.SetData(enemyData, levelWaveData);
+
+                Debug.Log(levelWaveData.IsThemeBoss());
+                Assert.IsTrue(levelWaveData.IsThemeBoss());
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
+
     }
 }
 #endif

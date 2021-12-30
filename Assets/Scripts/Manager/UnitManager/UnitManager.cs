@@ -115,13 +115,29 @@ namespace SEF.Unit
 
             public EnemyActor CreateEnemyActor(Transform parent)
             {
-                var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
-                var data = arr[Random.Range(0, arr.Length)];
-
-
                 EnemyEntity enemyEntity = new EnemyEntity();
                 var levelWaveData = _levelWaveData.Clone() as LevelWaveData;
-                Debug.Log(levelWaveData);
+
+
+                //일반, 보스, 테마보스 찾기
+                var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
+                var themeArray = arr.Where(data => (int)data.TypeLevelTheme == levelWaveData.GetTheme());
+                EnemyData data;
+                if (levelWaveData.IsThemeBoss())
+                {
+                    data = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.ThemeBoss).Single();
+                }
+                else if (levelWaveData.IsBoss()) 
+                {
+                    var bossArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Boss).ToArray();
+                    data = bossArray[UnityEngine.Random.Range(0, bossArray.Length)];
+                }
+                else
+                {
+                    var enemyArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Normal).ToArray();
+                    data = enemyArray[UnityEngine.Random.Range(0, enemyArray.Length)];
+                }
+
                 enemyEntity.SetData(data, levelWaveData);
 
                 var enemyActor = _poolEnemyActor.GiveElement();

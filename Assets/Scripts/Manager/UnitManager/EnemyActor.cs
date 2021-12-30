@@ -268,6 +268,7 @@ namespace SEF.Unit {
             SkeletonAnimationState.SetAnimation(0, name, isLoop);
         }
 
+        public TYPE_ENEMY_GROUP typeEnemyGroup => _enemyEntity.EnemyData.Group;
         public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
         public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
 

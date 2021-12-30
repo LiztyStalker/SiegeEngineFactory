@@ -34,5 +34,13 @@ namespace SEF.Data
         {
             _value = 0;
         }
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetValue(int value)
+        {
+            Value = value;
+        }
+#endif
     }
 }
