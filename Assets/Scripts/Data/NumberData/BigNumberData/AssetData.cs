@@ -9,7 +9,7 @@ namespace SEF.Data
 
         private TYPE_ASSET _typeAsset;
         public TYPE_ASSET TypeAsset => _typeAsset;
-        public AssetData() : base() { }
+        public AssetData() : base() {}
         protected AssetData(BigNumberData value) : base(value) { }
 
         public void SetTypeAsset(TYPE_ASSET typeAsset)
@@ -26,14 +26,14 @@ namespace SEF.Data
         public static AssetData Create_Test()
         {
             var data = new AssetData();
-            data.Value = 100;
+            data.ValueText = "100";
             return data;
         }
         public static AssetData Create_Test(TYPE_ASSET typeAsset, int value)
         {
             var data = new AssetData();
+            data.ValueText = value.ToString();
             data.SetTypeAsset(typeAsset);
-            data.Value = value;
             return data;
         }
 

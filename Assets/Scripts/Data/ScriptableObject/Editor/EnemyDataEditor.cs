@@ -24,6 +24,7 @@ namespace SEF.Data.Editor
         private VisualElement _root;
 
 
+        private LevelWaveData _levelWaveData;
 
         private int _nowLevel = 1;
         private int _nowWave = 1;
@@ -98,28 +99,13 @@ namespace SEF.Data.Editor
             _skeletonDataAssetField.SetEnabled(_isModified);
             _spineModelKeyField.SetEnabled(_isModified);
             _spineSkinKeyField.SetEnabled(_isModified);
+
+            
         }
 
 
         public override VisualElement CreateInspectorGUI()
         {
-
-//            _iconField = _root.Query<VisualElement>("icon_field").First();
-//            _iconField.style.backgroundImage = _enemyData.icon ? _enemyData.icon.texture : null;
-
-
-
-            //_spriteField = _root.Query<ObjectField>("icon_objectfield").First();
-            //_spriteField.objectType = typeof(Sprite);
-            //_spriteField.value = _enemyData.icon;
-            //_spriteField.RegisterCallback<ChangeEvent<Object>>(
-            //    e =>
-            //    {
-            //        _enemyData.icon = (Sprite)e.newValue;
-            //        _iconField.style.backgroundImage = _enemyData.icon.texture;
-            //        EditorUtility.SetDirty(_enemyData);
-            //    }
-            //);
 
             Toggle modifiedToggle = _root.Query<Toggle>("modified_toggle").First();
             modifiedToggle.label = "수정";
@@ -196,7 +182,7 @@ namespace SEF.Data.Editor
             TextField totalHealthValue = _root.Query<TextField>("health_textfield").First();
             totalHealthValue.SetEnabled(false);
             totalHealthValue.label = "총체력";
-            totalHealthValue.value = _enemyData.StartHealthValue.GetValue();
+            totalHealthValue.value = "";// _enemyData.StartHealthValue.;
 
             TextField dpsField = _root.Query<TextField>("dps_textfield").First();
             dpsField.SetEnabled(false);
@@ -211,26 +197,27 @@ namespace SEF.Data.Editor
             TextField summaryHealthValueField = _root.Query<TextField>("summary_healthvalue_textfield").First();
             summaryHealthValueField.SetEnabled(false);
             summaryHealthValueField.label = "체력 요약";
-            summaryHealthValueField.value = _enemyData.StartHealthValue.GetValue();
+            summaryHealthValueField.value = "";// _enemyData.StartHealthValue.GetValue();
 
             _startHealthValueField = _root.Query<TextField>("starthealthvalue_textfield").First();
             _startHealthValueField.label = "시작체력";
-            _startHealthValueField.value = _enemyData.StartHealthValue.GetValue();
+            _startHealthValueField.value = _enemyData.StartHealthValue.ValueText;
             _startHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.StartHealthValue.SetValue(e.newValue);
+                    _enemyData.StartHealthValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
+                    Debug.Log(_enemyData.StartHealthValue.GetValue());
                 }
             );
 
             _increaseLevelHealthValueField = _root.Query<TextField>("increaselevelhealthvalue_textfield").First();
             _increaseLevelHealthValueField.label = "체력레벨증가량";
-            _increaseLevelHealthValueField.value = _enemyData.IncreaseLevelHealthValue.GetValue();
+            _increaseLevelHealthValueField.value = _enemyData.IncreaseLevelHealthValue.ValueText;
             _increaseLevelHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.IncreaseLevelHealthValue.SetValue(e.newValue);
+                    _enemyData.IncreaseLevelHealthValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -248,11 +235,11 @@ namespace SEF.Data.Editor
 
             _increaseWaveHealthValueField = _root.Query<TextField>("increasewavehealthvalue_textfield").First();
             _increaseWaveHealthValueField.label = "체력웨이브증가량";
-            _increaseWaveHealthValueField.value = _enemyData.IncreaseWaveHealthValue.GetValue();
+            _increaseWaveHealthValueField.value = _enemyData.IncreaseWaveHealthValue.ValueText;
             _increaseWaveHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.IncreaseWaveHealthValue.SetValue(e.newValue);
+                    _enemyData.IncreaseWaveHealthValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -272,27 +259,27 @@ namespace SEF.Data.Editor
             TextField summaryAttackValueField = _root.Query<TextField>("summary_attackvalue_textfield").First();
             summaryAttackValueField.SetEnabled(false);
             summaryAttackValueField.label = "공격 요약";
-            summaryAttackValueField.value = _enemyData.StartAttackValue.GetValue();
+            summaryAttackValueField.value = _enemyData.StartAttackValue.ValueText;
 
 
             _startAttackValueField = _root.Query<TextField>("startattackvalue_textfield").First();
             _startAttackValueField.label = "기본공격력";
-            _startAttackValueField.value = _enemyData.StartAttackValue.GetValue();
+            _startAttackValueField.value = _enemyData.StartAttackValue.ValueText;
             _startAttackValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.StartAttackValue.SetValue(e.newValue);
+                    _enemyData.StartAttackValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
 
             _increaseAttackValueField = _root.Query<TextField>("increaseattackvalue_textfield").First();
             _increaseAttackValueField.label = "공격증가량";
-            _increaseAttackValueField.value = _enemyData.IncreaseAttackValue.GetValue();
+            _increaseAttackValueField.value = _enemyData.IncreaseAttackValue.ValueText;
             _increaseAttackValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.IncreaseAttackValue.SetValue(e.newValue);
+                    _enemyData.IncreaseAttackValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -339,27 +326,27 @@ namespace SEF.Data.Editor
             TextField summaryRewardAssetValueField = _root.Query<TextField>("summary_rewardassetvalue_textfield").First();
             summaryRewardAssetValueField.SetEnabled(false);
             summaryRewardAssetValueField.label = "재화요약";
-            summaryRewardAssetValueField.value = _enemyData.StartRewardAssetValue.GetValue();
+            summaryRewardAssetValueField.value = _enemyData.StartRewardAssetValue.ValueText;
 
 
             _startRewardAssetValueField = _root.Query<TextField>("startrewardassetvalue_textfield").First();
             _startRewardAssetValueField.label = "기본획득재화";
-            _startRewardAssetValueField.value = _enemyData.StartRewardAssetValue.GetValue();
+            _startRewardAssetValueField.value = _enemyData.StartRewardAssetValue.ValueText;
             _startRewardAssetValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.StartRewardAssetValue.SetValue(e.newValue);
+                    _enemyData.StartRewardAssetValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
 
             _increaseLevelRewardAssetValueField = _root.Query<TextField>("increaselevelrewardassetvalue_textfield").First();
             _increaseLevelRewardAssetValueField.label = "레벨재화증가량";
-            _increaseLevelRewardAssetValueField.value = _enemyData.IncreaseLevelRewardAssetValue.GetValue();
+            _increaseLevelRewardAssetValueField.value = _enemyData.IncreaseLevelRewardAssetValue.ValueText;
             _increaseLevelRewardAssetValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.IncreaseLevelRewardAssetValue.SetValue(e.newValue);
+                    _enemyData.IncreaseLevelRewardAssetValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -378,11 +365,11 @@ namespace SEF.Data.Editor
 
             _increaseWaveRewardAssetValueField = _root.Query<TextField>("increasewaverewardassetvalue_textfield").First();
             _increaseWaveRewardAssetValueField.label = "웨이브재화증가량";
-            _increaseWaveRewardAssetValueField.value = _enemyData.IncreaseWaveRewardAssetValue.GetValue();
+            _increaseWaveRewardAssetValueField.value = _enemyData.IncreaseWaveRewardAssetValue.ValueText;
             _increaseWaveRewardAssetValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _enemyData.IncreaseWaveRewardAssetValue.SetValue(e.newValue);
+                    _enemyData.IncreaseWaveRewardAssetValue.ValueText = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -401,9 +388,6 @@ namespace SEF.Data.Editor
 
 
 
-
-            
-            
 
 
 
@@ -441,85 +425,8 @@ namespace SEF.Data.Editor
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
-
-
-            
-                
-
+             
             UpdateFields();
-
-
-
-
-
-
-            //< ui:VisualElement name = "icon_background" style = "width: 116px;" />
-
-            //           < ui:VisualElement name = "icon_field" style = "width: 116px;" />
-
-            //      < uie:ObjectField allow-scene - objects = "false" name = "icon_objectfield" class="icon_object_field" />
-            //< ui:Toggle label = "Toggle" name = "modified_toggle" />
-
-            //       < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "name_textfield" />
-
-            //                < uie:EnumField label = "Enum" value = "Center" name = "group_enumfield" />
-
-            //                     < uie:IntegerField label = "Int Field" value = "42" name = "upgrade_intfield" />
-
-            //                          < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "health_textfield" />
-
-            //                                   < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "dps_textfield" />
-
-            //                                            < ui:TextField picking-mode = "Ignore" label = "Text Field" value = "filler text" text = "filler text" name = "next_upgrade_textfield" />
-
-            //                                                     < uie:FloatField label = "Float Field" value = "42.2" name = "product_floatfield" />
-
-
-
-            //    #region Fields
-            //    // Find the visual element with the name "systemSprite" and make it display the star system sprite if it has one.
-            //    VisualElement systemSprite = rootElement.Query<VisualElement>("systemSprite").First();
-            //    systemSprite.style.backgroundImage = starSystem.sprite ? starSystem.sprite.texture : null;
-
-            //    // Find an object field with the name "systemSpriteField", set that it only accepts objects of type Sprite,
-            //    // set its initial value and register a callback that will occur if the value of the filed changes.
-            //    ObjectField spriteField = rootElement.Query<ObjectField>("systemSpriteField").First();
-            //    spriteField.objectType = typeof(Sprite);
-            //    spriteField.value = starSystem.sprite;
-            //    spriteField.RegisterCallback<ChangeEvent<Object>>(
-            //        e =>
-            //        {
-            //            starSystem.sprite = (Sprite)e.newValue;
-            //            systemSprite.style.backgroundImage = starSystem.sprite.texture;
-            //        // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
-            //        EditorUtility.SetDirty(starSystem);
-            //        }
-            //    );
-
-            //    FloatField scaleField = rootElement.Query<FloatField>("starScale").First();
-            //    scaleField.value = starSystem.scale;
-            //    scaleField.RegisterCallback<ChangeEvent<float>>(
-            //        e => {
-            //            starSystem.scale = e.newValue;
-            //            EditorUtility.SetDirty(starSystem);
-            //        }
-            //    );
-            //    #endregion
-
-            //    #region Display Planet Data 
-            //    // Store visual element that will contain the planet sub-inspectors.  
-            //    planetList = rootElement.Query<VisualElement>("planetList").First();
-            //    UpdatePlanets();
-            //    #endregion
-
-            //    #region Buttons
-            //    // Assign methods to the click events of the two buttons.
-            //    Button btnAddPlanet = rootElement.Query<Button>("btnAddNew").First();
-            //    btnAddPlanet.clickable.clicked += AddPlanet;
-
-            //    Button btnRemoveAllPlanets = rootElement.Query<Button>("btnRemoveAll").First();
-            //    btnRemoveAllPlanets.clickable.clicked += RemoveAll;
-            //    #endregion
 
             return _root;
         }

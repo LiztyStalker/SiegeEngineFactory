@@ -12,17 +12,36 @@ namespace SEF.Data
     {
         [SerializeField]
         private string _valueText;
+        public string ValueText { get { return _valueText; } set { _valueText = value; } }
 
-        [SerializeField]
-        private BigInteger _value;
-        public BigInteger Value { get {return _value; } set {_value = value; } }
+        private BigInteger? _value;
+        public BigInteger Value 
+        { 
+            get {
+                if (_value == null)
+                {
+                    SetValue();
+                }
+                return _value.Value; 
+            } 
+            set {
+                _value = value; 
+            } 
+        }
 
-        public BigNumberData() { }
+        public BigNumberData() {}
 
         protected BigNumberData(BigNumberData data)
         {
             _value = data.Value;
-            _valueText = GetDigitValue();
+        }
+
+        public void SetValue()
+        {
+            if (!string.IsNullOrEmpty(_valueText))
+                SetValue(_valueText);
+            else
+                _value = new BigInteger();
         }
 
         public void SetValue(string value)
@@ -33,7 +52,6 @@ namespace SEF.Data
             Dictionary<string, int> dic = new Dictionary<string, int>();
             int digit = 0;
             string letter = null;
-
             for(int i = 0; i < str.Length; i++)
             {
                 var ch = str[i];
@@ -97,8 +115,6 @@ namespace SEF.Data
             }
 
             Value = bigint;
-
-            _valueText = GetDigitValue();
         }
 
         private BigInteger GetDigit(string letter)
@@ -115,7 +131,7 @@ namespace SEF.Data
             return BigInteger.Pow(10, power);
         }
 
-        public string GetValue() => GetValue(_value);
+        public string GetValue() => GetValue(Value);
 
         private string GetValue(BigInteger bigInt)
         {
@@ -141,9 +157,6 @@ namespace SEF.Data
                 var str2 = str.Substring(length, 4 - length);
                 return str1 + "." + str2 + digit;
             }
-
-            _valueText = GetDigitValue();
-
             //Ãâ·Â
             return str;
         }
@@ -164,7 +177,7 @@ namespace SEF.Data
             return capacity;
         }
 
-        public string GetDigitValue() => GetDigitValue(_value);
+        public string GetDigitValue() => GetDigitValue(Value);
 
         public string GetDigitValue(BigInteger bigInt)
         {

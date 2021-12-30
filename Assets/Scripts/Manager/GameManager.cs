@@ -40,7 +40,7 @@ namespace SEF.Manager
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
 
             //_unitManager.AddOnHitListener();
-            //_unitManager.AddOnDestoryListener();
+            _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
 
 
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
@@ -56,7 +56,7 @@ namespace SEF.Manager
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
 
             //_unitManager.RemoveOnHitListener();
-            //_unitManager.RemoveOnDestoryListener();
+            _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
             _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
 
             _uiGame.RemoveUpgradeListener(_gameSystem.UpgradeWorkshop);
@@ -78,6 +78,14 @@ namespace SEF.Manager
             _gameSystem.RunProcess(deltaTime);
             _unitManager.RunProcess(deltaTime);
         }
+
+
+
+        private void OnDestroyedEvent(PlayActor playActor) 
+        {
+            _gameSystem.DestroyedActor(playActor);
+        }
+
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

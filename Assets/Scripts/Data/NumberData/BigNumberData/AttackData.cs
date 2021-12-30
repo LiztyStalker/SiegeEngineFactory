@@ -17,7 +17,7 @@ namespace SEF.Data
         public static AttackData Create_Test()
         {
             var data = new AttackData();
-            data.Value = 100;
+            data.ValueText = "100";
             return data;
         }
 

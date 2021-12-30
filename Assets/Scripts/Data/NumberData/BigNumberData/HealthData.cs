@@ -37,9 +37,9 @@ namespace SEF.Data
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static HealthData Create_Test()
-        {
+        {            
             var data = new HealthData();
-            data.Value = 1000;
+            data.ValueText = "1000";
             return data;
         }
 

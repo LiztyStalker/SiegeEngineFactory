@@ -471,6 +471,19 @@ namespace SEF.Test
             yield return new WaitForSeconds(1f);
         }
 
+        [UnityTest]
+        public IEnumerator UnitManagerTest_EnemyData_BigNumberData()
+        {
+            _unitManager.Initialize_Empty();
+            var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
+            yield return null;
+
+            Debug.Log(enemyActor.GetRewardAssetData().Value);
+
+            yield return new WaitForSeconds(1f);
+        }
+
+
     }
 }
 #endif

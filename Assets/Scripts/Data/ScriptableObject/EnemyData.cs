@@ -7,6 +7,7 @@ namespace SEF.Data
 
     public enum TYPE_ENEMY_GROUP { Normal, Boss, ThemeBoss}
 
+    
     [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]    
     public class EnemyData : ScriptableObject
     {
@@ -44,11 +45,11 @@ namespace SEF.Data
 
         [SerializeField]
         private HealthData _startHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData StartHealthValue { get => _startHealthValue; set => _startHealthValue = value; }
+        public HealthData StartHealthValue => _startHealthValue;
 
         [SerializeField]
         private HealthData _increaseLevelHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseLevelHealthValue { get => _increaseLevelHealthValue; set => _increaseLevelHealthValue = value; }
+        public HealthData IncreaseLevelHealthValue => _increaseLevelHealthValue;
 
         [SerializeField]
         private float _increaseLevelHealthRate;
@@ -56,7 +57,7 @@ namespace SEF.Data
 
         [SerializeField]
         private HealthData _increaseWaveHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseWaveHealthValue { get => _increaseWaveHealthValue; set => _increaseWaveHealthValue = value; }
+        public HealthData IncreaseWaveHealthValue => _increaseWaveHealthValue;
 
         [SerializeField]
         private float _increaseWaveHealthRate;
@@ -64,11 +65,11 @@ namespace SEF.Data
 
         [SerializeField]
         private AttackData _startAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData StartAttackValue { get => _startAttackValue; set => _startAttackValue = value; }
+        public AttackData StartAttackValue => _startAttackValue;
 
         [SerializeField]
         private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
+        public AttackData IncreaseAttackValue => _increaseAttackValue; 
 
         [SerializeField]
         private float _increaseAttackRate;
@@ -95,11 +96,11 @@ namespace SEF.Data
 
         [SerializeField]
         private AssetData _startRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData StartRewardAssetValue { get => _startRewardAssetValue; set => _startRewardAssetValue = value; }
+        public AssetData StartRewardAssetValue => _startRewardAssetValue;
 
         [SerializeField]
         private AssetData _increaseLevelRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseLevelRewardAssetValue { get => _increaseLevelRewardAssetValue; set => _increaseLevelRewardAssetValue = value; }
+        public AssetData IncreaseLevelRewardAssetValue => _increaseLevelRewardAssetValue; 
 
         [SerializeField]
         private float _increaseLevelRewardAssetRate;
@@ -107,11 +108,12 @@ namespace SEF.Data
 
         [SerializeField]
         private AssetData _increaseWaveRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseWaveRewardAssetValue { get => _increaseWaveRewardAssetValue; set => _increaseWaveRewardAssetValue = value; }
+        public AssetData IncreaseWaveRewardAssetValue => _increaseWaveRewardAssetValue;
 
         [SerializeField]
         private float _increaseWaveRewardAssetRate;
         public float IncreaseWaveRewardAssetRate { get => _increaseWaveRewardAssetRate; set => _increaseWaveRewardAssetRate = value; }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 

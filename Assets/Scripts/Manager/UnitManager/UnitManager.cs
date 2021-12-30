@@ -113,7 +113,6 @@ namespace SEF.Unit
             {
                 var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
                 var data = arr[Random.Range(0, arr.Length)];
-
                 Debug.Log(data);
                 var enemyActor = _poolEnemyActor.GiveElement();
 
@@ -282,7 +281,7 @@ namespace SEF.Unit
             unitActor.SetData(unitEntity);
             unitActor.SetParent(_gameObject.transform);
             unitActor.AddOnHitListener(OnHitEvent);
-            unitActor.AddOnDestoryedListener(OnDestroyEvent);
+            unitActor.AddOnDestoryedListener(OnDestroyedEvent);
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
@@ -299,7 +298,7 @@ namespace SEF.Unit
         {
 
             unitActor.RemoveOnHitListener(OnHitEvent);
-            unitActor.RemoveOnDestoryedListener(OnDestroyEvent);
+            unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             unitActor.InActivate();
 
             _unitDic.Remove(unitActor.GetHashCode());
@@ -310,7 +309,7 @@ namespace SEF.Unit
         public void RetrieveEnemyActor(EnemyActor enemyActor)
         {
             enemyActor.RemoveOnHitListener(OnHitEvent);
-            enemyActor.RemoveOnDestoryedListener(OnDestroyEvent);
+            enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             enemyActor.InActivate();
             
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
@@ -362,7 +361,7 @@ namespace SEF.Unit
         {
 
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
-            _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyEvent);
+            _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
             _enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
 
         }
@@ -398,14 +397,15 @@ namespace SEF.Unit
         }
 
 
-        private System.Action<PlayActor> _destroyEvent;
+        private System.Action<PlayActor> _destroyedEvent;
 
         //IUnitActor
-        public void AddOnDestoryListener(System.Action<PlayActor> act) => _destroyEvent += act;
-        public void RemoveOnDestoryListener(System.Action<PlayActor> act) => _destroyEvent -= act;
+        public void AddOnDestoryedListener(System.Action<PlayActor> act) => _destroyedEvent += act;
+        public void RemoveOnDestoryedListener(System.Action<PlayActor> act) => _destroyedEvent -= act;
 
-        private void OnDestroyEvent(PlayActor playActor)
+        private void OnDestroyedEvent(PlayActor playActor)
         {
+            _destroyedEvent?.Invoke(playActor);
             switch (playActor)
             {
                 case UnitActor unitActor:
@@ -419,7 +419,6 @@ namespace SEF.Unit
                     Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
                     break;
             }
-            _destroyEvent?.Invoke(playActor);
         }
 
 

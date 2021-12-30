@@ -8,6 +8,7 @@ namespace SEF.Unit {
     using UtilityManager;
     using Entity;
     using Storage;
+    using Data;
 
     public class EnemyActor : PlayActor, ITarget, IPoolElement
     {
@@ -265,6 +266,11 @@ namespace SEF.Unit {
         private void SetAnimation(string name, bool isLoop = false)
         {
             SkeletonAnimationState.SetAnimation(0, name, isLoop);
+        }
+
+        public AssetData GetRewardAssetData()
+        {
+            return _enemyEntity.GetRewardAssetData();
         }
 
         #region ##### Listener #####

@@ -6,6 +6,8 @@ namespace SEF.Manager
     using Data;
     using Entity;
     using Account;
+    using Unit;
+
 
     public class GameSystem
     {
@@ -47,8 +49,8 @@ namespace SEF.Manager
             _workshopManager.RunProcess(deltaTime);
             //VillageManager
         }
-        public void AddAsset(AssetData assetData) => _account.Add(assetData);
-        public void SubjectAsset(AssetData assetData) => _account.Subject(assetData);
+        public void AddAsset(AssetData assetData) => _account.AddAsset(assetData);
+        public void SubjectAsset(AssetData assetData) => _account.SubjectAsset(assetData);
         
         public AssetData GetAssetData()
         {
@@ -58,7 +60,7 @@ namespace SEF.Manager
         public void UpgradeWorkshop(int index)
         {
             var assetData = _workshopManager.UpgradeWorkshop(index);
-            _account.Subject(assetData);
+            _account.SubjectAsset(assetData);
         }
 
         public void ExpendWorkshop()
@@ -70,6 +72,19 @@ namespace SEF.Manager
         {
             _workshopManager.UpTechWorkshop(index, unitData);
             //unitData TechAssetData ¼Òºñ
+        }
+
+        public void DestroyedActor(PlayActor playActor)
+        {
+            switch (playActor)
+            {
+                case UnitActor unitActor:
+                    break;
+                case EnemyActor enemyActor:
+                    Debug.Log(enemyActor.GetRewardAssetData().Value);
+                    _account.AddAsset(enemyActor.GetRewardAssetData());
+                    break;
+            }
         }
 
 

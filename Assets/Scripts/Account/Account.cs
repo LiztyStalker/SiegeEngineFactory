@@ -54,12 +54,12 @@ namespace SEF.Account
 
         private AssetEntity _assetEntity;
 
-        public void Add(AssetData assetData)
+        public void AddAsset(AssetData assetData)
         {
             _assetEntity.Add(assetData);
         }
 
-        public void Subject(AssetData assetData)
+        public void SubjectAsset(AssetData assetData)
         {
             _assetEntity.Subject(assetData);
         }
