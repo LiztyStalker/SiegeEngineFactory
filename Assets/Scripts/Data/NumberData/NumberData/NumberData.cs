@@ -6,19 +6,16 @@ namespace SEF.Data
     {
         private int _value;
 
-        public int Value => _value;
+        public int Value { get => _value; protected set => _value = value; }
 
         protected NumberData()
         {
             Initialize();
         }
 
-        public INumberData Clone()
-        {
-            return null;
-        }
+        public abstract INumberData Clone();
 
-        public string GetValue()
+        public virtual string GetValue()
         {
             return Value.ToString();
         }
