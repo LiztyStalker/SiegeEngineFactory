@@ -58,11 +58,6 @@ namespace SEF.Manager
             OnRefreshEvent();
         }
 
-        public bool IsEnoughAsset(AssetData assetData) 
-        {
-            return false; 
-        }
-
 
         #region ##### Listener #####
 

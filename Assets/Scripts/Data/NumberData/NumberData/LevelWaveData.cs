@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    [System.Serializable]
     public class LevelWaveData : NumberData
     {
         private const int LEVEL_THEME = 100;

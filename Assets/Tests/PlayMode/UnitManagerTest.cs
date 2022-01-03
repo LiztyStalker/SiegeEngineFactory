@@ -165,7 +165,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Appear_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             yield return null;
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
@@ -210,7 +210,7 @@ namespace SEF.Test
         {
             var dummy = new DummyTarget();
 
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             unitActor.SetTypeUnitState(TYPE_UNIT_STATE.Action);
             unitActor.SetPosition_Test(UnitActor.UNIT_ACTION_POSITION_TEST);
@@ -258,7 +258,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitActor_Destroy_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
 
             Assert.IsTrue(_unitManager.UnitCount == 1, "unitActor 가 생성되지 않았습니다");
@@ -310,7 +310,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_EnemyActor_State_Idle_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
             enemyActor.Activate();
@@ -321,7 +321,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_EnemyActor_State_Idle_Spine()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
 
             var enemyData = EnemyData.Create_Test();
             var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
@@ -337,7 +337,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_EnemyActor_State_Ready_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
             enemyActor.Activate();
@@ -356,7 +356,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_EnemyActor_State_Appear_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
             enemyActor.Activate();
@@ -378,7 +378,7 @@ namespace SEF.Test
         {
             var dummy = new DummyTarget();
 
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
             enemyActor.Activate();
@@ -398,7 +398,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_EnemyActor_State_Destroy_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
             enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
@@ -422,7 +422,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator UnitManagerTest_UnitAndEnemy_Position_Dummy()
         {
-            _unitManager.InitializeUnitManager_DummyTest();
+            _unitManager.InitializeAll_DummyTest();
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             yield return null;

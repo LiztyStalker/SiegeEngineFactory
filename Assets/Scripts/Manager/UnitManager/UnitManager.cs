@@ -174,8 +174,6 @@ namespace SEF.Unit
         private Dictionary<int, UnitActor> _unitDic;
         private EnemyQueueData _enemyQueueData;
 
-        //LevelWaveData - max LevelWaveData waitEnemyQueue
-
         public int UnitCount => _unitDic.Count;
         public int EnemyCount => _enemyQueueData.Count;
 
@@ -224,11 +222,10 @@ namespace SEF.Unit
             InitializeEnemyActor();
         }
 
-        public void InitializeUnitManager_DummyTest()
+        public void InitializeAll_DummyTest()
         {
             CreateGameObject();
-            CreatePoolSystem();
-            _poolUnitActor.Initialize(UnitActor.Create_Test);
+            CreatePoolSystem_Test();
 
             _unitDic = new Dictionary<int, UnitActor>();
 
@@ -243,11 +240,6 @@ namespace SEF.Unit
         {
             CreateGameObject();
             CreatePoolSystem();
-            _poolUnitActor.Initialize(UnitActor.Create);
-
-            _unitDic = new Dictionary<int, UnitActor>();
-
-//            _enemyQueueData.Initialize(_gameObject.transform);
         }
 
 
@@ -262,14 +254,23 @@ namespace SEF.Unit
         private void CreatePoolSystem()
         {
             _poolUnitActor = PoolSystem<UnitActor>.Create();
+            _poolUnitActor.Initialize(UnitActor.Create);
         }
+
+#if UNITY_EDITOR
+        private void CreatePoolSystem_Test()
+        {
+            _poolUnitActor = PoolSystem<UnitActor>.Create();
+            _poolUnitActor.Initialize(UnitActor.Create_Test);
+        }
+#endif
 
 
         //UnitActor 생산 - new or load
 
         private void InitializeUnitActor(/*AccountData*/)
         {
-
+            _unitDic = new Dictionary<int, UnitActor>();
         }
 
         //EnemyActor 생산 - new or load

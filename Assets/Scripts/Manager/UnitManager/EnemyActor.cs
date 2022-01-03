@@ -23,6 +23,7 @@ namespace SEF.Unit {
 #endif
 
         private EnemyEntity _enemyEntity;
+        public TYPE_ENEMY_GROUP typeEnemyGroup => _enemyEntity.EnemyData.Group;
 
         private SkeletonAnimation _skeletonAnimation;
 
@@ -61,7 +62,8 @@ namespace SEF.Unit {
         }
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
-
+        public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
+        public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
         public static EnemyActor Create()
         {
             var obj = new GameObject();
@@ -149,12 +151,10 @@ namespace SEF.Unit {
                     //Destroy
                     break;
             }
-            //Action
-            //Destroy
         }
 
 
-        bool isDead = false;
+        private bool isDead = false;
 
         protected override void DestoryActor()
         {
@@ -268,9 +268,7 @@ namespace SEF.Unit {
             SkeletonAnimationState.SetAnimation(0, name, isLoop);
         }
 
-        public TYPE_ENEMY_GROUP typeEnemyGroup => _enemyEntity.EnemyData.Group;
-        public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
-        public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
+        
 
 
         #region ##### Listener #####

@@ -56,7 +56,22 @@ namespace SEF.Manager
         {
             return null;
         }
+        public void DestroyedActor(PlayActor playActor)
+        {
+            switch (playActor)
+            {
+                case UnitActor unitActor:
+                    break;
+                case EnemyActor enemyActor:
+                    _account.AddAsset(enemyActor.GetRewardAssetData());
+                    break;
+            }
+        }
 
+
+
+
+        #region ##### Workshop #####
         public void UpgradeWorkshop(int index)
         {
             var assetData = _workshopManager.UpgradeWorkshop(index);
@@ -74,17 +89,9 @@ namespace SEF.Manager
             //unitData TechAssetData ¼Òºñ
         }
 
-        public void DestroyedActor(PlayActor playActor)
-        {
-            switch (playActor)
-            {
-                case UnitActor unitActor:
-                    break;
-                case EnemyActor enemyActor:
-                    _account.AddAsset(enemyActor.GetRewardAssetData());
-                    break;
-            }
-        }
+        #endregion
+
+
 
 
         #region ##### Listener #####
@@ -103,8 +110,13 @@ namespace SEF.Manager
         #endregion
 
 
+
+
+        #region ##### Data #####
+
         public void Save() { }
 
+        #endregion 
     }
 
 }
