@@ -23,5 +23,22 @@ namespace SEF.Data
         {
             return new PopulationAssetData(this);
         }
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static PopulationAssetData Create_Test()
+        {
+            var data = new PopulationAssetData();
+            data.Value = 1;
+            return data;
+        }
+
+        public static PopulationAssetData Create_Test(int value)
+        {
+            var data = new PopulationAssetData();
+            data.Value = value;
+            return data;
+        }
+#endif
     }
 }

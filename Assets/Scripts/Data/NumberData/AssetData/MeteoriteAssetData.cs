@@ -15,5 +15,21 @@ namespace SEF.Data
         {
             return new MeteoriteAssetData(this);
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static MeteoriteAssetData Create_Test()
+        {
+            var data = new MeteoriteAssetData();
+            data.Value = 100;
+            return data;
+        }
+
+        public static MeteoriteAssetData Create_Test(int value)
+        {
+            var data = new MeteoriteAssetData();
+            data.Value = value;
+            return data;
+        }
+#endif
     }
 }

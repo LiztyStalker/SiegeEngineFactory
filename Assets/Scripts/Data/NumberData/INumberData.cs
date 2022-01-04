@@ -15,5 +15,10 @@ namespace SEF.Data
         {
             return System.Activator.CreateInstance<T>();
         }
+
+        public static T CreateAssetData<T>() where T : IAssetData
+        {
+            return System.Activator.CreateInstance<T>();
+        }
     }
 }

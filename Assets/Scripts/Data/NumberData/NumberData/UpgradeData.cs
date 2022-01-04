@@ -10,6 +10,11 @@ namespace SEF.Data
             Value = data.Value;
         }
 
+        public override void Initialize()
+        {
+            Value = 1;
+        }
+
         public override INumberData Clone() => new UpgradeData(this);
     }
 }

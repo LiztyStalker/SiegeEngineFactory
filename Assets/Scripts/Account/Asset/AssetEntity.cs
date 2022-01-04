@@ -72,22 +72,18 @@ namespace SEF.Entity
 
         public void Initialize()
         {
-            _dic.Add(typeof(GoldAssetData).Name, NumberDataUtility.Create<GoldAssetData>());
-            _dic.Add(typeof(ResourceAssetData).Name, NumberDataUtility.Create<ResourceAssetData>());
-            _dic.Add(typeof(MeteoriteAssetData).Name, NumberDataUtility.Create<MeteoriteAssetData>());
-            _dic.Add(typeof(ResearchAssetData).Name, NumberDataUtility.Create<ResearchAssetData>());
+            _dic.Add(typeof(GoldAssetData).Name, CreateAssetDataCase<GoldAssetData>());
+            _dic.Add(typeof(ResourceAssetData).Name, CreateAssetDataCase<ResourceAssetData>());
+            _dic.Add(typeof(MeteoriteAssetData).Name, CreateAssetDataCase<MeteoriteAssetData>());
+            _dic.Add(typeof(ResearchAssetData).Name, CreateAssetDataCase<ResearchAssetData>());
+            _dic.Add(typeof(PopulationAssetData).Name, CreateAssetDataCase<PopulationAssetData>(new PopulationAssetData(10)));
+        }
 
-            var population = new AssetDataCase(NumberDataUtility.Create<PopulationAssetData>());
-            population.SetLimitAssetData(new PopulationAssetData(10));
-
-            _dic.Add(typeof(PopulationAssetData).Name, population);
-            //for(int i = 0; i < System.Enum.GetValues(typeof(TYPE_ASSET)).Length; i++)
-            //{
-            //    var assetData = NumberDataUtility.Create<AssetData>();
-            //    assetData.SetTypeAsset((TYPE_ASSET)i);
-            //    assetData.SetValue("0");
-            //    _dic.Add((TYPE_ASSET)i, assetData);
-            //}
+        private AssetDataCase CreateAssetDataCase<T>(IAssetData limitData = null) where T : IAssetData
+        {
+            var dataCase = new AssetDataCase(NumberDataUtility.CreateAssetData<T>());
+            dataCase.SetLimitAssetData(limitData);
+            return dataCase;
         }
 
         public void CleanUp()

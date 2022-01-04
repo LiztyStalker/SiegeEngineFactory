@@ -12,5 +12,22 @@ namespace SEF.Data
         {
             return new ResearchAssetData(this);
         }
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static ResearchAssetData Create_Test()
+        {
+            var data = new ResearchAssetData();
+            data.ValueText = "100";
+            return data;
+        }
+
+        public static ResearchAssetData Create_Test(int value)
+        {
+            var data = new ResearchAssetData();
+            data.ValueText = value.ToString();
+            return data;
+        }
+#endif
     }
 }

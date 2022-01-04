@@ -43,58 +43,65 @@ namespace SEF.Test
         {
             var data = GoldAssetData.Create_Test(100);
 
-//            var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
-
             _entity.Add(data);
             _entity.Add(data);
             _entity.Add(data);
             _entity.Add(data);
             _entity.Add(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Gold).Value == 500, "수치가 맞지 않습니다");
             Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 500, "수치가 맞지 않습니다");
-        }
-
-        [Test]
-        public void AssetEntityTest_Add_Ore()
-        {
-            //var data = AssetData.Create_Test(TYPE_ASSET.Ore, 100);
-
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Ore).Value == 500, "수치가 맞지 않습니다");
         }
 
         [Test]
         public void AssetEntityTest_Add_Resource()
         {
-            //var data = AssetData.Create_Test(TYPE_ASSET.Resource, 100);
+            var data = ResourceAssetData.Create_Test(100);
 
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Resource).Value == 500, "수치가 맞지 않습니다");
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 500, "수치가 맞지 않습니다");
+        }
+
+        [Test]
+        public void AssetEntityTest_Add_Research()
+        {
+            var data = ResearchAssetData.Create_Test(100);
+
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 500, "수치가 맞지 않습니다");
         }
 
         [Test]
         public void AssetEntityTest_Add_Meteorite()
         {
-            //var data = AssetData.Create_Test(TYPE_ASSET.Meteorite, 100);
+            var data = MeteoriteAssetData.Create_Test(100);
 
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
-            //_entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
+            _entity.Add(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Meteorite).Value == 500, "수치가 맞지 않습니다");
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 500, "수치가 맞지 않습니다");
+        }
+
+        [Test]
+        public void AssetEntityTest_Set_Population()
+        {
+            var data = PopulationAssetData.Create_Test(5);
+
+            _entity.Set(data);
+
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 5, "수치가 맞지 않습니다");
         }
 
         [Test]
@@ -103,87 +110,168 @@ namespace SEF.Test
             AssetEntityTest_Add_Gold();
 
             var data = GoldAssetData.Create_Test(100);
-            //var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
 
             _entity.Subject(data);
             _entity.Subject(data);
             _entity.Subject(data);
 
             Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 200, "수치가 맞지 않습니다");
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Gold).Value == 200, "수치가 맞지 않습니다");
         }
 
         [Test]
         public void AssetEntityTest_Subject_Resource()
         {
-            //AssetEntityTest_Add_Resource();
+            AssetEntityTest_Add_Resource();
 
-            //var data = AssetData.Create_Test(TYPE_ASSET.Resource, 100);
+            var data = ResourceAssetData.Create_Test(100);
 
-            //_entity.Subject(data);
-            //_entity.Subject(data);
-            //_entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Resource).Value == 200, "수치가 맞지 않습니다");
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 200, "수치가 맞지 않습니다");
         }
 
         [Test]
-        public void AssetEntityTest_Subject_Ore()
+        public void AssetEntityTest_Subject_Research()
         {
-            //AssetEntityTest_Add_Ore();
+            AssetEntityTest_Add_Research();
 
-            //var data = AssetData.Create_Test(TYPE_ASSET.Ore, 100);
+            var data = ResearchAssetData.Create_Test(100);
 
-            //_entity.Subject(data);
-            //_entity.Subject(data);
-            //_entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Ore).Value == 200, "수치가 맞지 않습니다");
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 200, "수치가 맞지 않습니다");
         }
 
         [Test]
         public void AssetEntityTest_Subject_Meteorite()
         {
-            //AssetEntityTest_Add_Meteorite();
+            AssetEntityTest_Add_Meteorite();
 
-            //var data = AssetData.Create_Test(TYPE_ASSET.Meteorite, 100);
+            var data = MeteoriteAssetData.Create_Test(100);
 
-            //_entity.Subject(data);
-            //_entity.Subject(data);
-            //_entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
 
-            //Assert.IsTrue(_entity.FindAssetData(TYPE_ASSET.Meteorite).Value == 200, "수치가 맞지 않습니다");
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 200, "수치가 맞지 않습니다");
         }
 
         [Test]
-        public void AssetEntityTest_IsEnough()
+        public void AssetEntityTest_Subject_Population()
         {
+            AssetEntityTest_Set_Population();
+
+            var data = PopulationAssetData.Create_Test(1);
+
+            _entity.Subject(data);
+            _entity.Subject(data);
+            _entity.Subject(data);
+
+            Assert.IsTrue(_entity.FindAssetData(data).AssetValue == 2, "수치가 맞지 않습니다");
+        }
+
+        [Test]
+        public void AssetEntityTest_IsOverflow()
+        {
+
             AssetEntityTest_Add_Gold();
-//            AssetEntityTest_Add_Meteorite();
-//            AssetEntityTest_Add_Ore();
-//            AssetEntityTest_Add_Resource();
+            AssetEntityTest_Add_Meteorite();
+            AssetEntityTest_Add_Research();
+            AssetEntityTest_Add_Resource();
+            AssetEntityTest_Set_Population();
 
             var data1 = GoldAssetData.Create_Test(500);
-//            var data1 = AssetData.Create_Test(TYPE_ASSET.Gold, 500);
-//            var data2 = AssetData.Create_Test(TYPE_ASSET.Meteorite, 500);
-//            var data3 = AssetData.Create_Test(TYPE_ASSET.Ore, 500);
-//            var data4 = AssetData.Create_Test(TYPE_ASSET.Resource, 500);
+            var data2 = ResearchAssetData.Create_Test(500);
+            var data3 = ResourceAssetData.Create_Test(500);
+            var data4 = MeteoriteAssetData.Create_Test(500);
+            var data5 = PopulationAssetData.Create_Test(5);
+
+            Assert.IsFalse(_entity.IsOverflow(data1), "넘쳤습니다");
+            Assert.IsFalse(_entity.IsOverflow(data2), "넘쳤습니다");
+            Assert.IsFalse(_entity.IsOverflow(data3), "넘쳤습니다");
+            Assert.IsFalse(_entity.IsOverflow(data4), "넘쳤습니다");
+            Assert.IsFalse(_entity.IsOverflow(data5), "넘쳤습니다");
+
+            data1.AssetValue += 1;
+            data2.AssetValue += 1;
+            data3.AssetValue += 1;
+            data4.AssetValue += 1;
+            data5.AssetValue += 1;
+
+            Assert.IsTrue(_entity.IsOverflow(data1), "넘치지 않았습니다");
+            Assert.IsTrue(_entity.IsOverflow(data2), "넘치지 않았습니다");
+            Assert.IsTrue(_entity.IsOverflow(data3), "넘치지 않았습니다");
+            Assert.IsTrue(_entity.IsOverflow(data4), "넘치지 않았습니다");
+            Assert.IsTrue(_entity.IsOverflow(data5), "넘치지 않았습니다");
+        }
+
+
+        //[Test]
+        //public void AssetEntityTest_IsUnderflow()
+        //{
+        //    var data1 = GoldAssetData.Create_Test(500);
+        //    var data2 = ResearchAssetData.Create_Test(500);
+        //    var data3 = ResourceAssetData.Create_Test(500);
+        //    var data4 = MeteoriteAssetData.Create_Test(500);
+        //    var data5 = PopulationAssetData.Create_Test(5);
+
+        //    Assert.IsFalse(_entity.IsUnderflow(data1), "넘쳤습니다");
+        //    Assert.IsFalse(_entity.IsUnderflow(data2), "넘쳤습니다");
+        //    Assert.IsFalse(_entity.IsUnderflow(data3), "넘쳤습니다");
+        //    Assert.IsFalse(_entity.IsUnderflow(data4), "넘쳤습니다");
+        //    Assert.IsFalse(_entity.IsUnderflow(data5), "넘쳤습니다");
+
+        //    data1.AssetValue -= 1;
+        //    data2.AssetValue -= 1;
+        //    data3.AssetValue -= 1;
+        //    data4.AssetValue -= 1;
+        //    data5.AssetValue -= 1;
+
+        //    Assert.IsTrue(_entity.IsUnderflow(data1), "넘치지 않았습니다");
+        //    Assert.IsTrue(_entity.IsUnderflow(data2), "넘치지 않았습니다");
+        //    Assert.IsTrue(_entity.IsUnderflow(data3), "넘치지 않았습니다");
+        //    Assert.IsTrue(_entity.IsUnderflow(data4), "넘치지 않았습니다");
+        //    Assert.IsTrue(_entity.IsUnderflow(data5), "넘치지 않았습니다");
+        //}
+
+
+            [Test]
+        public void AssetEntityTest_IsEnough()
+        {
+
+            AssetEntityTest_Add_Gold();
+            AssetEntityTest_Add_Meteorite();
+            AssetEntityTest_Add_Research();
+            AssetEntityTest_Add_Resource();
+            AssetEntityTest_Set_Population();
+
+            var data1 = GoldAssetData.Create_Test(500);
+            var data2 = ResearchAssetData.Create_Test(500);
+            var data3 = ResourceAssetData.Create_Test(500);
+            var data4 = MeteoriteAssetData.Create_Test(500);
+            var data5 = PopulationAssetData.Create_Test(5);
 
             Assert.IsTrue(_entity.IsEnough(data1), "재화값이 부족합니다");
-//            Assert.IsTrue(_entity.IsEnough(data2), "재화값이 부족합니다");
-//            Assert.IsTrue(_entity.IsEnough(data3), "재화값이 부족합니다");
-//            Assert.IsTrue(_entity.IsEnough(data4), "재화값이 부족합니다");
+            Assert.IsTrue(_entity.IsEnough(data2), "재화값이 부족합니다");
+            Assert.IsTrue(_entity.IsEnough(data3), "재화값이 부족합니다");
+            Assert.IsTrue(_entity.IsEnough(data4), "재화값이 부족합니다");
+            Assert.IsTrue(_entity.IsEnough(data5), "재화값이 부족합니다");
 
-            data1.Value += 1;
-//            data2.Value += 1;
-//            data3.Value += 1;
-//            data4.Value += 1;
+            data1.AssetValue += 1;
+            data2.AssetValue += 1;
+            data3.AssetValue += 1;
+            data4.AssetValue += 1;
+            data5.AssetValue += 1;
 
             Assert.IsFalse(_entity.IsEnough(data1), "재화값이 충분합니다");
-//            Assert.IsFalse(_entity.IsEnough(data2), "재화값이 충분합니다");
-//            Assert.IsFalse(_entity.IsEnough(data3), "재화값이 충분합니다");
-//            Assert.IsFalse(_entity.IsEnough(data4), "재화값이 충분합니다");
-
+            Assert.IsFalse(_entity.IsEnough(data2), "재화값이 충분합니다");
+            Assert.IsFalse(_entity.IsEnough(data3), "재화값이 충분합니다");
+            Assert.IsFalse(_entity.IsEnough(data4), "재화값이 충분합니다");
+            Assert.IsFalse(_entity.IsEnough(data5), "재화값이 충분합니다");
         }
 
         [Test]

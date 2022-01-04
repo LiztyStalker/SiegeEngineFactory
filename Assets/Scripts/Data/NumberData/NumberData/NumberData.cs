@@ -24,10 +24,7 @@ namespace SEF.Data
             _value++;
         }
 
-        public void Initialize()
-        {
-            _value = 1;
-        }
+        public virtual void Initialize() { }
 
         public void CleanUp()
         {
