@@ -27,13 +27,13 @@ namespace SEF.Account
         {
             //AccountData √ ±‚»≠
             _assetEntity = AssetEntity.Create();
-            _assetEntity.AddRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
+//            _assetEntity.AddRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
             _assetEntity.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
             _assetEntity.Initialize();
         }
         public void Dispose()
         {
-            _assetEntity.RemoveRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
+//            _assetEntity.RemoveRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
             _assetEntity.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
             _assetEntity.CleanUp();
             _current = null;
@@ -69,6 +69,10 @@ namespace SEF.Account
             return _assetEntity.IsEnough(assetData);
         }
 
+        public void RefreshAssetEntity()
+        {
+            _assetEntity.RefreshAssets();
+        }
 
         //public void AddAsset(AssetData assetData)
         //{
@@ -89,13 +93,8 @@ namespace SEF.Account
 
         #region ##### Listener #####
 
-        private System.Action<AssetEntity> _refreshAsseEntity;
-        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAsseEntity += act;
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAsseEntity -= act;
-        private void OnRefreshAssetEntityEvent(AssetEntity assetEntity)
-        {
-            _refreshAsseEntity?.Invoke(assetEntity);
-        }
+        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.AddRefreshAssetEntityListener(act);
+        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.RemoveRefreshAssetEntityListener(act);
 
 
 

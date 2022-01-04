@@ -47,6 +47,15 @@ namespace SEF.Manager
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
 
+
+
+        }
+
+        private void Start()
+        {
+            //Refresh
+            _gameSystem.Refresh();
+
         }
 
         private void OnDestroy()

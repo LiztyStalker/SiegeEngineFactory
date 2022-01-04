@@ -40,6 +40,14 @@ namespace SEF.Manager
             _list.Clear();
         }
 
+        public void Refresh()
+        {
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].RunProcess(0f);
+            }
+        }
+
         public void RunProcess(float deltaTime)
         {
             for (int i = 0; i < _list.Count; i++)

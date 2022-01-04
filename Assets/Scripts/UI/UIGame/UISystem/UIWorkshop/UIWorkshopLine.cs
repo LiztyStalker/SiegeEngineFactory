@@ -203,7 +203,6 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            var upgradeData = unitEntity.UpgradeValue;
             _levelValueLabel.text = unitEntity.UpgradeValue.ToString();
 
             _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
@@ -215,6 +214,7 @@ namespace SEF.UI.Toolkit
 
         public void RefreshAssetEntity(AssetEntity assetEntity)
         {
+            //Debug.Log("Refresh " + assetEntity);
             var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);
             _upgradeButton.SetEnabled(isEnough);
         }

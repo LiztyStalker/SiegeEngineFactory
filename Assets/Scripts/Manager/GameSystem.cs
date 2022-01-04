@@ -53,6 +53,13 @@ namespace SEF.Manager
 
         public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
         public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
+        public void Refresh()
+        {
+            _workshopManager.Refresh();
+
+            //UI는 나중에 갱신 필요 - Data -> UI
+            _account.RefreshAssetEntity();
+        }
 
         public IAssetData GetAssetData()
         {
