@@ -10,9 +10,12 @@ namespace SEF.Data
     {
         public BigInteger AssetValue { get => Value; set => Value = value; }
 
+        public GoldAssetData() { }
+        private GoldAssetData(GoldAssetData data) : base(data) { }
+
         public override INumberData Clone()
         {
-            return new GoldAssetData();
+            return new GoldAssetData(this);
         }
 
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)

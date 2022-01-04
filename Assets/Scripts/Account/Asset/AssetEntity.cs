@@ -5,6 +5,46 @@ namespace SEF.Entity
     using UnityEngine;
     using Data;
     using Account;
+    using System.Numerics;
+
+    public struct AssetDataCase : IAssetData
+    {
+        private IAssetData _limitAssetData;
+        private IAssetData _nowAssetData;
+
+        public IAssetData LimitAssetData => _limitAssetData;
+        public IAssetData NowAssetData => _nowAssetData;        
+
+        public AssetDataCase(IAssetData nowAssetData)
+        {
+            _limitAssetData = null;
+            _nowAssetData = nowAssetData;
+        }
+
+        public void SetLimitAssetData(IAssetData limitAssetData)
+        {
+            _limitAssetData = limitAssetData;
+        }
+
+        public BigInteger AssetValue { 
+            get => _nowAssetData.AssetValue;
+            set => _nowAssetData.AssetValue = value;
+        }
+
+        public string GetValue()
+        {
+            if(_limitAssetData == null)
+            {
+                return _nowAssetData.GetValue();
+            }
+            else
+            {
+                return $"{_nowAssetData.GetValue()} / {_limitAssetData.GetValue()}";
+            }
+        }
+
+        public new System.Type GetType() => _nowAssetData.GetType();
+    }
 
     public class AssetEntity
     {
@@ -19,7 +59,14 @@ namespace SEF.Entity
         public void Initialize()
         {
             _dic.Add(typeof(GoldAssetData).Name, NumberDataUtility.Create<GoldAssetData>());
-            _dic.Add(typeof(PopulationAssetData).Name, NumberDataUtility.Create<PopulationAssetData>());
+            _dic.Add(typeof(ResourceAssetData).Name, NumberDataUtility.Create<ResourceAssetData>());
+            _dic.Add(typeof(MeteoriteAssetData).Name, NumberDataUtility.Create<MeteoriteAssetData>());
+            _dic.Add(typeof(ResearchAssetData).Name, NumberDataUtility.Create<ResearchAssetData>());
+
+            var population = new AssetDataCase(NumberDataUtility.Create<PopulationAssetData>());
+            population.SetLimitAssetData(new PopulationAssetData(10));
+
+            _dic.Add(typeof(PopulationAssetData).Name, population);
             //for(int i = 0; i < System.Enum.GetValues(typeof(TYPE_ASSET)).Length; i++)
             //{
             //    var assetData = NumberDataUtility.Create<AssetData>();
@@ -27,7 +74,6 @@ namespace SEF.Entity
             //    assetData.SetValue("0");
             //    _dic.Add((TYPE_ASSET)i, assetData);
             //}
-            RefreshAssets();
         }
 
         public void CleanUp()
@@ -86,6 +132,10 @@ namespace SEF.Entity
         public void RefreshAssets()
         {
             OnRefreshAssetEntityEvent(this);
+            foreach(var value in _dic.Values)
+            {
+                OnRefreshAssetDataEvent(value);
+            }
         }
 
 
@@ -131,7 +181,11 @@ namespace SEF.Entity
         private System.Action<AssetEntity> _refreshAssetEntityEvent;
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent += act;
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent -= act;
-        public void OnRefreshAssetEntityEvent(AssetEntity assetEntity) => _refreshAssetEntityEvent?.Invoke(assetEntity);
+        public void OnRefreshAssetEntityEvent(AssetEntity assetEntity)
+        {
+            //Debug.Log(assetEntity);
+            _refreshAssetEntityEvent?.Invoke(assetEntity);
+        }
         //차후에 리팩토링시 refreshAssetDataEvent만 사용할 가능성 있음
 
 

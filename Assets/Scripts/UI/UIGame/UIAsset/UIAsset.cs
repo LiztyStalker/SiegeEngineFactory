@@ -11,9 +11,9 @@ namespace SEF.UI.Toolkit
         private string[] assetArray = new string[]
         {
             typeof(GoldAssetData).Name,
-            "ResourceAssetData",
-            "MeteoriteAssetData",
-            "ResearchAssetData",
+            typeof(ResourceAssetData).Name,
+            typeof(MeteoriteAssetData).Name,
+            typeof(ResearchAssetData).Name,
             typeof(PopulationAssetData).Name
         };
 
@@ -57,6 +57,7 @@ namespace SEF.UI.Toolkit
         public void RefreshAssetData(IAssetData data)
         {
             var typeName = data.GetType().Name;
+            Debug.Log(typeName);
             if (_dic.ContainsKey(typeName))
             {
                 _dic[typeName].RefreshAssetData(data);

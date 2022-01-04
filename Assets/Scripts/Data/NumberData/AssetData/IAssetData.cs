@@ -9,5 +9,6 @@ namespace SEF.Data
     {
         BigInteger AssetValue { get; set; }
         string GetValue();
+        System.Type GetType();
     }
 }

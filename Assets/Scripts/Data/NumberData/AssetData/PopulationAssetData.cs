@@ -7,20 +7,18 @@ namespace SEF.Data
 
     public class PopulationAssetData : NumberData, IAssetData
     {
-        public BigInteger AssetValue {
-            get
-            {
-                return new BigInteger(Value);
-            }
-            set
-            {
-                Value = int.Parse(value.ToString());
-            }
+        public BigInteger AssetValue { get => new BigInteger(Value); set => Value = int.Parse(value.ToString()); }
+
+        public PopulationAssetData() { }
+        public PopulationAssetData(int value) { Value = value; }
+        private PopulationAssetData(PopulationAssetData data) 
+        {
+            Value = data.Value;
         }
 
         public override INumberData Clone()
         {
-            return new PopulationAssetData();
+            return new PopulationAssetData(this);
         }
     }
 }
