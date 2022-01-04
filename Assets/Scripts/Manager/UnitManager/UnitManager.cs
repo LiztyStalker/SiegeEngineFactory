@@ -178,6 +178,7 @@ namespace SEF.Unit
         public int EnemyCount => _enemyQueueData.Count;
 
         public EnemyActor NowEnemy => _enemyQueueData.NowEnemy;
+        
 
         public static UnitManager Create()
         {
@@ -316,6 +317,8 @@ namespace SEF.Unit
 
             unitActor.SetTarget(_enemyQueueData.NowEnemy);
 
+            OnRefreshPopulationEvent(NowPopulation());
+
             return unitActor;
 
         }
@@ -395,6 +398,11 @@ namespace SEF.Unit
             return arr[UnityEngine.Random.Range(0, arr.Length)];
         }
 
+        private int NowPopulation()
+        {
+            return _unitDic.Values.Sum(actor => actor.Population);
+        }
+
 
         #region ##### Listener #####
 
@@ -433,6 +441,8 @@ namespace SEF.Unit
             {
                 case UnitActor unitActor:
                     RetrieveUnitActor(unitActor);
+                    OnRefreshPopulationEvent(NowPopulation());
+                    //ÆÄ±« ÀÌº¥Æ®
                     break;
                 case EnemyActor enemyActor:
                     RetrieveEnemyActor(enemyActor);
@@ -453,6 +463,15 @@ namespace SEF.Unit
         private void OnNextEnemyEvent(EnemyActor enemyActor)
         {
             _nextEvent?.Invoke(enemyActor);
+        }
+
+        public System.Action<IAssetData> _refreshPopulationEvent;
+        public void AddOnRefreshPopulationListener(System.Action<IAssetData> act) => _refreshPopulationEvent += act;
+        public void RemoveOnRefreshPopulationListener(System.Action<IAssetData> act) => _refreshPopulationEvent -= act;
+        public void OnRefreshPopulationEvent(int nowPopulation)
+        {
+            var data = new PopulationAssetData(nowPopulation);
+            _refreshPopulationEvent?.Invoke(data);
         }
 
         #endregion

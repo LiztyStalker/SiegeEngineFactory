@@ -31,6 +31,18 @@ namespace SEF.Entity
             set => _nowAssetData.AssetValue = value;
         }
 
+        public bool IsOverflow(IAssetData data)
+        {
+            if (_limitAssetData == null) return false;
+            return (_nowAssetData.AssetValue + data.AssetValue > _limitAssetData.AssetValue);
+        }
+
+        public bool IsUnderflow(IAssetData data)
+        {
+            if (_limitAssetData == null) return false;
+            return (_nowAssetData.AssetValue - data.AssetValue < 0);
+        }
+
         public string GetValue()
         {
             if(_limitAssetData == null)
@@ -44,6 +56,8 @@ namespace SEF.Entity
         }
 
         public new System.Type GetType() => _nowAssetData.GetType();
+
+        
     }
 
     public class AssetEntity
@@ -99,11 +113,41 @@ namespace SEF.Entity
             RefreshAssets(assetData);
         }
 
+        public void Set(IAssetData data)
+        {
+            var assetData = FindAssetData(data);
+            Debug.Assert(assetData != null, "Account AssetData를 찾을 수 없습니다");
+            assetData.AssetValue = data.AssetValue;
+            RefreshAssets(assetData);
+        }
+
         public bool IsEnough(IAssetData data)
         {
             var assetData = FindAssetData(data);
             if (assetData == null) return false;
             return assetData.AssetValue >= data.AssetValue;
+        }
+       
+        public bool IsOverflow(IAssetData data)
+        {
+            var assetData = FindAssetData(data);
+            if (assetData == null) return true;
+            if(assetData is AssetDataCase)
+            {
+                return ((AssetDataCase)assetData).IsOverflow(data);
+            }
+            return false;
+        }
+
+        public bool IsUnderflow(IAssetData data)
+        {
+            var assetData = FindAssetData(data);
+            if (assetData == null) return true;
+            if (assetData is AssetDataCase)
+            {
+                return ((AssetDataCase)assetData).IsUnderflow(data);
+            }
+            return false;
         }
 
         //public void Add(AssetData data)

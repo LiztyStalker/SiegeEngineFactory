@@ -10,7 +10,8 @@ namespace SEF.Entity
         public UnitData UnitData => _unitData;
 
         public int UpgradeValue => _upgradeData.Value;
-//        public UpgradeData UpgradeData => _upgradeData;
+        //        public UpgradeData UpgradeData => _upgradeData;
+        public int Population => 1; //_unitData.Population;
 
         public IAssetData UpgradeAssetData
         {

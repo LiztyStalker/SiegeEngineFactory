@@ -30,6 +30,7 @@ namespace SEF.Manager
 
             _workshopManager = WorkshopManager.Create();
 
+            _workshopManager.SetOnConditionProductUnitListener(IsConditionProductUnitEvent);
             _workshopManager.Initialize(null);
             //BlackSmithManager
             //VillageManager
@@ -53,6 +54,8 @@ namespace SEF.Manager
 
         public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
         public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
+
+        public void SetAsset(IAssetData assetData) => _account.SetAsset(assetData);
         public void Refresh()
         {
             _workshopManager.Refresh();
@@ -107,6 +110,12 @@ namespace SEF.Manager
             //unitData TechAssetData ¼Òºñ
         }
 
+        private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
+        {
+            var population = new PopulationAssetData(unitEntity.Population);
+            return !_account.IsOverflow(population);
+        }
+
         #endregion
 
 
@@ -117,7 +126,6 @@ namespace SEF.Manager
         public void RemoveRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.RemoveRefreshListener(act);
         public void AddProductUnitListener(System.Action<UnitEntity> act) => _workshopManager.AddProductUnitListener(act);
         public void RemoveProductUnitListener(System.Action<UnitEntity> act) => _workshopManager.RemoveProductUnitListener(act);
-
 
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);

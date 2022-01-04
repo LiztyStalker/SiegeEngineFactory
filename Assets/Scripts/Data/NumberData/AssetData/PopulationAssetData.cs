@@ -9,7 +9,10 @@ namespace SEF.Data
     {
         public BigInteger AssetValue { get => new BigInteger(Value); set => Value = int.Parse(value.ToString()); }
 
-        public PopulationAssetData() { }
+        public PopulationAssetData() 
+        {
+            Value = 1;
+        }
         public PopulationAssetData(int value) { Value = value; }
         private PopulationAssetData(PopulationAssetData data) 
         {

@@ -35,11 +35,14 @@ namespace SEF.Manager
 
         public void RunProcess(float deltaTime)
         {
-            _nowTime += deltaTime;
-            if(_nowTime > _unitEntity.UnitData.ProductTime)
+            if (OnConditionProductUnitEvent(_unitEntity))
             {
-                OnProductUnitEvent();
-                _nowTime -= _unitEntity.UnitData.ProductTime;
+                _nowTime += deltaTime;
+                if (_nowTime > _unitEntity.UnitData.ProductTime)
+                {
+                    OnProductUnitEvent();
+                    _nowTime -= _unitEntity.UnitData.ProductTime;
+                }
             }
             OnRefreshEvent();
         }
@@ -75,6 +78,14 @@ namespace SEF.Manager
         {
             _productUnitEvent?.Invoke(_unitEntity);
         }
+
+        private System.Func<UnitEntity, bool> _conditionProductEvent;
+        public void SetOnConditionProductUnitListener(System.Func<UnitEntity, bool> act) => _conditionProductEvent = act;
+        private bool OnConditionProductUnitEvent(UnitEntity unitEntity)
+        {
+            return _conditionProductEvent(unitEntity);
+        }
+
 
 
         private System.Action<int, UnitEntity, float> _refreshEvent;

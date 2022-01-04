@@ -55,6 +55,7 @@ namespace SEF.Unit
             }
         }
 
+        public int Population => _unitEntity.Population;
 
 
         public static UnitActor Create()

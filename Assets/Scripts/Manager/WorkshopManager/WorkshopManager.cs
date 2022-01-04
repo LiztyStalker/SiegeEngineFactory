@@ -4,6 +4,7 @@ namespace SEF.Manager
     using Account;
     using Entity;
     using Data;
+    using System.Linq;
 
     public class WorkshopManager
     {
@@ -83,6 +84,7 @@ namespace SEF.Manager
             workshopLine.SetIndex(_list.Count);
             workshopLine.SetOnProductUnitListener(OnProductUnitEvent);
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
+            workshopLine.SetOnConditionProductUnitListener(OnConditionProductUnitEvent);
             _list.Add(workshopLine);
             workshopLine.UpTech(UnitData.Create_Test());
             //기본 유닛 적용 workshopLine.UpTech()
@@ -111,6 +113,13 @@ namespace SEF.Manager
         private void OnRefreshEvent(int index, UnitEntity unitEntity, float nowTime)
         {
             _refreshEvent?.Invoke(index, unitEntity, nowTime);
+        }
+
+        private System.Func<UnitEntity, bool> _conditionProductUnitEvent;
+        public void SetOnConditionProductUnitListener(System.Func<UnitEntity, bool> act) => _conditionProductUnitEvent = act;
+        private bool OnConditionProductUnitEvent(UnitEntity unitEntity)
+        {
+            return _conditionProductUnitEvent(unitEntity);
         }
 
         //LineEvent
