@@ -64,9 +64,24 @@ namespace SEF.Account
             _assetEntity.Subject(assetData);
         }
 
+        public void SetAsset(IAssetData assetData)
+        {
+            _assetEntity.Set(assetData);
+        }
+
         public bool IsEnoughAsset(IAssetData assetData)
         {
             return _assetEntity.IsEnough(assetData);
+        }
+               
+        public bool IsOverflow(IAssetData assetData)
+        {
+            return _assetEntity.IsOverflow(assetData);
+        }
+
+        public bool IsUnderflow(IAssetData assetData)
+        {
+            return _assetEntity.IsUnderflow(assetData);
         }
 
         public void RefreshAssetEntity()
