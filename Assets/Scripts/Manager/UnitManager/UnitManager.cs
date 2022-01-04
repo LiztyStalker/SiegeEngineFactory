@@ -406,13 +406,10 @@ namespace SEF.Unit
 
         #region ##### Listener #####
 
-        public System.Action<PlayActor> _hitEvent;
-
-        //IUnitActor, AttackData
-        public void AddOnHitListener(System.Action<PlayActor> act) => _hitEvent += act;
-        public void RemoveOnHitListener(System.Action<PlayActor> act) => _hitEvent -= act;
-
-        private void OnHitEvent(PlayActor playActor) 
+        public System.Action<PlayActor, AttackData> _hitEvent;
+        public void AddOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent += act;
+        public void RemoveOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent -= act;
+        private void OnHitEvent(PlayActor playActor, AttackData attackData) 
         {
             //switch (playActor)
             //{
@@ -424,7 +421,7 @@ namespace SEF.Unit
             //        Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
             //        break;
             //}
-            _hitEvent?.Invoke(playActor);
+            _hitEvent?.Invoke(playActor, attackData);
         }
 
 
@@ -455,6 +452,8 @@ namespace SEF.Unit
             }
         }
 
+
+
         private System.Action<EnemyActor> _nextEvent;
 
         public void AddOnNextEnemyListener(System.Action<EnemyActor> act) => _nextEvent += act;
@@ -464,6 +463,8 @@ namespace SEF.Unit
         {
             _nextEvent?.Invoke(enemyActor);
         }
+
+
 
         public System.Action<IAssetData> _refreshPopulationEvent;
         public void AddOnRefreshPopulationListener(System.Action<IAssetData> act) => _refreshPopulationEvent += act;

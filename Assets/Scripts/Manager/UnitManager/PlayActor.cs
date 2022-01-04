@@ -96,7 +96,7 @@ namespace SEF.Unit
 
         public void DecreaseHealth(AttackData attackData)
         {
-            _hitEvent?.Invoke(this);
+            OnHitEvent(attackData);
             _nowHealthData.Subject(attackData);
 
             if (_nowHealthData.IsZero())
@@ -165,10 +165,13 @@ namespace SEF.Unit
 
         #region ##### Listener #####
 
-        protected System.Action<PlayActor> _hitEvent;
-        public void AddOnHitListener(System.Action<PlayActor> act/*AttackData*/) => _hitEvent += act;
-        public void RemoveOnHitListener(System.Action<PlayActor> act/*AttackData*/) => _hitEvent -= act;
-
+        protected System.Action<PlayActor, AttackData> _hitEvent;
+        public void AddOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent += act;
+        public void RemoveOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent -= act;
+        private void OnHitEvent(AttackData attackData)
+        {
+            _hitEvent?.Invoke(this, attackData);
+        }
 
         protected System.Action<PlayActor> _destoryedEvent;
         public void AddOnDestoryedListener(System.Action<PlayActor> act/*ITarget*/) => _destoryedEvent += act;
