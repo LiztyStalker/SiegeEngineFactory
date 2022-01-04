@@ -95,20 +95,20 @@ namespace SEF.Data
         public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
 
         [SerializeField]
-        private AssetData _startRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData StartRewardAssetValue => _startRewardAssetValue;
+        private GoldAssetData _startRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData StartRewardAssetValue => _startRewardAssetValue;
 
         [SerializeField]
-        private AssetData _increaseLevelRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseLevelRewardAssetValue => _increaseLevelRewardAssetValue; 
+        private GoldAssetData _increaseLevelRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData IncreaseLevelRewardAssetValue => _increaseLevelRewardAssetValue; 
 
         [SerializeField]
         private float _increaseLevelRewardAssetRate;
         public float IncreaseLevelRewardAssetRate { get => _increaseLevelRewardAssetRate; set => _increaseLevelRewardAssetRate = value; }
 
         [SerializeField]
-        private AssetData _increaseWaveRewardAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseWaveRewardAssetValue => _increaseWaveRewardAssetValue;
+        private GoldAssetData _increaseWaveRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData IncreaseWaveRewardAssetValue => _increaseWaveRewardAssetValue;
 
         [SerializeField]
         private float _increaseWaveRewardAssetRate;
@@ -145,10 +145,10 @@ namespace SEF.Data
             //_attackDelay[0] = 1f;
             _attackDelay = 1f;
 
-            _startRewardAssetValue = AssetData.Create_Test();
-            _increaseLevelRewardAssetValue = AssetData.Create_Test();
+            _startRewardAssetValue = GoldAssetData.Create_Test();
+            _increaseLevelRewardAssetValue = GoldAssetData.Create_Test();
             _increaseLevelRewardAssetRate = 1f;
-            _increaseWaveRewardAssetValue = AssetData.Create_Test();
+            _increaseWaveRewardAssetValue = GoldAssetData.Create_Test();
             _increaseWaveRewardAssetRate = 1f;
 
             UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");

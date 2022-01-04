@@ -118,7 +118,8 @@ namespace SEF.UI.Test
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 
-            AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 500);
+            //AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 500);
+            IAssetData assetData = GoldAssetData.Create_Test(500);
 
             AssetEntity assetEntity = AssetEntity.Create();
             assetEntity.Initialize();

@@ -10,14 +10,14 @@ namespace SEF.UI.Toolkit
     {
         private VisualElement _root;
 
-        private TYPE_ASSET _typeAsset;
-        public TYPE_ASSET TypeAsset => _typeAsset;
+        //private TYPE_ASSET _typeAsset;
+        //public TYPE_ASSET TypeAsset => _typeAsset;
 
         private VisualElement _icon;
 
         private Label _nowValueLabel;
 
-        private Label _maxValueLabel;
+        //private Label _maxValueLabel;
 
         public static UIAssetBlock Create()
         {
@@ -29,17 +29,22 @@ namespace SEF.UI.Toolkit
             _root = root;
             _icon = _root.Q<VisualElement>("asset_icon");
             _nowValueLabel = _root.Q<Label>("now_value_label");
-            _maxValueLabel = _root.Q<Label>("max_value_label");
+//            _maxValueLabel = _root.Q<Label>("max_value_label");
 
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nowValueLabel != null, "nowValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_maxValueLabel != null, "maxValueLabel element 를 찾지 못했습니다");
+//            Debug.Assert(_maxValueLabel != null, "maxValueLabel element 를 찾지 못했습니다");
 
             _nowValueLabel.text = "0";
-            _maxValueLabel.text = "0";
+//            _maxValueLabel.text = "0";
         }
 
-        public void RefreshAssetData(AssetData assetData)
+        //public void RefreshAssetData(AssetData assetData)
+        //{
+        //    _nowValueLabel.text = assetData.GetValue();
+        //}
+
+        public void RefreshAssetData(IAssetData assetData)
         {
             _nowValueLabel.text = assetData.GetValue();
         }
@@ -49,7 +54,7 @@ namespace SEF.UI.Toolkit
             _root = null;
             _icon = null;
             _nowValueLabel = null;
-            _maxValueLabel = null;
+            //_maxValueLabel = null;
         }
     }
 

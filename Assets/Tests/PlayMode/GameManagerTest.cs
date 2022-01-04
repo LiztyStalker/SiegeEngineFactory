@@ -65,7 +65,8 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator GameManagerTest_AssetRefresh_RunProcess_10seconds()
         {
-            AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+            var assetData = GoldAssetData.Create_Test(100);
+//            AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
             float nowTime = 0;
             float secondTime = 0;
             while (true)

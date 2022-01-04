@@ -478,7 +478,7 @@ namespace SEF.Test
             var enemyActor = _unitManager.CreateEnemyActor_Test(_enemyEntity_Dummy);
             yield return null;
 
-            Debug.Log(enemyActor.GetRewardAssetData().Value);
+            Debug.Log(enemyActor.GetRewardAssetData().AssetValue);
 
             yield return new WaitForSeconds(1f);
         }

@@ -47,7 +47,8 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIAssetBlockTest_Refresh()
         {
-            var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+            //var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+            var data = GoldAssetData.Create_Test(100);
             var block = UIAssetBlock_Test.Create();
             block.Initialize();
             block.Instance.RefreshAssetData(data);
@@ -58,7 +59,8 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIAssetBlockTest_Refresh_Random()
         {
-            var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+            var data = GoldAssetData.Create_Test(100);
+//            var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
             var block = UIAssetBlock_Test.Create();
             block.Initialize();
             int count = 0;
@@ -88,18 +90,21 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIAssetTest_Refresh()
         {
-            var gold = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
-            var ore = AssetData.Create_Test(TYPE_ASSET.Ore, 100);
-            var res = AssetData.Create_Test(TYPE_ASSET.Resource, 100);
-            var met = AssetData.Create_Test(TYPE_ASSET.Meteorite, 100);
+            var gold = GoldAssetData.Create_Test(100);
+//            var gold = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
+//            var ore = AssetData.Create_Test(TYPE_ASSET.Ore, 100);
+//            var res = AssetData.Create_Test(TYPE_ASSET.Resource, 100);
+//            var met = AssetData.Create_Test(TYPE_ASSET.Meteorite, 100);
+//            var pop = AssetData.Create_Test(TYPE_ASSET.Population, 100);
 
 
             var asset = UIAsset_Test.Create();
             asset.Initialize();
             asset.Instance.RefreshAssetData(gold);
-            asset.Instance.RefreshAssetData(ore);
-            asset.Instance.RefreshAssetData(res);
-            asset.Instance.RefreshAssetData(met);
+//            asset.Instance.RefreshAssetData(ore);
+//            asset.Instance.RefreshAssetData(res);
+//            asset.Instance.RefreshAssetData(met);
+//            asset.Instance.RefreshAssetData(pop);
             yield return new WaitForSeconds(1f);
             asset.Dispose();
         }
@@ -107,13 +112,21 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIAssetTest_Refresh_Random()
         {
-            AssetData[] assets = new AssetData[]
+            IAssetData[] assets = new IAssetData[]
             {
-                AssetData.Create_Test(TYPE_ASSET.Gold, 100),
-                AssetData.Create_Test(TYPE_ASSET.Ore, 100),
-                AssetData.Create_Test(TYPE_ASSET.Resource, 100),
-                AssetData.Create_Test(TYPE_ASSET.Meteorite, 100)
+                GoldAssetData.Create_Test(100),
+//                AssetData.Create_Test(TYPE_ASSET.Ore, 100),
+//                AssetData.Create_Test(TYPE_ASSET.Resource, 100),
+//                AssetData.Create_Test(TYPE_ASSET.Meteorite, 100)
             };
+
+            //AssetData[] assets = new AssetData[]
+            //{
+            //    AssetData.Create_Test(TYPE_ASSET.Gold, 100),
+            //    AssetData.Create_Test(TYPE_ASSET.Ore, 100),
+            //    AssetData.Create_Test(TYPE_ASSET.Resource, 100),
+            //    AssetData.Create_Test(TYPE_ASSET.Meteorite, 100)
+            //};
 
 
             var asset = UIAsset_Test.Create();
@@ -123,7 +136,7 @@ namespace SEF.UI.Test
             {
                 var index = Random.Range(0, assets.Length);
                 var value = (int)Random.Range(0, 1000000000);
-                assets[index].Value += value;
+                assets[index].AssetValue += value;
                 asset.Instance.RefreshAssetData(assets[index]);
                 count++;
                 if (count > 1000)

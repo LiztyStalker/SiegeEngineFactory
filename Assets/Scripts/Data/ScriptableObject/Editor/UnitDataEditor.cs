@@ -288,14 +288,14 @@ namespace SEF.Data.Editor
             _typeAttackRangeField = _root.Query<EnumField>("typeattackrange_enumfield").First();
             _typeAttackRangeField.BindProperty(serializedObject.FindProperty("_typeAttackRange"));
             _typeAttackRangeField.label = "공격타입";
-            _typeAttackRangeField.value = _unitData.TypeAttackRange;
-            _typeAttackRangeField.RegisterCallback<ChangeEvent<System.Enum>>(
-                e =>
-                {
-                    _unitData.TypeAttackRange = (UnitData.TYPE_ATTACK_RANGE)e.newValue;
-                    EditorUtility.SetDirty(_unitData);
-                }
-            );
+            //_typeAttackRangeField.value = _unitData.TypeAttackRange;
+            //_typeAttackRangeField.RegisterCallback<ChangeEvent<System.Enum>>(
+            //    e =>
+            //    {
+            //        _unitData.TypeAttackRange = (UnitData.TYPE_ATTACK_RANGE)e.newValue;
+            //        EditorUtility.SetDirty(_unitData);
+            //    }
+            //);
 
 
             _typeAttackActionField = _root.Query<EnumField>("typeattackaction_enumfield").First();

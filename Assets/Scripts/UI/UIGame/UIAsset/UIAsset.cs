@@ -1,6 +1,5 @@
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
@@ -8,7 +7,18 @@ namespace SEF.UI.Toolkit
 
     public class UIAsset //VisualElement로 교체 예정
     {
-        private Dictionary<TYPE_ASSET, UIAssetBlock> _dic = new Dictionary<TYPE_ASSET, UIAssetBlock>();
+
+        private string[] assetArray = new string[]
+        {
+            typeof(GoldAssetData).Name,
+            "ResourceAssetData",
+            "MeteoriteAssetData",
+            "ResearchAssetData",
+            typeof(PopulationAssetData).Name
+        };
+
+        //private Dictionary<TYPE_ASSET, UIAssetBlock> _dic = new Dictionary<TYPE_ASSET, UIAssetBlock>();
+        private Dictionary<string, UIAssetBlock> _dic = new Dictionary<string, UIAssetBlock>();
 
         private VisualElement _root;
 
@@ -21,22 +31,38 @@ namespace SEF.UI.Toolkit
         {
             _root = root;
 
-            for(int i = 0; i < _root.childCount; i++)
+            for (int i = 0; i < assetArray.Length; i++)
             {
                 var block = UIAssetBlock.Create();
                 block.Initialize(_root[i]);
-                _dic.Add((TYPE_ASSET)i, block);
+                _dic.Add(assetArray[i], block);
             }
+            //for(int i = 0; i < _root.childCount; i++)
+            //{
+            //    var block = UIAssetBlock.Create();
+            //    block.Initialize(_root[i]);
+            //    _dic.Add((TYPE_ASSET)i, block);
+            //}
 
         }
 
-        public void RefreshAssetData(AssetData data)
+        //public void RefreshAssetData(AssetData data)
+        //{
+        //    if (_dic.ContainsKey(data.TypeAsset))
+        //    {
+        //        _dic[data.TypeAsset].RefreshAssetData(data);
+        //    }
+        //}
+
+        public void RefreshAssetData(IAssetData data)
         {
-            if (_dic.ContainsKey(data.TypeAsset))
+            var typeName = data.GetType().Name;
+            if (_dic.ContainsKey(typeName))
             {
-                _dic[data.TypeAsset].RefreshAssetData(data);
+                _dic[typeName].RefreshAssetData(data);
             }
         }
+
 
         public void CleanUp()
         {

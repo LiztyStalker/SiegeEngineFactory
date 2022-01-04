@@ -49,13 +49,24 @@ namespace SEF.Manager
             _workshopManager.RunProcess(deltaTime);
             //VillageManager
         }
-        public void AddAsset(AssetData assetData) => _account.AddAsset(assetData);
-        public void SubjectAsset(AssetData assetData) => _account.SubjectAsset(assetData);
-        
-        public AssetData GetAssetData()
+
+
+        public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
+        public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
+
+        public IAssetData GetAssetData()
         {
             return null;
         }
+
+
+        //public void AddAsset(AssetData assetData) => _account.AddAsset(assetData);
+        //public void SubjectAsset(AssetData assetData) => _account.SubjectAsset(assetData);
+        
+        //public AssetData GetAssetData()
+        //{
+        //    return null;
+        //}
         public void DestroyedActor(PlayActor playActor)
         {
             switch (playActor)
@@ -104,8 +115,11 @@ namespace SEF.Manager
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);
 
-        public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _account.AddRefreshAssetDataListener(act);
-        public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _account.RemoveRefreshAssetDataListener(act);
+        //public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _account.AddRefreshAssetDataListener(act);
+        //public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _account.RemoveRefreshAssetDataListener(act);
+
+        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _account.AddRefreshAssetDataListener(act);
+        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _account.RemoveRefreshAssetDataListener(act);
 
         #endregion
 

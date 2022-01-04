@@ -46,6 +46,7 @@ namespace SEF.Manager
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
+
         }
 
         private void OnDestroy()
@@ -89,7 +90,12 @@ namespace SEF.Manager
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public void AddAssetData(Data.AssetData assetData)
+        //public void AddAssetData(Data.AssetData assetData)
+        //{
+        //    _gameSystem.AddAsset(assetData);
+        //}
+
+        public void AddAssetData(Data.IAssetData assetData)
         {
             _gameSystem.AddAsset(assetData);
         }

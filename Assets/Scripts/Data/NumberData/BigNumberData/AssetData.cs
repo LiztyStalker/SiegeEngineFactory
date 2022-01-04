@@ -1,9 +1,10 @@
 namespace SEF.Data
 {
     using UnityEngine;
-    public enum TYPE_ASSET { Gold, Ore, Resource, Meteorite }
+    public enum TYPE_ASSET { Gold, Ore, Resource, Meteorite, Population }
 
     [System.Serializable]
+    [System.Obsolete("사용하지 않음")]
     public class AssetData : BigNumberData
     {
 

@@ -80,7 +80,8 @@ namespace SEF.UI.Toolkit
         }
 
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
-        public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
+        //public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
+        public void RefreshAssetData(IAssetData assetData) => _uiAsset.RefreshAssetData(assetData);
 
         //public void ShowHit(IUnitActor, AttackData)
 

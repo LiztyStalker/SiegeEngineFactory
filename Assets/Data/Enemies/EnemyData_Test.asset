@@ -21,7 +21,7 @@ MonoBehaviour:
   _startHealthValue:
     _valueText: 1000
   _increaseLevelHealthValue:
-    _valueText: 1
+    _valueText: 100
   _increaseLevelHealthRate: 1
   _increaseWaveHealthValue:
     _valueText: 1

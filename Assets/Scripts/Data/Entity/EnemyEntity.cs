@@ -27,7 +27,12 @@ namespace SEF.Entity
             _levelWaveData = levelWaveData;
         }
 
-        public AssetData GetRewardAssetData()
+        //public AssetData GetRewardAssetData()
+        //{
+        //    return _enemyData.StartRewardAssetValue;
+        //}
+
+        public IAssetData GetRewardAssetData()
         {
             return _enemyData.StartRewardAssetValue;
         }

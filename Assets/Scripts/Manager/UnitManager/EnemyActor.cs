@@ -63,7 +63,8 @@ namespace SEF.Unit {
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
-        public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
+        //public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
+        public IAssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
         public static EnemyActor Create()
         {
             var obj = new GameObject();

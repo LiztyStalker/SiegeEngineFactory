@@ -54,20 +54,37 @@ namespace SEF.Account
 
         private AssetEntity _assetEntity;
 
-        public void AddAsset(AssetData assetData)
+        public void AddAsset(IAssetData assetData)
         {
             _assetEntity.Add(assetData);
         }
 
-        public void SubjectAsset(AssetData assetData)
+        public void SubjectAsset(IAssetData assetData)
         {
             _assetEntity.Subject(assetData);
         }
 
-        public bool IsEnoughAsset(AssetData assetData)
+        public bool IsEnoughAsset(IAssetData assetData)
         {
             return _assetEntity.IsEnough(assetData);
         }
+
+
+        //public void AddAsset(AssetData assetData)
+        //{
+        //    _assetEntity.Add(assetData);
+        //}
+
+        //public void SubjectAsset(AssetData assetData)
+        //{
+        //    _assetEntity.Subject(assetData);
+        //}
+
+        //public bool IsEnoughAsset(AssetData assetData)
+        //{
+        //    return _assetEntity.IsEnough(assetData);
+        //}
+
 
 
         #region ##### Listener #####
@@ -82,10 +99,19 @@ namespace SEF.Account
 
 
 
-        private System.Action<AssetData> _refreshAsseData;
-        public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData += act;
-        public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData -= act;
-        private void OnRefreshAssetDataEvent(AssetData assetData)
+        //private System.Action<AssetData> _refreshAsseData;
+        //public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData += act;
+        //public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData -= act;
+        //private void OnRefreshAssetDataEvent(AssetData assetData)
+        //{
+        //    _refreshAsseData?.Invoke(assetData);
+        //}
+
+
+        private System.Action<IAssetData> _refreshAsseData;
+        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;
+        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData -= act;
+        private void OnRefreshAssetDataEvent(IAssetData assetData)
         {
             _refreshAsseData?.Invoke(assetData);
         }

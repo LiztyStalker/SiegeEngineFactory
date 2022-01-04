@@ -83,12 +83,12 @@ namespace SEF.Data
         public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
 
         [SerializeField]
-        private AssetData _startUpgradeAsset = NumberDataUtility.Create<AssetData>();
-        public AssetData StartUpgradeAsset => _startUpgradeAsset;
+        private GoldAssetData _startUpgradeAsset = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData StartUpgradeAsset => _startUpgradeAsset;
 
         [SerializeField]
-        private AssetData _increaseUpgradeAssetValue = NumberDataUtility.Create<AssetData>();
-        public AssetData IncreaseUpgradeAssetValue => _increaseUpgradeAssetValue;
+        private GoldAssetData _increaseUpgradeAssetValue = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData IncreaseUpgradeAssetValue => _increaseUpgradeAssetValue;
 
         [SerializeField]
         private float _increaseUpgradeAssetRate;
@@ -142,8 +142,8 @@ namespace SEF.Data
             //            _attackDelay = new float[1];
             //            _attackDelay[0] = 1f;
             _attackDelay = 1f;
-            _startUpgradeAsset = AssetData.Create_Test();
-            _increaseUpgradeAssetValue = AssetData.Create_Test();
+            _startUpgradeAsset = GoldAssetData.Create_Test();
+            _increaseUpgradeAssetValue = GoldAssetData.Create_Test();
             _increaseUpgradeAssetRate = 0.01f;
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;

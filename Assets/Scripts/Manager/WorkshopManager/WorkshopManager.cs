@@ -48,10 +48,14 @@ namespace SEF.Manager
             }
         }
 
-        public AssetData UpgradeWorkshop(int index) 
+        public IAssetData UpgradeWorkshop(int index)
         {
             return _list[index].Upgrade();
         }
+        //public AssetData UpgradeWorkshop(int index) 
+        //{
+        //    return _list[index].Upgrade();
+        //}
 
         public void ExpendWorkshop() 
         {

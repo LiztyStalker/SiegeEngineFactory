@@ -21,7 +21,7 @@ MonoBehaviour:
   _startHealthValue:
     _valueText: 1000
   _increaseHealthValue:
-    _valueText: 100
+    _valueText: 1
   _increaseHealthRate: 1
   _productTime: 0
   _attackValue:
@@ -37,9 +37,9 @@ MonoBehaviour:
   _startUpgradeAsset:
     _valueText: 100
   _increaseUpgradeAssetValue:
-    _valueText: 10
+    _valueText: 1
   _increaseUpgradeAssetRate: 1
-  _maximumUpgradeValue: 100
+  _maximumUpgradeValue: 1
   _techTreeAsset:
     _valueText: 
   _techTreeKeys: []

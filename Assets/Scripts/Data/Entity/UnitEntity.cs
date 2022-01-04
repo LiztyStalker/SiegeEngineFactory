@@ -1,18 +1,18 @@
 namespace SEF.Entity
 {
     using Data;
-    public struct UnitEntity
+    public struct UnitEntity// : IEntity
     {
         private UnitData _unitData;
         private UpgradeData _upgradeData;
-        private AssetData _upgradeAssetData;
+        private IAssetData _upgradeAssetData;
 
         public UnitData UnitData => _unitData;
 
         public int UpgradeValue => _upgradeData.Value;
 //        public UpgradeData UpgradeData => _upgradeData;
 
-        public AssetData UpgradeAssetData
+        public IAssetData UpgradeAssetData
         {
             get
             {
@@ -46,10 +46,10 @@ namespace SEF.Entity
             _upgradeAssetData = null;
         }
 
-        private AssetData CalculateUpgradeData()
+        private IAssetData CalculateUpgradeData()
         {
-            var assetData = new AssetData();
-            assetData.SetAssetData(UnitData, _upgradeData);
+            var assetData = new GoldAssetData();
+            assetData.SetAssetData(_unitData, _upgradeData);
             return assetData;
         }
     }
