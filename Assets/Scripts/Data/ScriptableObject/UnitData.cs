@@ -104,8 +104,8 @@ namespace SEF.Data
         //public AssetData[] ConditionTechTreeValue => _conditionTechTreeValue;
 
         [SerializeField]
-        private AssetData _techTreeAsset = NumberDataUtility.Create<AssetData>();
-        public AssetData TechTreeAsset => _techTreeAsset;
+        private GoldAssetData _techTreeAsset = NumberDataUtility.Create<GoldAssetData>();
+        public GoldAssetData TechTreeAsset => _techTreeAsset;
 
         [SerializeField]
         private string[] _techTreeKeys;
@@ -147,7 +147,7 @@ namespace SEF.Data
             _increaseUpgradeAssetRate = 0.01f;
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;
-            _techTreeAsset = AssetData.Create_Test();
+            _techTreeAsset = GoldAssetData.Create_Test();
             _techTreeKeys = new string[0];
 
             UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
