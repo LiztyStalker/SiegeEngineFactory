@@ -35,6 +35,12 @@ namespace SEF.Data
                 Value -= subjectNumberData.Value;
         }
 
+        public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
+        {
+            Value = NumberDataUtility.GetCompoundInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value - 1);
+        }
+
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static HealthData Create_Test()
         {            

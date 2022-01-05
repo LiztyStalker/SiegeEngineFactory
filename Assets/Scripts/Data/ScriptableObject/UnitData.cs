@@ -38,8 +38,8 @@ namespace SEF.Data
         public HealthData StartHealthValue => _startHealthValue;
 
         [SerializeField]
-        private HealthData _increaseHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseHealthValue => _increaseHealthValue;
+        private int _increaseHealthValue;// = NumberDataUtility.Create<HealthData>();
+        public int IncreaseHealthValue { get => _increaseHealthValue; set => _increaseHealthValue = value; }
 
         [SerializeField]
         private float _increaseHealthRate;
@@ -54,8 +54,8 @@ namespace SEF.Data
         public AttackData StartAttackValue => _attackValue;
 
         [SerializeField]
-        private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData IncreaseAttackValue => _increaseAttackValue;
+        private int _increaseAttackValue;// = NumberDataUtility.Create<AttackData>();
+        public int IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
 
         [SerializeField]
         private float _increaseAttackRate;
@@ -87,8 +87,8 @@ namespace SEF.Data
         public GoldAssetData StartUpgradeAsset => _startUpgradeAsset;
 
         [SerializeField]
-        private GoldAssetData _increaseUpgradeAssetValue = NumberDataUtility.Create<GoldAssetData>();
-        public GoldAssetData IncreaseUpgradeAssetValue => _increaseUpgradeAssetValue;
+        private int _increaseUpgradeAssetValue;// = NumberDataUtility.Create<GoldAssetData>();
+        public int IncreaseUpgradeAssetValue { get => _increaseUpgradeAssetValue; set => _increaseUpgradeAssetValue = value; }
 
         [SerializeField]
         private float _increaseUpgradeAssetRate;
@@ -130,21 +130,21 @@ namespace SEF.Data
             _attackBulletKey = "Arrow";
 
             _startHealthValue = HealthData.Create_Test();
-            _increaseHealthValue = HealthData.Create_Test();
-            _increaseHealthRate = 0f;
+            _increaseHealthValue = 1;// HealthData.Create_Test();
+            _increaseHealthRate = 0.1f;
             _productTime = 1f;
             _attackValue = AttackData.Create_Test();
-            _increaseAttackValue = AttackData.Create_Test();
-            _increaseAttackRate = 0.01f;
+            _increaseAttackValue = 1;// AttackData.Create_Test();
+            _increaseAttackRate = 0.1f;
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
             _attackPopulation = 1;
             _attackCount = 1;
             //            _attackDelay = new float[1];
             //            _attackDelay[0] = 1f;
             _attackDelay = 1f;
-            _startUpgradeAsset = GoldAssetData.Create_Test();
-            _increaseUpgradeAssetValue = GoldAssetData.Create_Test();
-            _increaseUpgradeAssetRate = 0.01f;
+            _startUpgradeAsset = GoldAssetData.Create_Test(100);
+            _increaseUpgradeAssetValue = 1;// GoldAssetData.Create_Test(1);
+            _increaseUpgradeAssetRate = 0.1f;
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;
             _techTreeAsset = GoldAssetData.Create_Test();

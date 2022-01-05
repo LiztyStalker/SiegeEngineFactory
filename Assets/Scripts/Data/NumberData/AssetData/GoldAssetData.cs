@@ -1,8 +1,5 @@
 namespace SEF.Data
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
     using System.Numerics;
 
     [System.Serializable]
@@ -17,14 +14,9 @@ namespace SEF.Data
         {
             return new GoldAssetData(this);
         }
-
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
         {
-            var upgradeValue = upgradeData.Value - 1;
-            var increaseUpgradeAssetValue = unitData.IncreaseUpgradeAssetValue.Value;
-            var increaseUpgradeAssetRate = Mathf.RoundToInt(unitData.IncreaseUpgradeAssetRate * 100f);
-            //Value = unitData.StartUpgradeAsset.Value * Pow(increaseUpgradeAssetValue + increaseUpgradeAssetRate, upgradeValue); // 복리
-            Value = unitData.StartUpgradeAsset.Value + (increaseUpgradeAssetValue * upgradeValue) + (increaseUpgradeAssetValue * upgradeValue * increaseUpgradeAssetRate / 100); //단리
+            Value = NumberDataUtility.GetCompoundInterest(unitData.StartUpgradeAsset.Value, unitData.IncreaseUpgradeAssetValue, unitData.IncreaseUpgradeAssetRate, upgradeData.Value - 1);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

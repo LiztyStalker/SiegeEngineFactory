@@ -211,11 +211,11 @@ namespace SEF.Data.Editor
 
             _increaseHealthValueField = _root.Query<TextField>("increasehealthvalue_textfield").First();
             _increaseHealthValueField.label = "체력증가량";
-            _increaseHealthValueField.value = _unitData.IncreaseHealthValue.ValueText;
+            _increaseHealthValueField.value = _unitData.IncreaseHealthValue.ToString();
             _increaseHealthValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseHealthValue.ValueText = e.newValue;
+                    _unitData.IncreaseHealthValue = int.Parse(e.newValue);
                     EditorUtility.SetDirty(_unitData);
                 }
             );
@@ -253,11 +253,11 @@ namespace SEF.Data.Editor
 
             _increaseAttackValueField = _root.Query<TextField>("increaseattackvalue_textfield").First();
             _increaseAttackValueField.label = "공격증가량";
-            _increaseAttackValueField.value = _unitData.IncreaseAttackValue.ValueText;
+            _increaseAttackValueField.value = _unitData.IncreaseAttackValue.ToString();
             _increaseAttackValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseAttackValue.ValueText = e.newValue;
+                    _unitData.IncreaseAttackValue = int.Parse(e.newValue);
                     EditorUtility.SetDirty(_unitData);
                 }
             );
@@ -347,11 +347,11 @@ namespace SEF.Data.Editor
 
             _increaseUpgradeValueField = _root.Query<TextField>("increaseupgradevalue_textfield").First();
             _increaseUpgradeValueField.label = "업글증가량";
-            _increaseUpgradeValueField.value = _unitData.IncreaseUpgradeAssetValue.ValueText;
+            _increaseUpgradeValueField.value = _unitData.IncreaseUpgradeAssetValue.ToString();//.ValueText;
             _increaseUpgradeValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
                 {
-                    _unitData.IncreaseUpgradeAssetValue.ValueText = e.newValue;
+                    _unitData.IncreaseUpgradeAssetValue = int.Parse(e.newValue);
                     EditorUtility.SetDirty(_unitData);
                 }
             );
