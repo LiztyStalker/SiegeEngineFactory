@@ -11,10 +11,11 @@ namespace SEF.Test
     using Data;
     using Entity;
 
-    public class AssetDataTest
+    public class EntityDataTest
     {
         private UnitEntity _unitEntity_Dummy;
         private EnemyEntity _enemyEntity_Dummy;
+        private LevelWaveData _levelWaveData;
 
         [SetUp]
         public void SetUp()
@@ -23,7 +24,9 @@ namespace SEF.Test
             _unitEntity_Dummy.UpTech(UnitData.Create_Test());
             _enemyEntity_Dummy.Initialize();
             _enemyEntity_Dummy.SetData(EnemyData.Create_Test(), NumberDataUtility.Create<LevelWaveData>());
+            _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
         }
+
 
         [TearDown]
         public void TearDown()
@@ -96,6 +99,33 @@ namespace SEF.Test
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
             Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 161);
+        }
+
+        [Test]
+        public void AssetDataTest_Upgrade_EnemyHealthData()
+        {
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 995);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1001);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1007);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1013);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1019);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_enemyEntity_Dummy.HealthData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1025);
         }
     }
 }
