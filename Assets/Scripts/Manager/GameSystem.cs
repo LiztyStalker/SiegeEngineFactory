@@ -54,7 +54,6 @@ namespace SEF.Manager
 
         public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
         public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
-
         public void SetAsset(IAssetData assetData) => _account.SetAsset(assetData);
         public void Refresh()
         {
@@ -69,14 +68,6 @@ namespace SEF.Manager
             return null;
         }
 
-
-        //public void AddAsset(AssetData assetData) => _account.AddAsset(assetData);
-        //public void SubjectAsset(AssetData assetData) => _account.SubjectAsset(assetData);
-        
-        //public AssetData GetAssetData()
-        //{
-        //    return null;
-        //}
         public void DestroyedActor(PlayActor playActor)
         {
             switch (playActor)
@@ -129,10 +120,6 @@ namespace SEF.Manager
 
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);
-
-        //public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _account.AddRefreshAssetDataListener(act);
-        //public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _account.RemoveRefreshAssetDataListener(act);
-
         public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _account.AddRefreshAssetDataListener(act);
         public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _account.RemoveRefreshAssetDataListener(act);
 

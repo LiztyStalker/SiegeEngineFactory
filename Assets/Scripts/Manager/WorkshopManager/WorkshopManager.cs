@@ -21,7 +21,6 @@ namespace SEF.Manager
             if (accountData == null)
             {
                 //null이면 초기화
-
                 _list = new List<WorkshopLine>();
                 CreateLine();
             }
@@ -61,10 +60,6 @@ namespace SEF.Manager
         {
             return _list[index].Upgrade();
         }
-        //public AssetData UpgradeWorkshop(int index) 
-        //{
-        //    return _list[index].Upgrade();
-        //}
 
         public void ExpendWorkshop() 
         {

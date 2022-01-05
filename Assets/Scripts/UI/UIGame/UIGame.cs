@@ -83,7 +83,10 @@ namespace SEF.UI.Toolkit
         //public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
         public void RefreshAssetData(IAssetData assetData) => _uiAsset.RefreshAssetData(assetData);
 
-        //public void ShowHit(IUnitActor, AttackData)
+        //public void ShowHit(PlayActor playActor, AttackData attackData)
+        //{
+        //    Debug.Log(playActor + " " + attackData);
+        //}
 
 
 

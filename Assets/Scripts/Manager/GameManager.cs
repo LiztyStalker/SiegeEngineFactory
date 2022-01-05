@@ -102,11 +102,6 @@ namespace SEF.Manager
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        //public void AddAssetData(Data.AssetData assetData)
-        //{
-        //    _gameSystem.AddAsset(assetData);
-        //}
-
         public void AddAssetData(Data.IAssetData assetData)
         {
             _gameSystem.AddAsset(assetData);
