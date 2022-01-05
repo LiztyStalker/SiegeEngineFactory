@@ -7,8 +7,48 @@ namespace SEF.Entity
     {
         private EnemyData _enemyData;
         private LevelWaveData _levelWaveData;
-
         public EnemyData EnemyData => _enemyData;
+
+        private HealthData _healthData;
+        private AttackData _attackData;
+        private IAssetData _rewardAssetData;
+
+
+        public HealthData HealthData
+        {
+            get
+            {
+                if (_healthData == null)
+                {
+                    _healthData = CalculateHealthData();
+                }
+                return _healthData;
+            }
+        }
+
+        public AttackData AttackData
+        {
+            get
+            {
+                if (_attackData == null)
+                {
+                    _attackData = CalculateAttackData();
+                }
+                return _attackData;
+            }
+        }
+
+        public IAssetData RewardAssetData
+        {
+            get
+            {
+                if (_rewardAssetData == null)
+                {
+                    _rewardAssetData = CalculateRewardAssetData();
+                }
+                return _rewardAssetData;
+            }
+        }
 
 
         public void Initialize()
@@ -27,10 +67,12 @@ namespace SEF.Entity
             _levelWaveData = levelWaveData;
         }
 
-        //public AssetData GetRewardAssetData()
-        //{
-        //    return _enemyData.StartRewardAssetValue;
-        //}
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetData(LevelWaveData levelWaveData)
+        {
+            _levelWaveData = levelWaveData;
+        }
+#endif
 
         public IAssetData GetRewardAssetData()
         {
@@ -38,5 +80,27 @@ namespace SEF.Entity
         }
 
         public LevelWaveData GetLevelWaveData() => _levelWaveData;
+
+
+
+        private HealthData CalculateHealthData()
+        {
+            var assetData = new HealthData();
+            assetData.SetAssetData(_enemyData, _levelWaveData);
+            return assetData;
+        }
+
+        private AttackData CalculateAttackData()
+        {
+            var assetData = new AttackData();
+            assetData.SetAssetData(_enemyData, _levelWaveData);
+            return assetData;
+        }
+        private IAssetData CalculateRewardAssetData()
+        {
+            var assetData = new GoldAssetData();
+            assetData.SetAssetData(_enemyData, _levelWaveData);
+            return assetData;
+        }
     }
 }
