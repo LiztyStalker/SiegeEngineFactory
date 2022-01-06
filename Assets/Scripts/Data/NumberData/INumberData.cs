@@ -26,7 +26,7 @@ namespace SEF.Data
 
         /// <summary>
         /// <br>복리 계산식</br>
-        /// <br>소숫점 0.01까지 사용가능</br>
+        /// <br>소숫점 0.001까지 사용가능</br>
         /// <br>Pow를 두번 사용 O(a^n)</br>
         /// </summary>
         /// <param name="startValue">초기값</param>
@@ -37,9 +37,9 @@ namespace SEF.Data
         public static BigInteger GetCompoundInterest(BigInteger startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
         {
             var exponent = length;
-            var nv = nowValue * 100;
-            var rt = (int)UnityEngine.Mathf.Round(rate * 100f);
-            return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(100, exponent);
+            var nv = nowValue * 1000;
+            var rt = (int)UnityEngine.Mathf.Round(rate * 1000f);
+            return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(1000, exponent);
         }
 
 
