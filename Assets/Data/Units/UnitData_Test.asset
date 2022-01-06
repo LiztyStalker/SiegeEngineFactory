@@ -19,15 +19,13 @@ MonoBehaviour:
   _spineSkinKey: 
   _group: 0
   _startHealthValue:
-    _valueText: 1000
-  _increaseHealthValue:
-    _valueText: 1
-  _increaseHealthRate: 1
+    _valueText: 100
+  _increaseHealthValue: 1
+  _increaseHealthRate: 0.05
   _productTime: 0
   _attackValue:
-    _valueText: 100
-  _increaseAttackValue:
-    _valueText: 1
+    _valueText: 30
+  _increaseAttackValue: 1
   _increaseAttackRate: 0
   _typeAttackRange: 0
   _attackPopulation: 0
@@ -35,10 +33,9 @@ MonoBehaviour:
   _attackDelay: 1
   _attackBulletKey: 
   _startUpgradeAsset:
-    _valueText: 100
-  _increaseUpgradeAssetValue:
-    _valueText: 1
-  _increaseUpgradeAssetRate: 1
+    _valueText: 10
+  _increaseUpgradeAssetValue: 1
+  _increaseUpgradeAssetRate: 0.05
   _maximumUpgradeValue: 1
   _techTreeAsset:
     _valueText: 

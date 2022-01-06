@@ -19,26 +19,21 @@ MonoBehaviour:
   _group: 2
   _typeLevelTheme: 0
   _startHealthValue:
-    _valueText: 1000
-  _increaseLevelHealthValue:
-    _valueText: 1
-  _increaseLevelHealthRate: 1
-  _increaseWaveHealthValue:
-    _valueText: 1
-  _increaseWaveHealthRate: 1
-  _startAttackValue:
     _valueText: 100
-  _increaseAttackValue:
-    _valueText: 1
-  _increaseAttackRate: 1
-  _attackCount: 1
-  _attackDelay: 1
+  _increaseLevelHealthValue: 2
+  _increaseLevelHealthRate: 0.125
+  _increaseWaveHealthValue: 1
+  _increaseWaveHealthRate: 0.1
+  _startAttackValue:
+    _valueText: 30
+  _increaseAttackValue: 1
+  _increaseAttackRate: 0.2
+  _attackCount: 0
+  _attackDelay: 0
   _attackBulletKey: 
   _startRewardAssetValue:
-    _valueText: 100
-  _increaseLevelRewardAssetValue:
-    _valueText: 1
-  _increaseLevelRewardAssetRate: 1
-  _increaseWaveRewardAssetValue:
-    _valueText: 1
-  _increaseWaveRewardAssetRate: 1
+    _valueText: 10
+  _increaseLevelRewardAssetValue: 2
+  _increaseLevelRewardAssetRate: 0.125
+  _increaseWaveRewardAssetValue: 1
+  _increaseWaveRewardAssetRate: 0.1

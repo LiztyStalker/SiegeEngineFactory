@@ -16,16 +16,16 @@
                 <ui:Label text="체력" display-tooltip-when-elided="true" name="Label" class="title_label" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_healthvalue_textfield" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="starthealthvalue_textfield" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaselevelhealthvalue_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="increaselevelhealthvalue_textfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="increaselevelhealthrate_textfield" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increasewavehealthvalue_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="increasewavehealthvalue_textfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="increasewavehealthrate_textfield" />
             </ui:VisualElement>
             <ui:VisualElement name="attack_panel" class="advanced_element">
                 <ui:Label text="공격" display-tooltip-when-elided="true" name="Label" class="title_label" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_attackvalue_textfield" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startattackvalue_textfield" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaseattackvalue_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="increaseattackvalue_textfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="increaseattackrate_textfield" />
                 <uie:IntegerField label="Int Field" value="42" name="attackcount_intfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="attackdelay_floatfield" />
@@ -35,9 +35,9 @@
                 <ui:Label text="획득재화" display-tooltip-when-elided="true" name="Label" class="title_label" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_rewardassetvalue_textfield" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="startrewardassetvalue_textfield" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increaselevelrewardassetvalue_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="increaselevelrewardassetvalue_textfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="increaselevelrewardassetrate_floatfield" />
-                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="increasewaverewardassetvalue_textfield" />
+                <uie:IntegerField label="Int Field" value="42" name="increasewaverewardassetvalue_textfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="increasewaverewardassetrate_floatfield" />
             </ui:VisualElement>
             <ui:VisualElement name="spine_panel" class="advanced_element">
