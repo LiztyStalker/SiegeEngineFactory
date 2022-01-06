@@ -36,69 +36,69 @@ namespace SEF.Test
         }
 
         [Test]
-        public void AssetDataTest_UpgradeGoldAssetData()
+        public void AssetDataTest_Upgrade_UnitGoldAssetData()
         {
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 100);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 10);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 110);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 11);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 121);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 13);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 133);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 14);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 146);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 16);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.UpgradeAssetData.GetValue());
-            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 161);
+            Assert.IsTrue(_unitEntity_Dummy.UpgradeAssetData.AssetValue == 17);
         }
 
         [Test]
-        public void AssetDataTest_UpgradeHealthAssetData()
+        public void AssetDataTest_Upgrade_UnitHealthAssetData()
         {
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1000);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 100);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1100);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 106);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1210);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 112);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1331);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 118);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1464);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 125);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 1610);
+            Assert.IsTrue(_unitEntity_Dummy.HealthData.Value == 132);
         }
 
         [Test]
-        public void AssetDataTest_UpgradeAttackAssetData()
+        public void AssetDataTest_Upgrade_UnitAttackAssetData()
         {
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 100);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 15);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 110);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 16);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 121);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 18);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 133);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 20);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 146);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 22);
             _unitEntity_Dummy.Upgrade();
             Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 161);
+            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 24);
         }
 
         [Test]

@@ -24,7 +24,7 @@ MonoBehaviour:
   _increaseHealthRate: 0.05
   _productTime: 0
   _attackValue:
-    _valueText: 30
+    _valueText: 15
   _increaseAttackValue: 1
   _increaseAttackRate: 0
   _typeAttackRange: 0
