@@ -105,38 +105,115 @@ namespace SEF.Test
         public void AssetDataTest_Upgrade_EnemyHealthData()
         {
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 990);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 99);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1000);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 100);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1010);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 101);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1020);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 102);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1030);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 103);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 1040);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 104);
             _levelWaveData.IncreaseNumber();
             _levelWaveData.IncreaseNumber();
             _levelWaveData.IncreaseNumber();
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 3240);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 324);
             _levelWaveData.IncreaseNumber();
             _enemyEntity_Dummy.SetData(_levelWaveData);
             Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.HealthData.Value);
-            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 2104);
+            Assert.IsTrue(_enemyEntity_Dummy.HealthData.Value == 210);
+        }
+
+        [Test]
+        public void AssetDataTest_Upgrade_EnemyAttackData()
+        {
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 30);
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 60);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.AttackData.Value);
+            Assert.IsTrue(_enemyEntity_Dummy.AttackData.Value == 36);
+        }
+
+
+        [Test]
+        public void AssetDataTest_Upgrade_EnemyRewardAssetData()
+        {
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 9);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 10);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 11);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 12);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 13);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 14);
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 36);
+            _levelWaveData.IncreaseNumber();
+            _enemyEntity_Dummy.SetData(_levelWaveData);
+            Debug.Log(_levelWaveData.GetValue() + " " + _enemyEntity_Dummy.RewardAssetData.AssetValue);
+            Assert.IsTrue(_enemyEntity_Dummy.RewardAssetData.AssetValue == 19);
         }
     }
 }

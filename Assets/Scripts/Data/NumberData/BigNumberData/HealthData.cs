@@ -46,7 +46,7 @@ namespace SEF.Data
             var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartHealthValue.Value, enemyData.IncreaseLevelHealthValue, enemyData.IncreaseLevelHealthRate, level);
             var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
             var value = levelValue + waveValue;
-            Debug.Log(levelValue + " " + waveValue + " " + value);
+//            Debug.Log(levelValue + " " + waveValue + " " + value);
             if (levelWaveData.IsThemeBoss())
                 value *= 5;
             else if (levelWaveData.IsBoss())
@@ -60,7 +60,7 @@ namespace SEF.Data
         public static HealthData Create_Test()
         {            
             var data = new HealthData();
-            data.ValueText = "1000";
+            data.ValueText = "100";
             return data;
         }
 

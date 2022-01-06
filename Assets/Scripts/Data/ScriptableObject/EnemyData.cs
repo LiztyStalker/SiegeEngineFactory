@@ -132,22 +132,22 @@ namespace SEF.Data
 
             _attackBulletKey = "Arrow";
 
-            _startHealthValue = HealthData.Create_Test(1000);
+            _startHealthValue = HealthData.Create_Test(100);
             _increaseLevelHealthValue = 2;// HealthData.Create_Test();
             _increaseLevelHealthRate = 0.125f;
             _increaseWaveHealthValue = 1;// HealthData.Create_Test();
             _increaseWaveHealthRate = 0.01f;
-            _startAttackValue = AttackData.Create_Test();
+            _startAttackValue = AttackData.Create_Test(30);
             _increaseAttackValue = 1;// AttackData.Create_Test();
-            _increaseAttackRate = 0.1f;
+            _increaseAttackRate = 0.2f;
             _attackCount = 1;
             //_attackDelay = new float[1];
             //_attackDelay[0] = 1f;
             _attackDelay = 1f;
 
-            _startRewardAssetValue = GoldAssetData.Create_Test();
-            _increaseLevelRewardAssetValue = 1;// GoldAssetData.Create_Test();
-            _increaseLevelRewardAssetRate = 0.1f;
+            _startRewardAssetValue = GoldAssetData.Create_Test(10);
+            _increaseLevelRewardAssetValue = 2;// GoldAssetData.Create_Test();
+            _increaseLevelRewardAssetRate = 0.125f;
             _increaseWaveRewardAssetValue = 1;// GoldAssetData.Create_Test();
             _increaseWaveRewardAssetRate = 0.1f;
 

@@ -129,11 +129,11 @@ namespace SEF.Data
 
             _attackBulletKey = "Arrow";
 
-            _startHealthValue = HealthData.Create_Test();
+            _startHealthValue = HealthData.Create_Test(100);
             _increaseHealthValue = 1;// HealthData.Create_Test();
             _increaseHealthRate = 0.1f;
             _productTime = 1f;
-            _attackValue = AttackData.Create_Test();
+            _attackValue = AttackData.Create_Test(30);
             _increaseAttackValue = 1;// AttackData.Create_Test();
             _increaseAttackRate = 0.1f;
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
@@ -142,7 +142,7 @@ namespace SEF.Data
             //            _attackDelay = new float[1];
             //            _attackDelay[0] = 1f;
             _attackDelay = 1f;
-            _startUpgradeAsset = GoldAssetData.Create_Test(100);
+            _startUpgradeAsset = GoldAssetData.Create_Test(10);
             _increaseUpgradeAssetValue = 1;// GoldAssetData.Create_Test(1);
             _increaseUpgradeAssetRate = 0.1f;
             //private string[] _conditionTechTree;

@@ -21,13 +21,19 @@ namespace SEF.Data
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
-            var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartRewardAssetValue.Value, enemyData.IncreaseLevelRewardAssetValue, enemyData.IncreaseLevelRewardAssetRate, levelWaveData.GetLevel());
-            var waveValue = (int)UnityEngine.Mathf.Round(((float)levelWaveData.GetWave() * enemyData.IncreaseWaveRewardAssetRate + (float)levelWaveData.Value)) * 100;
-
-            var value = (levelValue * 2) + (levelValue * waveValue);
-            value /= 100;
+            var level = (levelWaveData.GetWave() == 0) ? levelWaveData.GetLevel() - 1 : levelWaveData.GetLevel();
+            var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartRewardAssetValue.Value, enemyData.IncreaseLevelRewardAssetValue, enemyData.IncreaseLevelRewardAssetRate, level);
+            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)(((levelWaveData.Value - 1) % 10) - enemyData.IncreaseWaveRewardAssetValue) * enemyData.IncreaseWaveRewardAssetRate * 100f))) / 100;
+            var value = levelValue + waveValue;
+            UnityEngine.Debug.Log(levelValue + " " + waveValue + " " + value);
+            if (levelWaveData.IsThemeBoss())
+                value *= 4;
+            else if (levelWaveData.IsBoss())
+            {
+                value *= 2;
+            }
             Value = value;
-//            Value = NumberDataUtility.GetCompoundInterest(enemyData.StartRewardAssetValue.Value, enemyData.IncreaseLevelRewardAssetValue, enemyData.IncreaseLevelRewardAssetRate, levelWaveData.GetLevel());
+
         }
 
 
@@ -35,7 +41,7 @@ namespace SEF.Data
         public static GoldAssetData Create_Test() 
         {
             var data = new GoldAssetData();
-            data.ValueText = "100";
+            data.ValueText = "10";
             return data;
         }
 
