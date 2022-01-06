@@ -36,21 +36,21 @@ namespace SEF.Data.Editor
 
 
         private TextField _startHealthValueField;
-        private TextField _increaseLevelHealthValueField;
+        private IntegerField _increaseLevelHealthValueField;
         private FloatField _increaseLevelHealthRateField;
-        private TextField _increaseWaveHealthValueField;
+        private IntegerField _increaseWaveHealthValueField;
         private FloatField _increaseWaveHealthRateField;
 
         private TextField _startAttackValueField;
-        private TextField _increaseAttackValueField;
+        private IntegerField _increaseAttackValueField;
         private FloatField _increaseAttackRateField;
         private IntegerField _attackCountField;
         private FloatField _attackDelayField;
 
         private TextField _startRewardAssetValueField;
-        private TextField _increaseLevelRewardAssetValueField;
+        private IntegerField _increaseLevelRewardAssetValueField;
         private FloatField _increaseLevelRewardAssetRateField;
-        private TextField _increaseWaveRewardAssetValueField;
+        private IntegerField _increaseWaveRewardAssetValueField;
         private FloatField _increaseWaveRewardAssetRateField;
 
         private ObjectField _skeletonDataAssetField;
@@ -213,13 +213,13 @@ namespace SEF.Data.Editor
                 }
             );
 
-            _increaseLevelHealthValueField = _root.Query<TextField>("increaselevelhealthvalue_textfield").First();
+            _increaseLevelHealthValueField = _root.Query<IntegerField>("increaselevelhealthvalue_textfield").First();
             _increaseLevelHealthValueField.label = "체력레벨증가량";
-            _increaseLevelHealthValueField.value = _enemyData.IncreaseLevelHealthValue.ValueText;
-            _increaseLevelHealthValueField.RegisterCallback<ChangeEvent<string>>(
+            _increaseLevelHealthValueField.value = _enemyData.IncreaseLevelHealthValue;
+            _increaseLevelHealthValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _enemyData.IncreaseLevelHealthValue.ValueText = e.newValue;
+                    _enemyData.IncreaseLevelHealthValue = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -235,13 +235,13 @@ namespace SEF.Data.Editor
                 }
             );
 
-            _increaseWaveHealthValueField = _root.Query<TextField>("increasewavehealthvalue_textfield").First();
+            _increaseWaveHealthValueField = _root.Query<IntegerField>("increasewavehealthvalue_textfield").First();
             _increaseWaveHealthValueField.label = "체력웨이브증가량";
-            _increaseWaveHealthValueField.value = _enemyData.IncreaseWaveHealthValue.ValueText;
-            _increaseWaveHealthValueField.RegisterCallback<ChangeEvent<string>>(
+            _increaseWaveHealthValueField.value = _enemyData.IncreaseWaveHealthValue;
+            _increaseWaveHealthValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _enemyData.IncreaseWaveHealthValue.ValueText = e.newValue;
+                    _enemyData.IncreaseWaveHealthValue = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -275,13 +275,13 @@ namespace SEF.Data.Editor
                 }
             );
 
-            _increaseAttackValueField = _root.Query<TextField>("increaseattackvalue_textfield").First();
+            _increaseAttackValueField = _root.Query<IntegerField>("increaseattackvalue_textfield").First();
             _increaseAttackValueField.label = "공격증가량";
-            _increaseAttackValueField.value = _enemyData.IncreaseAttackValue.ValueText;
-            _increaseAttackValueField.RegisterCallback<ChangeEvent<string>>(
+            _increaseAttackValueField.value = _enemyData.IncreaseAttackValue;
+            _increaseAttackValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _enemyData.IncreaseAttackValue.ValueText = e.newValue;
+                    _enemyData.IncreaseAttackValue = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -342,13 +342,13 @@ namespace SEF.Data.Editor
                 }
             );
 
-            _increaseLevelRewardAssetValueField = _root.Query<TextField>("increaselevelrewardassetvalue_textfield").First();
+            _increaseLevelRewardAssetValueField = _root.Query<IntegerField>("increaselevelrewardassetvalue_textfield").First();
             _increaseLevelRewardAssetValueField.label = "레벨재화증가량";
-            _increaseLevelRewardAssetValueField.value = _enemyData.IncreaseLevelRewardAssetValue.ValueText;
-            _increaseLevelRewardAssetValueField.RegisterCallback<ChangeEvent<string>>(
+            _increaseLevelRewardAssetValueField.value = _enemyData.IncreaseLevelRewardAssetValue;
+            _increaseLevelRewardAssetValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _enemyData.IncreaseLevelRewardAssetValue.ValueText = e.newValue;
+                    _enemyData.IncreaseLevelRewardAssetValue = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -365,13 +365,13 @@ namespace SEF.Data.Editor
             );
 
 
-            _increaseWaveRewardAssetValueField = _root.Query<TextField>("increasewaverewardassetvalue_textfield").First();
+            _increaseWaveRewardAssetValueField = _root.Query<IntegerField>("increasewaverewardassetvalue_textfield").First();
             _increaseWaveRewardAssetValueField.label = "웨이브재화증가량";
-            _increaseWaveRewardAssetValueField.value = _enemyData.IncreaseWaveRewardAssetValue.ValueText;
-            _increaseWaveRewardAssetValueField.RegisterCallback<ChangeEvent<string>>(
+            _increaseWaveRewardAssetValueField.value = _enemyData.IncreaseWaveRewardAssetValue;
+            _increaseWaveRewardAssetValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _enemyData.IncreaseWaveRewardAssetValue.ValueText = e.newValue;
+                    _enemyData.IncreaseWaveRewardAssetValue = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );

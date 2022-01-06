@@ -18,15 +18,18 @@ namespace SEF.Data
             Value = NumberDataUtility.GetCompoundInterest(unitData.StartAttackValue.Value, unitData.IncreaseAttackValue, unitData.IncreaseAttackRate, upgradeData.Value - 1);
         }
 
+        public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
+        {
+            Value = NumberDataUtility.GetCompoundInterest(enemyData.StartAttackValue.Value, enemyData.IncreaseAttackValue, enemyData.IncreaseAttackRate, levelWaveData.GetLevel());
+        }
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static AttackData Create_Test()
         {
             var data = new AttackData();
             data.ValueText = "100";
             return data;
-        }
-
-       
+        }       
 #endif
     }
 }

@@ -6,7 +6,9 @@ namespace SEF.Data
         private const int LEVEL_THEME = 100;
         private const int LEVEL_DIVIDE = 10;
 
-        public LevelWaveData() { }
+        public LevelWaveData() {
+            Value = 1;
+        }
         private LevelWaveData(LevelWaveData levelWaveData)
         {
             Value = levelWaveData.Value;
@@ -17,15 +19,28 @@ namespace SEF.Data
             return $"Level {GetLevel()} - Wave {GetWave()}";
         }
 
+        /// <summary>
+        /// 테마 0-n
+        /// </summary>
+        /// <returns></returns>
         public int GetTheme()
         {
             return Value / LEVEL_THEME;
         }
 
+        /// <summary>
+        /// 레벨 0-n
+        /// </summary>
+        /// <returns></returns>
         public int GetLevel()
         {
             return Value / LEVEL_DIVIDE;
         }
+
+        /// <summary>
+        /// 웨이브 0-9
+        /// </summary>
+        /// <returns></returns>
         public int GetWave()
         {
             return Value % LEVEL_DIVIDE;

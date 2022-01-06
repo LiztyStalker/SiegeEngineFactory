@@ -48,16 +48,16 @@ namespace SEF.Data
         public HealthData StartHealthValue => _startHealthValue;
 
         [SerializeField]
-        private HealthData _increaseLevelHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseLevelHealthValue => _increaseLevelHealthValue;
+        private int _increaseLevelHealthValue;
+        public int IncreaseLevelHealthValue { get => _increaseLevelHealthValue; set => _increaseLevelHealthValue = value; }
 
         [SerializeField]
         private float _increaseLevelHealthRate;
         public float IncreaseLevelHealthRate { get => _increaseLevelHealthRate; set => _increaseLevelHealthRate = value; }
 
         [SerializeField]
-        private HealthData _increaseWaveHealthValue = NumberDataUtility.Create<HealthData>();
-        public HealthData IncreaseWaveHealthValue => _increaseWaveHealthValue;
+        private int _increaseWaveHealthValue;// = NumberDataUtility.Create<HealthData>();
+        public int IncreaseWaveHealthValue { get => _increaseWaveHealthValue; set => _increaseWaveHealthValue = value; }
 
         [SerializeField]
         private float _increaseWaveHealthRate;
@@ -68,8 +68,8 @@ namespace SEF.Data
         public AttackData StartAttackValue => _startAttackValue;
 
         [SerializeField]
-        private AttackData _increaseAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData IncreaseAttackValue => _increaseAttackValue; 
+        private int _increaseAttackValue;// = NumberDataUtility.Create<AttackData>();
+        public int IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
 
         [SerializeField]
         private float _increaseAttackRate;
@@ -99,16 +99,16 @@ namespace SEF.Data
         public GoldAssetData StartRewardAssetValue => _startRewardAssetValue;
 
         [SerializeField]
-        private GoldAssetData _increaseLevelRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
-        public GoldAssetData IncreaseLevelRewardAssetValue => _increaseLevelRewardAssetValue; 
+        private int _increaseLevelRewardAssetValue;// = NumberDataUtility.Create<GoldAssetData>();
+        public int IncreaseLevelRewardAssetValue { get => _increaseLevelRewardAssetValue; set => _increaseLevelRewardAssetValue = value; }
 
         [SerializeField]
         private float _increaseLevelRewardAssetRate;
         public float IncreaseLevelRewardAssetRate { get => _increaseLevelRewardAssetRate; set => _increaseLevelRewardAssetRate = value; }
 
         [SerializeField]
-        private GoldAssetData _increaseWaveRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
-        public GoldAssetData IncreaseWaveRewardAssetValue => _increaseWaveRewardAssetValue;
+        private int _increaseWaveRewardAssetValue;// = NumberDataUtility.Create<GoldAssetData>();
+        public int IncreaseWaveRewardAssetValue { get => _increaseWaveRewardAssetValue; set => _increaseWaveRewardAssetValue = value; }
 
         [SerializeField]
         private float _increaseWaveRewardAssetRate;
@@ -132,24 +132,24 @@ namespace SEF.Data
 
             _attackBulletKey = "Arrow";
 
-            _startHealthValue = HealthData.Create_Test();
-            _increaseLevelHealthValue = HealthData.Create_Test();
-            _increaseLevelHealthRate = 0f;
-            _increaseWaveHealthValue = HealthData.Create_Test();
-            _increaseWaveHealthRate = 0f;
+            _startHealthValue = HealthData.Create_Test(1000);
+            _increaseLevelHealthValue = 2;// HealthData.Create_Test();
+            _increaseLevelHealthRate = 0.125f;
+            _increaseWaveHealthValue = 1;// HealthData.Create_Test();
+            _increaseWaveHealthRate = 0.01f;
             _startAttackValue = AttackData.Create_Test();
-            _increaseAttackValue = AttackData.Create_Test();
-            _increaseAttackRate = 0.01f;
+            _increaseAttackValue = 1;// AttackData.Create_Test();
+            _increaseAttackRate = 0.1f;
             _attackCount = 1;
             //_attackDelay = new float[1];
             //_attackDelay[0] = 1f;
             _attackDelay = 1f;
 
             _startRewardAssetValue = GoldAssetData.Create_Test();
-            _increaseLevelRewardAssetValue = GoldAssetData.Create_Test();
-            _increaseLevelRewardAssetRate = 1f;
-            _increaseWaveRewardAssetValue = GoldAssetData.Create_Test();
-            _increaseWaveRewardAssetRate = 1f;
+            _increaseLevelRewardAssetValue = 1;// GoldAssetData.Create_Test();
+            _increaseLevelRewardAssetRate = 0.1f;
+            _increaseWaveRewardAssetValue = 1;// GoldAssetData.Create_Test();
+            _increaseWaveRewardAssetRate = 0.1f;
 
             UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");
 
