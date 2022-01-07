@@ -2,7 +2,7 @@
     width: 90%;
     background-color: rgb(106, 106, 106);
     height: 10px;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
     align-items: center;
 }

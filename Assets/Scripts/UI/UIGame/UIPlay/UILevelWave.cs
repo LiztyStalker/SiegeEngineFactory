@@ -50,6 +50,7 @@ namespace SEF.UI.Toolkit {
                 else
                     _wave = value;
                 ShowLabel();
+                UpdateHandlePosition();
             }
         }
         public int MinValue { 
@@ -58,6 +59,7 @@ namespace SEF.UI.Toolkit {
             {
                 _minValue = value;
                 ShowLabel();
+                UpdateHandlePosition();
             }
         }
         public int MaxValue { 
@@ -66,6 +68,7 @@ namespace SEF.UI.Toolkit {
             {
                 _maxValue = value;
                 ShowLabel();
+                UpdateHandlePosition();
             }
         }
 
@@ -107,7 +110,44 @@ namespace SEF.UI.Toolkit {
        
         private void UpdateHandlePosition()
         {
-            //_handle.transform.position = Vector2.zero;
+            var value = _wave;
+            var lowValue = _minValue;
+            var highValue = _maxValue;
+            var dragElement = _handle;
+            var dragContainer = _sliderBar;
+
+            float normalizedPosition = SliderNormalizeValue(value, lowValue, highValue);
+            float directionalNormalizedPosition = normalizedPosition;// inverted ? 1f - normalizedPosition : normalizedPosition;
+            float halfPixel = 0.5f;// scaledPixelsPerPoint * 0.5f;
+
+            float dragElementWidth = dragElement.resolvedStyle.width;
+
+            // This is the main calculation for the location of the thumbs / dragging element
+            float offsetForThumbFullWidth = -dragElement.resolvedStyle.marginLeft - dragElement.resolvedStyle.marginRight;
+            float totalWidth = dragContainer.layout.width - dragElementWidth + offsetForThumbFullWidth;
+            float newLeft = directionalNormalizedPosition * totalWidth;
+
+            if (float.IsNaN(newLeft)) //This can happen when layout is not computed yet
+                return;
+
+            float currentLeft = dragElement.transform.position.x;
+
+            if (!SameValues(currentLeft, newLeft, halfPixel))
+            {
+                var newPos = new Vector3(newLeft, 0, 0);
+                dragElement.transform.position = newPos;
+                //dragBorderElement.transform.position = newPos;
+            }
+        }
+
+        private bool SameValues(float a, float b, float epsilon)
+        {
+            return Mathf.Abs(b - a) < epsilon;
+        }
+
+        private float SliderNormalizeValue(int currentValue, int lowerValue, int higherValue)
+        {
+            return ((float)currentValue - (float)lowerValue) / ((float)higherValue - (float)lowerValue);
         }
 
         private void ShowLabel()
