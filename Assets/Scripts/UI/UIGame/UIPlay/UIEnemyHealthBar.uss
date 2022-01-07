@@ -1,0 +1,34 @@
+#progressbar_panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#progressbar_label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+    color: rgb(0, 0, 0);
+}
+
+UIEnemyHealthBar {
+    width: 100%;
+    height: 100%;
+}
+
+#progressbar_background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgb(130, 130, 130);
+}
+
+#progressbar {
+    position: absolute;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    background-color: rgb(2, 70, 0);
+}
