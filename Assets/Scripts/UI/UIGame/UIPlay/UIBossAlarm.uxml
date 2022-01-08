@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="UIBossAlarm.uss" />
+    <SEF.UI.Toolkit.UIBossAlarm style="width: 100%; height: 100%;">
+        <ui:VisualElement name="theme_boss_panel" class="boss_panel">
+            <ui:Label text="!!!ThemeBoss!!!" display-tooltip-when-elided="true" class="boss_Label" />
+        </ui:VisualElement>
+        <ui:VisualElement name="boss_panel" class="boss_panel" style="display: none;">
+            <ui:Label text="!Boss!" display-tooltip-when-elided="true" class="boss_Label" />
+        </ui:VisualElement>
+    </SEF.UI.Toolkit.UIBossAlarm>
+</ui:UXML>

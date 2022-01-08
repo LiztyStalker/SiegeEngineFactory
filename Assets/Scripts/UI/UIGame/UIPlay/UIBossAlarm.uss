@@ -1,0 +1,15 @@
+.boss_Label {
+    -unity-text-align: middle-center;
+    font-size: 60px;
+    width: 100%;
+    height: 100%;
+}
+
+UIBossAlarm {
+}
+
+.boss_panel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
