@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="UnityEditor.Experimental.GraphView" elementFormDefault="qualified" targetNamespace="SEF.UI.Toolkit" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:complexType name="UIEnemyHealthBarType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="engine:VisualElement" />
+        </xs:sequence>
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="false" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UIEnemyHealthBar" substitutionGroup="engine:VisualElement" xmlns:q1="SEF.UI.Toolkit" type="q1:UIEnemyHealthBarType" />
   <xs:complexType name="UILevelWaveType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -17,13 +38,15 @@
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
-        <xs:attribute default="1" name="Level" type="xs:int" use="optional" />
-        <xs:attribute default="1 / 10" name="Wave" type="xs:string" use="optional" />
+        <xs:attribute default="1" name="level" type="xs:int" use="optional" />
+        <xs:attribute default="1" name="wave" type="xs:int" use="optional" />
+        <xs:attribute default="10" name="min" type="xs:int" use="optional" />
+        <xs:attribute default="10" name="max" type="xs:int" use="optional" />
         <xs:anyAttribute processContents="lax" />
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UILevelWave" substitutionGroup="engine:VisualElement" xmlns:q1="SEF.UI.Toolkit" type="q1:UILevelWaveType" />
+  <xs:element name="UILevelWave" substitutionGroup="engine:VisualElement" xmlns:q2="SEF.UI.Toolkit" type="q2:UILevelWaveType" />
   <xs:complexType name="UISystemType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -44,7 +67,7 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UISystem" substitutionGroup="engine:VisualElement" xmlns:q2="SEF.UI.Toolkit" type="q2:UISystemType" />
+  <xs:element name="UISystem" substitutionGroup="engine:VisualElement" xmlns:q3="SEF.UI.Toolkit" type="q3:UISystemType" />
   <xs:complexType name="UIWorkshopType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -65,7 +88,7 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UIWorkshop" substitutionGroup="engine:VisualElement" xmlns:q3="SEF.UI.Toolkit" type="q3:UIWorkshopType" />
+  <xs:element name="UIWorkshop" substitutionGroup="engine:VisualElement" xmlns:q4="SEF.UI.Toolkit" type="q4:UIWorkshopType" />
   <xs:complexType name="UIWorkshopLineType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -86,7 +109,7 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UIWorkshopLine" substitutionGroup="engine:VisualElement" xmlns:q4="SEF.UI.Toolkit" type="q4:UIWorkshopLineType" />
+  <xs:element name="UIWorkshopLine" substitutionGroup="engine:VisualElement" xmlns:q5="SEF.UI.Toolkit" type="q5:UIWorkshopLineType" />
   <xs:simpleType name="UIProgressbar_TypeLabelView_Type">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Hide" />
@@ -112,10 +135,10 @@
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
         <xs:attribute default="0.5" name="FillAmount" type="xs:float" use="optional" />
-        <xs:attribute default="Hide" name="TypeLabelView" xmlns:q5="SEF.UI.Toolkit" type="q5:UIProgressbar_TypeLabelView_Type" use="optional" />
+        <xs:attribute default="Hide" name="TypeLabelView" xmlns:q6="SEF.UI.Toolkit" type="q6:UIProgressbar_TypeLabelView_Type" use="optional" />
         <xs:anyAttribute processContents="lax" />
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="UIProgressbar" substitutionGroup="engine:VisualElement" xmlns:q6="SEF.UI.Toolkit" type="q6:UIProgressbarType" />
+  <xs:element name="UIProgressbar" substitutionGroup="engine:VisualElement" xmlns:q7="SEF.UI.Toolkit" type="q7:UIProgressbarType" />
 </xs:schema>
