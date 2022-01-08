@@ -16,6 +16,8 @@ namespace SEF.UI.Toolkit
         //    TopToBottom = 3
         //}
 
+        public enum TYPE_LABEL_VIEW { Hide, Now, Now_Max, Percent};
+
 
         //https://docs.unity.cn/kr/2020.3/Manual/UIE-UXML.html
         //팩토리를 정의
@@ -29,16 +31,18 @@ namespace SEF.UI.Toolkit
 
             //속성 정의
             UxmlFloatAttributeDescription _fillAmount = new UxmlFloatAttributeDescription { name = "FillAmount", defaultValue = 0.5f };
+            UxmlEnumAttributeDescription<TYPE_LABEL_VIEW> _typeLabelView = new UxmlEnumAttributeDescription<TYPE_LABEL_VIEW> { name = "TypeLabelView", defaultValue = TYPE_LABEL_VIEW.Hide };
 
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
                 ((UIProgressbar)ve).FillAmount = _fillAmount.GetValueFromBag(bag, cc);
+                ((UIProgressbar)ve).TypeLabelView = _typeLabelView.GetValueFromBag(bag, cc);
             }
         }
 
 
-        internal static readonly string PATH_UI_PROGRESSBAR_UXML = "Assets/Scripts/UI/UIUtility/UIProgressbar.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIUtility/UIProgressbar.uxml";
 
         private Label _progressLabel;
         private VisualElement _background;
@@ -56,10 +60,25 @@ namespace SEF.UI.Toolkit
             } 
         }
 
-//        private FillDirection fillDirection;
+        private TYPE_LABEL_VIEW _typeLabelView;
 
-//        private Texture2D originalTexture;
-//        private Texture2D copyTexture;
+        public TYPE_LABEL_VIEW TypeLabelView
+        {
+            get { return _typeLabelView; }
+            private set
+            {
+                _typeLabelView = value;
+            }
+        }
+
+        public Label ProgressLabel => _progressLabel;
+
+        //FillAmount 이미지형으로 제작
+        //개발중
+        //        private FillDirection fillDirection;
+
+        //        private Texture2D originalTexture;
+        //        private Texture2D copyTexture;
 
         private void GenerateVisualContent(MeshGenerationContext context)
         {
@@ -199,8 +218,26 @@ namespace SEF.UI.Toolkit
 
         private void SetLabel()
         {
-            if(_progressLabel.style.display == DisplayStyle.Flex)
-                _progressLabel.text = _fillAmount.ToString();
+            if (_progressLabel.style.display == DisplayStyle.Flex)
+            {
+                var str = "";
+                //switch (TypeLabelView)
+                //{
+                //    case TYPE_LABEL_VIEW.Now:
+                        str = _fillAmount.ToString();
+                //        break;
+                //    case TYPE_LABEL_VIEW.Now_Max:
+                //        str = _fillAmount.ToString();
+                //        break;
+                //    case TYPE_LABEL_VIEW.Percent:
+                //        str = _fillAmount.ToString();
+                //        break;
+                //    default:
+                //        Debug.Assert(false, "지정된 TypeLabelView가 없습니다");
+                //        break;
+                //}
+                _progressLabel.text = str;
+            }
         }
 
         public UIProgressbar()
@@ -244,7 +281,8 @@ namespace SEF.UI.Toolkit
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
 
-
+    //통합 UIVisualElementTester
+    //개발중
     //[RequireComponent(typeof(UIDocument))]
 
     //public class UIVisualElementTester : MonoBehaviour
@@ -298,7 +336,7 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UIProgressbar.PATH_UI_PROGRESSBAR_UXML);
+            var root = UIUXML.GetVisualElement(gameObject, UIProgressbar.PATH_UI_UXML);
             _instance = root.Q<UIProgressbar>();            
         }
 

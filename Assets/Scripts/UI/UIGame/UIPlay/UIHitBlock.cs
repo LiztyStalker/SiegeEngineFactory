@@ -79,7 +79,6 @@ namespace SEF.UI.Toolkit
 
 
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static UIHitBlock Create()
         {
             var obj = new GameObject();
@@ -88,6 +87,5 @@ namespace SEF.UI.Toolkit
             UIUXML.GetVisualElement(obj, PATH_UI_UXML);
             return block;
         }
-#endif
     }
 }

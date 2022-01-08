@@ -10,12 +10,7 @@ namespace SEF.UI.Toolkit
 
         //속성 정의
         //
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-                       
-        }
-
-
+        public new class UxmlTraits : VisualElement.UxmlTraits  {   }
 
 
 
@@ -25,6 +20,14 @@ namespace SEF.UI.Toolkit
         {
 //            ProgressLabel.style.display = DisplayStyle.None;
         }
+
+
+        public void ShowHealth(string value, float rate)
+        {
+            FillAmount = rate;
+            ProgressLabel.text = value;
+        }
+
 
     }
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
