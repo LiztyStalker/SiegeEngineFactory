@@ -111,18 +111,18 @@ namespace SEF.UI.Toolkit {
 
         public void Initialize()
         {
-
         }
 
         public void CleanUp()
         {
-
         }
 
         public void ShowLevelWave(int level, int wave)
         {
             _level = level;
             _wave = wave;
+            UpdateHandlePosition();
+            ShowLabel();
         }
 
         private void UpdateHandlePosition()

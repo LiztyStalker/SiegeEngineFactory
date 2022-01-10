@@ -53,6 +53,7 @@ namespace SEF.Entity
 
         public void Initialize()
         {
+            //UpTech와 Initialize의 순서가 필요하지 않도록 제작 필요
             _upgradeData = NumberDataUtility.Create<UpgradeData>();            
         }
         public void CleanUp()

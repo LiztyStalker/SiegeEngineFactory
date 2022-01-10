@@ -55,11 +55,21 @@ namespace SEF.UI.Toolkit
                 _uiHealthContainer.ShowEnemyHealthData(((EnemyActor)playActor).NowHealthValue(), playActor.NowHealthRate());
         }
 
+        
+        //EnemyEntity, float, LevelWaveData
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData)
         {
             _uiHealthContainer.ShowEnemyHealthData(enemyActor.NowHealthValue(), enemyActor.NowHealthRate());
             _uiLevelWave.ShowLevelWave(levelWaveData.GetLevel(), levelWaveData.GetWave());
-            _uiBossAlarm.ShowAlarm(enemyActor.GetTypeEnemyGroup());
+
+            TYPE_ENEMY_GROUP typeEnemyGroup = TYPE_ENEMY_GROUP.Normal;
+            if (levelWaveData.IsBoss())
+                typeEnemyGroup = TYPE_ENEMY_GROUP.Boss;
+            else if (levelWaveData.IsThemeBoss())
+                typeEnemyGroup = TYPE_ENEMY_GROUP.ThemeBoss;
+            _uiBossAlarm.ShowAlarm(typeEnemyGroup);
+            //아래 코드 제거 필요
+//            _uiBossAlarm.ShowAlarm(enemyActor.GetTypeEnemyGroup());
         }
 
     }
