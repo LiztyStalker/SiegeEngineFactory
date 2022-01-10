@@ -57,9 +57,21 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIHealthTest_ShowHitBlock()
         {
-            _uiblock.ShowHealth(0.4f, Vector2.one * 100);
+            bool isRun = true;
+
+            _uiblock.SetOnRetrieveBlockListener(block =>
+            {
+                Debug.Log("End");
+                isRun = false;
+            });
+
+            _uiblock.ShowHealth(0.4f, Vector2.zero);
             _uiblock.Activate();
-            yield return new WaitForSeconds(1f);
+
+            while (isRun)
+            {
+                yield return null;
+            }
         }
 
     }

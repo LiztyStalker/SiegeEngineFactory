@@ -8,4 +8,6 @@
 }
 
 .hit_block {
+    align-items: center;
+    justify-content: center;
 }

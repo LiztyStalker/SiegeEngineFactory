@@ -38,7 +38,6 @@ namespace SEF.UI.Toolkit
 
         private void Retrieve(UIHealthBar block)
         {
-            block.Inactivate();
             _pool.RetrieveElement(block);
         }
 

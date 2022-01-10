@@ -16,6 +16,7 @@ namespace UtilityManager.Test {
             camera.backgroundColor = Color.cyan;
             camera.orthographic = true;
             camera.orthographicSize = 5f;
+            camera.tag = "MainCamera";
             return camera;
         }
 

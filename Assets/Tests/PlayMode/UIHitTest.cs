@@ -57,9 +57,26 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIHitTest_ShowHitBlock()
         {
-            _uiHitBlock.ShowHit("1.234A", Vector2.one * 100);
-            _uiHitBlock.Activate();
+            bool isRun = true;
+
+
+
             yield return new WaitForSeconds(1f);
+
+            _uiHitBlock.SetOnRetrieveBlockListener(block =>
+            {
+                Debug.Log("End");
+                isRun = false;
+            });
+
+
+            _uiHitBlock.ShowHit("1.234A", Vector2.zero);
+            _uiHitBlock.Activate();
+
+            while (isRun)
+            {
+                yield return null;
+            }
         }
 
     }

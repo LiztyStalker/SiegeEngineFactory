@@ -11,14 +11,16 @@ namespace SEF.UI.Toolkit
     {
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIHealthBar.uxml";
 
-
+        private UIDocument _uiDocument;
         private VisualElement _root;
         private UIProgressbar _fillBar;
 
+        private float _fillAmount;
+
         public void Initialize()
         {
-            _root = GetComponent<UIDocument>().rootVisualElement;
-            _fillBar = _root.Q<UIProgressbar>();
+            _uiDocument = GetComponent<UIDocument>();
+            _root = _uiDocument.rootVisualElement;
             Inactivate();
         }
 
@@ -31,32 +33,38 @@ namespace SEF.UI.Toolkit
 
         public void ShowHealth(float fillAmount, Vector2 position)
         {
-            _root.transform.position = position;
-            _fillBar.FillAmount = fillAmount;
+            transform.position = position;
+            _fillAmount = fillAmount;
         }
 
-        //static void MoveAndScaleToWorldPosition(VisualElement element, Vector3 worldPosition, Vector2 worldSize)
-        //{
-        //    //Rect rect = RuntimePanelUtils.CameraTransformWorldToPanelRect(element.panel, worldPosition, worldSize, Camera.main);
-        //    //Vector2 layoutSize = element.layout.size;
-
-        //    //// Don't set scale to 0 or a negative number.
-        //    //Vector2 scale = layoutSize.x > 0 && layoutSize.y > 0 ? rect.size / layoutSize : Vector2.one * 1e-5f;
-
-        //    element.transform.position = worldPosition;
-        //    element.transform.scale = Vector3.one;// new Vector3(scale.x, scale.y, 1);
-        //}
 
         public void Activate()
         {
             gameObject.SetActive(true);
-            //MoveAndScaleToWorldPosition(_root, Vector2.one * 50, Vector2.one);
-            //Debug.Log(_root.transform.position);
+            SetPosition();
+            SetFillAmount();
+
         }
 
         public void Inactivate()
         {
             gameObject.SetActive(false);
+        }
+
+
+        private void SetPosition()
+        {
+            var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+            screenPos.z = 0;
+            _uiDocument.rootVisualElement.transform.position = screenPos;
+        }
+
+        private void SetFillAmount()
+        {
+            //Inactivate되면 기존에 연결한 VisualElement가 해제되므로 
+            //Activate후 다시 연결할 필요 있음
+            _fillBar = _root.Q<UIProgressbar>();
+            _fillBar.FillAmount = _fillAmount;
         }
 
         private float nowTime = 0;
@@ -67,6 +75,7 @@ namespace SEF.UI.Toolkit
             {
                 nowTime = 0;
                 _retrieveEvent?.Invoke(this);
+                Inactivate();
             }
         }
 

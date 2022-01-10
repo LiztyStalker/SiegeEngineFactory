@@ -34,7 +34,6 @@ namespace SEF.UI.Toolkit
 
         private void Retrieve(UIHitBlock block)
         {
-            block.Inactivate();
             _pool.RetrieveElement(block);
         }
 
