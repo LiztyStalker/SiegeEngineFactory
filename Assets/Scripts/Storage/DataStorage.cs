@@ -113,7 +113,7 @@ namespace Storage
             for (int j = 0; j < files.Length; j++)
             {
                 var data = AssetDatabase.LoadAssetAtPath<T>(files[j]);
-                Debug.Log(data + " " + files[j]);
+                //Debug.Log(data + " " + files[j]);
                 if (data != null)
                 {
                     AddDirectoryInData(data.name, data);

@@ -152,7 +152,7 @@ namespace SEF.UI.Toolkit {
 
         private void ShowLabel()
         {
-            Debug.Log("ShowLabel");
+            //Debug.Log("ShowLabel");
             _levelLabel.text = _level.ToString();
             _waveLabel.text = $"{_wave}/{_maxValue}";
         }
