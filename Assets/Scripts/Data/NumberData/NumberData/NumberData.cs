@@ -33,7 +33,11 @@ namespace SEF.Data
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public void SetValue(int value)
+        /// <summary>
+        /// Test¿ë
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetValue_Test(int value)
         {
             Value = value;
         }
