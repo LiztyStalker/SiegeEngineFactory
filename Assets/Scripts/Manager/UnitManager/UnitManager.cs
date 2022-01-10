@@ -279,7 +279,7 @@ namespace SEF.Unit
         {
             _enemyQueueData.Initialize(/*AccountData*/_gameObject.transform);
             SetNowEnemyListener();
-            OnNextEnemyEvent(_enemyQueueData.NowEnemy);
+            OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
         }
 
         public void CleanUp()
@@ -444,7 +444,7 @@ namespace SEF.Unit
                 case EnemyActor enemyActor:
                     RetrieveEnemyActor(enemyActor);
                     CreateAndChangeEnemyActor();
-                    OnNextEnemyEvent(_enemyQueueData.NowEnemy);
+                    OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
                     break;
                 default:
                     Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
@@ -454,14 +454,14 @@ namespace SEF.Unit
 
 
 
-        private System.Action<EnemyActor> _nextEvent;
+        private System.Action<EnemyActor, LevelWaveData> _nextEvent;
 
-        public void AddOnNextEnemyListener(System.Action<EnemyActor> act) => _nextEvent += act;
-        public void RemoveOnNextEnemyListener(System.Action<EnemyActor> act) => _nextEvent += act;
+        public void AddOnNextEnemyListener(System.Action<EnemyActor, LevelWaveData> act) => _nextEvent += act;
+        public void RemoveOnNextEnemyListener(System.Action<EnemyActor, LevelWaveData> act) => _nextEvent += act;
 
-        private void OnNextEnemyEvent(EnemyActor enemyActor)
+        private void OnNextEnemyEvent(EnemyActor enemyActor, LevelWaveData levelWaveData)
         {
-            _nextEvent?.Invoke(enemyActor);
+            _nextEvent?.Invoke(enemyActor, levelWaveData);
         }
 
 

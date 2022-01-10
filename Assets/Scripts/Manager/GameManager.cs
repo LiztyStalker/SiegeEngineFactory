@@ -39,9 +39,9 @@ namespace SEF.Manager
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
 
-            //_unitManager.AddOnHitListener();
+            _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
-            _unitManager.AddOnNextEnemyListener(_uiGame.RefreshEnemyUnit);
+            _unitManager.AddOnNextEnemyListener(_uiGame.RefreshNextEnemyUnit);
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 
             _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
@@ -67,17 +67,14 @@ namespace SEF.Manager
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
 
-            //_unitManager.RemoveOnHitListener();
+            _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
-            _unitManager.RemoveOnNextEnemyListener(_uiGame.RefreshEnemyUnit);
+            _unitManager.RemoveOnNextEnemyListener(_uiGame.RefreshNextEnemyUnit);
             _unitManager.RemoveOnRefreshPopulationListener(_gameSystem.SetAsset);
 
             _uiGame.RemoveUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
-
-
-
 
             //CleanUp
             _gameSystem.CleanUp();

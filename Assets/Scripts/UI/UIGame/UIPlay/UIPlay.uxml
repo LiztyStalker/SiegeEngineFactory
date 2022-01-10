@@ -3,9 +3,9 @@
     <ui:Template name="UIEnemyHealthBar" src="UIEnemyHealthBar.uxml" />
     <ui:Template name="UILevelWave" src="UILevelWave.uxml" />
     <Style src="UIPlay.uss" />
-    <ui:VisualElement name="uiplay_panel">
+    <SEF.UI.Toolkit.UIPlay name="uiplay_panel">
         <ui:Instance template="UILevelWave" name="UILevelWave" />
         <ui:Instance template="UIEnemyHealthBar" name="UIEnemyHealthBar" />
         <ui:Instance template="UIBossAlarm" name="UIBossAlarm" />
-    </ui:VisualElement>
+    </SEF.UI.Toolkit.UIPlay>
 </ui:UXML>

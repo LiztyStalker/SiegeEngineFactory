@@ -30,22 +30,67 @@ namespace SEF.UI.Toolkit
 
         public void CleanUp()
         {
-
+            _bossPanel = null;
+            _themebossPanel = null;
         }
 
-        public void ShowThemeBoss()
+        public void ShowAlarm(SEF.Data.TYPE_ENEMY_GROUP typeEnemyGroup)
+        {
+            switch (typeEnemyGroup)
+            {
+                case Data.TYPE_ENEMY_GROUP.Boss:
+                    ShowBoss();
+                    break;
+                case Data.TYPE_ENEMY_GROUP.ThemeBoss:
+                    ShowThemeBoss();
+                    break;
+                case Data.TYPE_ENEMY_GROUP.Normal:
+                    break;
+                default:
+                    Debug.LogError($"{typeEnemyGroup} 타입이 지정되지 않았습니다");
+                    break;
+            }
+        }
+
+        private void ShowThemeBoss()
         {
             _bossPanel.style.display = DisplayStyle.None;
             _themebossPanel.style.display = DisplayStyle.Flex;
             this.style.display = DisplayStyle.Flex;
+            
         }
 
-        public void ShowBoss()
+        private void ShowBoss()
         {
             _bossPanel.style.display = DisplayStyle.Flex;
             _themebossPanel.style.display = DisplayStyle.None;
             this.style.display = DisplayStyle.Flex;            
-        }
+        }       
+
+
+        //private float _nowTime = 0;
+        //private void Update()
+        //{
+        //    if(this.style.display == DisplayStyle.Flex)
+        //    {
+        //        _nowTime += Time.deltaTime;
+        //        if(_nowTime > 1f)
+        //        {
+        //            this.style.display = DisplayStyle.None;
+        //            _closedEvent?.Invoke();
+        //        }
+        //    }
+        //}
+
+
+        #region ##### Listener #####
+
+        private System.Action _closedEvent;
+
+        public void SetOnClosedEvent(System.Action act) => _closedEvent = act;
+
+        #endregion
+
     }
 
 

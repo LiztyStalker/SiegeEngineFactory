@@ -41,19 +41,52 @@ namespace SEF.UI.Test
             yield return new WaitForSeconds(1f);
         }
 
-
-
         [UnityTest]
         public IEnumerator UIBossAlarmTest_ShowBoss()
         {
-            _uitest.Instance.ShowBoss();
+            bool isRun = true;
+            _uitest.Instance.SetOnClosedEvent(delegate
+            {
+                Debug.Log("End");
+                isRun = false;
+            });
+
+            _uitest.Instance.ShowAlarm(Data.TYPE_ENEMY_GROUP.Boss);
+
+
+            while (isRun)
+            {
+                yield return null;
+            }
+
             yield return new WaitForSeconds(1f);
         }
 
         [UnityTest]
         public IEnumerator UIBossAlarmTest_ShowThemeBoss()
         {
-            _uitest.Instance.ShowThemeBoss();
+            bool isRun = true;
+            _uitest.Instance.SetOnClosedEvent(delegate
+            {
+                Debug.Log("End");
+                isRun = false;
+            });
+
+            _uitest.Instance.ShowAlarm(Data.TYPE_ENEMY_GROUP.ThemeBoss);
+
+
+            while (isRun)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest]
+        public IEnumerator UIBossAlarmTest_ShowNormal()
+        {
+            _uitest.Instance.ShowAlarm(Data.TYPE_ENEMY_GROUP.Normal);
             yield return new WaitForSeconds(1f);
         }
 

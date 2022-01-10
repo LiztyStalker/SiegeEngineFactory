@@ -1,37 +1,97 @@
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
-
-
-public class UIPlay : EditorWindow
+namespace SEF.UI.Toolkit
 {
-    [MenuItem("Window/UI Toolkit/UIPlay")]
-    public static void ShowExample()
+    using UnityEditor;
+    using UnityEngine;
+    using UnityEngine.UIElements;
+    using UnityEditor.UIElements;
+    using Data;
+    using SEF.Unit;
+
+    public class UIPlay : VisualElement
     {
-        UIPlay wnd = GetWindow<UIPlay>();
-        wnd.titleContent = new GUIContent("UIPlay");
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIPlay.uxml";
+
+
+        public new class UxmlFactory : UxmlFactory<UIPlay, UxmlTraits> { }
+        public new class UxmlTraits : VisualElement.UxmlTraits { }
+
+
+        private UILevelWave _uiLevelWave;
+
+        private UIHealthContainer _uiHealthContainer;
+
+        private UIBossAlarm _uiBossAlarm;
+
+        private UIHitContainer _uiHitContainer;
+        
+        public void Initialize(Transform parent) {
+            _uiLevelWave = this.Query<UILevelWave>().First();
+            _uiBossAlarm = this.Query<UIBossAlarm>().First();
+
+            _uiHealthContainer = UIHealthContainer.Create(parent);
+            _uiHitContainer = UIHitContainer.Create(parent);
+
+            _uiLevelWave.Initialize();
+            _uiBossAlarm.Initialize();
+            _uiHealthContainer.Initialize(this);
+            _uiHitContainer.Initialize();
+        }
+
+        public void CleanUp() 
+        {
+            _uiLevelWave.CleanUp();
+            _uiBossAlarm.CleanUp();
+            _uiHealthContainer.CleanUp();
+            _uiHitContainer.CleanUp();
+        }
+
+        public void ShowHit(PlayActor playActor, AttackData data)
+        {
+            _uiHitContainer.ShowHit(data.GetValue(), playActor.transform.position);
+
+            if (playActor is UnitActor)
+                _uiHealthContainer.ShowUnitHealthData(playActor.NowHealthRate(), playActor.transform.position);
+            else if (playActor is EnemyActor)
+                _uiHealthContainer.ShowEnemyHealthData(((EnemyActor)playActor).NowHealthValue(), playActor.NowHealthRate());
+        }
+
+        public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData)
+        {
+            _uiHealthContainer.ShowEnemyHealthData(enemyActor.NowHealthValue(), enemyActor.NowHealthRate());
+            _uiLevelWave.ShowLevelWave(levelWaveData.GetLevel(), levelWaveData.GetWave());
+            _uiBossAlarm.ShowAlarm(enemyActor.GetTypeEnemyGroup());
+        }
+
     }
 
-    public void CreateGUI()
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+    [RequireComponent(typeof(UIDocument))]
+    public class UIPlay_Test : MonoBehaviour
     {
-        // Each editor window contains a root VisualElement object
-        VisualElement root = rootVisualElement;
+        private UIPlay _instance;
+        public UIPlay Instance => _instance;
 
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
+        public static UIPlay_Test Create()
+        {
+            var obj = new GameObject();
+            obj.name = "UIPlay_Test";
+            return obj.AddComponent<UIPlay_Test>();
+        }
 
-        // Import UXML
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/UI/UIGame/UIPlay/UIPlay.uxml");
-        VisualElement labelFromUXML = visualTree.Instantiate();
-        root.Add(labelFromUXML);
+        public void Initialize()
+        {
+            var root = UIUXML.GetVisualElement(gameObject, UIPlay.PATH_UI_UXML);
+            _instance = root.Q<UIPlay>();
+            _instance.Initialize(transform);
+        }
 
-        // A stylesheet can be added to a VisualElement.
-        // The style will be applied to the VisualElement and all of its children.
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/UI/UIGame/UIPlay/UIPlay.uss");
-        VisualElement labelWithStyle = new Label("Hello World! With Style");
-        labelWithStyle.styleSheets.Add(styleSheet);
-        root.Add(labelWithStyle);
+        public void Dispose()
+        {
+            _instance = null;
+            DestroyImmediate(gameObject);
+        }
     }
+#endif
 }

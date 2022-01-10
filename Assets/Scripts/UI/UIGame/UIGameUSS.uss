@@ -6,6 +6,8 @@
 }
 
 #UISystemUXML {
+    width: 100%;
+    height: 60%;
 }
 
 #UIAssetUXML {
@@ -13,7 +15,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
-    height: 140px;
+    height: 10%;
     border-left-width: 10px;
     border-right-width: 10px;
     border-top-width: 10px;

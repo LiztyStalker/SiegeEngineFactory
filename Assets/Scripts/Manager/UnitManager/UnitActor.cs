@@ -18,6 +18,8 @@ namespace SEF.Unit
         public readonly static Vector2 UNIT_APPEAR_POSITION_TEST = UNIT_APPEAR_POSITION;
         public readonly static Vector2 UNIT_ACTION_POSITION_TEST = UNIT_ACTION_POSITION;
 #endif
+
+        public override float NowHealthRate() => (float)NowHealthData.Value / (float)_unitEntity.HealthData.Value;
         public bool IsArriveAction() => (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
         private UnitEntity _unitEntity;

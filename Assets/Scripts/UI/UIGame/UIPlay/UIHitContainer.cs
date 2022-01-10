@@ -31,7 +31,6 @@ namespace SEF.UI.Toolkit
             hit.Activate();
         }
 
-
         private void Retrieve(UIHitBlock block)
         {
             _pool.RetrieveElement(block);
@@ -40,6 +39,7 @@ namespace SEF.UI.Toolkit
         private UIHitBlock Create()
         {
             var block = UIHitBlock.Create();
+            block.Initialize();
             block.SetOnRetrieveBlockListener(Retrieve);
             return block;
         }
@@ -55,6 +55,24 @@ namespace SEF.UI.Toolkit
             container.transform.SetParent(parent);
             return container;
         }
+
+
+        /// <summary>
+        /// ShowHit 테스트판
+        /// Release에서는 사용 불가
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="position"></param>
+        /// <param name="endCallback"></param>
+        public void ShowHit_Test(string value, Vector2 position, System.Action<UIHitBlock> endCallback)
+        {
+            var hit = _pool.GiveElement();
+            hit.SetOnRetrieveBlockListener(endCallback);
+            hit.ShowHit(value, position);
+            hit.Activate();
+        }
+
+
 #endif
     }
 }

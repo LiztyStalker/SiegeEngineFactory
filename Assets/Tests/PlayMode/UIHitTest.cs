@@ -79,5 +79,31 @@ namespace SEF.UI.Test
             }
         }
 
+        [UnityTest]
+        public IEnumerator UIHitTest_ShowHitContainer_10()
+        {
+            int count = 0;
+
+            yield return new WaitForSeconds(1f);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), -2f);
+                _uiHitContainer.ShowHit_Test("1.234A", pos, block =>
+                {
+                    Debug.Log("End");
+                    count++;
+                });
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+            }
+
+            while (true)
+            {
+                if (count >= 10)
+                    break;
+                yield return null;
+            }
+        }
+
     }
 }

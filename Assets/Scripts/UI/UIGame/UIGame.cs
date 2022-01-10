@@ -18,7 +18,7 @@ namespace SEF.UI.Toolkit
 
         private UIAsset _uiAsset;
         private UISystem _uiSystem;
-        //private UIPlay _uiPlay;
+        private UIPlay _uiPlay;
         //private UIOfflineReward _uiOfflineReward;
 
         public static UIGame Create()
@@ -39,54 +39,32 @@ namespace SEF.UI.Toolkit
 
             _uiAsset = UIAsset.Create();
             _uiSystem = _root.Q<UISystem>();
+            _uiPlay = _root.Q<UIPlay>();
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
+            Debug.Assert(_uiPlay != null, "_uiPlay 가 등록되지 않았습니다");
 
             _uiAsset.Initialize(_root.Q<VisualElement>("UIAssetUXML"));
-            _uiSystem.Initialize();            
+            _uiSystem.Initialize();
+            _uiPlay.Initialize(transform);
         }
 
         public void CleanUp()
         {            
             _uiAsset.CleanUp();
             _uiSystem.CleanUp();
+            _uiPlay.CleanUp();
         }
 
         //오프라인 보상
         //public void CompensateOffline(AccountData)
 
-
-
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
-        public void RefreshEnemyUnit(EnemyActor enemyActor) 
-        {
-
-            switch (enemyActor.typeEnemyGroup) 
-            {
-                case TYPE_ENEMY_GROUP.Normal:
-                    Debug.Log("적 등장 " + enemyActor.GetLevelWaveData().GetValue());
-                    break;
-                case TYPE_ENEMY_GROUP.Boss:
-                    Debug.Log("보스 등장 " + enemyActor.GetLevelWaveData().GetValue());
-                    break;
-                case TYPE_ENEMY_GROUP.ThemeBoss:
-                    Debug.Log("테마 보스 등장 " + enemyActor.GetLevelWaveData().GetValue());
-                    break;
-                default:
-                    Debug.LogError($"{enemyActor.typeEnemyGroup} TypeEnemyGroup이 지정되지 않았습니다");
-                    break;
-            }
-        }
-
+        public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
-        //public void RefreshAssetData(AssetData assetData) => _uiAsset.RefreshAssetData(assetData);
         public void RefreshAssetData(IAssetData assetData) => _uiAsset.RefreshAssetData(assetData);
-
-        //public void ShowHit(PlayActor playActor, AttackData attackData)
-        //{
-        //    Debug.Log(playActor + " " + attackData);
-        //}
+        public void ShowHit(PlayActor playActor, AttackData attackData) => _uiPlay.ShowHit(playActor, attackData);
 
 
 

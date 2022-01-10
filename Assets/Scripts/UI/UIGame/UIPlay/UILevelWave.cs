@@ -108,6 +108,23 @@ namespace SEF.UI.Toolkit {
             //generateVisualContent = GenerateVisualContent;
         }
        
+
+        public void Initialize()
+        {
+
+        }
+
+        public void CleanUp()
+        {
+
+        }
+
+        public void ShowLevelWave(int level, int wave)
+        {
+            _level = level;
+            _wave = wave;
+        }
+
         private void UpdateHandlePosition()
         {
             var value = _wave;
@@ -152,7 +169,7 @@ namespace SEF.UI.Toolkit {
 
         private void ShowLabel()
         {
-            Debug.Log("ShowLabel");
+            //Debug.Log("ShowLabel");
             _levelLabel.text = _level.ToString();
             _waveLabel.text = $"{_wave}/{_maxValue}";
         }

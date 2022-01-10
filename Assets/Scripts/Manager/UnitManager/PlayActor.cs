@@ -25,6 +25,8 @@ namespace SEF.Unit
 
         protected HealthData NowHealthData => _nowHealthData;
 
+        public abstract float NowHealthRate();
+
         protected void SetHealthData(HealthData healthData)
         {
             _nowHealthData = healthData.Clone() as HealthData;

@@ -10,12 +10,14 @@ namespace SEF.UI.Toolkit
 
         private PoolSystem<UIHealthBar> _pool;
 
-        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIHitContainer.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIHealthContainer.uxml";
 
-        public void Initialize()
+        public void Initialize(VisualElement parent)
         {
             _pool = new PoolSystem<UIHealthBar>();
             _pool.Initialize(Create);
+
+            _uiEnemyHealthBar = parent.Q<UIEnemyHealthBar>();
         }
 
         public void CleanUp()
@@ -23,17 +25,34 @@ namespace SEF.UI.Toolkit
             _pool.CleanUp();
         }
 
-        public void ShowEnemyHealth(string value, float rate)
+        public void ShowEnemyHealthData(string value, float rate)
         {
             _uiEnemyHealthBar.ShowHealth(value, rate);
         }
 
-        public void ShowHealth(float rate, Vector2 position)
+        public void ShowUnitHealthData(float rate, Vector2 position)
         {
-            var hit = _pool.GiveElement();
-            hit.ShowHealth(rate, position);
-            hit.Activate();
+            var block = _pool.GiveElement();
+            block.ShowHealth(rate, position);
+            block.Activate();
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        /// <summary>
+        /// Test용
+        /// Release에서 사용 불가
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <param name="position"></param>
+        /// <param name="endCallback"></param>
+        public void ShowUnitHealthData_Test(float rate, Vector2 position, System.Action<UIHealthBar> endCallback)
+        {
+            var block = _pool.GiveElement();
+            block.SetOnRetrieveBlockListener(endCallback);
+            block.ShowHealth(rate, position);
+            block.Activate();
+        }
+#endif
 
 
         private void Retrieve(UIHealthBar block)
@@ -44,6 +63,7 @@ namespace SEF.UI.Toolkit
         private UIHealthBar Create()
         {
             var block = UIHealthBar.Create();
+            block.Initialize();
             block.SetOnRetrieveBlockListener(Retrieve);
             return block;
         }
