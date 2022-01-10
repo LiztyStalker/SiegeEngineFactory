@@ -36,7 +36,6 @@ namespace SEF.UI.Toolkit
             if(uiDocument == null)
             {
                 uiDocument = gameObject.AddComponent<UIDocument>();
-                Debug.LogWarning("UIDocument Component를 생성합니다");
             }
 
             if (uiDocument.visualTreeAsset == null)
