@@ -16,8 +16,6 @@ namespace SEF.UI.Toolkit
         //    TopToBottom = 3
         //}
 
-        public enum TYPE_LABEL_VIEW { Hide, Now, Now_Max, Percent };
-
 
         //https://docs.unity.cn/kr/2020.3/Manual/UIE-UXML.html
         //팩토리를 정의
@@ -31,23 +29,23 @@ namespace SEF.UI.Toolkit
         {
 
             //속성 정의
-            UxmlFloatAttributeDescription _fillAmount = new UxmlFloatAttributeDescription { name = "FillAmount", defaultValue = 0.5f };
-            UxmlEnumAttributeDescription<TYPE_LABEL_VIEW> _typeLabelView = new UxmlEnumAttributeDescription<TYPE_LABEL_VIEW> { name = "TypeLabelView", defaultValue = TYPE_LABEL_VIEW.Hide };
+            UxmlFloatAttributeDescription _fillAmount = new UxmlFloatAttributeDescription { name = "FillAmount", defaultValue = 0.3f };
+            UxmlEnumAttributeDescription<DisplayStyle> _typeLabelView = new UxmlEnumAttributeDescription<DisplayStyle> { name = "TypeLabelView", defaultValue = DisplayStyle.None };
 
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
                 ((UIFillable)ve).FillAmount = _fillAmount.GetValueFromBag(bag, cc);
-                ((UIFillable)ve).TypeLabelView = _typeLabelView.GetValueFromBag(bag, cc);
+                ((UIFillable)ve).DisplayStyle = _typeLabelView.GetValueFromBag(bag, cc);
             }
         }
 
 
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIUtility/UIFillable.uxml";
 
-        private Label _progressLabel;
+        private Label _fillableLabel;
         private VisualElement _background;
-        private VisualElement _progressbar;
+        private VisualElement _fillableBar;
 
         private float _fillAmount;
 
@@ -59,23 +57,25 @@ namespace SEF.UI.Toolkit
             set
             {
                 _fillAmount = math.saturate(value);
+                UpdateTypeLabelView();
                 UpdateFillable();
             }
         }
 
-        private TYPE_LABEL_VIEW _typeLabelView;
+        private DisplayStyle _displayStyle;
 
-        public TYPE_LABEL_VIEW TypeLabelView
+        public DisplayStyle DisplayStyle
         {
-            get { return _typeLabelView; }
-            private set
+            get { return _displayStyle; }
+            set
             {
-                _typeLabelView = value;
+                _displayStyle = value;
+                UpdateTypeLabelView();
                 UpdateFillable();
             }
         }
 
-        public Label ProgressLabel => _progressLabel;
+        public Label ProgressLabel => _fillableLabel;
 
         //FillAmount 이미지형으로 제작
         //개발중
@@ -87,17 +87,17 @@ namespace SEF.UI.Toolkit
         private void UpdateFillable()
         {
             UpdateFillableBar();
-            SetLabel();
+            //SetLabel();
         }
 
         private void UpdateFillableBar()
         {
-            _progressbar.style.width = new StyleLength(Length.Percent(FillAmount * 100f));
+            _fillableBar.style.width = new StyleLength(Length.Percent(FillAmount * 100f));
         }
 
         private void GenerateVisualContent(MeshGenerationContext context)
         {
-            _progressbar.style.width = new StyleLength(Length.Percent(FillAmount * 100f));
+            _fillableBar.style.width = new StyleLength(Length.Percent(FillAmount * 100f));
 
             //var rStyle = this.resolvedStyle;
             //var texture = rStyle.backgroundImage.texture;
@@ -133,8 +133,7 @@ namespace SEF.UI.Toolkit
             //        copyTexture = null;
             //    }
             //}
-
-            SetLabel();
+            //SetLabel();
         }
 
         //private Texture2D CreateCopyTexture(Texture2D source, float fillAmount, FillDirection fillDirection)
@@ -231,28 +230,15 @@ namespace SEF.UI.Toolkit
         //    _progressbar.style.width = new StyleLength(Length.Percent(nowValue / maxValue));
         //}
 
-        private void SetLabel()
+        private void UpdateTypeLabelView()
         {
-            if (_progressLabel.style.display == DisplayStyle.Flex)
-            {
-                var str = "";
-                //switch (TypeLabelView)
-                //{
-                //    case TYPE_LABEL_VIEW.Now:
-                str = _fillAmount.ToString();
-                //        break;
-                //    case TYPE_LABEL_VIEW.Now_Max:
-                //        str = _fillAmount.ToString();
-                //        break;
-                //    case TYPE_LABEL_VIEW.Percent:
-                //        str = _fillAmount.ToString();
-                //        break;
-                //    default:
-                //        Debug.Assert(false, "지정된 TypeLabelView가 없습니다");
-                //        break;
-                //}
-                _progressLabel.text = str;
-            }
+            _fillableLabel.style.display = _displayStyle;
+        }
+
+        public void SetLabel(string value)
+        {
+            if(_displayStyle == DisplayStyle.Flex)
+                _fillableLabel.text = value;
         }
 
         public UIFillable()
@@ -274,20 +260,20 @@ namespace SEF.UI.Toolkit
             progressbar.AddToClassList("unity-base-slider__drag-container");
 
             _background = new VisualElement() { name = "fillable-background" };
-            _progressbar = new VisualElement() { name = "fillable-bar" };
-            _progressLabel = new Label() { name = "fillable-label", focusable = false };
-            _progressLabel.AddToClassList("unity-base-field__label");
-            _progressLabel.AddToClassList("unity-base-slider__label");
-            _progressLabel.AddToClassList("unity-slider__label");
+            _fillableBar = new VisualElement() { name = "fillable-bar" };
+            _fillableLabel = new Label() { name = "fillable-label", focusable = false };
+            _fillableLabel.AddToClassList("unity-base-field__label");
+            _fillableLabel.AddToClassList("unity-base-slider__label");
+            _fillableLabel.AddToClassList("unity-slider__label");
 
             progressbar.Add(_background);
-            progressbar.Add(_progressbar);
+            progressbar.Add(_fillableBar);
             Add(progressbar);
-            Add(_progressLabel);
+            Add(_fillableLabel);
 
-            _progressLabel.style.display = DisplayStyle.None;
+            _fillableLabel.style.display = DisplayStyle.None;
 
-            _progressbar.generateVisualContent = GenerateVisualContent;
+            _fillableBar.generateVisualContent = GenerateVisualContent;
 
         }
     }

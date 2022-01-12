@@ -45,15 +45,40 @@ namespace SEF.UI.Test
         }
 
         [UnityTest]
-        public IEnumerator UIFillableTest_RunProcess()
+        public IEnumerator UIFillableTest_RunProcess_Hide()
         {
+            _uiTest.Instance.DisplayStyle = UnityEngine.UIElements.DisplayStyle.None;
+
             var nowTime = 0f;
 
             while (true)
             {
                 nowTime += Time.deltaTime * 1f;
                 _uiTest.Instance.FillAmount = nowTime;
-                if(nowTime >= 1f)
+                _uiTest.Instance.SetLabel(nowTime.ToString());
+                if (nowTime >= 1f)
+                {
+                    break;
+                }
+                Debug.Log(_uiTest.Instance.FillAmount);
+                yield return null;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest]
+        public IEnumerator UIFillableTest_RunProcess_Show()
+        {
+            _uiTest.Instance.DisplayStyle = UnityEngine.UIElements.DisplayStyle.Flex;
+
+            var nowTime = 0f;
+
+            while (true)
+            {
+                nowTime += Time.deltaTime * 1f;
+                _uiTest.Instance.FillAmount = nowTime;
+                _uiTest.Instance.SetLabel(nowTime.ToString());
+                if (nowTime >= 1f)
                 {
                     break;
                 }
