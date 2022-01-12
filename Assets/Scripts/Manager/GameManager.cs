@@ -87,6 +87,7 @@ namespace SEF.Manager
             var deltaTime = Time.deltaTime;
             _gameSystem.RunProcess(deltaTime);
             _unitManager.RunProcess(deltaTime);
+            _uiGame.RunProcess(deltaTime);
         }
 
 

@@ -56,6 +56,7 @@ namespace SEF.UI.Test
 
             while (isRun)
             {
+                _uitest.Instance.RunProcess_Test(Time.deltaTime);
                 yield return null;
             }
 
@@ -77,6 +78,7 @@ namespace SEF.UI.Test
 
             while (isRun)
             {
+                _uitest.Instance.RunProcess_Test(Time.deltaTime);
                 yield return null;
             }
 
