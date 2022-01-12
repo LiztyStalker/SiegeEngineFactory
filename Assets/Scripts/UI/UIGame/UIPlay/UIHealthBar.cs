@@ -40,7 +40,7 @@ namespace SEF.UI.Toolkit
 
         public void Activate()
         {
-            gameObject.SetActive(true);
+            _root.style.display = DisplayStyle.Flex;
             SetPosition();
             SetFillAmount();
 
@@ -48,7 +48,7 @@ namespace SEF.UI.Toolkit
 
         public void Inactivate()
         {
-            gameObject.SetActive(false);
+            _root.style.display = DisplayStyle.None;
         }
 
 
