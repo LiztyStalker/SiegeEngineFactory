@@ -37,7 +37,7 @@ namespace SEF.Data
 
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
         {
-            Value = NumberDataUtility.GetCompoundInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value - 1) + (upgradeData.Value - 1);
+            Value = NumberDataUtility.GetCompoundInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value) + (upgradeData.Value);
         }
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
