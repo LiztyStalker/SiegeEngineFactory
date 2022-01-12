@@ -11,7 +11,6 @@ namespace SEF.UI.Toolkit
     {
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIPlay.uxml";
 
-
         public new class UxmlFactory : UxmlFactory<UIPlay, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
@@ -68,8 +67,6 @@ namespace SEF.UI.Toolkit
             else if (levelWaveData.IsThemeBoss())
                 typeEnemyGroup = TYPE_ENEMY_GROUP.ThemeBoss;
             _uiBossAlarm.ShowAlarm(typeEnemyGroup);
-            //아래 코드 제거 필요
-//            _uiBossAlarm.ShowAlarm(enemyActor.GetTypeEnemyGroup());
         }
 
     }

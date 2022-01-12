@@ -57,7 +57,7 @@ namespace SEF.UI.Toolkit
         public void RefreshAssetData(IAssetData data)
         {
             var typeName = data.GetType().Name;
-            Debug.Log(typeName);
+            //Debug.Log(typeName);
             if (_dic.ContainsKey(typeName))
             {
                 _dic[typeName].RefreshAssetData(data);

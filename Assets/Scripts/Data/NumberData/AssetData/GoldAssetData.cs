@@ -25,7 +25,7 @@ namespace SEF.Data
             var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartRewardAssetValue.Value, enemyData.IncreaseLevelRewardAssetValue, enemyData.IncreaseLevelRewardAssetRate, level);
             var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value % 10) - enemyData.IncreaseWaveRewardAssetValue) * enemyData.IncreaseWaveRewardAssetRate * 100f))) / 100;
             var value = levelValue + waveValue;
-            UnityEngine.Debug.Log(levelValue + " " + waveValue + " " + value);
+//            UnityEngine.Debug.Log(levelValue + " " + waveValue + " " + value);
             if (levelWaveData.IsThemeBoss())
                 value *= 4;
             else if (levelWaveData.IsBoss())
