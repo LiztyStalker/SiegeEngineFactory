@@ -135,7 +135,7 @@ namespace SEF.Data
             _startHealthValue = HealthData.Create_Test(100);
             _increaseLevelHealthValue = 2;// HealthData.Create_Test();
             _increaseLevelHealthRate = 0.125f;
-            _increaseWaveHealthValue = 1;// HealthData.Create_Test();
+            _increaseWaveHealthValue = 0;// HealthData.Create_Test();
             _increaseWaveHealthRate = 0.01f;
             _startAttackValue = AttackData.Create_Test(30);
             _increaseAttackValue = 1;// AttackData.Create_Test();
@@ -148,7 +148,7 @@ namespace SEF.Data
             _startRewardAssetValue = GoldAssetData.Create_Test(10);
             _increaseLevelRewardAssetValue = 2;// GoldAssetData.Create_Test();
             _increaseLevelRewardAssetRate = 0.125f;
-            _increaseWaveRewardAssetValue = 1;// GoldAssetData.Create_Test();
+            _increaseWaveRewardAssetValue = 0;// GoldAssetData.Create_Test();
             _increaseWaveRewardAssetRate = 0.1f;
 
             UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");

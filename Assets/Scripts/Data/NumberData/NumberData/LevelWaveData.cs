@@ -6,9 +6,7 @@ namespace SEF.Data
         private const int LEVEL_THEME = 100;
         private const int LEVEL_DIVIDE = 10;
 
-        public LevelWaveData() {
-            Value = 1;
-        }
+        public LevelWaveData() { }
         private LevelWaveData(LevelWaveData levelWaveData)
         {
             Value = levelWaveData.Value;
@@ -46,15 +44,24 @@ namespace SEF.Data
             return Value % LEVEL_DIVIDE;
         }
 
+        //public TYPE_ENEMY_GROUP NowTypeEnemyGroup()
+        //{
+        //    if (IsBoss())
+        //        return TYPE_ENEMY_GROUP.Boss;
+        //    else if (IsThemeBoss())
+        //        return TYPE_ENEMY_GROUP.ThemeBoss;
+        //    return TYPE_ENEMY_GROUP.Normal;
+        //}
+
         public bool IsBoss()
         {
             if (IsThemeBoss()) return false;
-            return GetWave() == 0;
+            return GetWave() == 9;
         }
 
         public bool IsThemeBoss()
         {
-            return (GetLevel() % LEVEL_DIVIDE == 0 && GetWave() == 0);
+            return (GetLevel() % LEVEL_DIVIDE == 9 && GetWave() == 9);
         }
 
         public override INumberData Clone()

@@ -20,7 +20,7 @@ namespace SEF.Data
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
-            var level = (levelWaveData.GetWave() == 0) ? levelWaveData.GetLevel() - 1 : levelWaveData.GetLevel();
+            var level = levelWaveData.GetLevel();
             var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartAttackValue.Value, enemyData.IncreaseAttackValue, enemyData.IncreaseAttackRate, level);
             //            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
             var value = levelValue;// + waveValue;
