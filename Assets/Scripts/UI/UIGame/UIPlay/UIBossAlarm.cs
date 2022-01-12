@@ -81,6 +81,7 @@ namespace SEF.UI.Toolkit
                 {
                     this.style.display = DisplayStyle.None;
                     _closedEvent?.Invoke();
+                    _nowTime = 0;
                 }
             }
         }
