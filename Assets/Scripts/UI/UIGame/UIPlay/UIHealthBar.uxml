@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="UIProgressbar" src="/Assets/Scripts/UI/UIUtility/UIProgressbar.uxml" />
-    <Style src="/Assets/Scripts/UI/UIUtility/UIProgressbar.uss" />
-    <ui:Instance template="UIProgressbar" name="UIProgressbar" />
+    <ui:Template name="UIFillable" src="/Assets/Scripts/UI/UIUtility/UIFillable.uxml" />
+    <Style src="/Assets/Scripts/UI/UIUtility/UIFillable.uss" />
+    <ui:Instance template="UIFillable" name="UIFillable" />
 </ui:UXML>

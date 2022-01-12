@@ -9,55 +9,55 @@ namespace SEF.UI.Test
     using UtilityManager.Test;
     using SEF.UI.Toolkit;
 
-    public class UIProgressbarTest
+    public class UIFillableTest
     {
 
 
         private Camera _camera;
         private Light2D _light;
 
-        private UIProgressbar_Test _uiProgressbar;
+        private UIFillable_Test _uiTest;
 
         [SetUp]
         public void SetUp()
         {
             _camera = PlayTestUtility.CreateCamera();
             _light = PlayTestUtility.CreateLight();
-            _uiProgressbar = UIProgressbar_Test.Create();
-            _uiProgressbar.Initialize();
+            _uiTest = UIFillable_Test.Create();
+            _uiTest.Initialize();
 
         }
 
         [TearDown]
         public void TearDown()
         {
-            _uiProgressbar.Dispose();
+            _uiTest.Dispose();
             PlayTestUtility.DestroyCamera(_camera);
             PlayTestUtility.DestroyLight(_light);
         }
 
 
         [UnityTest]
-        public IEnumerator UIProgressbarTest_Initialize()
+        public IEnumerator UIFillableTest_Initialize()
         {
-            _uiProgressbar.Instance.FillAmount = 0.3f;
+            _uiTest.Instance.FillAmount = 0.3f;
             yield return new WaitForSeconds(1f);
         }
 
         [UnityTest]
-        public IEnumerator UIProgressbarTest_RunProcess()
+        public IEnumerator UIFillableTest_RunProcess()
         {
             var nowTime = 0f;
 
             while (true)
             {
-                nowTime += Time.deltaTime * 5f;
-                _uiProgressbar.Instance.FillAmount = nowTime;
+                nowTime += Time.deltaTime * 1f;
+                _uiTest.Instance.FillAmount = nowTime;
                 if(nowTime >= 1f)
                 {
                     break;
                 }
-                Debug.Log(_uiProgressbar.Instance.FillAmount);
+                Debug.Log(_uiTest.Instance.FillAmount);
                 yield return null;
             }
             yield return new WaitForSeconds(1f);

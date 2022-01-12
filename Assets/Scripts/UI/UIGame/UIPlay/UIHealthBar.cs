@@ -13,7 +13,7 @@ namespace SEF.UI.Toolkit
 
         private UIDocument _uiDocument;
         private VisualElement _root;
-        private UIProgressbar _fillBar;
+        private UIFillable _uiFillable;
 
         private float _fillAmount;
 
@@ -63,8 +63,8 @@ namespace SEF.UI.Toolkit
         {
             //Inactivate되면 기존에 연결한 VisualElement가 해제되므로 
             //Activate후 다시 연결할 필요 있음
-            _fillBar = _root.Q<UIProgressbar>();
-            _fillBar.FillAmount = _fillAmount;
+            _uiFillable = _root.Q<UIFillable>();
+            _uiFillable.FillAmount = _fillAmount;
         }
 
         private float nowTime = 0;
