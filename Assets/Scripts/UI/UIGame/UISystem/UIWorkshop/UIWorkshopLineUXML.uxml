@@ -15,8 +15,8 @@
                     <ui:VisualElement name="lv_dps_panel" class="value_panel">
                         <ui:Label text="Lv" display-tooltip-when-elided="true" name="unit_lv_Label" class="dps_label" />
                         <ui:Label text="03" display-tooltip-when-elided="true" name="unit_lv_value_Label" class="dps_label" />
-                        <ui:Label text="/" display-tooltip-when-elided="true" name="slider" class="dps_label" />
-                        <ui:Label text="DPS" display-tooltip-when-elided="true" name="dps_label" class="dps_label" />
+                        <ui:Label text="/" display-tooltip-when-elided="true" name="dps-slide" class="dps_label" />
+                        <ui:Label text="DPS" display-tooltip-when-elided="true" name="dps-label" class="dps_label" />
                         <ui:Label text="100" display-tooltip-when-elided="true" name="dps_value_label" class="dps_label" />
                         <ui:Label text="(+10)" display-tooltip-when-elided="true" name="dps_up_label" enable-rich-text="true" class="unit_upgrade_label" />
                     </ui:VisualElement>

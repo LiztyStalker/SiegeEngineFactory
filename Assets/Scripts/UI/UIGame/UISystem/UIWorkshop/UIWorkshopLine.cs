@@ -22,6 +22,8 @@ namespace SEF.UI.Toolkit
         private Label _typeLabel;
 
         private Label _levelValueLabel;
+        private Label _dpsSlideLabel;
+        private Label _dpsLabel;
         private Label _dpsValueLabel;
         private Label _dpsUpLabel;
 
@@ -75,6 +77,8 @@ namespace SEF.UI.Toolkit
 
             _levelValueLabel = this.Q<Label>("unit_lv_value_Label");
 
+            _dpsSlideLabel = this.Q<Label>("dps-slide");
+            _dpsLabel = this.Q<Label>("dps-label");
             _dpsValueLabel = this.Q<Label>("dps_value_label");
             _dpsUpLabel = this.Q<Label>("dps_up_label");
 
@@ -119,6 +123,12 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_groupLabel != null, "_groupLabel element 를 찾지 못했습니다");
             Debug.Assert(_typeLabel != null, "_typeLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
+
+            Debug.Assert(_dpsSlideLabel != null, "_dpsSlideLabel element 를 찾지 못했습니다");
+            Debug.Assert(_dpsLabel != null, "_dpsLabel element 를 찾지 못했습니다");
+            Debug.Assert(_dpsValueLabel != null, "_dpsValueLabel element 를 찾지 못했습니다");
+            Debug.Assert(_dpsUpLabel != null, "_dpsUpLabel element 를 찾지 못했습니다");
+
             Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthValueLabel != null, "_healthValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
@@ -150,8 +160,10 @@ namespace SEF.UI.Toolkit
             _typeLabel.text = "타입";
             _healthLabel.text = "체력";
             _healthValueLabel.text = "0";
+            _healthUpLabel.text = "(0)";
             _attackLabel.text = "공격";
             _attackValueLabel.text = "0";
+            _attackUpLabel.text = "(0)";
             _productLabel.text = "생산";
             _productValueLabel.text = "1.000s";
             _attackDelayLabel.text = "공격딜레이";
@@ -161,6 +173,9 @@ namespace SEF.UI.Toolkit
             _attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
             _uiFillable.FillAmount = 0;
+
+            _dpsValueLabel.text = "0";
+            _dpsUpLabel.text = "(0)";
 
             //_expendAssetIcon = Texture
             _expendValueLabel.text = "0";
@@ -174,6 +189,13 @@ namespace SEF.UI.Toolkit
 
             _activatePanel.style.display = DisplayStyle.None;
             _inactivatePanel.style.display = DisplayStyle.Flex;
+
+            _attackUpLabel.style.display = DisplayStyle.None;
+            _healthUpLabel.style.display = DisplayStyle.None;
+            _dpsSlideLabel.style.display = DisplayStyle.None;
+            _dpsLabel.style.display = DisplayStyle.None;
+            _dpsValueLabel.style.display = DisplayStyle.None;
+            _dpsUpLabel.style.display = DisplayStyle.None;
 
         }
 
@@ -198,8 +220,8 @@ namespace SEF.UI.Toolkit
             _groupLabel.text = unitData.Group.ToString();
             _healthValueLabel.text = _unitEntity.HealthData.GetValue();
             _attackValueLabel.text = _unitEntity.AttackData.GetValue();
-            _productValueLabel.text = unitData.ProductTime.ToString();
-            _attackDelayValueLabel.text = unitData.AttackDelay.ToString();
+            _productValueLabel.text = $"{unitData.ProductTime}s";
+            _attackDelayValueLabel.text = $"{unitData.AttackDelay}s";
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
