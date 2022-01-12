@@ -81,8 +81,12 @@ namespace SEF.Manager
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
             workshopLine.SetOnConditionProductUnitListener(OnConditionProductUnitEvent);
             _list.Add(workshopLine);
-            workshopLine.UpTech(UnitData.Create_Test());
+//            workshopLine.UpTech(UnitData.Create_Test());
             //기본 유닛 적용 workshopLine.UpTech()
+            workshopLine.UpTech(Storage.DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_Test", null, null));
+        
+
+
             return workshopLine;
         }
 
