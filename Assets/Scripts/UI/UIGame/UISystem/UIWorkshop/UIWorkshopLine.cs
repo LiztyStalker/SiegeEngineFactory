@@ -196,8 +196,8 @@ namespace SEF.UI.Toolkit
             var unitData = unitEntity.UnitData;
             _nameLabel.text = unitData.name;
             _groupLabel.text = unitData.Group.ToString();
-            _healthValueLabel.text = unitData.StartHealthValue.GetValue();
-            _attackValueLabel.text = unitData.StartAttackValue.GetValue();
+            _healthValueLabel.text = _unitEntity.HealthData.GetValue();
+            _attackValueLabel.text = _unitEntity.AttackData.GetValue();
             _productValueLabel.text = unitData.ProductTime.ToString();
             _attackDelayValueLabel.text = unitData.AttackDelay.ToString();
             _attackCountValueLabel.text = unitData.AttackCount.ToString();

@@ -80,14 +80,9 @@ namespace SEF.Entity
         }
 #endif
 
-        public IAssetData GetRewardAssetData()
-        {
-            return _enemyData.StartRewardAssetValue;
-        }
+        public IAssetData GetRewardAssetData() => RewardAssetData;
 
         public LevelWaveData GetLevelWaveData() => _levelWaveData;
-
-
 
         private HealthData CalculateHealthData()
         {
