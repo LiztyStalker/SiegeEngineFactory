@@ -26,14 +26,10 @@ namespace SEF.UI.Toolkit
             _bossPanel.style.display = DisplayStyle.None;
             _themebossPanel.style.display = DisplayStyle.None;
             this.style.display = DisplayStyle.None;
-
-            UIGame.ProcessEvent += RunProcess;
         }
 
         public void CleanUp()
         {
-            UIGame.ProcessEvent -= RunProcess;
-
             _bossPanel = null;
             _themebossPanel = null;
         }
@@ -69,32 +65,22 @@ namespace SEF.UI.Toolkit
             _bossPanel.style.display = DisplayStyle.Flex;
             _themebossPanel.style.display = DisplayStyle.None;
             this.style.display = DisplayStyle.Flex;            
-        }
+        }       
 
-        private float _nowTime = 0;
-        private void RunProcess(float deltaTime)
-        {
-            if (this.style.display == DisplayStyle.Flex)
-            {
-                _nowTime += Time.deltaTime;
-                if (_nowTime > 1f)
-                {
-                    this.style.display = DisplayStyle.None;
-                    _closedEvent?.Invoke();
-                }
-            }
-        }
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        /// <summary>
-        /// 테스트용
-        /// </summary>
-        /// <param name="deltaTime"></param>
-        public void RunProcess_Test(float deltaTime)
-        {
-            RunProcess(deltaTime);
-        }
-#endif
+        //private float _nowTime = 0;
+        //private void Update()
+        //{
+        //    if(this.style.display == DisplayStyle.Flex)
+        //    {
+        //        _nowTime += Time.deltaTime;
+        //        if(_nowTime > 1f)
+        //        {
+        //            this.style.display = DisplayStyle.None;
+        //            _closedEvent?.Invoke();
+        //        }
+        //    }
+        //}
 
 
         #region ##### Listener #####

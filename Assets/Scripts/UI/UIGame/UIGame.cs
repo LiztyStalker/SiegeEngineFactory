@@ -10,7 +10,6 @@ namespace SEF.UI.Toolkit
     [RequireComponent(typeof(UIDocument))]
     public class UIGame : MonoBehaviour
     {
-        public static event System.Action<float> ProcessEvent;
 
         private readonly string PATH_UI_GAME_UXML = "Assets/Scripts/UI/UIGame/UIGameUXML.uxml";
 
@@ -56,11 +55,6 @@ namespace SEF.UI.Toolkit
             _uiAsset.CleanUp();
             _uiSystem.CleanUp();
             _uiPlay.CleanUp();
-        }
-
-        public void RunProcess(float deltaTime)
-        {
-            ProcessEvent?.Invoke(deltaTime);
         }
 
         //오프라인 보상
