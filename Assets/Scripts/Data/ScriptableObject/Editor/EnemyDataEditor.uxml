@@ -10,6 +10,7 @@
             <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="wave_sliderfield" />
             <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="health_textfield" />
             <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="dps_textfield" />
+            <uie:FloatField label="Float Field" value="42.2" name="scale-floatfield" />
         </ui:VisualElement>
         <ui:VisualElement name="advanced_panel">
             <ui:VisualElement name="health_panel" class="advanced_element">
@@ -29,6 +30,8 @@
                 <uie:FloatField label="Float Field" value="42.2" name="increaseattackrate_textfield" />
                 <uie:IntegerField label="Int Field" value="42" name="attackcount_intfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="attackdelay_floatfield" />
+                <uie:ObjectField label="Object Field" name="bullet-objectfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="bullet-scale-floatfield" />
                 <ui:VisualElement />
             </ui:VisualElement>
             <ui:VisualElement name="asset_panel" class="advanced_element">

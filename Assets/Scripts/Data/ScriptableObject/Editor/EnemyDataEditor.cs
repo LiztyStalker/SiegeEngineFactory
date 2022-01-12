@@ -32,6 +32,7 @@ namespace SEF.Data.Editor
 
         private EnumField _groupField;
         private EnumField _themeField;
+        private FloatField _scaleField;
 
 
 
@@ -46,6 +47,8 @@ namespace SEF.Data.Editor
         private FloatField _increaseAttackRateField;
         private IntegerField _attackCountField;
         private FloatField _attackDelayField;
+        private ObjectField _bulletField;
+        private FloatField _bulletScaleField;
 
         private TextField _startRewardAssetValueField;
         private IntegerField _increaseLevelRewardAssetValueField;
@@ -76,6 +79,7 @@ namespace SEF.Data.Editor
         {
             _groupField.SetEnabled(_isModified);
             _themeField.SetEnabled(_isModified);
+            _scaleField.SetEnabled(_isModified);
 
             _startHealthValueField.SetEnabled(_isModified);
             _increaseLevelHealthValueField.SetEnabled(_isModified);
@@ -89,6 +93,8 @@ namespace SEF.Data.Editor
             _increaseAttackRateField.SetEnabled(_isModified);
             _attackCountField.SetEnabled(_isModified);
             _attackDelayField.SetEnabled(_isModified);
+            _bulletField.SetEnabled(_isModified);
+            _bulletScaleField.SetEnabled(_isModified);
 
             _startRewardAssetValueField.SetEnabled(_isModified);
             _increaseLevelRewardAssetValueField.SetEnabled(_isModified);
@@ -152,6 +158,18 @@ namespace SEF.Data.Editor
                 e =>
                 {
                     _themeField.value = e.newValue;
+                    EditorUtility.SetDirty(_enemyData);
+                }
+            );
+
+
+            _scaleField = _root.Query<FloatField>("scale-floatfield").First();
+            _scaleField.label = "Å©±â";
+            _scaleField.value = _enemyData.Scale;
+            _scaleField.RegisterCallback<ChangeEvent<float>>(
+                e =>
+                {
+                    _enemyData.Scale = e.newValue;
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
@@ -319,6 +337,31 @@ namespace SEF.Data.Editor
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
+
+            _bulletField = _root.Query<ObjectField>("bullet-objectfield").First();
+            _bulletField.objectType = typeof(UtilityManager.BulletData);
+            _bulletField.label = "ÅºÈ¯Å©±â";
+            _bulletField.value = _enemyData.AttackBulletData;
+            _bulletField.RegisterCallback<ChangeEvent<Object>>(
+                e =>
+                {
+                    _enemyData.AttackBulletData = e.newValue as UtilityManager.BulletData;
+                    EditorUtility.SetDirty(_enemyData);
+                }
+            );
+
+
+            _bulletScaleField = _root.Query<FloatField>("bullet-scale-floatfield").First();
+            _bulletScaleField.label = "ÅºÈ¯Å©±â";
+            _bulletScaleField.value = _enemyData.BulletScale;
+            _bulletScaleField.RegisterCallback<ChangeEvent<float>>(
+                e =>
+                {
+                    _enemyData.BulletScale = e.newValue;
+                    EditorUtility.SetDirty(_enemyData);
+                }
+            );
+
 
 
 

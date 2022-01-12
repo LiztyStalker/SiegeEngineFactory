@@ -184,6 +184,8 @@ namespace SEF.Unit {
                     SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
             }
 
+            //transform.localScale = Vector3.one * enemyEntity.EnemyData.Scale;
+
         }
 
         private void ReadyRunProcess(float deltaTime)
@@ -289,10 +291,17 @@ namespace SEF.Unit {
             if (Target != null)
             {
                 //원거리
-                if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
+                if(_enemyEntity.EnemyData.AttackBulletData != null)
+                {
+                    var bullet = _enemyEntity.EnemyData.AttackBulletData;
+                    var scale = _enemyEntity.EnemyData.BulletScale;
+                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
+                }
+                else if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
                 {
                     var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
-                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
+                    var scale = _enemyEntity.EnemyData.BulletScale;
+                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
                 }
                 //근거리
                 else

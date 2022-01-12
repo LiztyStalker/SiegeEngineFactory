@@ -35,6 +35,7 @@ namespace SEF.Data
         private string _spineSkinKey;
         public string SpineSkinKey { get => _spineSkinKey; set => _spineSkinKey = value; }
 
+
         [SerializeField]
         private TYPE_ENEMY_GROUP _group;
         public TYPE_ENEMY_GROUP Group { get => _group; set => _group = value; }
@@ -42,6 +43,10 @@ namespace SEF.Data
         [SerializeField]
         private TYPE_LEVEL_THEME _typeLevelTheme;
         public TYPE_LEVEL_THEME TypeLevelTheme { get => _typeLevelTheme; set => _typeLevelTheme = value; }
+
+        [SerializeField]
+        private float _scale;
+        public float Scale { get => _scale; set => _scale = value; }
 
         [SerializeField]
         private HealthData _startHealthValue = NumberDataUtility.Create<HealthData>();
@@ -91,8 +96,23 @@ namespace SEF.Data
 
         [SerializeField]
         private string _attackBulletKey;
-
         public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
+
+        [SerializeField]
+        private UtilityManager.BulletData _attackBulletData;
+
+        public UtilityManager.BulletData AttackBulletData { 
+            get => _attackBulletData;
+            set { 
+                _attackBulletData = value;
+                if (value != null)
+                    _attackBulletKey = value.name;
+            } 
+        }
+
+        [SerializeField]
+        private float _bulletScale;
+        public float BulletScale { get => _bulletScale; set => _bulletScale = value; }
 
         [SerializeField]
         private GoldAssetData _startRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
