@@ -17,5 +17,5 @@ MonoBehaviour:
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
   _arriveEffectDataKey: 
-  _movementSpeed: 1
+  _movementSpeed: 10
   _isRotate: 1

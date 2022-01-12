@@ -21,6 +21,8 @@ namespace SEF.Data.Editor
 
         private EnumField _groupField;
 
+        private FloatField _scaleField;
+
         private FloatField _productField;
 
 
@@ -36,6 +38,8 @@ namespace SEF.Data.Editor
         private EnumField _typeAttackRangeField;
         private EnumField _typeAttackActionField;
         private FloatField _attackDelayField;
+        private ObjectField _bulletField;
+        private FloatField _bulletScaleField;
 
         private TextField _startUpgradeValueField;
         private TextField _increaseUpgradeValueField;
@@ -66,6 +70,7 @@ namespace SEF.Data.Editor
             _spriteField.SetEnabled(_isModified);
             _groupField.SetEnabled(_isModified);
             _productField.SetEnabled(_isModified);
+            _scaleField.SetEnabled(_isModified);
 
             _startHealthValueField.SetEnabled(_isModified);
             _increaseHealthValueField.SetEnabled(_isModified);
@@ -79,6 +84,8 @@ namespace SEF.Data.Editor
             _typeAttackRangeField.SetEnabled(_isModified);
             _typeAttackActionField.SetEnabled(false);
             _attackDelayField.SetEnabled(_isModified);
+            _bulletField.SetEnabled(_isModified);
+            _bulletScaleField.SetEnabled(_isModified);
 
             _startUpgradeValueField.SetEnabled(_isModified);
             _increaseUpgradeValueField.SetEnabled(_isModified);
@@ -148,6 +155,19 @@ namespace SEF.Data.Editor
                 }
             );
 
+            _scaleField = _root.Query<FloatField>("scale-floatfield").First();
+            _scaleField.label = "크기";
+            _scaleField.value = _unitData.Scale;
+            _scaleField.RegisterCallback<ChangeEvent<float>>(
+                e =>
+                {
+                    _unitData.Scale = e.newValue;
+                    EditorUtility.SetDirty(_unitData);
+                }
+            );
+
+
+
             IntegerField nowUpgradeField = _root.Query<IntegerField>("upgrade_intfield").First();
             nowUpgradeField.label = "업글";
             nowUpgradeField.value = _nowUpgrade;
@@ -179,7 +199,7 @@ namespace SEF.Data.Editor
             _productField = _root.Query<FloatField>("product_floatfield").First();
             _productField.label = "생산시간";
             _productField.value = _unitData.ProductTime;
-            _productField.RegisterCallback<ChangeEvent<int>>(
+            _productField.RegisterCallback<ChangeEvent<float>>(
                 e =>
                 {
                     _unitData.ProductTime = e.newValue;
@@ -323,7 +343,28 @@ namespace SEF.Data.Editor
                 }
             );
 
+            _bulletField = _root.Query<ObjectField>("bullet-objectfield").First();
+            _bulletField.objectType = typeof(UtilityManager.BulletData);
+            _bulletField.label = "탄환";
+            _bulletField.value = _unitData.AttackBulletData;
+            _bulletField.RegisterCallback<ChangeEvent<Object>>(
+                e =>
+                {
+                    _unitData.AttackBulletData = e.newValue as UtilityManager.BulletData;
+                    EditorUtility.SetDirty(_unitData);
+                }
+            );
 
+            _bulletScaleField = _root.Query<FloatField>("bullet-scale-floatfield").First();
+            _bulletScaleField.label = "탄환크기";
+            _bulletScaleField.value = _unitData.BulletScale;
+            _bulletScaleField.RegisterCallback<ChangeEvent<float>>(
+                e =>
+                {
+                    _unitData.BulletScale = e.newValue;
+                    EditorUtility.SetDirty(_unitData);
+                }
+            );
 
 
 

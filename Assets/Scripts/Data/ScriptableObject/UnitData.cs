@@ -30,6 +30,13 @@ namespace SEF.Data
         public string SpineSkinKey { get => _spineSkinKey; set => _spineSkinKey = value; }
 
         [SerializeField]
+        private float _scale = 1f;
+        public float Scale { 
+            get => _scale;
+            set { _scale = value; UnityEngine.Debug.Log(value); }
+        }
+
+        [SerializeField]
         private TYPE_UNIT_GROUP _group;
         public TYPE_UNIT_GROUP Group { get => _group; set => _group = value; }
 
@@ -79,8 +86,23 @@ namespace SEF.Data
 
         [SerializeField]
         private string _attackBulletKey;
-
         public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
+
+        [SerializeField]
+        private UtilityManager.BulletData _attackBulletData;
+
+        public UtilityManager.BulletData AttackBulletData { 
+            get => _attackBulletData;
+            set { 
+                _attackBulletData = value;
+                if(value != null)
+                _attackBulletKey = value.name;
+            }
+        }
+
+        [SerializeField]
+        private float _bulletScale = 1f;
+        public float BulletScale { get => _bulletScale; set => _bulletScale = value; }
 
         [SerializeField]
         private GoldAssetData _startUpgradeAsset = NumberDataUtility.Create<GoldAssetData>();
@@ -126,6 +148,7 @@ namespace SEF.Data
             _key = "Test";
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_UNIT_GROUP.Thrower;
+            _scale = 1f;
 
             _attackBulletKey = "Arrow";
 

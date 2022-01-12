@@ -15,8 +15,9 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _key: 
   _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
-  _spineModelKey: 
+  _spineModelKey: BowSoldier
   _spineSkinKey: 
+  _scale: 0.4
   _group: 0
   _startHealthValue:
     _valueText: 100
@@ -31,7 +32,9 @@ MonoBehaviour:
   _attackPopulation: 0
   _attackCount: 1
   _attackDelay: 1
-  _attackBulletKey: 
+  _attackBulletKey: BulletData_Arrow
+  _attackBulletData: {fileID: 11400000, guid: f095821eb4d298643beef0d9261160b0, type: 2}
+  _bulletScale: 0.3
   _startUpgradeAsset:
     _valueText: 10
   _increaseUpgradeAssetValue: 1

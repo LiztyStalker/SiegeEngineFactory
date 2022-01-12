@@ -13,6 +13,7 @@
                 <ui:Toggle label="Toggle" name="modified_toggle" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="name_textfield" />
                 <uie:EnumField label="Enum" value="Center" name="group_enumfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="scale-floatfield" />
                 <uie:IntegerField label="Int Field" value="42" name="upgrade_intfield" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="health_textfield" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="dps_textfield" />
@@ -38,6 +39,8 @@
                 <uie:EnumField label="Enum" value="Center" name="typeattackrange_enumfield" />
                 <uie:EnumField label="Enum" value="Center" name="typeattackaction_enumfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="attackdelay_floatfield" />
+                <uie:ObjectField label="Object Field" name="bullet-objectfield" />
+                <uie:FloatField label="Float Field" value="42.2" name="bullet-scale-floatfield" />
             </ui:VisualElement>
             <ui:VisualElement name="upgrade_panel" class="advanced_element">
                 <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="Label" class="title_label" />

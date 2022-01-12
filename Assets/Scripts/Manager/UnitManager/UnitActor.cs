@@ -46,12 +46,15 @@ namespace SEF.Unit
             {
                 if(_skeletonAnimationState == null)
                 {
-                    _skeletonAnimationState = SkeletonAnimation.AnimationState;
-                    _skeletonAnimationState.Start += delegate { };
-                    _skeletonAnimationState.Event += OnSpineEvent;
-                    _skeletonAnimationState.Complete += OnEndEvent;
-                    _skeletonAnimationState.Dispose += delegate { };
-                    //_skeletonAnimationState.End += OnEndEvent;
+                    if (SkeletonAnimation.AnimationState != null)
+                    {
+                        _skeletonAnimationState = SkeletonAnimation.AnimationState;
+                        _skeletonAnimationState.Start += delegate { };
+                        _skeletonAnimationState.Event += OnSpineEvent;
+                        _skeletonAnimationState.Complete += OnEndEvent;
+                        _skeletonAnimationState.Dispose += delegate { };
+                        //_skeletonAnimationState.End += OnEndEvent;
+                    }
                 }
                 return _skeletonAnimationState;
             }
@@ -122,8 +125,13 @@ namespace SEF.Unit
             if (SkeletonAnimation != null)
             {
                 //유닛 생성
-                SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
+                if (unitEntity.UnitData.SkeletonDataAsset == null)
+                    SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
+                else
+                    SkeletonAnimation.skeletonDataAsset = unitEntity.UnitData.SkeletonDataAsset;
             }
+
+            transform.localScale = Vector3.one * unitEntity.UnitData.Scale;
         }
 
 
@@ -224,10 +232,17 @@ namespace SEF.Unit
             if (Target != null)
             {
                 //원거리
-                if (!string.IsNullOrEmpty(_unitEntity.UnitData.AttackBulletKey))
+                if(_unitEntity.UnitData.AttackBulletData != null)
+                {
+                    var bullet = _unitEntity.UnitData.AttackBulletData;
+                    var scale = _unitEntity.UnitData.BulletScale;
+                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_unitEntity.AttackData); });
+                }
+                else if (!string.IsNullOrEmpty(_unitEntity.UnitData.AttackBulletKey))
                 {
                     var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_unitEntity.UnitData.AttackBulletKey);
-                    BulletManager.Current.Activate(bullet, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_unitEntity.AttackData); });
+                    var scale = _unitEntity.UnitData.BulletScale;
+                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_unitEntity.AttackData); });
                 }
                 //근거리
                 else
