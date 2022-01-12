@@ -1,4 +1,4 @@
-.hit_label {
+.hit-label {
     font-size: 20px;
     -unity-font-style: bold;
     color: rgb(68, 138, 255);
@@ -7,7 +7,7 @@
     -unity-text-align: middle-center;
 }
 
-.hit_block {
+.hit-block {
     align-items: center;
     justify-content: center;
 }
