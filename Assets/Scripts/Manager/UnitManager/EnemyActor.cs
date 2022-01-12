@@ -23,7 +23,6 @@ namespace SEF.Unit {
 #endif
 
         private EnemyEntity _enemyEntity;
-        public TYPE_ENEMY_GROUP typeEnemyGroup => _enemyEntity.EnemyData.Group;
 
         private SkeletonAnimation _skeletonAnimation;
 
@@ -62,7 +61,6 @@ namespace SEF.Unit {
         }
 
         public override float NowHealthRate() => (float)NowHealthData.Value / (float)_enemyEntity.HealthData.Value;
-        public TYPE_ENEMY_GROUP GetTypeEnemyGroup() => _enemyEntity.EnemyData.Group;
         public string NowHealthValue() => NowHealthData.GetValue();
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
