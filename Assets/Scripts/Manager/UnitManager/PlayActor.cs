@@ -98,13 +98,13 @@ namespace SEF.Unit
 
         public void DecreaseHealth(AttackData attackData)
         {
-            OnHitEvent(attackData);
             _nowHealthData.Subject(attackData);
 
             if (_nowHealthData.IsZero())
             {
                 DestoryActor();
             }
+            OnHitEvent(attackData);
         }
 
         #region ##### Data #####
