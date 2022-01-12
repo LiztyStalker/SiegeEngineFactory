@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _key: EnemyData_Boss_Test
   _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
-  _spineModelKey: 
+  _spineModelKey: BowSoldier_SkeletonData
   _spineSkinKey: 
   _group: 1
   _typeLevelTheme: 0

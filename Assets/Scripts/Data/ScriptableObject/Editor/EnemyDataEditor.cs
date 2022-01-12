@@ -103,7 +103,7 @@ namespace SEF.Data.Editor
             _increaseWaveRewardAssetRateField.SetEnabled(_isModified);
 
             _skeletonDataAssetField.SetEnabled(_isModified);
-            _spineModelKeyField.SetEnabled(_isModified);
+            _spineModelKeyField.SetEnabled(false);
             _spineSkinKeyField.SetEnabled(_isModified);
 
             
@@ -433,6 +433,9 @@ namespace SEF.Data.Editor
 
 
 
+            _spineModelKeyField = _root.Query<TextField>("spinemodelkey_textfield").First();
+            _spineModelKeyField.label = "¸ðµ¨Å°";
+            _spineModelKeyField.value = _enemyData.SpineModelKey;
 
 
 
@@ -444,21 +447,19 @@ namespace SEF.Data.Editor
                 e =>
                 {
                     _enemyData.SkeletonDataAsset = (Spine.Unity.SkeletonDataAsset)e.newValue;
+                    _spineModelKeyField.value = _enemyData.SpineModelKey;
                     // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
 
-            _spineModelKeyField = _root.Query<TextField>("spinemodelkey_textfield").First();
-            _spineModelKeyField.label = "¸ðµ¨Å°";
-            _spineModelKeyField.value = _enemyData.SpineModelKey;
-            _spineModelKeyField.RegisterCallback<ChangeEvent<string>>(
-                e =>
-                {
-                    _enemyData.SpineModelKey = e.newValue;
-                    EditorUtility.SetDirty(_enemyData);
-                }
-            );
+            //_spineModelKeyField.RegisterCallback<ChangeEvent<string>>(
+            //    e =>
+            //    {
+            //        _enemyData.SpineModelKey = e.newValue;
+            //        EditorUtility.SetDirty(_enemyData);
+            //    }
+            //);
 
             _spineSkinKeyField = _root.Query<TextField>("spineskinkey_textfield").First();
             _spineSkinKeyField.label = "½ºÅ²";

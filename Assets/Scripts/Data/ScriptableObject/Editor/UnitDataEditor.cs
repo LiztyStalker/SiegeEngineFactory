@@ -93,7 +93,7 @@ namespace SEF.Data.Editor
             _maximumUpgradeValueField.SetEnabled(_isModified);
 
             _skeletonDataAssetField.SetEnabled(_isModified);
-            _spineModelKeyField.SetEnabled(_isModified);
+            _spineModelKeyField.SetEnabled(false);
             _spineSkinKeyField.SetEnabled(_isModified);
         }
 
@@ -421,7 +421,16 @@ namespace SEF.Data.Editor
             );
 
 
-
+            _spineModelKeyField = _root.Query<TextField>("spinemodelkey_textfield").First();
+            _spineModelKeyField.label = "¸ðµ¨Å°";
+            _spineModelKeyField.value = _unitData.SpineModelKey;
+            //_spineModelKeyField.RegisterCallback<ChangeEvent<string>>(
+            //    e =>
+            //    {
+            //        _unitData.SpineModelKey = e.newValue;
+            //        EditorUtility.SetDirty(_unitData);
+            //    }
+            //);
 
             _skeletonDataAssetField = _root.Query<ObjectField>("skeletondatasset_objectfield").First();
             _skeletonDataAssetField.label = "¸ðµ¨";
@@ -431,21 +440,13 @@ namespace SEF.Data.Editor
                 e =>
                 {
                     _unitData.SkeletonDataAsset = (Spine.Unity.SkeletonDataAsset)e.newValue;
+                    _spineModelKeyField.value = _unitData.SpineModelKey;
                     // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
                     EditorUtility.SetDirty(_unitData);
                 }
             );
 
-            _spineModelKeyField = _root.Query<TextField>("spinemodelkey_textfield").First();
-            _spineModelKeyField.label = "¸ðµ¨Å°";
-            _spineModelKeyField.value = _unitData.SpineModelKey;
-            _spineModelKeyField.RegisterCallback<ChangeEvent<string>>(
-                e =>
-                {
-                    _unitData.SpineModelKey = e.newValue;
-                    EditorUtility.SetDirty(_unitData);
-                }
-            );
+         
 
             _spineSkinKeyField = _root.Query<TextField>("spineskinkey_textfield").First();
             _spineSkinKeyField.label = "½ºÅ²";

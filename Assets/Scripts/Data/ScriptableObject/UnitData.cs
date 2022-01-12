@@ -25,7 +25,7 @@ namespace SEF.Data
             set
             {
                 _skeletonDataAsset = value;
-                if (_skeletonDataAsset != null)
+                if (value != null)
                     _spineModelKey = value.name;
                 else
                     _spineModelKey = null;
@@ -34,7 +34,7 @@ namespace SEF.Data
 
         [SerializeField]
         private string _spineModelKey;
-        public string SpineModelKey { get => _spineModelKey; set => _spineModelKey = value; }
+        public string SpineModelKey => _spineModelKey;
 
         [SerializeField]
         private string _spineSkinKey;

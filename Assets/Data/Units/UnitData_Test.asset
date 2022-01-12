@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _key: 
   _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
-  _spineModelKey: BowSoldier
+  _spineModelKey: BowSoldier_SkeletonData
   _spineSkinKey: 
   _scale: 0.4
   _group: 0
