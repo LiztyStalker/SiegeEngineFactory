@@ -19,7 +19,18 @@ namespace SEF.Data
 
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
-        public SkeletonDataAsset SkeletonDataAsset { get => _skeletonDataAsset; set => _skeletonDataAsset = value; }
+        public SkeletonDataAsset SkeletonDataAsset
+        {
+            get => _skeletonDataAsset; 
+            set
+            {
+                _skeletonDataAsset = value;
+                if (_skeletonDataAsset != null)
+                    _spineModelKey = value.name;
+                else
+                    _spineModelKey = null;
+            }
+        }
 
         [SerializeField]
         private string _spineModelKey;
@@ -91,12 +102,15 @@ namespace SEF.Data
         [SerializeField]
         private UtilityManager.BulletData _attackBulletData;
 
-        public UtilityManager.BulletData AttackBulletData { 
+        public UtilityManager.BulletData AttackBulletData 
+        { 
             get => _attackBulletData;
             set { 
                 _attackBulletData = value;
                 if(value != null)
-                _attackBulletKey = value.name;
+                    _attackBulletKey = value.name;
+                else
+                    _attackBulletKey = "";
             }
         }
 

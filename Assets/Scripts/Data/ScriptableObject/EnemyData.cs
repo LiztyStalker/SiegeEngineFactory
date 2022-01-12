@@ -25,7 +25,17 @@ namespace SEF.Data
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
 
-        public SkeletonDataAsset SkeletonDataAsset { get => _skeletonDataAsset; set => _skeletonDataAsset = value; }
+        public SkeletonDataAsset SkeletonDataAsset { 
+            get => _skeletonDataAsset;
+            set
+            {
+                _skeletonDataAsset = value;
+                if (_skeletonDataAsset != null)
+                    _spineModelKey = value.name;
+                else
+                    _spineModelKey = null;
+            }
+        }
 
         [SerializeField]
         private string _spineModelKey;
@@ -45,7 +55,7 @@ namespace SEF.Data
         public TYPE_LEVEL_THEME TypeLevelTheme { get => _typeLevelTheme; set => _typeLevelTheme = value; }
 
         [SerializeField]
-        private float _scale;
+        private float _scale = 1f;
         public float Scale { get => _scale; set => _scale = value; }
 
         [SerializeField]
@@ -105,13 +115,16 @@ namespace SEF.Data
             get => _attackBulletData;
             set { 
                 _attackBulletData = value;
+
                 if (value != null)
                     _attackBulletKey = value.name;
+                else
+                    _attackBulletKey = "";
             } 
         }
 
         [SerializeField]
-        private float _bulletScale;
+        private float _bulletScale = 1f;
         public float BulletScale { get => _bulletScale; set => _bulletScale = value; }
 
         [SerializeField]
