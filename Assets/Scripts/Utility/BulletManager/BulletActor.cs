@@ -55,6 +55,7 @@ namespace UtilityManager
                 _prefab = Instantiate(_data.prefab);
                 _prefab.transform.SetParent(transform);
                 _prefab.transform.localPosition = Vector3.zero;
+                _prefab.transform.localScale = Vector3.one;
                 _prefab.gameObject.SetActive(true);
             }
 
@@ -105,6 +106,10 @@ namespace UtilityManager
             _prefab = null;
         }
 
+        public void SetScale(float scale)
+        {
+            transform.localScale = Vector3.one * scale;
+        }
         private void Update()
         {
 

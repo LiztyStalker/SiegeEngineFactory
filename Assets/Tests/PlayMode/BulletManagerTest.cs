@@ -38,7 +38,7 @@ namespace UtilityManager.Test
             bool isRun = true;
             var bulletData = BulletData.CreateTest();
             bulletData.SetData(BulletData.TYPE_BULLET_ACTION.Move, 1f, false);
-            BulletManager.Current.Activate(bulletData, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); isRun = false; });
+            BulletManager.Current.Activate(bulletData, 1f, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); isRun = false; });
             while (isRun)
             {
                 yield return null;
@@ -55,7 +55,7 @@ namespace UtilityManager.Test
             {
                 var bulletData = BulletData.CreateTest();
                 bulletData.SetData(BulletData.TYPE_BULLET_ACTION.Move, 1f, false);
-                BulletManager.Current.Activate(bulletData, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
+                BulletManager.Current.Activate(bulletData, 1f, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
                 yield return null;
             }
 
@@ -77,7 +77,7 @@ namespace UtilityManager.Test
             {
                 var bulletData = BulletData.CreateTest();
                 bulletData.SetData(BulletData.TYPE_BULLET_ACTION.Move, 1f, false);
-                BulletManager.Current.Activate(bulletData, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
+                BulletManager.Current.Activate(bulletData, 1f, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
                 yield return null;
             }
 
@@ -93,7 +93,7 @@ namespace UtilityManager.Test
             {
                 var bulletData = BulletData.CreateTest();
                 bulletData.SetData(BulletData.TYPE_BULLET_ACTION.Move, 1f, false);
-                BulletManager.Current.Activate(bulletData, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
+                BulletManager.Current.Activate(bulletData, 1f, _startPosition, _arrivePosition, actor => { Debug.Log("Arrive"); arrivedCount++; });
                 yield return null;
             }
             while (true)

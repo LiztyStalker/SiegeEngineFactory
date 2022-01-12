@@ -69,7 +69,7 @@ namespace UtilityManager
         /// <param name="arrivePos"></param>
         /// <param name="arrivedCallback"></param>
         /// <returns></returns>
-        public BulletActor Activate(BulletData data, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null, System.Action<BulletActor> inactiveCallback = null)
+        public BulletActor Activate(BulletData data, float scale, Vector2 startPos, Vector2 arrivePos, System.Action<BulletActor> arrivedCallback = null, System.Action<BulletActor> inactiveCallback = null)
         {
             if (Application.isPlaying)
             {
@@ -88,6 +88,7 @@ namespace UtilityManager
                     inactiveCallback?.Invoke(actor);
                     RetrieveActor(actor);
                 });
+                actor.SetScale(scale);
                 actor.Activate();
                 _list.Add(actor);
                 return actor;
