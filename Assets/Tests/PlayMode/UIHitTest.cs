@@ -88,7 +88,7 @@ namespace SEF.UI.Test
 
             for (int i = 0; i < 10; i++)
             {
-                Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), -2f);
+                Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), 2f);
                 _uiHitContainer.ShowHit_Test("1.234A", pos, block =>
                 {
                     Debug.Log("End");

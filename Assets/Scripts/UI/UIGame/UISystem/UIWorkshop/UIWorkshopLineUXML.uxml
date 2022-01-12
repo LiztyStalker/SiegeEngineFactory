@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="UIProgressbar" src="/Assets/Scripts/UI/UIUtility/UIProgressbar.uxml" />
+    <ui:Template name="UIFillable" src="/Assets/Scripts/UI/UIUtility/UIFillable.uxml" />
     <Style src="UIWorkshopLineUSS.uss" />
     <SEF.UI.Toolkit.UIWorkshopLine style="height: 200px;">
-        <ui:Instance template="UIProgressbar" name="UIProgressbar" />
+        <ui:Instance template="UIFillable" name="fillable-block" class="fillable-block" />
         <ui:VisualElement name="activate_panel" style="display: flex;">
             <ui:VisualElement name="line_panel">
                 <ui:VisualElement name="line_icon" style="background-color: rgb(255, 255, 255);" />

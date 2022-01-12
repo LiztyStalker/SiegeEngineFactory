@@ -27,3 +27,8 @@
     height: 100%;
     background-color: rgb(2, 70, 0);
 }
+
+.fillable {
+    width: 100%;
+    height: 100%;
+}

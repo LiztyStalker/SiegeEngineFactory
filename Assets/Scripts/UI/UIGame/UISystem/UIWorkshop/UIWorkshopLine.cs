@@ -42,7 +42,7 @@ namespace SEF.UI.Toolkit
         private Label _attackTypeLabel;
         private Label _attackTypeValueLabel;
 
-        private UIProgressbar _uiProgressbar;
+        private UIFillable _uiFillable;
 
         private Button _upgradeButton;
         private VisualElement _upgradeAssetIcon;
@@ -98,7 +98,7 @@ namespace SEF.UI.Toolkit
             _attackDelayLabel = this.Q<Label>("attack_delay_label");
             _attackDelayValueLabel = this.Q<Label>("attack_delay_value_label");
 
-            _uiProgressbar = this.Q<UIProgressbar>();
+            _uiFillable = this.Q<UIFillable>();
 
             _upgradeButton = this.Q<Button>("upgrade_button");
             _upgradeAssetIcon = this.Q<VisualElement>("upgrade_asset_icon");
@@ -135,7 +135,7 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
-            Debug.Assert(_uiProgressbar != null, "_uiProgressbar element 를 찾지 못했습니다");
+            Debug.Assert(_uiFillable != null, "_uiProgressbar element 를 찾지 못했습니다");
 
             Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
             Debug.Assert(_expendButton != null, "_expendButton element 를 찾지 못했습니다");
@@ -160,7 +160,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = "1";
             _attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
-            _uiProgressbar.FillAmount = 0;
+            _uiFillable.FillAmount = 0;
 
             //_expendAssetIcon = Texture
             _expendValueLabel.text = "0";
@@ -205,7 +205,7 @@ namespace SEF.UI.Toolkit
 
             _levelValueLabel.text = unitEntity.UpgradeValue.ToString();
 
-            _uiProgressbar.FillAmount = nowTime / unitData.ProductTime;
+            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
 
             _upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
 

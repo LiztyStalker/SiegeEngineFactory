@@ -111,7 +111,7 @@ namespace SEF.UI.Test
 
             for (int i = 0; i < 10; i++)
             {
-                Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), -2f);
+                Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), 2f);
                 _uiContainer.ShowUnitHealthData_Test(UnityEngine.Random.Range(0.1f, 1f), pos, block =>
                 {
                     Debug.Log("End");

@@ -49,6 +49,7 @@ namespace SEF.UI.Toolkit
         private void SetPosition()
         {
             var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+            screenPos.y = Screen.height - screenPos.y;
             screenPos.z = 0;
             _uiDocument.rootVisualElement.transform.position = screenPos;
         }
