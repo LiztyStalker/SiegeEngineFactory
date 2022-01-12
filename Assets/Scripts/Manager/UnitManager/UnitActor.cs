@@ -117,7 +117,7 @@ namespace SEF.Unit
         {
             _unitEntity = unitEntity;
 
-            SetHealthData(_unitEntity.UnitData.StartHealthValue);
+            SetHealthData(_unitEntity.HealthData);
 
             if (SkeletonAnimation != null)
             {

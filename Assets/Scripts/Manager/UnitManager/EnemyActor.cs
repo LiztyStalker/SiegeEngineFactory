@@ -173,7 +173,7 @@ namespace SEF.Unit {
         {
             _enemyEntity = enemyEntity;
 
-            SetHealthData(_enemyEntity.EnemyData.StartHealthValue);
+            SetHealthData(_enemyEntity.HealthData);
 
             if (SkeletonAnimation != null)
             {
