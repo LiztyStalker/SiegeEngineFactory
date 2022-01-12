@@ -56,6 +56,7 @@ namespace SEF.Manager
         {
             //Refresh
             _gameSystem.Refresh();
+            _unitManager.Refresh();
 
         }
 

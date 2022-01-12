@@ -403,6 +403,10 @@ namespace SEF.Unit
             return _unitDic.Values.Sum(actor => actor.Population);
         }
 
+        public void Refresh()
+        {
+            OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
+        }
 
         #region ##### Listener #####
 

@@ -8,6 +8,7 @@ namespace SEF.UI.Test
     using UnityEngine.Experimental.Rendering.Universal;
     using UtilityManager.Test;
     using SEF.UI.Toolkit;
+    using Data;
 
     public class UILevelWaveTest
     {
@@ -17,6 +18,7 @@ namespace SEF.UI.Test
         private Light2D _light;
 
         private UILevelWave_Test _uiLevelWave;
+        private LevelWaveData _levelWaveData;
 
         [SetUp]
         public void SetUp()
@@ -26,6 +28,8 @@ namespace SEF.UI.Test
             _uiLevelWave = UILevelWave_Test.Create();
             _uiLevelWave.Initialize();
             Assert.IsNotNull(_uiLevelWave.Instance);
+
+            _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
         }
 
         [TearDown]
@@ -43,8 +47,8 @@ namespace SEF.UI.Test
             yield return null;
             _uiLevelWave.Instance.Level = 1;
             _uiLevelWave.Instance.Wave = 4;
-            _uiLevelWave.Instance.MaxValue = 10;
-            _uiLevelWave.Instance.MinValue = 1;
+            _uiLevelWave.Instance.MaxValue = 9;
+            _uiLevelWave.Instance.MinValue = 0;
             yield return new WaitForSeconds(1f);
         }
 
@@ -54,9 +58,49 @@ namespace SEF.UI.Test
 
             yield return null;
             _uiLevelWave.Instance.Level = 0;
-            _uiLevelWave.Instance.Wave = 1;
-            _uiLevelWave.Instance.MaxValue = 10;
-            _uiLevelWave.Instance.MinValue = 1;
+            _uiLevelWave.Instance.Wave = 0;
+            _uiLevelWave.Instance.MaxValue = 9;
+            _uiLevelWave.Instance.MinValue = 0;
+
+            var nowTime = 0f;
+            int level = 0;
+            int wave = 0;
+
+            while (true)
+            {
+                nowTime += Time.deltaTime * 5f;
+                if (nowTime >= 1f)
+                {
+                    if (wave + 1 == 10)
+                    {
+                        level++;
+                        wave = 0;
+                    }
+                    else
+                    {
+                        wave++;
+                    }
+
+                    _uiLevelWave.Instance.ShowLevelWave(level, wave);
+
+                    if (level == 3)
+                        break;
+                    nowTime -= 1f;
+                }
+                yield return null;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+
+        [UnityTest]
+        public IEnumerator UILevelWaveTest_RunProcessWithLevelWaveData()
+        {
+
+            yield return null;
+            _uiLevelWave.Instance.Level = 0;
+            _uiLevelWave.Instance.Wave = 0;
+            _uiLevelWave.Instance.MaxValue = 9;
+            _uiLevelWave.Instance.MinValue = 0;
 
             var nowTime = 0f;
 
@@ -65,17 +109,11 @@ namespace SEF.UI.Test
                 nowTime += Time.deltaTime * 5f;
                 if (nowTime >= 1f)
                 {
-                    if (_uiLevelWave.Instance.Wave + 1 == 11)
-                    {
-                        _uiLevelWave.Instance.Level++;
-                        _uiLevelWave.Instance.Wave = 1;
-                    }
-                    else
-                    {
-                        _uiLevelWave.Instance.Wave++;
-                    }
+                    _levelWaveData.IncreaseNumber();
 
-                    if (_uiLevelWave.Instance.Level == 3)
+                    _uiLevelWave.Instance.ShowLevelWave(_levelWaveData.GetLevel(), _levelWaveData.GetWave());
+
+                    if (_levelWaveData.GetLevel() == 3)
                         break;
                     nowTime -= 1f;
                 }

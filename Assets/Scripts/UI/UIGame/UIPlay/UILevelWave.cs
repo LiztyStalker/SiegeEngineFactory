@@ -15,8 +15,8 @@ namespace SEF.UI.Toolkit {
             //속성 정의
             UxmlIntAttributeDescription _level = new UxmlIntAttributeDescription { name = "level", defaultValue = 1 };
             UxmlIntAttributeDescription _wave = new UxmlIntAttributeDescription { name = "wave", defaultValue = 1 };
-            UxmlIntAttributeDescription _min = new UxmlIntAttributeDescription { name = "min", defaultValue = 10 };
-            UxmlIntAttributeDescription _max = new UxmlIntAttributeDescription { name = "max", defaultValue = 10 };
+            UxmlIntAttributeDescription _min = new UxmlIntAttributeDescription { name = "min", defaultValue = 0 };
+            UxmlIntAttributeDescription _max = new UxmlIntAttributeDescription { name = "max", defaultValue = 9 };
 
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
@@ -58,8 +58,6 @@ namespace SEF.UI.Toolkit {
             set
             {
                 _minValue = value;
-                ShowLabel();
-                UpdateHandlePosition();
             }
         }
         public int MaxValue { 
@@ -67,8 +65,6 @@ namespace SEF.UI.Toolkit {
             set
             {
                 _maxValue = value;
-                ShowLabel();
-                UpdateHandlePosition();
             }
         }
 
@@ -111,6 +107,8 @@ namespace SEF.UI.Toolkit {
 
         public void Initialize()
         {
+            _minValue = 0;
+            _maxValue = 9;
         }
 
         public void CleanUp()
@@ -171,7 +169,7 @@ namespace SEF.UI.Toolkit {
         {
             //Debug.Log("ShowLabel");
             _levelLabel.text = _level.ToString();
-            _waveLabel.text = $"{_wave}/{_maxValue}";
+            _waveLabel.text = $"{_wave + 1}/{_maxValue + 1}";
         }
     }
 
