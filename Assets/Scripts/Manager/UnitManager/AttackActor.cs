@@ -54,7 +54,7 @@ namespace SEF.Unit
 
         private AttackCase _attackCase;
 
-        private bool _isDead = false;
+        private bool _isDestroy = false;
 
         public void Initialize()
         {
@@ -70,7 +70,7 @@ namespace SEF.Unit
 
         public void SetData(SkeletonDataAsset skeletonDataAsset, AttackerData attackerData, NumberData numberData)
         {
-            _isDead = false;
+            _isDestroy = false;
 
             _attackCase._attackerData = attackerData;
             _attackCase._numberData = numberData;
@@ -167,7 +167,7 @@ namespace SEF.Unit
 
         public void Destory()
         {
-            _isDead = true;
+            _isDestroy = true;
             if (SkeletonAnimationState != null)
                 PlayAnimation("Dead", false);
             else
