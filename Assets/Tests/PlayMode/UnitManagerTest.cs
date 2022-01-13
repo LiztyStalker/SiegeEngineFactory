@@ -21,7 +21,7 @@ namespace SEF.Test
             public Vector2 NowPosition => Vector2.zero;
 
             public int hitCount;
-            public void DecreaseHealth(AttackData attackData)
+            public void DecreaseHealth(DamageData attackData)
             {
                 hitCount++;
                 Debug.Log("Hit");
@@ -93,6 +93,7 @@ namespace SEF.Test
         public IEnumerator UnitManagerTest_Create_UnitActor_1()
         {
             _unitManager.InitializeUnitManager_Test();
+//            _unitManager.InitializeUnitActor_Test();
             var unitActor = _unitManager.ProductUnitActor_Test(_unitEntity_Dummy);
             
             yield return null;
