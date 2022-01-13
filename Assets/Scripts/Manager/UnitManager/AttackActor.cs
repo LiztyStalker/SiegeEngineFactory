@@ -11,29 +11,26 @@ namespace SEF.Unit
         #region ##### AttackCase #####
         private struct AttackCase
         {
-            internal AttackerData _attackerData;
-            internal NumberData _numberData;
+            internal AttackerData AttackData;
+            internal NumberData NumberData;
 
             private float _nowTime;
             internal void RunProcess(float deltaTime)
             {
-                Debug.Log("RunProcess " + _nowTime);
                 _nowTime += deltaTime;
-                if(_nowTime > _attackerData.AttackData.AttackDelay)
+                if(_nowTime > AttackData.AttackData.AttackDelay)
                 {
-                    //공격하기
-                    //AttackEvent?.Invoke(_attackerData.AttackData);
-                    //PlayAnimation("Attack");
                     AttackEvent?.Invoke("Attack", false);
-                    _nowTime -= _attackerData.AttackData.AttackDelay;
+                    _nowTime -= AttackData.AttackData.AttackDelay;
                 }
             }
-
-            //internal event System.Action<AttackData> AttackEvent;
             internal event System.Action<string, bool> AttackEvent;
         }
 
         #endregion
+
+
+
 
         [SerializeField]
         private SkeletonAnimation _skeletonAnimation;
@@ -72,8 +69,8 @@ namespace SEF.Unit
         {
             _isDestroy = false;
 
-            _attackCase._attackerData = attackerData;
-            _attackCase._numberData = numberData;
+            _attackCase.AttackData = attackerData;
+            _attackCase.NumberData = numberData;
 
             SkeletonAnimation.skeletonDataAsset = skeletonDataAsset;
             SetSkeletonAnimationState(SkeletonAnimationState);
@@ -85,13 +82,13 @@ namespace SEF.Unit
             {
                 animationState.Start += delegate { };
                 animationState.Event += OnSpineEvent;
-                animationState.Complete += OnEndEvent;
+                animationState.Complete += OnCompleteEvent;
                 animationState.Dispose += delegate { };
                 //_skeletonAnimationState.End += OnEndEvent;
             }
         }
 
-        private void OnEndEvent(TrackEntry trackEntry)
+        private void OnCompleteEvent(TrackEntry trackEntry)
         {
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
@@ -99,7 +96,7 @@ namespace SEF.Unit
 
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            OnAttackEvent(_attackCase._attackerData.AttackData);
+            OnAttackEvent(_attackCase.AttackData.AttackData);
             AddAnimation("Idle", true);
         }
 
@@ -112,7 +109,7 @@ namespace SEF.Unit
             }
             else
             {
-                OnAttackEvent(_attackCase._attackerData.AttackData);
+                OnAttackEvent(_attackCase.AttackData.AttackData);
             }
         }
 
@@ -162,7 +159,10 @@ namespace SEF.Unit
 
         public void RunProcess(float deltaTime)
         {
-            _attackCase.RunProcess(deltaTime);
+            if (!_isDestroy)
+            {
+                _attackCase.RunProcess(deltaTime);
+            }
         }
 
         public void Destory()
