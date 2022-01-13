@@ -16,13 +16,13 @@ namespace SEF.Unit
         private ITarget _target;
         protected ITarget Target => _target;
 
+        //private List<AttackActor> _attackActorList;        
 
         private TYPE_UNIT_STATE _typeUnitState;
         protected TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
         public Vector2 NowPosition => transform.position;
 
         private HealthData _nowHealthData;
-
         protected HealthData NowHealthData => _nowHealthData;
 
         public abstract float NowHealthRate();
@@ -96,7 +96,7 @@ namespace SEF.Unit
             return false;
         }
 
-        public void DecreaseHealth(AttackData attackData)
+        public void DecreaseHealth(DamageData attackData)
         {
             _nowHealthData.Subject(attackData);
 
@@ -167,10 +167,10 @@ namespace SEF.Unit
 
         #region ##### Listener #####
 
-        protected System.Action<PlayActor, AttackData> _hitEvent;
-        public void AddOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent += act;
-        public void RemoveOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent -= act;
-        private void OnHitEvent(AttackData attackData)
+        protected System.Action<PlayActor, DamageData> _hitEvent;
+        public void AddOnHitListener(System.Action<PlayActor, DamageData> act) => _hitEvent += act;
+        public void RemoveOnHitListener(System.Action<PlayActor, DamageData> act) => _hitEvent -= act;
+        private void OnHitEvent(DamageData attackData)
         {
             _hitEvent?.Invoke(this, attackData);
         }

@@ -410,10 +410,10 @@ namespace SEF.Unit
 
         #region ##### Listener #####
 
-        public System.Action<PlayActor, AttackData> _hitEvent;
-        public void AddOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent += act;
-        public void RemoveOnHitListener(System.Action<PlayActor, AttackData> act) => _hitEvent -= act;
-        private void OnHitEvent(PlayActor playActor, AttackData attackData) 
+        public System.Action<PlayActor, DamageData> _hitEvent;
+        public void AddOnHitListener(System.Action<PlayActor, DamageData> act) => _hitEvent += act;
+        public void RemoveOnHitListener(System.Action<PlayActor, DamageData> act) => _hitEvent -= act;
+        private void OnHitEvent(PlayActor playActor, DamageData attackData) 
         {
             //switch (playActor)
             //{

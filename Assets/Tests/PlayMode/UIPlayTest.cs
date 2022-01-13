@@ -126,7 +126,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIPlayTest_HitUnit()
         {
-            _uitest.Instance.ShowHit(_unitActor, AttackData.Create_Test());
+            _uitest.Instance.ShowHit(_unitActor, DamageData.Create_Test());
             yield return new WaitForSeconds(1f);
         }
 
@@ -134,7 +134,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIPlayTest_HitEnemy()
         {
-            _uitest.Instance.ShowHit(_enemyActor, AttackData.Create_Test());
+            _uitest.Instance.ShowHit(_enemyActor, DamageData.Create_Test());
             yield return new WaitForSeconds(1f);
         }
 

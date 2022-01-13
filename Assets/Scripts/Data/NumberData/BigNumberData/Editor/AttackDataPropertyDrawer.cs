@@ -7,7 +7,7 @@ namespace SEF.Data.Editor
     using UnityEditor.UIElements;
     using UnityEngine.UIElements;
 
-    [CustomPropertyDrawer(typeof(AttackData))]
+    [CustomPropertyDrawer(typeof(DamageData))]
     [CanEditMultipleObjects]
     public class AttackDataPropertyDrawer : PropertyDrawer
     {

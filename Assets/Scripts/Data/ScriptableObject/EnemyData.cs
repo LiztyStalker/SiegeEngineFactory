@@ -79,8 +79,8 @@ namespace SEF.Data
         public float IncreaseWaveHealthRate { get => _increaseWaveHealthRate; set => _increaseWaveHealthRate = value; }
 
         [SerializeField]
-        private AttackData _startAttackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData StartAttackValue => _startAttackValue;
+        private DamageData _startAttackValue = NumberDataUtility.Create<DamageData>();
+        public DamageData StartAttackValue => _startAttackValue;
 
         [SerializeField]
         private int _increaseAttackValue;// = NumberDataUtility.Create<AttackData>();
@@ -170,7 +170,7 @@ namespace SEF.Data
             _increaseLevelHealthRate = 0.125f;
             _increaseWaveHealthValue = 0;// HealthData.Create_Test();
             _increaseWaveHealthRate = 0.01f;
-            _startAttackValue = AttackData.Create_Test(30);
+            _startAttackValue = DamageData.Create_Test(30);
             _increaseAttackValue = 1;// AttackData.Create_Test();
             _increaseAttackRate = 0.2f;
             _attackCount = 1;

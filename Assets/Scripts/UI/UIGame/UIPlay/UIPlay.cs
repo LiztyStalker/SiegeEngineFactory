@@ -44,7 +44,7 @@ namespace SEF.UI.Toolkit
             _uiHitContainer.CleanUp();
         }
 
-        public void ShowHit(PlayActor playActor, AttackData data)
+        public void ShowHit(PlayActor playActor, DamageData data)
         {
             _uiHitContainer.ShowHit(data.GetValue(), playActor.transform.position);
 

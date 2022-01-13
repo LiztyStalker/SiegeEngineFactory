@@ -10,7 +10,7 @@ namespace SEF.Entity
         public EnemyData EnemyData => _enemyData;
 
         private HealthData _healthData;
-        private AttackData _attackData;
+        private DamageData _attackData;
         private IAssetData _rewardAssetData;
 
 
@@ -26,7 +26,7 @@ namespace SEF.Entity
             }
         }
 
-        public AttackData AttackData
+        public DamageData AttackData
         {
             get
             {
@@ -91,9 +91,9 @@ namespace SEF.Entity
             return assetData;
         }
 
-        private AttackData CalculateAttackData()
+        private DamageData CalculateAttackData()
         {
-            var assetData = new AttackData();
+            var assetData = new DamageData();
             assetData.SetAssetData(_enemyData, _levelWaveData);
             return assetData;
         }

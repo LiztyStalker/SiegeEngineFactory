@@ -3,14 +3,14 @@ namespace SEF.Data
     using UnityEngine;
 
     [System.Serializable]
-    public class AttackData : BigNumberData
+    public class DamageData : BigNumberData
     {
-        public AttackData() : base() { }
-        protected AttackData(BigNumberData value) : base(value) { }
+        public DamageData() : base() { }
+        protected DamageData(BigNumberData value) : base(value) { }
 
         public override INumberData Clone()
         {
-            return new AttackData(this);
+            return new DamageData(this);
         }
 
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
@@ -36,15 +36,15 @@ namespace SEF.Data
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static AttackData Create_Test()
+        public static DamageData Create_Test()
         {
-            var data = new AttackData();
+            var data = new DamageData();
             data.ValueText = "30";
             return data;
         }
-        public static AttackData Create_Test(int value)
+        public static DamageData Create_Test(int value)
         {
-            var data = new AttackData();
+            var data = new DamageData();
             data.ValueText = value.ToString();
             return data;
         }

@@ -68,8 +68,8 @@ namespace SEF.Data
         public float ProductTime { get => _productTime; set => _productTime = value; }
 
         [SerializeField]
-        private AttackData _attackValue = NumberDataUtility.Create<AttackData>();
-        public AttackData StartAttackValue => _attackValue;
+        private DamageData _attackValue = NumberDataUtility.Create<DamageData>();
+        public DamageData StartAttackValue => _attackValue;
 
         [SerializeField]
         private int _increaseAttackValue;// = NumberDataUtility.Create<AttackData>();
@@ -170,7 +170,7 @@ namespace SEF.Data
             _increaseHealthValue = 1;// HealthData.Create_Test();
             _increaseHealthRate = 0.05f;
             _productTime = 1f;
-            _attackValue = AttackData.Create_Test(15);
+            _attackValue = DamageData.Create_Test(15);
             _increaseAttackValue = 1;// AttackData.Create_Test();
             _increaseAttackRate = 0.05f;
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;

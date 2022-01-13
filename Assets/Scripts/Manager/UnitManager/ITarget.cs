@@ -4,7 +4,7 @@ namespace SEF.Unit
     using Data;
     public interface ITarget
     {
-        void DecreaseHealth(AttackData attackData);
+        void DecreaseHealth(DamageData attackData);
         Vector2 NowPosition { get; }
     }
 }
