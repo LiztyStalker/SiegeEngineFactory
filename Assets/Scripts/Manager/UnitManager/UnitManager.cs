@@ -18,13 +18,9 @@ namespace SEF.Unit
         {
             private PoolSystem<EnemyActor> _poolEnemyActor;
 
-            //private EnemyActor _nowEnemy;
-            //private EnemyActor _readyEnemy;
-            //private EnemyActor _idleEnemy;
-
             private List<EnemyActor> _list;
 
-            public EnemyActor NowEnemy => _list[0];
+            public EnemyActor NowEnemy => (_list.Count > 0) ? _list[0] : null;
 
             private LevelWaveData _levelWaveData;
 
@@ -34,10 +30,6 @@ namespace SEF.Unit
                 get
                 {
                     return _list.Count;
-                    //var count = 0;
-                    //if (_readyEnemy != null) count++;
-                    //if (_idleEnemy != null) count++;
-                    //return count;
                 } 
             }
 
@@ -45,13 +37,11 @@ namespace SEF.Unit
             private bool IsFull()
             {
                 return Count == 3;
-//                return _nowEnemy != null && _readyEnemy != null && _idleEnemy != null;
             }
 
             private bool IsEmpty()
             {
                 return Count == 0;
-//                return _nowEnemy == null && _readyEnemy == null && _idleEnemy == null;
             }
 
             public void Initialize(/* LevelWaveData */Transform parent)
@@ -80,6 +70,19 @@ namespace SEF.Unit
 
                 _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
             }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+                       
+
+            public void InitializePoolSystem_Test()
+            {
+                _list = new List<EnemyActor>();
+                _poolEnemyActor = PoolSystem<EnemyActor>.Create();
+                _poolEnemyActor.Initialize(EnemyActor.Create_Test);
+
+                _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            }
+#endif
 
             public void ChangeEnemyActor(EnemyActor enemyActor)
             {
@@ -145,8 +148,6 @@ namespace SEF.Unit
                 enemyActor.SetParent(parent);
                 enemyActor.Activate();
 
-                //_list.Add(enemyActor);
-
                 _levelWaveData.IncreaseNumber();
 
                 return enemyActor;
@@ -198,39 +199,33 @@ namespace SEF.Unit
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
+        
+        /// <summary>
+        /// 모든 개체가 비어있습니다
+        /// 더미를 사용하지 않습니다
+        /// </summary>
         public void Initialize_Empty()
         {
             CreateGameObject();
             CreatePoolSystem();
-            _poolUnitActor.Initialize(UnitActor.Create);
 
-            _unitDic = new Dictionary<int, UnitActor>();
+            InitializeUnitActor();
+
             _enemyQueueData.InitializePoolSystem();
         }
 
-        public void InitializeUnitManager_Test()
-        {
-            InitializeUnitManager();
-        }
-
-        public void InitializeUnitActor_Test()
-        {
-            InitializeUnitActor();
-        }
-
-        public void InitializeEnemyActor_Test()
-        {
-            InitializeEnemyActor();
-        }
-
-        public void InitializeAll_DummyTest()
+        /// <summary>
+        /// 모든 개체가 비어있습니다
+        /// 더미 데이터를 사용할 수 있습니다
+        /// </summary>
+        public void Initialize_Empty_DummyTest()
         {
             CreateGameObject();
             CreatePoolSystem_Test();
 
-            _unitDic = new Dictionary<int, UnitActor>();
+            InitializeUnitActor();
 
-            _enemyQueueData.InitializePoolSystem();
+            _enemyQueueData.InitializePoolSystem_Test();
 
         }
 #endif
@@ -313,14 +308,12 @@ namespace SEF.Unit
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
-            unitActor.Activate();
-
             unitActor.SetTarget(_enemyQueueData.NowEnemy);
 
-            OnRefreshPopulationEvent(NowPopulation());
+            unitActor.Activate();
 
+            OnRefreshPopulationEvent(NowPopulation());          
             return unitActor;
-
         }
 
 
