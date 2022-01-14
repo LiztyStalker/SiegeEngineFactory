@@ -32,6 +32,13 @@ namespace SEF.Data
         public float Scale => _scale;
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void SetPositionAndScale_Test(Vector2 position, float scale)
+        {
+            _position = position;
+            _scale = scale;
+        }
+
         public static AttackerData Create_Test()
         {
             return new AttackerData();

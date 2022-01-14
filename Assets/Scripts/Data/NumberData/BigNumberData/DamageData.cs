@@ -32,8 +32,25 @@ namespace SEF.Data
                 value *= 2;
             }
             Value = value;
+        }
+
+        public void SetAssetData(AttackData attackData, LevelWaveData levelWaveData)
+        {
+            var level = levelWaveData.GetLevel();
+            var levelValue = NumberDataUtility.GetCompoundInterest(attackData.AttackValue.Value, attackData.IncreaseAttackValue, attackData.IncreaseAttackRate, level);
+            //            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
+            var value = levelValue;// + waveValue;
+            //            Debug.Log(levelValue + " " + waveValue + " " + value);
+            if (levelWaveData.IsThemeBoss())
+                value *= 3;
+            else if (levelWaveData.IsBoss())
+            {
+                value *= 2;
+            }
+            Value = value;
 
         }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static DamageData Create_Test()

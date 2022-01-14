@@ -110,6 +110,7 @@ namespace SEF.Unit {
             sprite.sprite = _instanceSprite;
             return enemyActor;
         }
+
 #endif
 
         public override void Activate()
@@ -126,14 +127,10 @@ namespace SEF.Unit {
             base.InActivate();
             SetPosition(ENEMY_IDLE_POSITION);
             SetTypeUnitState(TYPE_UNIT_STATE.Idle);
-
-            //_destoryedEvent = null;
-            //_hitEvent = null;
         }
 
         public override void RunProcess(float deltaTime)
         {
-//            Debug.Log(TypeUnitState);
             switch (TypeUnitState)
             {
                 case TYPE_UNIT_STATE.Idle:
@@ -171,9 +168,11 @@ namespace SEF.Unit {
 
         public void SetData(EnemyEntity enemyEntity)
         {
-            _enemyEntity = enemyEntity;
+            _enemyEntity = enemyEntity;            
 
             SetHealthData(_enemyEntity.HealthData);
+
+            SetAttackerData(enemyEntity.EnemyData.AttackerDataArray, GetLevelWaveData());
 
             if (SkeletonAnimation != null)
             {
@@ -183,6 +182,7 @@ namespace SEF.Unit {
                 else
                     SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
             }
+
 
             //transform.localScale = Vector3.one * enemyEntity.EnemyData.Scale;
 
@@ -218,7 +218,7 @@ namespace SEF.Unit {
         }
 
 
-        private float _nowActionTime = 0f;
+        //private float _nowActionTime = 0f;
 
         protected override void ActionRunProcess(float deltaTime)
         {
@@ -226,29 +226,31 @@ namespace SEF.Unit {
 
             //Debug.Log(Target);
             //TestCode
-            if (Target == null)
-            {
-                //Debug.Log("find");
-                //Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
-                SetTarget(_findTargetEvent());
-            }
-            else
-            {
-                _nowActionTime += deltaTime;
-                if (_nowActionTime > 1f)
-                {
-                    if (IsHasAnimation("Attack"))
-                    {
-                        SetAnimation("Attack");
-                    }
-                    else
-                    {
-                        Target.DecreaseHealth(_enemyEntity.AttackData);
-                    }
-                    _nowActionTime = 0f;
-                }
+            base.ActionRunProcess(deltaTime);
+
+            //if (Target == null)
+            //{
+            //    //Debug.Log("find");
+            //    //Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
+            //    SetTarget(_findTargetEvent());
+            //}
+            //else
+            //{
+            //    _nowActionTime += deltaTime;
+            //    if (_nowActionTime > 1f)
+            //    {
+            //        if (IsHasAnimation("Attack"))
+            //        {
+            //            SetAnimation("Attack");
+            //        }
+            //        else
+            //        {
+            //            Target.DecreaseHealth(_enemyEntity.AttackData);
+            //        }
+            //        _nowActionTime = 0f;
+            //    }
                 
-            }
+            //}
         }
 
 
@@ -274,17 +276,6 @@ namespace SEF.Unit {
         }
 
         
-
-
-        #region ##### Listener #####
-
-        private System.Func<ITarget> _findTargetEvent;
-        public void SetOnFindTargetListener(System.Func<ITarget> act) => _findTargetEvent = act;
-
-
-        #endregion
-
-
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {

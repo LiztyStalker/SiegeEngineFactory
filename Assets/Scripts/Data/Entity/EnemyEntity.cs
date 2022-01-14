@@ -71,6 +71,13 @@ namespace SEF.Entity
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetData(EnemyData enemyData)
+        {
+            _enemyData = enemyData;
+            _attackData = null;
+            _healthData = null;
+            _rewardAssetData = null;
+        }
         public void SetData(LevelWaveData levelWaveData)
         {
             _levelWaveData = levelWaveData;

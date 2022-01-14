@@ -65,7 +65,7 @@ namespace SEF.Data
             _attackCount = 1;
             _attackDelay = 1f;
 
-            _bulletDataKey = "BulletData_Test";
+            _bulletDataKey = "BulletData_Arrow";
             _bulletScale = 0.3f;
         }
 #endif

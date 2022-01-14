@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    using System.Collections.Generic;
     using UnityEngine;
     using Spine.Unity;
 
@@ -126,6 +127,29 @@ namespace SEF.Data
         [SerializeField]
         private float _bulletScale = 1f;
         public float BulletScale { get => _bulletScale; set => _bulletScale = value; }
+
+
+
+
+
+
+        [SerializeField]
+        private List<AttackerData> _attackerDataList = new List<AttackerData>();
+        public AttackerData[] AttackerDataArray => _attackerDataList.ToArray();
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void AddAttackerData(AttackerData attackerData)
+        {
+            _attackerDataList.Add(attackerData);
+        }
+
+        public void RemoveAttackerData(AttackerData attackerData)
+        {
+            _attackerDataList.Remove(attackerData);
+        }
+#endif
+
 
         [SerializeField]
         private GoldAssetData _startRewardAssetValue = NumberDataUtility.Create<GoldAssetData>();
