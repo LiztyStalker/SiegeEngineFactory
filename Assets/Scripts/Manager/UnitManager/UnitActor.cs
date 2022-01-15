@@ -135,6 +135,9 @@ namespace SEF.Unit
         }
 
 
+        //UnitActor, EnemyActor, AttackActor에서 사용
+        //통합할 필요가 있을지 의문
+
         private void PlayAnimation(string name, bool isLoop = false)
         {
             if (IsHasAnimation(name))
@@ -173,7 +176,7 @@ namespace SEF.Unit
                     //Action
                     ActionRunProcess(deltaTime);
                     break;
-                case TYPE_UNIT_STATE.Destory:
+                case TYPE_UNIT_STATE.Destroy:
                     //Destroy
                     break;
             }

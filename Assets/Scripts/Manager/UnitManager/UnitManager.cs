@@ -7,7 +7,7 @@ namespace SEF.Unit
     using Entity;
     using Data;
     using Storage;
-
+    using UtilityManager;
 
     public class UnitManager
     {
@@ -382,13 +382,52 @@ namespace SEF.Unit
         {
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
-            _enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
+            //_enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
+            _enemyQueueData.NowEnemy.SetOnAttackTargetListener(OnAttackTargetEvent);
+        }
+
+
+        private void OnAttackTargetEvent(PlayActor playActor, Vector2 attackPos, string bulletDataKey, float scale, DamageData damageData)
+        {
+            BulletData bulletData = null;
+            if (!string.IsNullOrEmpty(bulletDataKey))
+                bulletData = DataStorage.Instance.GetDataOrNull<BulletData>(bulletDataKey, null, null);
+
+            switch (playActor)
+            {
+                case UnitActor unitActor:
+                    AttackTarget(_enemyQueueData.NowEnemy, attackPos, bulletData, scale, damageData);
+                    break;
+                case EnemyActor enemyActor:
+                    var uActor = FindUnitActor();
+                    if (uActor != null)
+                    {
+                        AttackTarget(uActor, attackPos, bulletData, scale, damageData);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void AttackTarget(ITarget target, Vector2 attackPos, BulletData bulletData, float scale, DamageData damageData)
+        {
+            if(bulletData != null)
+            {
+                BulletManager.Current.Activate(bulletData, scale, attackPos, target.NowPosition, delegate { target.DecreaseHealth(damageData); });
+            }
+            else
+            {
+                target.DecreaseHealth(damageData);
+            }
         }
 
         private UnitActor FindUnitActor()
         {
             var arr = _unitDic.Values.ToArray();
-            return arr[UnityEngine.Random.Range(0, arr.Length)];
+            if(arr.Length > 0)
+                return arr[UnityEngine.Random.Range(0, arr.Length)];
+            return null;
         }
 
         private int NowPopulation()
@@ -415,6 +454,7 @@ namespace SEF.Unit
             //    case EnemyActor enemyActor:
             //        break;
             //    default:
+
             //        Debug.LogError("적용되지 않은 PlayActor 클래스 입니다");
             //        break;
             //}

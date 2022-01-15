@@ -626,8 +626,6 @@ namespace SEF.Test
         public IEnumerator UnitTest_EnemyActor_Attacker_5_Attack()
         {
 
-
-
             var attackerData1 = AttackerData.Create_Test();
             attackerData1.SetPositionAndScale_Test(Vector2.zero, 0.3f);
             var attackerData2 = AttackerData.Create_Test();
@@ -689,6 +687,45 @@ namespace SEF.Test
                     break;
                 yield return null;
             }
+
+            yield return new WaitForSeconds(1f);
+
+        }
+
+        [UnityTest]
+        public IEnumerator UnitTest_EnemyActor_Attacker_1_Destroy()
+        {
+            var attackerData = AttackerData.Create_Test();
+
+            var enemyData = EnemyData.Create_Test();
+            enemyData.AddAttackerData(attackerData);
+
+            _enemyEntity_Dummy.SetData(enemyData);
+
+            var enemyActor = EnemyActor.Create_Test();
+
+            Assert.IsNotNull(enemyActor, "enemyActor 가 생성되지 않았습니다");
+
+            enemyActor.SetData(_enemyEntity_Dummy);
+            enemyActor.Activate();
+
+            enemyActor.SetPosition_Test(EnemyActor.ENEMY_ACTION_POSITION_TEST);
+            enemyActor.SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+
+            yield return new WaitForSeconds(1f);
+
+            bool isRun = true;
+            enemyActor.Destroy_Test(() =>
+            {
+                Debug.Log("End");
+                isRun = false;
+            });
+
+            while (isRun)
+            {
+                yield return null;
+            }
+
 
             yield return new WaitForSeconds(1f);
 

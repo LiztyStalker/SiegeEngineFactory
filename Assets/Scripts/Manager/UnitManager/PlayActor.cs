@@ -7,7 +7,7 @@ namespace SEF.Unit
     using Spine.Unity;
     using UtilityManager;
 
-    public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destory}
+    public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destroy}
 
     public abstract class PlayActor : MonoBehaviour
     {
@@ -15,7 +15,9 @@ namespace SEF.Unit
 
         protected readonly static float ACTOR_ARRIVE_DISTANCE = 0.1f;
 
+        
         private ITarget _target;
+        [System.Obsolete("사용하지 않음")]
         protected ITarget Target => _target;
 
 
@@ -181,6 +183,7 @@ namespace SEF.Unit
         public void Destroy_Test(System.Action endCallback)
         {
             DestoryActor_Test(endCallback);
+            DestoryAttackActor();
         }
 
         protected void DestoryActor_Test(System.Action endCallback)
@@ -212,7 +215,7 @@ namespace SEF.Unit
         protected virtual void DestoryActor()
         {
             //애니메이션 후 destoryEvent 실행 됨
-            SetTypeUnitState(TYPE_UNIT_STATE.Destory);
+            SetTypeUnitState(TYPE_UNIT_STATE.Destroy);
             DestoryAttackActor();
         }
 

@@ -147,7 +147,7 @@ namespace SEF.Unit {
                     //Action
                     ActionRunProcess(deltaTime);
                     break;
-                case TYPE_UNIT_STATE.Destory:
+                case TYPE_UNIT_STATE.Destroy:
                     //Destroy
                     break;
             }
@@ -213,12 +213,12 @@ namespace SEF.Unit {
                 //목표에 도달했으면 Action으로 변환
                 //Debug.Log("Action에 도달함");
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
-                PlayAnimation("Attack");
+                //PlayAnimation("Attack");
             }
         }
 
 
-        //private float _nowActionTime = 0f;
+        private float _nowActionTime = 0f;
 
         protected override void ActionRunProcess(float deltaTime)
         {
@@ -227,6 +227,24 @@ namespace SEF.Unit {
             //Debug.Log(Target);
             //TestCode
             base.ActionRunProcess(deltaTime);
+
+
+            _nowActionTime += deltaTime;
+            if (_nowActionTime > 1f)
+            {
+                if (IsHasAnimation("Attack"))
+                {
+                    SetAnimation("Attack");
+                }
+                else
+                {
+                    OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
+                    //Target.DecreaseHealth(_enemyEntity.AttackData);
+                }
+                _nowActionTime = 0f;
+            }
+
+
 
             //if (Target == null)
             //{
@@ -249,7 +267,7 @@ namespace SEF.Unit {
             //        }
             //        _nowActionTime = 0f;
             //    }
-                
+
             //}
         }
 
@@ -279,27 +297,27 @@ namespace SEF.Unit {
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            if (Target != null)
-            {
-                //원거리
-                if(_enemyEntity.EnemyData.AttackBulletData != null)
-                {
-                    var bullet = _enemyEntity.EnemyData.AttackBulletData;
-                    var scale = _enemyEntity.EnemyData.BulletScale;
-                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
-                }
-                else if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
-                {
-                    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
-                    var scale = _enemyEntity.EnemyData.BulletScale;
-                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
-                }
-                //근거리
-                else
-                {
-                    Target.DecreaseHealth(_enemyEntity.AttackData);
-                }
-            }
+
+            OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
+
+            ////원거리
+            //if (_enemyEntity.EnemyData.AttackBulletData != null)
+            //{
+            //    var bullet = _enemyEntity.EnemyData.AttackBulletData;
+            //    var scale = _enemyEntity.EnemyData.BulletScale;
+            //    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
+            //}
+            //else if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
+            //{
+            //    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
+            //    var scale = _enemyEntity.EnemyData.BulletScale;
+            //    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
+            //}
+            ////근거리
+            //else
+            //{
+            //    Target.DecreaseHealth(_enemyEntity.AttackData);
+            //}
         }
 
         private void OnEndEvent(TrackEntry trackEntry)
