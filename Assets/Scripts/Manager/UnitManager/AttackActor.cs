@@ -203,10 +203,6 @@ namespace SEF.Unit
 
         #region ##### Listener #####
 
-        //private System.Action<AttackData> _attackEvent;
-        //public void SetOnAttackListener(System.Action<AttackData> act) => _attackEvent = act;
-        //private void OnAttackEvent(AttackData attackData) => _attackEvent?.Invoke(attackData);
-
         private System.Action _destroyedEvent;
         public void SetOnDestroyedListener(System.Action act) => _destroyedEvent = act;
         private void OnDestroyedEvent() => _destroyedEvent?.Invoke();
@@ -219,9 +215,6 @@ namespace SEF.Unit
         {
             _attackTargetEvent?.Invoke(transform.position, bulletDataKey, scale, damageData);
         }
-
-        //private System.Func<ITarget> _targetEvent;
-        //public void SetOnTargetListener(System.Func<ITarget> act) => _targetEvent = act;
 
         #endregion
 
