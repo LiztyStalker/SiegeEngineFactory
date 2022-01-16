@@ -7,10 +7,10 @@ namespace SEF.Unit
     using UtilityManager;
 
     [RequireComponent(typeof(SkeletonAnimation))]
-    public class AttackActor : MonoBehaviour
+    public class AttackerActor : MonoBehaviour
     {
-        #region ##### AttackCase #####
-        private struct AttackCase
+        #region ##### AttackerCase #####
+        private struct AttackerCase
         {
             internal AttackerData AttackData;
             internal NumberData NumberData;
@@ -72,7 +72,7 @@ namespace SEF.Unit
 
         private Spine.AnimationState SkeletonAnimationState => _skeletonAnimation.AnimationState;
 
-        private AttackCase _attackCase;
+        private AttackerCase _attackCase;
 
         private bool _isDestroy = false;
         public void Initialize()
@@ -218,20 +218,20 @@ namespace SEF.Unit
 
         #endregion
 
-        public static AttackActor Create(Transform parent)
+        public static AttackerActor Create(Transform parent)
         {
             var obj = new GameObject();
             obj.name = "AttackActor";
             obj.transform.SetParent(parent);
-            return obj.AddComponent<AttackActor>();
+            return obj.AddComponent<AttackerActor>();
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static AttackActor Create_Test()
+        public static AttackerActor Create_Test()
         {
             var obj = new GameObject();
             obj.name = "AttackActor_Test";
-            return obj.AddComponent<AttackActor>();
+            return obj.AddComponent<AttackerActor>();
         }
 #endif
     }
