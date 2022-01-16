@@ -229,9 +229,6 @@ namespace SEF.Unit
 
         }
 #endif
-
-
-
         private void InitializeUnitManager()
         {
             CreateGameObject();
@@ -305,10 +302,9 @@ namespace SEF.Unit
             unitActor.SetParent(_gameObject.transform);
             unitActor.AddOnHitListener(OnHitEvent);
             unitActor.AddOnDestoryedListener(OnDestroyedEvent);
+            unitActor.SetOnAttackTargetListener(OnAttackTargetEvent);
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
-
-            unitActor.SetTarget(_enemyQueueData.NowEnemy);
 
             unitActor.Activate();
 
@@ -321,6 +317,7 @@ namespace SEF.Unit
         {
             unitActor.RemoveOnHitListener(OnHitEvent);
             unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
+            unitActor.SetOnAttackTargetListener(null);
             unitActor.InActivate();
 
             _unitDic.Remove(unitActor.GetHashCode());
@@ -332,6 +329,7 @@ namespace SEF.Unit
         {
             enemyActor.RemoveOnHitListener(OnHitEvent);
             enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
+            enemyActor.SetOnAttackTargetListener(null);
             enemyActor.InActivate();
             
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
@@ -372,10 +370,10 @@ namespace SEF.Unit
 
             SetNowEnemyListener();
 
-            foreach (var value in _unitDic.Values)
-            {
-                value.SetTarget(_enemyQueueData.NowEnemy);
-            }
+            //foreach (var value in _unitDic.Values)
+            //{
+            //    value.SetTarget(_enemyQueueData.NowEnemy);
+            //}
         }
 
         private void SetNowEnemyListener()

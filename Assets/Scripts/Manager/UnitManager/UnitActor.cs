@@ -51,7 +51,7 @@ namespace SEF.Unit
                         _skeletonAnimationState = SkeletonAnimation.AnimationState;
                         _skeletonAnimationState.Start += delegate { };
                         _skeletonAnimationState.Event += OnSpineEvent;
-                        _skeletonAnimationState.Complete += OnEndEvent;
+                        _skeletonAnimationState.Complete += OnCompleteEvent;
                         _skeletonAnimationState.Dispose += delegate { };
                         //_skeletonAnimationState.End += OnEndEvent;
                     }
@@ -105,7 +105,6 @@ namespace SEF.Unit
             return unitActor;
         }
 #endif
-
 
         public override void Activate()
         {
@@ -186,7 +185,6 @@ namespace SEF.Unit
 
         protected override void AppearRunProcess(float deltaTime)
         {
-
             if (!IsArriveAction())
             {
                 //목표까지 이동
@@ -198,28 +196,28 @@ namespace SEF.Unit
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
                 PlayAnimation("Idle", true);
             }
-
         }
 
 
         private float _nowAttackTime = 0f;
         protected override void ActionRunProcess(float deltaTime)
         {
-            if(Target != null)
+            base.ActionRunProcess(deltaTime);
+
+            //자신 공격
+            //자신이 공격하면 가능
+            _nowAttackTime += deltaTime;
+            if (_nowAttackTime > 1f)
             {
-                _nowAttackTime += deltaTime;
-                if (_nowAttackTime > 1f)
+                if (IsHasAnimation("Attack"))
                 {
-                    if (IsHasAnimation("Attack"))
-                    {
-                        SetAnimation("Attack");
-                    }
-                    else
-                    {
-                        Target.DecreaseHealth(_unitEntity.AttackData);
-                    }
-                    _nowAttackTime = 0f;
+                    SetAnimation("Attack");
                 }
+                else
+                {
+                    OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.AttackData);
+                }
+                _nowAttackTime = 0f;
             }
         }
 
@@ -232,32 +230,11 @@ namespace SEF.Unit
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            if (Target != null)
-            {
-                //원거리
-                if(_unitEntity.UnitData.AttackBulletData != null)
-                {
-                    var bullet = _unitEntity.UnitData.AttackBulletData;
-                    var scale = _unitEntity.UnitData.BulletScale;
-                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_unitEntity.AttackData); });
-                }
-                else if (!string.IsNullOrEmpty(_unitEntity.UnitData.AttackBulletKey))
-                {
-                    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_unitEntity.UnitData.AttackBulletKey);
-                    var scale = _unitEntity.UnitData.BulletScale;
-                    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_unitEntity.AttackData); });
-                }
-                //근거리
-                else
-                {
-                    Target.DecreaseHealth(_unitEntity.AttackData);
-                }
-            }
+            OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.AttackData);
         }
 
-        private void OnEndEvent(TrackEntry trackEntry)
+        private void OnCompleteEvent(TrackEntry trackEntry)
         {
-//            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }
