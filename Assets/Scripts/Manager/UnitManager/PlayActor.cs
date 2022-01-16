@@ -111,6 +111,7 @@ namespace SEF.Unit
 
         public void CleanUp()
         {
+            CleanUpAttackActor();
             DestroyImmediate(gameObject);
         }
 
@@ -254,6 +255,10 @@ namespace SEF.Unit
         {
             _attackTargetEvent?.Invoke(this, attackPos, bulletDataKey, scale, damageData);
         }
+
+        private System.Func<PlayActor, bool> _hasTargetEvent;
+        public void SetOnHasAttackTargetListener(System.Func<PlayActor, bool> act) => _hasTargetEvent = act;
+        protected bool HasTarget() => _hasTargetEvent(this);
 
         #endregion
 

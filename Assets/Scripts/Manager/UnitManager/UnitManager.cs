@@ -303,6 +303,7 @@ namespace SEF.Unit
             unitActor.AddOnHitListener(OnHitEvent);
             unitActor.AddOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(OnAttackTargetEvent);
+            unitActor.SetOnHasAttackTargetListener(HasAttackTarget);
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
@@ -318,6 +319,7 @@ namespace SEF.Unit
             unitActor.RemoveOnHitListener(OnHitEvent);
             unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(null);
+            unitActor.SetOnHasAttackTargetListener(null);
             unitActor.InActivate();
 
             _unitDic.Remove(unitActor.GetHashCode());
@@ -330,6 +332,7 @@ namespace SEF.Unit
             enemyActor.RemoveOnHitListener(OnHitEvent);
             enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             enemyActor.SetOnAttackTargetListener(null);
+            enemyActor.SetOnHasAttackTargetListener(null);
             enemyActor.InActivate();
             
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
@@ -369,21 +372,32 @@ namespace SEF.Unit
             _enemyQueueData.ChangeEnemyActor(enemyActor);
 
             SetNowEnemyListener();
-
-            //foreach (var value in _unitDic.Values)
-            //{
-            //    value.SetTarget(_enemyQueueData.NowEnemy);
-            //}
         }
 
         private void SetNowEnemyListener()
         {
             _enemyQueueData.NowEnemy.AddOnHitListener(OnHitEvent);
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
-            //_enemyQueueData.NowEnemy.SetOnFindTargetListener(FindUnitActor);
             _enemyQueueData.NowEnemy.SetOnAttackTargetListener(OnAttackTargetEvent);
+            _enemyQueueData.NowEnemy.SetOnHasAttackTargetListener(HasAttackTarget);
         }
 
+        private bool HasAttackTarget(PlayActor playActor)
+        {
+            ITarget target = null;
+            switch (playActor)
+            {
+                case UnitActor unitActor:
+                    target = _enemyQueueData.NowEnemy;
+                    break;
+                case EnemyActor enemyActor:
+                    target = FindUnitActor();
+                    break;
+                default:
+                    break;
+            }
+            return (target != null);
+        }
 
         private void OnAttackTargetEvent(PlayActor playActor, Vector2 attackPos, string bulletDataKey, float scale, DamageData damageData)
         {

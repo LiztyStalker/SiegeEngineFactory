@@ -211,23 +211,26 @@ namespace SEF.Unit {
 
         protected override void ActionRunProcess(float deltaTime)
         {
-            //적 공격자 행동
-            base.ActionRunProcess(deltaTime);
-
-            //자신 공격
-            //자신이 공격 가능하면
-            _nowActionTime += deltaTime;
-            if (_nowActionTime > 1f)
+            if (HasTarget())
             {
-                if (IsHasAnimation("Attack"))
+                //적 공격자 행동
+                base.ActionRunProcess(deltaTime);
+
+                //자신 공격
+                //자신이 공격 가능하면
+                _nowActionTime += deltaTime;
+                if (_nowActionTime > 1f)
                 {
-                    SetAnimation("Attack");
+                    if (IsHasAnimation("Attack"))
+                    {
+                        SetAnimation("Attack");
+                    }
+                    else
+                    {
+                        OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
+                    }
+                    _nowActionTime = 0f;
                 }
-                else
-                {
-                    OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
-                }
-                _nowActionTime = 0f;
             }
         }
 
