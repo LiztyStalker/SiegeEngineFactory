@@ -51,7 +51,7 @@ namespace SEF.Unit {
                         _skeletonAnimationState = SkeletonAnimation.AnimationState;
                         _skeletonAnimationState.Start += delegate { };
                         _skeletonAnimationState.Event += OnSpineEvent;
-                        _skeletonAnimationState.Complete += OnEndEvent;
+                        _skeletonAnimationState.Complete += OnCompleteEvent;
                         _skeletonAnimationState.Dispose += delegate { };
                         //_skeletonAnimationState.End += OnEndEvent;
                     }
@@ -65,7 +65,6 @@ namespace SEF.Unit {
         public bool IsArriveReady() => (Vector2.Distance(transform.position, ENEMY_READY_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public bool IsArriveAction() => (Vector2.Distance(transform.position, ENEMY_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
         public LevelWaveData GetLevelWaveData() => _enemyEntity.GetLevelWaveData();
-        //public AssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
         public IAssetData GetRewardAssetData() => _enemyEntity.GetRewardAssetData();
         public static EnemyActor Create()
         {
@@ -182,10 +181,6 @@ namespace SEF.Unit {
                 else
                     SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
             }
-
-
-            //transform.localScale = Vector3.one * enemyEntity.EnemyData.Scale;
-
         }
 
         private void ReadyRunProcess(float deltaTime)
@@ -195,10 +190,6 @@ namespace SEF.Unit {
                 //목표까지 이동
                 SetPosition(Vector2.MoveTowards(transform.position, ENEMY_READY_POSITION, deltaTime));
             }
-            //else
-            //{
-            //    Debug.Log("Ready에 도달함");
-            //}
         }
 
         protected override void AppearRunProcess(float deltaTime)
@@ -211,9 +202,7 @@ namespace SEF.Unit {
             else
             {
                 //목표에 도달했으면 Action으로 변환
-                //Debug.Log("Action에 도달함");
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
-                //PlayAnimation("Attack");
             }
         }
 
@@ -223,12 +212,10 @@ namespace SEF.Unit {
         protected override void ActionRunProcess(float deltaTime)
         {
             //적 공격자 행동
-
-            //Debug.Log(Target);
-            //TestCode
             base.ActionRunProcess(deltaTime);
 
-
+            //자신 공격
+            //자신이 공격 가능하면
             _nowActionTime += deltaTime;
             if (_nowActionTime > 1f)
             {
@@ -239,36 +226,9 @@ namespace SEF.Unit {
                 else
                 {
                     OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
-                    //Target.DecreaseHealth(_enemyEntity.AttackData);
                 }
                 _nowActionTime = 0f;
             }
-
-
-
-            //if (Target == null)
-            //{
-            //    //Debug.Log("find");
-            //    //Debug.Assert(_findTargetEvent != null, "FindTargetEvent가 비어있습니다");
-            //    SetTarget(_findTargetEvent());
-            //}
-            //else
-            //{
-            //    _nowActionTime += deltaTime;
-            //    if (_nowActionTime > 1f)
-            //    {
-            //        if (IsHasAnimation("Attack"))
-            //        {
-            //            SetAnimation("Attack");
-            //        }
-            //        else
-            //        {
-            //            Target.DecreaseHealth(_enemyEntity.AttackData);
-            //        }
-            //        _nowActionTime = 0f;
-            //    }
-
-            //}
         }
 
 
@@ -297,32 +257,11 @@ namespace SEF.Unit {
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-
             OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
-
-            ////원거리
-            //if (_enemyEntity.EnemyData.AttackBulletData != null)
-            //{
-            //    var bullet = _enemyEntity.EnemyData.AttackBulletData;
-            //    var scale = _enemyEntity.EnemyData.BulletScale;
-            //    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
-            //}
-            //else if (!string.IsNullOrEmpty(_enemyEntity.EnemyData.AttackBulletKey))
-            //{
-            //    var bullet = DataStorage.Instance.GetDataOrNull<BulletData>(_enemyEntity.EnemyData.AttackBulletKey);
-            //    var scale = _enemyEntity.EnemyData.BulletScale;
-            //    BulletManager.Current.Activate(bullet, scale, transform.position, Target.NowPosition, delegate { Target.DecreaseHealth(_enemyEntity.AttackData); });
-            //}
-            ////근거리
-            //else
-            //{
-            //    Target.DecreaseHealth(_enemyEntity.AttackData);
-            //}
         }
 
-        private void OnEndEvent(TrackEntry trackEntry)
+        private void OnCompleteEvent(TrackEntry trackEntry)
         {
-//            Debug.Log(trackEntry.Animation.Name);
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }
