@@ -7,28 +7,28 @@ namespace SEF.Data
     public class AttackData
     {
         [SerializeField]
-        private DamageData _attackValue;
-        public DamageData AttackValue => _attackValue;
+        private DamageData _damageValue;
+        public DamageData DamageValue { get => _damageValue; set => _damageValue = value; }
 
 
         [SerializeField]
-        private int _increaseAttackValue;
-        public int IncreaseAttackValue => _increaseAttackValue;
+        private int _increaseDamageValue;
+        public int IncreaseDamageValue { get => _increaseDamageValue; set => _increaseDamageValue = value; }
 
 
         [SerializeField]
-        private float _increaseAttackRate;
-        public float IncreaseAttackRate => _increaseAttackRate;
+        private float _increaseDamageRate;
+        public float IncreaseDamageRate { get => _increaseDamageRate; set => _increaseDamageRate = value; }
 
 
         [SerializeField]
         private int _attackCount;
-        public int AttackCount => _attackCount;
+        public int AttackCount { get => _attackCount; set => _attackCount = value; }
 
 
         [SerializeField]
         private float _attackDelay;
-        public float AttackDelay => _attackDelay;
+        public float AttackDelay { get => _attackDelay; set => _attackDelay = value; }
 
 
 
@@ -37,17 +37,17 @@ namespace SEF.Data
 
         [SerializeField]
         private BulletData _bulletData;
-        public BulletData BulletData => _bulletData;
+        public BulletData BulletData { get => _bulletData; set => _bulletData = value; }
 
 
         [SerializeField]
         private string _bulletDataKey;
-        public string BulletDataKey => _bulletDataKey;
+        public string BulletDataKey { get => _bulletDataKey; set => _bulletDataKey = value; }
 
 
         [SerializeField]
         private float _bulletScale;
-        public float BulletScale => _bulletScale;
+        public float BulletScale { get => _bulletScale; set => _bulletScale = value; }
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -58,9 +58,9 @@ namespace SEF.Data
 
         private AttackData()
         {
-            _attackValue = DamageData.Create_Test();
-            _increaseAttackValue = 1;
-            _increaseAttackRate = 0.125f;
+            _damageValue = DamageData.Create_Test();
+            _increaseDamageValue = 1;
+            _increaseDamageRate = 0.125f;
 
             _attackCount = 1;
             _attackDelay = 1f;
