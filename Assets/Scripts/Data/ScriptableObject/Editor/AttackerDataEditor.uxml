@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="AttackerDataEditor.uss" />
+    <uie:ObjectField label="Object Field" name="model-field" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="model-key-field" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="model-skin-field" />
+    <ui:VisualElement name="attack-data-layout" />
+    <uie:Vector2Field label="Vec2 Field" name="position-field" />
+    <uie:FloatField label="Float Field" value="42.2" name="scale-field" />
+    <ui:Button text="Remove" display-tooltip-when-elided="true" name="remove-button" />
+</ui:UXML>

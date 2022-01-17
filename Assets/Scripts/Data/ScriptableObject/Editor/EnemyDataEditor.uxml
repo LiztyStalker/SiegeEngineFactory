@@ -12,7 +12,7 @@
             <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="dps_textfield" />
             <uie:FloatField label="Float Field" value="42.2" name="scale-floatfield" />
         </ui:VisualElement>
-        <ui:VisualElement name="advanced_panel">
+        <ui:VisualElement name="advanced-panel">
             <ui:VisualElement name="health_panel" class="advanced_element">
                 <ui:Label text="체력" display-tooltip-when-elided="true" name="Label" class="title_label" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_healthvalue_textfield" />
@@ -33,6 +33,14 @@
                 <uie:ObjectField label="Object Field" name="bullet-objectfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="bullet-scale-floatfield" />
                 <ui:VisualElement />
+            </ui:VisualElement>
+            <ui:VisualElement name="attaker-panel" class="advanced_element">
+                <ui:Label text="공격자" display-tooltip-when-elided="true" class="title_label" />
+                <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+                    <ui:Button text="Add" display-tooltip-when-elided="true" name="attacker-add-button" />
+                    <ui:Button text="Remove" display-tooltip-when-elided="true" name="attacker-remove-button" />
+                </ui:VisualElement>
+                <ui:VisualElement name="attacker-layout" />
             </ui:VisualElement>
             <ui:VisualElement name="asset_panel" class="advanced_element">
                 <ui:Label text="획득재화" display-tooltip-when-elided="true" name="Label" class="title_label" />

@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="AttackDataEditor.uss" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="damage-value-field" />
+    <uie:IntegerField label="Int Field" value="42" name="increase-damage-value-field" />
+    <uie:FloatField label="Float Field" value="42.2" name="increase-damage-rate-field" />
+    <uie:IntegerField label="Int Field" value="42" name="attack-count-field" />
+    <uie:FloatField label="Float Field" value="42.2" name="attack-delay-field" />
+</ui:UXML>

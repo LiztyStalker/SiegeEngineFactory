@@ -11,15 +11,6 @@ namespace SEF.Data.Editor
     public class EnemyDataEditor : Editor
     {
 
-        //public override void OnInspectorGUI()
-        //{
-        //    base.OnInspectorGUI();
-
-        //    //var property = serializedObject.FindProperty("_healthValue");
-        //    //EditorGUILayout.PropertyField(property, true);
-        //}
-
-
         private EnemyData _enemyData;
         private VisualElement _root;
 
@@ -34,14 +25,13 @@ namespace SEF.Data.Editor
         private EnumField _themeField;
         private FloatField _scaleField;
 
-
-
         private TextField _startHealthValueField;
         private IntegerField _increaseLevelHealthValueField;
         private FloatField _increaseLevelHealthRateField;
         private IntegerField _increaseWaveHealthValueField;
         private FloatField _increaseWaveHealthRateField;
 
+        private VisualElement _attackPanel;
         private TextField _startAttackValueField;
         private IntegerField _increaseAttackValueField;
         private FloatField _increaseAttackRateField;
@@ -49,6 +39,8 @@ namespace SEF.Data.Editor
         private FloatField _attackDelayField;
         private ObjectField _bulletField;
         private FloatField _bulletScaleField;
+
+        private VisualElement _attackerLayout;
 
         private TextField _startRewardAssetValueField;
         private IntegerField _increaseLevelRewardAssetValueField;
@@ -364,6 +356,17 @@ namespace SEF.Data.Editor
 
 
 
+            Button attackerAddButton = _root.Query<Button>("attacker-add-button").First();
+            attackerAddButton.clicked += AddAttackerData;
+            //Button attackerRemoveButton = _root.Query<Button>("attacker-add-button").First();
+            //attackerRemoveButton.clicked += RemoveAttackerData;
+
+            _attackerLayout = _root.Query<VisualElement>("attacker-layout").First();
+            UpdateAttakerData(_attackerLayout, _enemyData.AttackerDataArray);
+
+
+
+
 
 
 
@@ -448,18 +451,9 @@ namespace SEF.Data.Editor
                 {
                     _enemyData.SkeletonDataAsset = (Spine.Unity.SkeletonDataAsset)e.newValue;
                     _spineModelKeyField.value = _enemyData.SpineModelKey;
-                    // Set StarSystem as being dirty. This tells the editor that there have been changes made to the asset and that it requires a save. 
                     EditorUtility.SetDirty(_enemyData);
                 }
             );
-
-            //_spineModelKeyField.RegisterCallback<ChangeEvent<string>>(
-            //    e =>
-            //    {
-            //        _enemyData.SpineModelKey = e.newValue;
-            //        EditorUtility.SetDirty(_enemyData);
-            //    }
-            //);
 
             _spineSkinKeyField = _root.Query<TextField>("spineskinkey_textfield").First();
             _spineSkinKeyField.label = "½ºÅ²";
@@ -475,6 +469,27 @@ namespace SEF.Data.Editor
             UpdateFields();
 
             return _root;
+        }
+
+        private void UpdateAttakerData(VisualElement layout, AttackerData[] datas)
+        {
+            layout.Clear();
+            for(int i = 0; i < datas.Length; i++)
+            {
+                var attackerDataEditor = new AttackerDataEditor(datas[i]);
+                attackerDataEditor.SetOnRemoveListener(RemoveAttackerData);
+                layout.Add(attackerDataEditor);
+            }
+        }
+
+        private void AddAttackerData() {
+            var attackerData = AttackerData.Create_Test();
+            _enemyData.AddAttackerData(attackerData);
+            UpdateAttakerData(_attackerLayout, _enemyData.AttackerDataArray);
+        }
+        private void RemoveAttackerData(AttackerData attackerData) {
+            _enemyData.RemoveAttackerData(attackerData);
+            UpdateAttakerData(_attackerLayout, _enemyData.AttackerDataArray);
         }
     }
 }

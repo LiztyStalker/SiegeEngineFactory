@@ -34,6 +34,7 @@ MonoBehaviour:
   _attackBulletKey: BulletData_Arrow
   _attackBulletData: {fileID: 11400000, guid: f095821eb4d298643beef0d9261160b0, type: 2}
   _bulletScale: 0.3
+  _attackerDataList: []
   _startRewardAssetValue:
     _valueText: 10
   _increaseLevelRewardAssetValue: 2
