@@ -16,11 +16,6 @@ namespace SEF.Unit
         protected readonly static float ACTOR_ARRIVE_DISTANCE = 0.1f;
 
         
-        //private ITarget _target;
-        //[System.Obsolete("사용하지 않음")]
-        //protected ITarget Target => _target;
-
-
         private List<AttackerActor> _attackActorList = new List<AttackerActor>();
         public AttackerActor[] AttackActorArray => _attackActorList.ToArray();
 
@@ -39,12 +34,6 @@ namespace SEF.Unit
         {
             _nowHealthData = healthData.Clone() as HealthData;
         }
-
-        //[System.Obsolete("사용하지 않음")]
-        //public void SetTarget(ITarget target)
-        //{
-        //    _target = target;
-        //}
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
@@ -129,15 +118,24 @@ namespace SEF.Unit
 
         //}
 
+        private AttackerActor CreateAttackerActor()
+        {
+            var attackActor = AttackerActor.Create(transform);
+            attackActor.name = "AttackerActor";
+            return attackActor;
+        }
+
         protected void SetAttackerData(AttackerData[] attackerDataArray, NumberData numberData)
         {
-            if(attackerDataArray.Length > 0)
+            _attackActorList.Clear();
+            if (attackerDataArray.Length > 0)
             {
                 for(int i = 0; i < attackerDataArray.Length; i++)
                 {
                     var attackerData = attackerDataArray[i];
-                    var attackActor = AttackerActor.Create(transform);
+                    var attackActor = AttackerActor.GetAttackerActor(CreateAttackerActor);// AttackerActor.Create(transform);
                     var skeletonDataAsset = FindSkeletonDataAsset(attackerData.SkeletonDataAssetKey);
+                    attackActor.SetParent(transform);
                     attackActor.SetData(skeletonDataAsset, attackerData, numberData);
                     attackActor.SetOnAttackTargetListener(OnAttackTargetEvent);
                     attackActor.Initialize();
@@ -222,6 +220,12 @@ namespace SEF.Unit
 
         protected void OnDestroyedEvent()
         {
+            for (int i = 0; i < _attackActorList.Count; i++)
+            {
+                _attackActorList[i].Inactivate();
+                AttackerActor.RetrieveActor(_attackActorList[i]);
+            }
+            _attackActorList.Clear();
             _destoryedEvent?.Invoke(this);
         }
 

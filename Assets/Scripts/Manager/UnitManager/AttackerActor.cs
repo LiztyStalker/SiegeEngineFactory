@@ -5,10 +5,39 @@ namespace SEF.Unit
     using Data;
     using Spine;
     using UtilityManager;
+    using PoolSystem;
 
     [RequireComponent(typeof(SkeletonAnimation))]
-    public class AttackerActor : MonoBehaviour
+    public class AttackerActor : MonoBehaviour, IPoolElement
     {
+
+        #region ##### PoolSystem #####
+
+        private static GameObject _gameObject;
+
+        private static PoolSystem<AttackerActor> _pool;
+        private static void Initialize(System.Func<AttackerActor> createCallback)
+        {
+            _pool = new PoolSystem<AttackerActor>();
+            _pool.Initialize(createCallback);
+
+            _gameObject = new GameObject();
+            _gameObject.name = "Storage@AttackerActor";
+        }
+        public static AttackerActor GetAttackerActor(System.Func<AttackerActor> createCallback)
+        {
+            if (_pool == null) Initialize(createCallback);
+            return _pool.GiveElement();
+        }
+        public static void RetrieveActor(AttackerActor attackerActor)
+        {
+            Debug.Assert(_pool != null, "AttackerActor PoolSystem이 초기화 되지 않았습니다");
+            attackerActor.SetParent(_gameObject.transform);
+            _pool.RetrieveElement(attackerActor);
+        }
+
+        #endregion
+
         #region ##### AttackerCase #####
         private struct AttackerCase
         {
@@ -114,8 +143,11 @@ namespace SEF.Unit
 
             transform.localPosition = attackerData.Position;
             transform.localScale = Vector3.one * attackerData.Scale;
+        }
 
-
+        public void SetParent(Transform parent)
+        {
+            transform.SetParent(parent);
         }
 
         private void SetSkeletonAnimationState(Spine.AnimationState animationState)
