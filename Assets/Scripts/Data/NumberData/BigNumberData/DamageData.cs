@@ -51,6 +51,15 @@ namespace SEF.Data
 
         }
 
+        public void SetAssetData(AttackData attackData, NumberData numberData)
+        {
+            var level = numberData.Value;
+            var levelValue = NumberDataUtility.GetCompoundInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
+            var value = levelValue;
+            Value = value;
+
+        }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static DamageData Create_Test()

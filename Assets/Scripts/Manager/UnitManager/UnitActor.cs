@@ -114,7 +114,14 @@ namespace SEF.Unit
             PlayAnimation("Idle", true);
         }
 
-       
+        public override void InActivate()
+        {
+            base.InActivate();
+            SetPosition(UNIT_APPEAR_POSITION);
+            SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+        }
+
+
         public void SetData(UnitEntity unitEntity)
         {
             _unitEntity = unitEntity;

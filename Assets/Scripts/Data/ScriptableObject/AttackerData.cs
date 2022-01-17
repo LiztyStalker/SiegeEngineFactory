@@ -3,9 +3,8 @@ namespace SEF.Data
     using UnityEngine;
     using Spine.Unity;
 
-    [CreateAssetMenu(fileName = "AttackerData", menuName = "ScriptableObjects/AttackerData")]
-
-    public class AttackerData : ScriptableObject
+    [System.Serializable]
+    public class AttackerData
     {
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;

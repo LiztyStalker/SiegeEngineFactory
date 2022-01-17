@@ -16,26 +16,39 @@ namespace SEF.Unit
             internal NumberData NumberData;
 
             private DamageData _damageData;
-            internal DamageData DamageData
-            {
-                get
-                {
-                    if(_damageData == null)
-                    {
-                        _damageData = CalculateDamageData();
-                    }
-                    return _damageData;
-                }
-            }
+            internal DamageData DamageData => _damageData;
 
             internal void InitializeDamageData() => _damageData = null;
 
-            private DamageData CalculateDamageData()
+            internal void CalculateDamageData()
             {
                 var assetData = new DamageData();
-                assetData.SetAssetData(AttackData.AttackData, (LevelWaveData)NumberData);
-                return assetData;
+                switch (NumberData)
+                {
+                    case UpgradeData upgradeData:
+                        assetData.SetAssetData(AttackData.AttackData, upgradeData);
+                        break;
+                    case LevelWaveData levelWaveData:
+                        assetData.SetAssetData(AttackData.AttackData, levelWaveData);
+                        break;
+                }
+                _damageData = assetData;
             }
+
+            //private DamageData CalculateDamageData(PlayActor playActor)
+            //{
+            //    var assetData = new DamageData();
+            //    switch (playActor)
+            //    {
+            //        case UnitActor unitActor:
+            //            assetData.SetAssetData(AttackData.AttackData, NumberData);
+            //            break;
+            //        case EnemyActor enemyActor:
+            //            assetData.SetAssetData(AttackData.AttackData, (LevelWaveData)NumberData);
+            //            break;
+            //    }
+            //    return assetData;
+            //}
 
             private float _nowTime;
             internal void RunProcess(float deltaTime)
@@ -94,12 +107,15 @@ namespace SEF.Unit
             _attackCase.AttackData = attackerData;
             _attackCase.NumberData = numberData;
             _attackCase.InitializeDamageData();
+            _attackCase.CalculateDamageData();
 
             SkeletonAnimation.skeletonDataAsset = skeletonDataAsset;
             SetSkeletonAnimationState(SkeletonAnimationState);
 
             transform.localPosition = attackerData.Position;
             transform.localScale = Vector3.one * attackerData.Scale;
+
+
         }
 
         private void SetSkeletonAnimationState(Spine.AnimationState animationState)
