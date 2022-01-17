@@ -21,6 +21,7 @@ namespace SEF.Data.Editor
 
 
             TextField damageValueField = this.Query<TextField>("damage-value-field").First();
+            damageValueField.label = "공격력";
             damageValueField.value = _attackData.DamageValue.GetValue();
             damageValueField.RegisterCallback<ChangeEvent<string>>(
                 e =>
@@ -31,6 +32,7 @@ namespace SEF.Data.Editor
 
 
             IntegerField increaseDamageValueField = this.Query<IntegerField>("increase-damage-value-field").First();
+            increaseDamageValueField.label = "증가량";
             increaseDamageValueField.value = _attackData.IncreaseDamageValue;
             increaseDamageValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
@@ -40,6 +42,7 @@ namespace SEF.Data.Editor
             );
 
             FloatField increaseDamageRateField = this.Query<FloatField>("increase-damage-rate-field").First();
+            increaseDamageRateField.label = "증가율";
             increaseDamageRateField.value = _attackData.IncreaseDamageRate;
             increaseDamageRateField.RegisterCallback<ChangeEvent<float>>(
                 e =>
@@ -50,6 +53,7 @@ namespace SEF.Data.Editor
 
 
             IntegerField attackCountField = this.Query<IntegerField>("attack-count-field").First();
+            attackCountField.label = "공격횟수";
             attackCountField.value = _attackData.AttackCount;
             attackCountField.RegisterCallback<ChangeEvent<int>>(
                 e =>
@@ -59,6 +63,7 @@ namespace SEF.Data.Editor
             );
 
             FloatField attackDelayField = this.Query<FloatField>("attack-delay-field").First();
+            attackDelayField.label = "딜레이";
             attackDelayField.value = _attackData.IncreaseDamageRate;
             attackDelayField.RegisterCallback<ChangeEvent<float>>(
                 e =>

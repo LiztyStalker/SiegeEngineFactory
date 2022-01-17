@@ -22,6 +22,7 @@ namespace SEF.Data.Editor
 
 
             ObjectField modelField = this.Query<ObjectField>("model-field").First();
+            modelField.label = "모델";
             modelField.objectType = typeof(Spine.Unity.SkeletonDataAsset);
             modelField.value = _attackerData.SkeletonDataAsset;
             modelField.RegisterCallback<ChangeEvent<Object>>(
@@ -32,15 +33,12 @@ namespace SEF.Data.Editor
             );
 
             TextField modelKeyField = this.Query<TextField>("model-key-field").First();
+            modelKeyField.label = "모델키";
             modelKeyField.value = _attackerData.SkeletonDataAssetKey;
-            modelKeyField.RegisterCallback<ChangeEvent<string>>(
-                e =>
-                {
-                    _attackerData.SkeletonDataAssetKey = e.newValue;
-                }
-            );
+            modelKeyField.SetEnabled(false);
 
             TextField modelSkinKeyField = this.Query<TextField>("model-skin-field").First();
+            modelSkinKeyField.label = "스킨키";
             modelKeyField.value = _attackerData.SkeletonDataAssetSkinKey;
             modelKeyField.RegisterCallback<ChangeEvent<string>>(
                 e =>
@@ -54,6 +52,7 @@ namespace SEF.Data.Editor
             attackData.Add(new AttackDataEditor(_attackerData.AttackData));
 
             Vector2Field positionField = this.Query<Vector2Field>("position-field").First();
+            positionField.label = "위치";
             positionField.value = _attackerData.Position;
             positionField.RegisterCallback<ChangeEvent<Vector2>>(
                 e =>
@@ -63,6 +62,7 @@ namespace SEF.Data.Editor
             );
 
             FloatField scaleField = this.Query<FloatField>("scale-field").First();
+            scaleField.label = "크기";
             scaleField.value = _attackerData.Scale;
             scaleField.RegisterCallback<ChangeEvent<float>>(
                 e =>
