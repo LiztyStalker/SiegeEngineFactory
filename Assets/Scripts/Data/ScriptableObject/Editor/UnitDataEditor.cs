@@ -41,6 +41,8 @@ namespace SEF.Data.Editor
         private ObjectField _bulletField;
         private FloatField _bulletScaleField;
 
+        private VisualElement _attackerLayout;
+
         private TextField _startUpgradeValueField;
         private TextField _increaseUpgradeValueField;
         private FloatField _increaseUpgradeRateField;
@@ -367,6 +369,14 @@ namespace SEF.Data.Editor
             );
 
 
+            Button attackerAddButton = _root.Query<Button>("attacker-add-button").First();
+            attackerAddButton.clicked += AddAttackerData;
+            //Button attackerRemoveButton = _root.Query<Button>("attacker-add-button").First();
+            //attackerRemoveButton.clicked += RemoveAttackerData;
+
+            _attackerLayout = _root.Query<VisualElement>("attacker-layout").First();
+            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
+
 
 
             TextField summaryUpgradeValueField = _root.Query<TextField>("summary_upgradevalue_textfield").First();
@@ -462,6 +472,30 @@ namespace SEF.Data.Editor
             UpdateFields();
 
             return _root;
+        }
+
+
+        private void UpdateAttakerData(VisualElement layout, AttackerData[] datas)
+        {
+            layout.Clear();
+            for (int i = 0; i < datas.Length; i++)
+            {
+                var attackerDataEditor = new AttackerDataEditor(datas[i]);
+                attackerDataEditor.SetOnRemoveListener(RemoveAttackerData);
+                layout.Add(attackerDataEditor);
+            }
+        }
+
+        private void AddAttackerData()
+        {
+            var attackerData = AttackerData.Create_Test();
+            _unitData.AddAttackerData(attackerData);
+            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
+        }
+        private void RemoveAttackerData(AttackerData attackerData)
+        {
+            _unitData.RemoveAttackerData(attackerData);
+            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
         }
     }
 }

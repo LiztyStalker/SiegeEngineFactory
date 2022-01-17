@@ -7,7 +7,7 @@ namespace SEF.Data
     public class AttackData
     {
         [SerializeField]
-        private DamageData _damageValue;
+        private DamageData _damageValue = NumberDataUtility.Create<DamageData>();
         public DamageData DamageValue { get => _damageValue; set => _damageValue = value; }
 
 

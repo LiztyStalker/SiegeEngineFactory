@@ -10,7 +10,7 @@ namespace SEF.Entity
         private DamageData _attackData;
 
         public UnitData UnitData => _unitData;
-
+        public UpgradeData UpgradeData => _upgradeData;
         public int UpgradeValue => _upgradeData.Value;
         public int Population => 1; //_unitData.Population;
 

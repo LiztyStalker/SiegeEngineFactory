@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    using System.Collections.Generic;
     using UnityEngine;
     using Spine.Unity;
 
@@ -68,6 +69,11 @@ namespace SEF.Data
         public float ProductTime { get => _productTime; set => _productTime = value; }
 
         [SerializeField]
+        private bool _isAttack = true;
+
+        public bool IsAttack { get => _isAttack; set => _isAttack = value; }
+
+        [SerializeField]
         private DamageData _attackValue = NumberDataUtility.Create<DamageData>();
         public DamageData StartAttackValue => _attackValue;
 
@@ -98,6 +104,12 @@ namespace SEF.Data
         [SerializeField]
         private string _attackBulletKey;
         public string AttackBulletKey { get => _attackBulletKey; set => _attackBulletKey = value; }
+
+        [SerializeField]
+        private List<AttackerData> _attackerDataList = new List<AttackerData>();
+        public AttackerData[] AttackerDataArray => _attackerDataList.ToArray();
+        public void AddAttackerData(AttackerData attackerData) => _attackerDataList.Add(attackerData);
+        public void RemoveAttackerData(AttackerData attackerData) => _attackerDataList.Remove(attackerData);
 
         [SerializeField]
         private UtilityManager.BulletData _attackBulletData;

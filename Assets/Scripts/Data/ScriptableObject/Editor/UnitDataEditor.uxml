@@ -42,6 +42,14 @@
                 <uie:ObjectField label="Object Field" name="bullet-objectfield" />
                 <uie:FloatField label="Float Field" value="42.2" name="bullet-scale-floatfield" />
             </ui:VisualElement>
+            <ui:VisualElement name="attacker_panel" class="advanced_element">
+                <ui:Label text="공격자" display-tooltip-when-elided="true" name="Label" class="title_label" />
+                <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+                    <ui:Button text="Add" display-tooltip-when-elided="true" name="attacker-add-button" />
+                    <ui:Button text="Remove" display-tooltip-when-elided="true" name="attacker-remove-button" />
+                </ui:VisualElement>
+                <ui:VisualElement name="attacker-layout" />
+            </ui:VisualElement>
             <ui:VisualElement name="upgrade_panel" class="advanced_element">
                 <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="Label" class="title_label" />
                 <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="summary_upgradevalue_textfield" />

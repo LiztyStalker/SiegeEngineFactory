@@ -121,6 +121,8 @@ namespace SEF.Unit
 
             SetHealthData(_unitEntity.HealthData);
 
+            SetAttackerData(unitEntity.UnitData.AttackerDataArray, unitEntity.UpgradeData);
+
             if (SkeletonAnimation != null)
             {
                 //À¯´Ö »ý¼º
