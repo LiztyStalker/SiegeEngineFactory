@@ -42,6 +42,7 @@ namespace SEF.Data.Editor
         private FloatField _bulletScaleField;
 
         private VisualElement _attackerLayout;
+        private Button _attackerAddButton;
 
         private TextField _startUpgradeValueField;
         private TextField _increaseUpgradeValueField;
@@ -369,13 +370,13 @@ namespace SEF.Data.Editor
             );
 
 
-            Button attackerAddButton = _root.Query<Button>("attacker-add-button").First();
-            attackerAddButton.clicked += AddAttackerData;
+            _attackerAddButton = _root.Query<Button>("attacker-add-button").First();
+            _attackerAddButton.clicked += AddAttackerData;
             //Button attackerRemoveButton = _root.Query<Button>("attacker-add-button").First();
             //attackerRemoveButton.clicked += RemoveAttackerData;
 
             _attackerLayout = _root.Query<VisualElement>("attacker-layout").First();
-            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
+            UpdateAttackerData(_attackerLayout, _unitData.AttackerDataArray);
 
 
 
@@ -475,7 +476,13 @@ namespace SEF.Data.Editor
         }
 
 
-        private void UpdateAttakerData(VisualElement layout, AttackerData[] datas)
+        private void OnDisable()
+        {
+            _attackerAddButton.clicked -= AddAttackerData;
+        }
+
+
+        private void UpdateAttackerData(VisualElement layout, AttackerData[] datas)
         {
             layout.Clear();
             for (int i = 0; i < datas.Length; i++)
@@ -490,12 +497,12 @@ namespace SEF.Data.Editor
         {
             var attackerData = AttackerData.Create_Test();
             _unitData.AddAttackerData(attackerData);
-            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
+            UpdateAttackerData(_attackerLayout, _unitData.AttackerDataArray);
         }
         private void RemoveAttackerData(AttackerData attackerData)
         {
             _unitData.RemoveAttackerData(attackerData);
-            UpdateAttakerData(_attackerLayout, _unitData.AttackerDataArray);
+            UpdateAttackerData(_attackerLayout, _unitData.AttackerDataArray);
         }
     }
 }
