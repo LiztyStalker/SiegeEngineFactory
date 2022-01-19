@@ -17,6 +17,9 @@ namespace UtilityManager.Test {
             camera.orthographic = true;
             camera.orthographicSize = 5f;
             camera.tag = "MainCamera";
+
+            obj.AddComponent<AudioListener>();
+
             return camera;
         }
 
