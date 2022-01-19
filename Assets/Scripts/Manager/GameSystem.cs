@@ -14,6 +14,8 @@ namespace SEF.Manager
 
         private Account _account;
 
+        private StatusPackage _statusPackage;
+
         private WorkshopManager _workshopManager;
         //BlackSmithManager
         //VillageManager
@@ -35,10 +37,17 @@ namespace SEF.Manager
             //BlackSmithManager
             //VillageManager
             //ResearchManager
+
+            _statusPackage = StatusPackage.Create();
+            _statusPackage.Initialize();
+            _statusPackage.AddOnProductListener(OnStatusProductEvent);
         }
 
         public void CleanUp()
         {
+            _statusPackage.RemoveOnProductListener(OnStatusProductEvent);
+            _statusPackage.CleanUp();
+
             _workshopManager.CleanUp();
             //BlackSmithManager
             //VillageManager
@@ -49,12 +58,10 @@ namespace SEF.Manager
         {
             _workshopManager.RunProcess(deltaTime);
             //VillageManager
+
+            _statusPackage.RunProcess(deltaTime);
         }
 
-
-        public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
-        public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
-        public void SetAsset(IAssetData assetData) => _account.SetAsset(assetData);
         public void Refresh()
         {
             _workshopManager.Refresh();
@@ -63,11 +70,41 @@ namespace SEF.Manager
             _account.RefreshAssetEntity();
         }
 
+        #region ##### StatusEntity #####
+
+        //        public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData => _statusEntity.GetStatusDataToBigNumberData<T, U>(data);
+
+        public StatusPackage GetStatusPackage() => _statusPackage;
+
+        private void OnStatusProductEvent(IAssetData[] assetDataArr)
+        {
+            for(int i = 0; i < assetDataArr.Length; i++)
+            {
+                AddAsset(assetDataArr[i]);
+            }
+        }
+
+        #endregion
+
+
+        #region ##### AssetEntity #####
+
+        public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
+        public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
+        public void SetAsset(IAssetData assetData) => _account.SetAsset(assetData);
+
+        #endregion
+
+              
+
         public IAssetData GetAssetData()
         {
             return null;
         }
 
+
+        //DestroyedActor가 여기 있을 필요가 있는지 의문
+        [System.Obsolete("StatusPackage 적용 보상")]
         public void DestroyedActor(PlayActor playActor)
         {
             switch (playActor)
@@ -75,6 +112,7 @@ namespace SEF.Manager
                 case UnitActor unitActor:
                     break;
                 case EnemyActor enemyActor:
+                    //[System.Obsolete("StatusPackage 적용 보상")]
                     _account.AddAsset(enemyActor.GetRewardAssetData());
                     break;
             }
