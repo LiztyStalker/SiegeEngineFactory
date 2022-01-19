@@ -82,23 +82,23 @@ namespace SEF.Test
         [Test]
         public void AssetDataTest_Upgrade_UnitAttackAssetData()
         {
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 15);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 15);
             _unitEntity_Dummy.Upgrade();
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 16);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 16);
             _unitEntity_Dummy.Upgrade();
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 18);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 18);
             _unitEntity_Dummy.Upgrade();
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 20);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 20);
             _unitEntity_Dummy.Upgrade();
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 22);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 22);
             _unitEntity_Dummy.Upgrade();
-            Debug.Log(_unitEntity_Dummy.AttackData.Value);
-            Assert.IsTrue(_unitEntity_Dummy.AttackData.Value == 24);
+            Debug.Log(_unitEntity_Dummy.DamageData.Value);
+            Assert.IsTrue(_unitEntity_Dummy.DamageData.Value == 24);
         }
 
         [Test]

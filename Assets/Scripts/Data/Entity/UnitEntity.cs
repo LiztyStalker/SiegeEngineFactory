@@ -7,7 +7,7 @@ namespace SEF.Entity
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
         private HealthData _healthData;
-        private DamageData _attackData;
+        private DamageData _damageData;
 
         public UnitData UnitData => _unitData;
         public UpgradeData UpgradeData => _upgradeData;
@@ -27,15 +27,15 @@ namespace SEF.Entity
         }
 
 
-        public DamageData AttackData
+        public DamageData DamageData
         {
             get
             {
-                if (_attackData == null)
+                if (_damageData == null)
                 {
-                    _attackData = CalculateAttackData();
+                    _damageData = CalculateAttackData();
                 }
-                return _attackData;
+                return _damageData;
             }
         }
 
@@ -60,7 +60,7 @@ namespace SEF.Entity
         {
             _unitData = null;
             _upgradeData = null;
-            _attackData = null;
+            _damageData = null;
         }
 
         public void UpTech(UnitData unitData)
@@ -74,7 +74,7 @@ namespace SEF.Entity
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
             _healthData = null;
-            _attackData = null;
+            _damageData = null;
         }
 
         private IAssetData CalculateUpgradeData()

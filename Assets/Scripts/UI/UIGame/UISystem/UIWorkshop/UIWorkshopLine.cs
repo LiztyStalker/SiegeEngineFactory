@@ -219,7 +219,7 @@ namespace SEF.UI.Toolkit
             _nameLabel.text = unitData.name;
             _groupLabel.text = unitData.Group.ToString();
             _healthValueLabel.text = _unitEntity.HealthData.GetValue();
-            _attackValueLabel.text = _unitEntity.AttackData.GetValue();
+            _attackValueLabel.text = _unitEntity.DamageData.GetValue();
             _productValueLabel.text = $"{unitData.ProductTime}s";
             _attackDelayValueLabel.text = $"{unitData.AttackDelay}s";
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
