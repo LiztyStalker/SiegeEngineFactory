@@ -123,19 +123,6 @@ namespace SEF.Test
         }
 
         [Test]
-        public void StatusPackageTest_GetStatusData()
-        {
-            var statusProvider = new StatusProvider_Test();
-            var statusData = new StatusData_Test();
-            _statusPackage.SetStatusData(statusProvider, statusData);
-            Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
-
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
-            Debug.Log(value.GetValue());
-            Assert.IsTrue(value.GetValue() == "1.000A");
-        }
-
-        [Test]
         public void StatusPackageTest_GetStatusData_Absolute()
         {
             var statusProvider = new StatusProvider_Test();
@@ -145,7 +132,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider, statusData);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.100A");
         }
@@ -175,7 +162,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.300A");
         }
@@ -190,7 +177,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider, statusData);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.010A");
         }
@@ -221,7 +208,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.030A");
         }
@@ -236,7 +223,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider, statusData);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.100A");
         }
@@ -265,7 +252,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.300A");
         }
@@ -287,7 +274,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider2, statusData2);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider2, statusData2), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.110A");
         }
@@ -338,7 +325,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider23, statusData23);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider23, statusData23), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.330A");
         }
@@ -368,7 +355,7 @@ namespace SEF.Test
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
 
-            var value = _statusPackage.GetStatusDataToAssetData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
+            var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
             Assert.IsTrue(value.GetValue() == "1.100A");
         }

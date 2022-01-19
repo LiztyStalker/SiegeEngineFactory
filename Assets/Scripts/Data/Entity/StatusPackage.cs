@@ -69,12 +69,12 @@ namespace SEF.Entity
             Dictionary[provider].SetStatusData(statusData);
         }
 
-        public U GetStatusDataToAssetData<T, U>(U data) where T : IStatusData where U : IAssetData
+        public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData
         {
             var values = Dictionary.Values.Where(sData => sData.StatusData is T).ToArray();
 
-            U absoluteData = NumberDataUtility.CreateAssetData<U>();
-            U valueData = NumberDataUtility.CreateAssetData<U>();
+            U absoluteData = NumberDataUtility.Create<U>();
+            U valueData = NumberDataUtility.Create<U>();
             int rate = 0;
 
             for (int i = 0; i < values.Length; i++)
@@ -83,13 +83,13 @@ namespace SEF.Entity
                 switch (statusData.TypeStatusData)
                 {
                     case IStatusData.TYPE_STATUS_DATA.Value:
-                        valueData.AssetValue += statusData.GetValue().Value;
+                        valueData.Value += statusData.GetValue().Value;
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Rate:
                         rate += (int)statusData.GetValue().Value;
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Absolute:
-                        absoluteData.AssetValue += statusData.GetValue().Value;
+                        absoluteData.Value += statusData.GetValue().Value;
                         break;
                     default:
                         Debug.Assert(false, $"{statusData.TypeStatusData} TypeStatusData 가 범위에서 벗어났습니다");
@@ -98,27 +98,16 @@ namespace SEF.Entity
             }
 
             //data + absolute
-            if (!absoluteData.AssetValue.IsZero)
+            if (!absoluteData.Value.IsZero)
             {
-                data.AssetValue += absoluteData.AssetValue;
+                data.Value += absoluteData.Value;
             }
-            //data * rate + value
+            //data + data * rate + value
             else
             {
-                data.AssetValue += (data.AssetValue * rate / 100) + valueData.AssetValue;
+                data.Value += (data.Value * rate / 100) + valueData.Value;
             }
             return data;
-        }
-
-        public U GetStatusDataToNumberData<T, U>(U data) where T : IStatusData where U : INumberData
-        {
-            var value = Dictionary.Values.Where(data => data.StatusData is T);
-            return default;
-        }
-
-        public U GetStatusDataToCommonDataType<T, U>(U value) where T : IStatusData
-        {
-            return default;
         }
 
         public void RunProcess(float deltaTime)
