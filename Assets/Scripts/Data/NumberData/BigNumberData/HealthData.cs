@@ -14,11 +14,6 @@ namespace SEF.Data
             return new HealthData(this);
         }
 
-        public bool IsZero()
-        {
-            return Value.IsZero;
-        }
-
         public void Add(BigNumberData addNumberData, BigNumberData maxNumberData)
         {
             if (Value + addNumberData.Value > maxNumberData.Value)
@@ -69,9 +64,7 @@ namespace SEF.Data
             var data = new HealthData();
             data.ValueText = value.ToString();
             return data;
-        }
-
-        
+        }        
 #endif
     }
 }

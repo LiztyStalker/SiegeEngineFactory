@@ -35,6 +35,10 @@ namespace SEF.Data
         {
             _value = data.Value;
         }
+        public bool IsZero()
+        {
+            return Value.IsZero;
+        }
 
         public void SetValue()
         {
