@@ -7,7 +7,12 @@ namespace SEF.Data
 
     public interface IStatusData
     {
+        public enum TYPE_STATUS_DATA { Value, Rate, Absolute}
+
         public IAssetData[] AssetDataArray { get; }
         public float ProductTime { get; }
+
+        public TYPE_STATUS_DATA TypeStatusData { get; }
+        public BigNumberData GetValue();
     }
 }

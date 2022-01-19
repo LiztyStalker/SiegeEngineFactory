@@ -19,7 +19,6 @@ namespace SEF.Entity
 
             internal void SetStatusData(IStatusData statusData)
             {
-                Debug.Log(statusData);
                 _statusData = statusData;
             }
 
@@ -72,8 +71,42 @@ namespace SEF.Entity
 
         public U GetStatusDataToAssetData<T, U>(U data) where T : IStatusData where U : IAssetData
         {
-            var value = Dictionary.Values.Where(data => data.StatusData is T);
-            //value rate absolute
+            var values = Dictionary.Values.Where(sData => sData.StatusData is T).ToArray();
+
+            U absoluteData = NumberDataUtility.CreateAssetData<U>();
+            U valueData = NumberDataUtility.CreateAssetData<U>();
+            int rate = 0;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                var statusData = values[i].StatusData;
+                switch (statusData.TypeStatusData)
+                {
+                    case IStatusData.TYPE_STATUS_DATA.Value:
+                        valueData.AssetValue += statusData.GetValue().Value;
+                        break;
+                    case IStatusData.TYPE_STATUS_DATA.Rate:
+                        rate += (int)statusData.GetValue().Value;
+                        break;
+                    case IStatusData.TYPE_STATUS_DATA.Absolute:
+                        absoluteData.AssetValue += statusData.GetValue().Value;
+                        break;
+                    default:
+                        Debug.Assert(false, $"{statusData.TypeStatusData} TypeStatusData 가 범위에서 벗어났습니다");
+                        break;
+                }
+            }
+
+            //data + absolute
+            if (!absoluteData.AssetValue.IsZero)
+            {
+                data.AssetValue += absoluteData.AssetValue;
+            }
+            //data * rate + value
+            else
+            {
+                data.AssetValue += (data.AssetValue * rate / 100) + valueData.AssetValue;
+            }
             return data;
         }
 
@@ -111,7 +144,6 @@ namespace SEF.Entity
         {
             if (HasStatusProvider(provider))
             {
-                Debug.Log(Dictionary[provider].StatusData.GetHashCode() + " " + statusData.GetHashCode());
                 return Dictionary[provider].StatusData == statusData;
             }
             return false;            
