@@ -9,6 +9,8 @@ namespace SEF.Unit
     using Spine;
     using Storage;
     using UtilityManager;
+    using Data;
+
     public class UnitActor : PlayActor, ITarget, IPoolElement
     {
         private readonly static Vector2 UNIT_APPEAR_POSITION = new Vector2(-3.5f, 2f);
@@ -126,7 +128,7 @@ namespace SEF.Unit
         {
             _unitEntity = unitEntity;
 
-            SetHealthData(_unitEntity.HealthData);
+            SetHealthData(unitEntity.HealthData);
 
             SetAttackerData(unitEntity.UnitData.AttackerDataArray, unitEntity.UpgradeData);
 
@@ -218,7 +220,7 @@ namespace SEF.Unit
                 //자신 공격
                 //자신이 공격하면 가능
                 _nowAttackTime += deltaTime;
-                if (_nowAttackTime > 1f)
+                if (_nowAttackTime > _unitEntity.AttackDelay)
                 {
                     if (IsHasAnimation("Attack"))
                     {
@@ -226,7 +228,7 @@ namespace SEF.Unit
                     }
                     else
                     {
-                        OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.AttackData);
+                        OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.DamageData);
                     }
                     _nowAttackTime = 0f;
                 }
@@ -242,7 +244,7 @@ namespace SEF.Unit
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.AttackData);
+            OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.DamageData);
         }
 
         private void OnCompleteEvent(TrackEntry trackEntry)
@@ -253,5 +255,6 @@ namespace SEF.Unit
         #endregion
 
 
+        
     }
 }

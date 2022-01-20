@@ -6,6 +6,7 @@ namespace SEF.Unit
     using Spine;
     using UtilityManager;
     using PoolSystem;
+    using SEF.Entity;
 
     [RequireComponent(typeof(SkeletonAnimation))]
     public class AttackerActor : MonoBehaviour, IPoolElement
@@ -41,55 +42,77 @@ namespace SEF.Unit
         #region ##### AttackerCase #####
         private struct AttackerCase
         {
-            internal AttackerData AttackData;
+            internal AttackerData AttackerData;
             internal NumberData NumberData;
 
-            private DamageData _damageData;
-            internal DamageData DamageData => _damageData;
+            private StatusPackage _statusPackage;
+            internal void SetStatusPackage(StatusPackage statusPackage) => _statusPackage = statusPackage;
 
-            internal void InitializeDamageData() => _damageData = null;
+            private DamageData _damageData;
+            internal DamageData DamageData
+            {
+                get
+                {
+                    //유닛만 사용
+                    if(NumberData is UpgradeData)
+                        return _statusPackage.GetStatusDataToBigNumberData<AttackerDamageValueStatusData, DamageData>(_damageData);
+                    //적군은 미사용
+                    return _damageData;
+                }
+            }
+
+            private float AttackDalay
+            {
+                get
+                {
+                    //유닛만 사용
+                    if (NumberData is UpgradeData)
+                    {
+                        var data = _statusPackage.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
+                        return (float)data.GetDecimalValue();
+                    }
+                    //적군은 미사용
+                    return AttackerData.AttackData.AttackDelay;
+                }
+            }
+
+            internal void CleanUp()
+            {
+                AttackerData = null;
+                NumberData = null;
+                _statusPackage = null;
+                _damageData = null;
+
+            }
 
             internal void CalculateDamageData()
             {
-                var assetData = new DamageData();
+                if(_damageData == null)
+                    _damageData = new DamageData();
+
+                _damageData.Clear();
+
                 switch (NumberData)
                 {
                     case UpgradeData upgradeData:
-                        assetData.SetAssetData(AttackData.AttackData, upgradeData);
+                        _damageData.SetAssetData(AttackerData.AttackData, upgradeData);
                         break;
                     case LevelWaveData levelWaveData:
-                        assetData.SetAssetData(AttackData.AttackData, levelWaveData);
+                        _damageData.SetAssetData(AttackerData.AttackData, levelWaveData);
                         break;
                 }
-                _damageData = assetData;
             }
-
-            //private DamageData CalculateDamageData(PlayActor playActor)
-            //{
-            //    var assetData = new DamageData();
-            //    switch (playActor)
-            //    {
-            //        case UnitActor unitActor:
-            //            assetData.SetAssetData(AttackData.AttackData, NumberData);
-            //            break;
-            //        case EnemyActor enemyActor:
-            //            assetData.SetAssetData(AttackData.AttackData, (LevelWaveData)NumberData);
-            //            break;
-            //    }
-            //    return assetData;
-            //}
 
             private float _nowTime;
-            internal void RunProcess(float deltaTime)
+            internal void RunProcess(float deltaTime, System.Action<string, bool> attackCallback)
             {
                 _nowTime += deltaTime;
-                if(_nowTime > AttackData.AttackData.AttackDelay)
+                if (_nowTime > AttackDalay)
                 {
-                    AttackEvent?.Invoke("Attack", false);
-                    _nowTime -= AttackData.AttackData.AttackDelay;
+                    attackCallback?.Invoke("Attack", false);
+                    _nowTime -= AttackerData.AttackData.AttackDelay;
                 }
             }
-            internal event System.Action<string, bool> AttackEvent;
         }
 
         #endregion
@@ -119,23 +142,20 @@ namespace SEF.Unit
         private bool _isDestroy = false;
         public void Initialize()
         {
-            _attackCase.AttackEvent += OnAttackEvent;
             Inactivate();
         }
 
         public void CleanUp()
         {
-            _attackCase.AttackEvent -= OnAttackEvent;
-            _attackCase = default;
+            _attackCase.CleanUp();
         }
 
         public void SetData(SkeletonDataAsset skeletonDataAsset, AttackerData attackerData, NumberData numberData)
         {
             _isDestroy = false;
 
-            _attackCase.AttackData = attackerData;
+            _attackCase.AttackerData = attackerData;
             _attackCase.NumberData = numberData;
-            _attackCase.InitializeDamageData();
             _attackCase.CalculateDamageData();
 
             SkeletonAnimation.skeletonDataAsset = skeletonDataAsset;
@@ -170,13 +190,12 @@ namespace SEF.Unit
 
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            OnAttackTargetEvent(_attackCase.AttackData.AttackData.BulletDataKey, _attackCase.AttackData.AttackData.BulletScale, _attackCase.DamageData);
-//            OnAttackEvent(_attackCase.AttackData.AttackData);
+            OnAttackTargetEvent(_attackCase.AttackerData.AttackData.BulletDataKey, _attackCase.AttackerData.AttackData.BulletScale, _attackCase.DamageData);
             AddAnimation("Idle", true);
         }
 
 
-        private void OnAttackEvent(string name, bool isLoop)
+        internal void OnAttackEvent(string name, bool isLoop)
         {
             if(SkeletonAnimationState != null)
             {
@@ -184,7 +203,7 @@ namespace SEF.Unit
             }
             else
             {
-                OnAttackTargetEvent(_attackCase.AttackData.AttackData.BulletDataKey, _attackCase.AttackData.AttackData.BulletScale, _attackCase.DamageData);
+                OnAttackTargetEvent(_attackCase.AttackerData.AttackData.BulletDataKey, _attackCase.AttackerData.AttackData.BulletScale, _attackCase.DamageData);
             }
         }
 
@@ -236,7 +255,7 @@ namespace SEF.Unit
         {
             if (!_isDestroy)
             {
-                _attackCase.RunProcess(deltaTime);
+                _attackCase.RunProcess(deltaTime, OnAttackEvent);
             }
         }
 
@@ -282,5 +301,7 @@ namespace SEF.Unit
             return obj.AddComponent<AttackerActor>();
         }
 #endif
+
+
     }
 }

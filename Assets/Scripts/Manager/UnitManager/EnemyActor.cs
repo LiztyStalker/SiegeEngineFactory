@@ -167,7 +167,7 @@ namespace SEF.Unit {
 
         public void SetData(EnemyEntity enemyEntity)
         {
-            _enemyEntity = enemyEntity;            
+            _enemyEntity = enemyEntity;
 
             SetHealthData(_enemyEntity.HealthData);
 

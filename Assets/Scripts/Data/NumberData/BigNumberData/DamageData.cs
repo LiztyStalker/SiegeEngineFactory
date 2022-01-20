@@ -60,6 +60,11 @@ namespace SEF.Data
 
         }
 
+        public new void Clear()
+        {
+            Value = 0;
+        }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static DamageData Create_Test()

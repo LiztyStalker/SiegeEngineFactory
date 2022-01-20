@@ -20,7 +20,7 @@ namespace SEF.Test
 
         private Vector2 _position = new Vector2(-2f, 2f);
 
-        private AttackActor _attackActor;
+        private AttackerActor _attackActor;
         private AttackerData _attackerData;
         private LevelWaveData _levelWaveData;
         private UpgradeData _upgradeData;
@@ -30,7 +30,7 @@ namespace SEF.Test
         {
             _camera = PlayTestUtility.CreateCamera();
             _light = PlayTestUtility.CreateLight();
-            _attackActor = AttackActor.Create_Test();
+            _attackActor = AttackerActor.Create_Test();
             _attackActor.Initialize();
             _attackerData = AttackerData.Create_Test();
             _upgradeData = NumberDataUtility.Create<UpgradeData>();
@@ -83,93 +83,93 @@ namespace SEF.Test
         }
 
 
-        [UnityTest]
-        public IEnumerator AttackerTest_Attack_SkeletonData()
-        {
-            yield return AttackerTest_SetData_SkeletonData();
+        //[UnityTest]
+        //public IEnumerator AttackerTest_Attack_SkeletonData()
+        //{
+        //    yield return AttackerTest_SetData_SkeletonData();
 
-            bool isRun = true;
-            _attackActor.SetOnAttackListener(data =>
-            {
-                Debug.Log("Attack");
-                isRun = false;
-            });
+        //    bool isRun = true;
+        //    _attackActor.SetOnAttackListener(data =>
+        //    {
+        //        Debug.Log("Attack");
+        //        isRun = false;
+        //    });
 
-            while (isRun)
-            {
-                _attackActor.RunProcess(Time.deltaTime);
-                yield return null;
-            }
+        //    while (isRun)
+        //    {
+        //        _attackActor.RunProcess(Time.deltaTime);
+        //        yield return null;
+        //    }
 
-            yield return new WaitForSeconds(1f);
-        }
+        //    yield return new WaitForSeconds(1f);
+        //}
 
-        [UnityTest]
-        public IEnumerator AttackerTest_Attack_SkeletonData_10Cycles()
-        {
-            yield return AttackerTest_SetData_SkeletonData();
+        //[UnityTest]
+        //public IEnumerator AttackerTest_Attack_SkeletonData_10Cycles()
+        //{
+        //    yield return AttackerTest_SetData_SkeletonData();
 
-            int count = 0;
-            _attackActor.SetOnAttackListener(data =>
-            {
-                Debug.Log("Attack");
-                count++;
-            });
+        //    int count = 0;
+        //    _attackActor.SetOnAttackListener(data =>
+        //    {
+        //        Debug.Log("Attack");
+        //        count++;
+        //    });
 
-            while (true)
-            {
-                _attackActor.RunProcess(Time.deltaTime);
-                if (count >= 10)
-                    break;
-                yield return null;
-            }
+        //    while (true)
+        //    {
+        //        _attackActor.RunProcess(Time.deltaTime);
+        //        if (count >= 10)
+        //            break;
+        //        yield return null;
+        //    }
 
-            yield return new WaitForSeconds(1f);
-        }
+        //    yield return new WaitForSeconds(1f);
+        //}
 
-        [UnityTest]
-        public IEnumerator AttackerTest_Attack_Empty()
-        {
-            yield return AttackerTest_SetData_Empty();
+        //[UnityTest]
+        //public IEnumerator AttackerTest_Attack_Empty()
+        //{
+        //    yield return AttackerTest_SetData_Empty();
 
-            bool isRun = true;
-            _attackActor.SetOnAttackListener(data =>
-            {
-                Debug.Log("Attack");
-                isRun = false;
-            });
+        //    bool isRun = true;
+        //    _attackActor.SetOnAttackListener(data =>
+        //    {
+        //        Debug.Log("Attack");
+        //        isRun = false;
+        //    });
 
-            while (isRun)
-            {
-                _attackActor.RunProcess(Time.deltaTime);
-                yield return null;
-            }
+        //    while (isRun)
+        //    {
+        //        _attackActor.RunProcess(Time.deltaTime);
+        //        yield return null;
+        //    }
 
-            yield return new WaitForSeconds(1f);
-        }
+        //    yield return new WaitForSeconds(1f);
+        //}
 
-        [UnityTest]
-        public IEnumerator AttackerTest_Attack_Empty_10Cycles()
-        {
-            yield return AttackerTest_SetData_Empty();
+        //[UnityTest]
+        //public IEnumerator AttackerTest_Attack_Empty_10Cycles()
+        //{
+        //    yield return AttackerTest_SetData_Empty();
 
-            int count = 0;
-            _attackActor.SetOnAttackListener(data =>
-            {
-                Debug.Log("Attack");
-                count++;
-            });
+        //    int count = 0;
+        //    _attackActor.SetOnAttackListener(data =>
+        //    {
+        //        Debug.Log("Attack");
+        //        count++;
+        //    });
 
-            while (true)
-            {
-                _attackActor.RunProcess(Time.deltaTime);
-                if (count >= 10)
-                    break;
-                yield return null;
-            }
+        //    while (true)
+        //    {
+        //        _attackActor.RunProcess(Time.deltaTime);
+        //        if (count >= 10)
+        //            break;
+        //        yield return null;
+        //    }
 
-            yield return new WaitForSeconds(1f);
-        }
+        //    yield return new WaitForSeconds(1f);
+        //}
 
         [UnityTest]
         public IEnumerator AttackerTest_Destroy_SkeletonData()

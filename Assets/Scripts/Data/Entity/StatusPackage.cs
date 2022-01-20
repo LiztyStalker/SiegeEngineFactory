@@ -71,6 +71,7 @@ namespace SEF.Entity
 
         public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData
         {
+            U calData = (U)data.Clone();
             var values = Dictionary.Values.Where(sData => sData.StatusData is T).ToArray();
 
             U absoluteData = NumberDataUtility.Create<U>();
@@ -100,14 +101,14 @@ namespace SEF.Entity
             //data + absolute
             if (!absoluteData.Value.IsZero)
             {
-                data.Value += absoluteData.Value;
+                calData.Value += absoluteData.Value;
             }
             //data + data * rate + value
             else
             {
-                data.Value += (data.Value * rate / 100) + valueData.Value;
+                calData.Value += (data.Value * rate / 100) + valueData.Value;
             }
-            return data;
+            return calData;
         }
 
         public void RunProcess(float deltaTime)

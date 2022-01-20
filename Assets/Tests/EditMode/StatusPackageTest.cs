@@ -44,7 +44,7 @@ namespace SEF.Test
                 _value = assetData;
             }
 
-            public BigNumberData GetValue() => _value;
+            public UniversalBigNumberData GetValue() => _value;
         }
 
         private StatusPackage _statusPackage;

@@ -13,6 +13,6 @@ namespace SEF.Data
         public float ProductTime { get; }
 
         public TYPE_STATUS_DATA TypeStatusData { get; }
-        public BigNumberData GetValue();
+        public UniversalBigNumberData GetValue();
     }
 }

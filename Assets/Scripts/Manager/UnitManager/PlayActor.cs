@@ -6,6 +6,7 @@ namespace SEF.Unit
     using Data;
     using Spine.Unity;
     using UtilityManager;
+    using SEF.Entity;
 
     public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destroy}
 
@@ -138,6 +139,7 @@ namespace SEF.Unit
                     attackActor.SetParent(transform);
                     attackActor.SetData(skeletonDataAsset, attackerData, numberData);
                     attackActor.SetOnAttackTargetListener(OnAttackTargetEvent);
+//                    attackActor.SetOnStatusPackageListener(GetStatusPackage);
                     attackActor.Initialize();
                     _attackActorList.Add(attackActor);
                 }
@@ -263,6 +265,17 @@ namespace SEF.Unit
         private System.Func<PlayActor, bool> _hasTargetEvent;
         public void SetOnHasAttackTargetListener(System.Func<PlayActor, bool> act) => _hasTargetEvent = act;
         protected bool HasTarget() => _hasTargetEvent(this);
+
+
+        private System.Func<StatusPackage> _statusPackageEvent;
+        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        protected StatusPackage GetStatusPackage() => _statusPackageEvent();
+
+        //protected U GetStatusData<T, U>(U data) where T : IStatusData where U : BigNumberData
+        //{
+        //    var statusPackage = GetStatusPackage();
+        //    return statusPackage.GetStatusDataToBigNumberData<T, U>(data);
+        //}
 
         #endregion
 

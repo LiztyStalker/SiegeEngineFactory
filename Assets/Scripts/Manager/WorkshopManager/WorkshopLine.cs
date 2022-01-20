@@ -18,10 +18,12 @@ namespace SEF.Manager
         public void Initialize()
         {
             _unitEntity.Initialize();
+            _unitEntity.SetOnStatusPackageListener(GetStatusPackage);
             _nowTime = 0;
         }
         public void CleanUp()
         {
+            _unitEntity.SetOnStatusPackageListener(null);
             _unitEntity.CleanUp();
             _nowTime = 0;
             _productUnitEvent = null;
@@ -38,7 +40,7 @@ namespace SEF.Manager
             if (OnConditionProductUnitEvent(_unitEntity))
             {
                 _nowTime += deltaTime;
-                if (_nowTime > _unitEntity.UnitData.ProductTime)
+                if (_nowTime > _unitEntity.ProductTime)
                 {
                     OnProductUnitEvent();
                     _nowTime -= _unitEntity.UnitData.ProductTime;
@@ -55,13 +57,6 @@ namespace SEF.Manager
             OnRefreshEvent();
             return assetData;
         }
-        //public AssetData Upgrade() 
-        //{
-        //    var assetData = _unitEntity.UpgradeAssetData;
-        //    _unitEntity.Upgrade();            
-        //    OnRefreshEvent();
-        //    return assetData;
-        //}
 
         public void UpTech(UnitData unitData) 
         {
@@ -86,14 +81,16 @@ namespace SEF.Manager
             return _conditionProductEvent(unitEntity);
         }
 
-
-
         private System.Action<int, UnitEntity, float> _refreshEvent;
         public void SetOnRefreshListener(System.Action<int, UnitEntity, float> act) => _refreshEvent = act;
         private void OnRefreshEvent()
         {
             _refreshEvent?.Invoke(_index, _unitEntity, _nowTime);
         }
+
+        private System.Func<StatusPackage> _statusPackageEvent;
+        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        private StatusPackage GetStatusPackage() => _statusPackageEvent();
         #endregion
 
 

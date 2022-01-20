@@ -41,6 +41,9 @@ namespace SEF.Manager
             _statusPackage = StatusPackage.Create();
             _statusPackage.Initialize();
             _statusPackage.AddOnProductListener(OnStatusProductEvent);
+
+
+            _workshopManager.SetOnStatusPackageListener(GetStatusPackage);
         }
 
         public void CleanUp()
