@@ -46,6 +46,30 @@ namespace SEF.Test
         }
 
         [Test]
+        public void MathTest_BigInteger_Divide()
+        {
+            BigInteger bigInt1 = new BigInteger(100);
+            BigInteger bigInt2 = new BigInteger(70);
+            Debug.Log(BigInteger.Divide(bigInt1, bigInt2));
+        }
+
+        [Test]
+        public void MathTest_BigInteger_Moduler()
+        {
+            BigInteger bigInt1 = new BigInteger(100);
+            BigInteger bigInt2 = new BigInteger(70);
+            Debug.Log(bigInt1 % bigInt2);
+        }
+
+        [Test]
+        public void MathTest_Float_Moduler()
+        {
+            float f1 = 0.1f;
+            float f2 = 0.022f;
+            Debug.Log(f1 % f2);
+        }
+
+        [Test]
         public void MathTest_Float_To_BigInteger()
         {
             BigInteger bigInt1 = new BigInteger(0.1f);
@@ -93,23 +117,33 @@ namespace SEF.Test
         {
             var value1 = new BigDecimal(0.12345f);
             var value2 = new BigDecimal(0.12345f);
-            Debug.Log((value1 + value2).GetDecimalValue());
+            var result1 = value1 + value2;
+            Debug.Log(result1.GetDecimalValue());
+            Assert.IsTrue(result1.GetDecimalValue() == (decimal)0.24690);
 
             var value3 = new BigDecimal(0.12345f);
             var value4 = new BigDecimal(0.123f);
-            Debug.Log((value3 + value4).GetDecimalValue());
+            var result2 = value3 + value4;
+            Debug.Log(result2.GetDecimalValue());
+            Assert.IsTrue(result2.GetDecimalValue() == (decimal)0.24645);
 
             var value5 = new BigDecimal(0.123f);
             var value6 = new BigDecimal(0.12345f);
-            Debug.Log((value5 + value6).GetDecimalValue());
+            var result3 = value5 + value6;
+            Debug.Log(result3.GetDecimalValue());
+            Assert.IsTrue(result3.GetDecimalValue() == (decimal)0.24645);
 
             var value7 = new BigDecimal(1f);
             var value8 = new BigDecimal(0.1234567f);
-            Debug.Log((value7 + value8).GetDecimalValue());
+            var result4 = value7 + value8;
+            Debug.Log(result4.GetDecimalValue());
+            Assert.IsTrue(result4.GetDecimalValue() == (decimal)1.12346);
 
             var value9 = new BigDecimal(0.0000001f);
             var value10 = new BigDecimal(0.9999999f);
-            Debug.Log((value9 + value10).GetDecimalValue());
+            var result5 = value9 + value10;
+            Debug.Log(result5.GetDecimalValue());
+            Assert.IsTrue(result5.GetDecimalValue() == (decimal)1);
 
         }
 
@@ -118,23 +152,33 @@ namespace SEF.Test
         {
             var value1 = new BigDecimal(0.12345f);
             var value2 = new BigDecimal(0.12345f);
-            Debug.Log((value1 - value2).GetDecimalValue());
+            var result1 = value1 - value2;
+            Debug.Log(result1.GetDecimalValue());
+            Assert.IsTrue(result1.GetDecimalValue() == (decimal)0);
 
             var value3 = new BigDecimal(0.12345f);
             var value4 = new BigDecimal(0.123f);
-            Debug.Log((value3 - value4).GetDecimalValue());
+            var result2 = value3 - value4;
+            Debug.Log(result2.GetDecimalValue());
+            Assert.IsTrue(result2.GetDecimalValue() == (decimal)0.00045);
 
             var value5 = new BigDecimal(0.123f);
             var value6 = new BigDecimal(0.12345f);
-            Debug.Log((value5 - value6).GetDecimalValue());
+            var result3 = value5 - value6;
+            Debug.Log(result3.GetDecimalValue());
+            Assert.IsTrue(result3.GetDecimalValue() == (decimal)-0.00045);
 
             var value7 = new BigDecimal(1f);
             var value8 = new BigDecimal(0.1234567f);
-            Debug.Log((value7 - value8).GetDecimalValue());
+            var result4 = value7 - value8;
+            Debug.Log(result4.GetDecimalValue());
+            Assert.IsTrue(result4.GetDecimalValue() == (decimal)0.87654);
 
             var value9 = new BigDecimal(0.0000001f);
             var value10 = new BigDecimal(0.9999999f);
-            Debug.Log((value9 - value10).GetDecimalValue());
+            var result5 = value9 - value10;
+            Debug.Log(result5.GetDecimalValue());
+            Assert.IsTrue(result5.GetDecimalValue() == (decimal)-1);
 
         }
 
@@ -143,48 +187,101 @@ namespace SEF.Test
         {
             var value1 = new BigDecimal(0.12345f);
             var value2 = new BigDecimal(0.12345f);
-            Debug.Log((value1 * value2).GetDecimalValue());
+            var result1 = value1 * value2;
+            Debug.Log(result1.GetDecimalValue());
+            Assert.IsTrue(result1.GetDecimalValue() == (decimal)0.01524);
 
             var value3 = new BigDecimal(0.12345f);
             var value4 = new BigDecimal(0.123f);
-            Debug.Log((value3 * value4).GetDecimalValue());
+            var result2 = value3 * value4;
+            Debug.Log(result2.GetDecimalValue());
+            Assert.IsTrue(result2.GetDecimalValue() == (decimal)0.01518);
 
             var value5 = new BigDecimal(0.123f);
             var value6 = new BigDecimal(0.12345f);
-            Debug.Log((value5 * value6).GetDecimalValue());
+            var result3 = value5 * value6;
+            Debug.Log(result3.GetDecimalValue());
+            Assert.IsTrue(result3.GetDecimalValue() == (decimal)0.01518);
 
             var value7 = new BigDecimal(1f);
             var value8 = new BigDecimal(0.1234567f);
-            Debug.Log((value7 * value8).GetDecimalValue());
+            var result4 = value7 * value8;
+            Debug.Log(result4.GetDecimalValue());
+            Assert.IsTrue(result4.GetDecimalValue() == (decimal)0.12346f);
 
             var value9 = new BigDecimal(0.0000001f);
             var value10 = new BigDecimal(0.9999999f);
-            Debug.Log((value9 * value10).GetDecimalValue());
+            var result5 = value9 * value10;
+            Debug.Log(result5.GetDecimalValue());
+            Assert.IsTrue(result5.GetDecimalValue() == (decimal)0);
         }
         [Test]
         public void MathTest_BigDecimal_Divide()
         {
             var value1 = new BigDecimal(0.12345f);
             var value2 = new BigDecimal(0.12345f);
-            Debug.Log((value1 / value2).GetDecimalValue());
+            var result1 = value1 / value2;
+            Debug.Log(result1.GetDecimalValue());
+            Assert.IsTrue(result1.GetDecimalValue() == (decimal)1);
 
             var value3 = new BigDecimal(0.12345f);
             var value4 = new BigDecimal(0.123f);
-            Debug.Log((value3 / value4).GetDecimalValue());
+            var result2 = value3 / value4;
+            Debug.Log(result2.GetDecimalValue());
+            Assert.IsTrue(result2.GetDecimalValue() == (decimal)1.00365);
 
             var value5 = new BigDecimal(0.123f);
             var value6 = new BigDecimal(0.12345f);
-            Debug.Log((value5 / value6).GetDecimalValue());
+            var result3 = value5 / value6;
+            Debug.Log(result3.GetDecimalValue());
+            Assert.IsTrue(result3.GetDecimalValue() == (decimal)0.99635);
 
             var value7 = new BigDecimal(1f);
             var value8 = new BigDecimal(0.1234567f);
-            Debug.Log((value7 / value8).GetDecimalValue());
+            var result4 = value7 / value8;
+            Debug.Log(result4.GetDecimalValue());
+            Assert.IsTrue(result4.GetDecimalValue() == (decimal)8.1);
 
             var value9 = new BigDecimal(0.0000001f);
             var value10 = new BigDecimal(0.9999999f);
-            Debug.Log((value9 / value10).GetDecimalValue());
+            var result5 = value9 / value10;
+            Debug.Log(result5.GetDecimalValue());
+            Assert.IsTrue(result5.GetDecimalValue() == (decimal)0);
         }
 
+        [Test]
+        public void MathTest_BigDecimal_Moduler()
+        {
+            var value1 = new BigDecimal(0.12345f);
+            var value2 = new BigDecimal(0.12345f);
+            var result1 = value1 % value2;
+            Debug.Log(result1.GetDecimalValue());
+            Assert.IsTrue(result1.GetDecimalValue() == (decimal)0);
+
+            var value3 = new BigDecimal(0.12345f);
+            var value4 = new BigDecimal(0.123f);
+            var result2 = value3 % value4;
+            Debug.Log(result2.GetDecimalValue());
+            Assert.IsTrue(result2.GetDecimalValue() == (decimal)0.00045);
+
+            var value5 = new BigDecimal(0.123f);
+            var value6 = new BigDecimal(0.12345f);
+            var result3 = value5 % value6;
+            Debug.Log(result3.GetDecimalValue());
+            Assert.IsTrue(result3.GetDecimalValue() == (decimal)0.123);
+
+            var value7 = new BigDecimal(1f);
+            var value8 = new BigDecimal(0.1234567f);
+            var result4 = value7 % value8;
+            Debug.Log(result4.GetDecimalValue());
+            Assert.IsTrue(result4.GetDecimalValue() == (decimal)0.01235);
+
+            var value9 = new BigDecimal(0.0000001f);
+            var value10 = new BigDecimal(0.9999999f);
+            var result5 = value9 % value10;
+            Debug.Log(result5.GetDecimalValue());
+            Assert.IsTrue(result5.GetDecimalValue() == (decimal)0.00000);
+        }
     }
 }
 #endif

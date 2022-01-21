@@ -4,9 +4,15 @@ namespace Utility
     using System.Collections.Generic;
     using UnityEngine;
     using System.Numerics;
+    using Unity.Mathematics;
 
     public struct BigDecimal
     {
+
+        //private static Dictionary<byte, int> _powDic = new Dictionary<byte, int>();
+
+        private const byte COUNT_DECIMALPOINT = 5;
+
         private BigInteger _value;
 
         private byte _decimalPoint;
@@ -33,9 +39,16 @@ namespace Utility
             _value = ConvertToBigInteger(value);
         }
 
+
         public decimal GetDecimalValue()
         {
-            return ((decimal)_value) * (decimal)Mathf.Pow(0.1f, _decimalPoint);
+            //반올림
+            return decimal.Round(((decimal)_value) * (decimal)Mathf.Pow(0.1f, _decimalPoint), COUNT_DECIMALPOINT);
+        }
+
+        public override string ToString()
+        {
+            return null;
         }
 
         private BigInteger ConvertToBigInteger(decimal value)
@@ -66,6 +79,8 @@ namespace Utility
             _decimalPoint = decimalPoint;
         }
 
+
+
         private BigDecimal(BigInteger value, byte decimalPoint)
         {
             _value = value;
@@ -89,42 +104,37 @@ namespace Utility
 
         public static BigDecimal operator +(BigDecimal a, BigDecimal b)
         {
-            if (a._decimalPoint > b._decimalPoint)
-            {
-                b = b.CorrectDecimalPoint(a._decimalPoint);
-            }
-            else if (a._decimalPoint < b._decimalPoint)
-            {
-                a = a.CorrectDecimalPoint(b._decimalPoint);
-            }
+            CorrectDecimalPoint(ref a, ref b);
+            //if (a._decimalPoint > b._decimalPoint)
+            //{
+            //    b = b.CorrectDecimalPoint(a._decimalPoint);
+            //}
+            //else if (a._decimalPoint < b._decimalPoint)
+            //{
+            //    a = a.CorrectDecimalPoint(b._decimalPoint);
+            //}
 
             return new BigDecimal(a._value + b._value, a._decimalPoint);
         }
         public static BigDecimal operator -(BigDecimal a, BigDecimal b)
         {
-            if (a._decimalPoint > b._decimalPoint)
-            {
-                b = b.CorrectDecimalPoint(a._decimalPoint);
-            }
-            else if (a._decimalPoint < b._decimalPoint)
-            {
-                a = a.CorrectDecimalPoint(b._decimalPoint);
-            }
+            CorrectDecimalPoint(ref a, ref b);
+            //if (a._decimalPoint > b._decimalPoint)
+            //{
+            //    b = b.CorrectDecimalPoint(a._decimalPoint);
+            //}
+            //else if (a._decimalPoint < b._decimalPoint)
+            //{
+            //    a = a.CorrectDecimalPoint(b._decimalPoint);
+            //}
             return new BigDecimal(a._value - b._value, a._decimalPoint);
         }
 
         public static BigDecimal operator *(BigDecimal a, BigDecimal b)
         {
-            return new BigDecimal(System.Numerics.BigInteger.Multiply(a._value, b._value), (byte)(a._decimalPoint + b._decimalPoint));
+            return new BigDecimal(BigInteger.Multiply(a._value, b._value), (byte)(a._decimalPoint + b._decimalPoint));
         }
-
-
-        /// <summary>
-        /// 개발중
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
+        
         public static BigDecimal operator /(BigDecimal a, BigDecimal b)
         {
             if (b._decimalPoint == 0 && b._value == 0)
@@ -132,18 +142,115 @@ namespace Utility
                 throw new System.DivideByZeroException();
             }
 
-            if (b._decimalPoint > a._decimalPoint)
+            //소숫점 자리수
+            CorrectDecimalPoint(ref a, ref b);
+
+            //if (b._decimalPoint > a._decimalPoint)
+            //{
+            //    a = a.CorrectDecimalPoint(b._decimalPoint);
+            //}
+            //else if(a._decimalPoint > b._decimalPoint)
+            //{
+            //    b = b.CorrectDecimalPoint(a._decimalPoint);
+            //}
+
+            var result = new BigDecimal();
+            var nowValue = a._value;
+            var decimalPoint = 0;
+            while (true)
             {
-                a = a.CorrectDecimalPoint(b._decimalPoint);
+                result += new BigDecimal(nowValue / b._value, (byte)decimalPoint);
+                var moduler = nowValue % b._value;
+
+                if (moduler == 0 || decimalPoint >= COUNT_DECIMALPOINT)
+                    break;
+
+                decimalPoint++;
+                nowValue = moduler * 10;
             }
-            return new BigDecimal(System.Numerics.BigInteger.Divide(a._value, b._value), a._decimalPoint);
+            return result;
         }
 
 
         public static BigDecimal operator %(BigDecimal a, BigDecimal b)
         {
+            CorrectDecimalPoint(ref a, ref b);
 
-            return new BigDecimal(a._value - b._value, a._decimalPoint);
+            //if (b._decimalPoint > a._decimalPoint)
+            //{
+            //    a = a.CorrectDecimalPoint(b._decimalPoint);
+            //}
+            //else if (a._decimalPoint > b._decimalPoint)
+            //{
+            //    b = b.CorrectDecimalPoint(a._decimalPoint);
+            //}
+
+            return new BigDecimal(a._value % b._value, a._decimalPoint);
+        }
+
+        public static BigDecimal operator ++(BigDecimal value)
+        {
+            value._value++;
+            return value;
+        }
+        public static BigDecimal operator --(BigDecimal value)
+        {
+            value._value--;
+            return value;
+        }
+
+        //public static BigInteger operator &(BigInteger left, BigInteger right);
+        //public static BigInteger operator |(BigInteger left, BigInteger right);
+        //public static BigInteger operator ^(BigInteger left, BigInteger right);
+        //public static BigInteger operator <<(BigInteger value, int shift);
+        //public static BigInteger operator >>(BigInteger value, int shift);
+
+
+        public static bool operator ==(BigDecimal a, BigDecimal b) => (a._value == b._value && a._decimalPoint == b._decimalPoint);
+        public static bool operator !=(BigDecimal a, BigDecimal b) => (a._value != b._value || a._decimalPoint != b._decimalPoint);
+        public static bool operator >(BigDecimal a, BigDecimal b) => false;
+        public static bool operator <(BigDecimal a, BigDecimal b) => false;
+        public static bool operator >=(BigDecimal a, BigDecimal b) => false;
+        public static bool operator <=(BigDecimal a, BigDecimal b) => false;
+
+
+        //public static implicit operator BigInteger(byte value);
+        //[CLSCompliant(false)]
+        //public static implicit operator BigInteger(ushort value);
+        //[CLSCompliant(false)]
+        //public static implicit operator BigInteger(sbyte value);
+        //[CLSCompliant(false)]
+        //public static implicit operator BigInteger(uint value);
+        //public static implicit operator BigInteger(long value);
+        //public static implicit operator BigInteger(int value);
+        //public static implicit operator BigInteger(short value);
+        //[CLSCompliant(false)]
+        //public static implicit operator BigInteger(ulong value);
+        //public static explicit operator BigInteger(decimal value);
+        //public static explicit operator BigInteger(double value);
+
+
+        private static void CorrectDecimalPoint(ref BigDecimal a, ref BigDecimal b)
+        {
+            if (b._decimalPoint > a._decimalPoint)
+            {
+                a = a.CorrectDecimalPoint(b._decimalPoint);
+            }
+            else if (a._decimalPoint > b._decimalPoint)
+            {
+                b = b.CorrectDecimalPoint(a._decimalPoint);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            var bigDec = (BigDecimal)obj;
+            return (_value == bigDec._value && _decimalPoint == bigDec._decimalPoint);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
