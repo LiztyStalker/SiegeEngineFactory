@@ -22,6 +22,10 @@ namespace SEF.Data
         {
             Value = ConvertToBigInteger(value);
         }
+        public UniversalBigNumberData(int value)
+        {
+            Value = ConvertToBigInteger(value);
+        }
 
         public decimal GetDecimalValue()
         {
@@ -68,6 +72,13 @@ namespace SEF.Data
         }
 
         public static UniversalBigNumberData Create_Test(int value)
+        {
+            var data = new UniversalBigNumberData();
+            data.ValueText = value.ToString();
+            return data;
+        }
+
+        public static UniversalBigNumberData Create(int value)
         {
             var data = new UniversalBigNumberData();
             data.ValueText = value.ToString();

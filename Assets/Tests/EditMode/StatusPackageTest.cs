@@ -172,7 +172,7 @@ namespace SEF.Test
         {
             var statusProvider = new StatusProvider_Test();
             var statusData = new StatusData_Test();
-            statusData.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData.SetValue(UniversalBigNumberData.Create(1));
             statusData.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider, statusData);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
@@ -187,7 +187,7 @@ namespace SEF.Test
         {
             var statusProvider1 = new StatusProvider_Test();
             var statusData1 = new StatusData_Test();
-            statusData1.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData1.SetValue(UniversalBigNumberData.Create(1));
             statusData1.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider1, statusData1);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider1, statusData1), "StatusProvider 가 저장되지 않았습니다");
@@ -195,7 +195,7 @@ namespace SEF.Test
 
             var statusProvider2 = new StatusProvider_Test();
             var statusData2 = new StatusData_Test();
-            statusData2.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData2.SetValue(UniversalBigNumberData.Create(1));
             statusData2.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider2, statusData2);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider2, statusData2), "StatusProvider 가 저장되지 않았습니다");
@@ -203,7 +203,7 @@ namespace SEF.Test
 
             var statusProvider3 = new StatusProvider_Test();
             var statusData3 = new StatusData_Test();
-            statusData3.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData3.SetValue(UniversalBigNumberData.Create(1));
             statusData3.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
@@ -218,7 +218,7 @@ namespace SEF.Test
         {
             var statusProvider = new StatusProvider_Test();
             var statusData = new StatusData_Test();
-            statusData.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData.SetValue(UniversalBigNumberData.Create(100));
             statusData.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider, statusData);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider, statusData), "StatusProvider 가 저장되지 않았습니다");
@@ -233,21 +233,21 @@ namespace SEF.Test
         {
             var statusProvider1 = new StatusProvider_Test();
             var statusData1 = new StatusData_Test();
-            statusData1.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData1.SetValue(UniversalBigNumberData.Create(100));
             statusData1.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider1, statusData1);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider1, statusData1), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider2 = new StatusProvider_Test();
             var statusData2 = new StatusData_Test();
-            statusData2.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData2.SetValue(UniversalBigNumberData.Create(100));
             statusData2.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider2, statusData2);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider2, statusData2), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider3 = new StatusProvider_Test();
             var statusData3 = new StatusData_Test();
-            statusData3.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData3.SetValue(UniversalBigNumberData.Create(100));
             statusData3.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
@@ -262,14 +262,14 @@ namespace SEF.Test
         {
             var statusProvider1 = new StatusProvider_Test();
             var statusData1 = new StatusData_Test();
-            statusData1.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData1.SetValue(UniversalBigNumberData.Create(1));
             statusData1.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider1, statusData1);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider1, statusData1), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider2 = new StatusProvider_Test();
             var statusData2 = new StatusData_Test();
-            statusData2.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData2.SetValue(UniversalBigNumberData.Create(100));
             statusData2.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider2, statusData2);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider2, statusData2), "StatusProvider 가 저장되지 않았습니다");
@@ -284,21 +284,21 @@ namespace SEF.Test
         {
             var statusProvider11 = new StatusProvider_Test();
             var statusData11 = new StatusData_Test();
-            statusData11.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData11.SetValue(UniversalBigNumberData.Create(1));
             statusData11.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider11, statusData11);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider11, statusData11), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider12 = new StatusProvider_Test();
             var statusData12 = new StatusData_Test();
-            statusData12.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData12.SetValue(UniversalBigNumberData.Create(1));
             statusData12.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider12, statusData12);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider12, statusData12), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider13 = new StatusProvider_Test();
             var statusData13 = new StatusData_Test();
-            statusData13.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData13.SetValue(UniversalBigNumberData.Create(1));
             statusData13.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider13, statusData13);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider13, statusData13), "StatusProvider 가 저장되지 않았습니다");
@@ -306,21 +306,21 @@ namespace SEF.Test
 
             var statusProvider21 = new StatusProvider_Test();
             var statusData21 = new StatusData_Test();
-            statusData21.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData21.SetValue(UniversalBigNumberData.Create(100));
             statusData21.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider21, statusData21);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider21, statusData21), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider22 = new StatusProvider_Test();
             var statusData22 = new StatusData_Test();
-            statusData22.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData22.SetValue(UniversalBigNumberData.Create(100));
             statusData22.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider22, statusData22);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider22, statusData22), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider23 = new StatusProvider_Test();
             var statusData23 = new StatusData_Test();
-            statusData23.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData23.SetValue(UniversalBigNumberData.Create(100));
             statusData23.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider23, statusData23);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider23, statusData23), "StatusProvider 가 저장되지 않았습니다");
@@ -335,14 +335,14 @@ namespace SEF.Test
         {
             var statusProvider1 = new StatusProvider_Test();
             var statusData1 = new StatusData_Test();
-            statusData1.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData1.SetValue(UniversalBigNumberData.Create(100));
             statusData1.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Absolute);
             _statusPackage.SetStatusData(statusProvider1, statusData1);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider1, statusData1), "StatusProvider 가 저장되지 않았습니다");
 
             var statusProvider2 = new StatusProvider_Test();
             var statusData2 = new StatusData_Test();
-            statusData2.SetValue(UniversalBigNumberData.Create_Test(1));
+            statusData2.SetValue(UniversalBigNumberData.Create(1));
             statusData2.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Rate);
             _statusPackage.SetStatusData(statusProvider2, statusData2);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider2, statusData2), "StatusProvider 가 저장되지 않았습니다");
@@ -350,7 +350,7 @@ namespace SEF.Test
 
             var statusProvider3 = new StatusProvider_Test();
             var statusData3 = new StatusData_Test();
-            statusData3.SetValue(UniversalBigNumberData.Create_Test(100));
+            statusData3.SetValue(UniversalBigNumberData.Create(100));
             statusData3.SetTypeStatusData(IStatusData.TYPE_STATUS_DATA.Value);
             _statusPackage.SetStatusData(statusProvider3, statusData3);
             Assert.IsTrue(_statusPackage.HasStatusProviderAndStatusData(statusProvider3, statusData3), "StatusProvider 가 저장되지 않았습니다");
