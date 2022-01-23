@@ -1,0 +1,15 @@
+.ui-asset {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+}
+
+#UIAssetBlock {
+    width: 25%;
+    height: 50%;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}

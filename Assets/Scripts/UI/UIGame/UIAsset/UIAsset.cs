@@ -1,9 +1,9 @@
 namespace SEF.UI.Toolkit
 {
+    using Data;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Data;
 
     public class UIAsset //VisualElement로 교체 예정
     {
@@ -17,42 +17,25 @@ namespace SEF.UI.Toolkit
             typeof(PopulationAssetData).Name
         };
 
-        //private Dictionary<TYPE_ASSET, UIAssetBlock> _dic = new Dictionary<TYPE_ASSET, UIAssetBlock>();
         private Dictionary<string, UIAssetBlock> _dic = new Dictionary<string, UIAssetBlock>();
 
         private VisualElement _root;
 
-        public static UIAsset Create()
-        {
-            return new UIAsset();
-        }
+        public static UIAsset Create() => new UIAsset();
 
         public void Initialize(VisualElement root)
         {
             _root = root;
 
+            var tr = _root.Query<VisualElement>().First()[0];
+
             for (int i = 0; i < assetArray.Length; i++)
             {
                 var block = UIAssetBlock.Create();
-                block.Initialize(_root[i]);
+                block.Initialize(tr[i]);
                 _dic.Add(assetArray[i], block);
             }
-            //for(int i = 0; i < _root.childCount; i++)
-            //{
-            //    var block = UIAssetBlock.Create();
-            //    block.Initialize(_root[i]);
-            //    _dic.Add((TYPE_ASSET)i, block);
-            //}
-
         }
-
-        //public void RefreshAssetData(AssetData data)
-        //{
-        //    if (_dic.ContainsKey(data.TypeAsset))
-        //    {
-        //        _dic[data.TypeAsset].RefreshAssetData(data);
-        //    }
-        //}
 
         public void RefreshAssetData(IAssetData data)
         {
@@ -73,10 +56,11 @@ namespace SEF.UI.Toolkit
 
     }
 
+    #region ##### Test #####
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
     public class UIAsset_Test : MonoBehaviour
     {
-        private readonly string PATH_UI_ASSET_UXML = "Assets/Scripts/UI/UIGame/UIAsset/UIAssetUXML.uxml";
+        private readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIAsset/UIAsset.uxml";
 
         private UIAsset _uiAsset;
 
@@ -92,7 +76,7 @@ namespace SEF.UI.Toolkit
         public void Initialize()
         {
             _uiAsset = UIAsset.Create();
-            _uiAsset.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_ASSET_UXML));
+            _uiAsset.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_UXML));
         }
 
         public void Dispose()
@@ -102,4 +86,5 @@ namespace SEF.UI.Toolkit
         }
     }
 #endif
+    #endregion
 }

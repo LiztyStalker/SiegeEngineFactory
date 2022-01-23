@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UIFillable" src="/Assets/Scripts/UI/UIUtility/UIFillable.uxml" />
-    <Style src="UIWorkshopLineUSS.uss" />
+    <Style src="UIWorkshopLine.uss" />
     <SEF.UI.Toolkit.UIWorkshopLine style="height: 200px;">
         <ui:Instance template="UIFillable" name="fillable-block" class="fillable-block" />
         <ui:VisualElement name="activate_panel" style="display: flex;">

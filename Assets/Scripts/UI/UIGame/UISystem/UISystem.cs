@@ -10,7 +10,7 @@ namespace SEF.UI.Toolkit
     public class UISystem : VisualElement 
     {
 
-        internal static readonly string PATH_UI_SYSTEM_UXML = "Assets/Scripts/UI/UIGame/UISystem/UISystemUXML.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UISystem.uxml";
 
         public new class UxmlFactory : UxmlFactory<UISystem, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
@@ -76,7 +76,7 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UISystem.PATH_UI_SYSTEM_UXML);
+            var root = UIUXML.GetVisualElement(gameObject, UISystem.PATH_UI_UXML);
             _instance = root.Q<UISystem>();
             _instance.Initialize();
         }

@@ -62,7 +62,7 @@ namespace SEF.UI.Toolkit
     [RequireComponent(typeof(UIDocument))]
     public class UIAssetBlock_Test : MonoBehaviour
     {
-        private readonly string PATH_UI_ASSET_BLOCK_UXML = "Assets/Scripts/UI/UIGame/UIAsset/UIAssetBlock/UIAssetBlockUXML.uxml";
+        private readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIAsset/UIAssetBlock/UIAssetBlock.uxml";
 
         private UIAssetBlock _uiAssetBlock;
 
@@ -78,7 +78,7 @@ namespace SEF.UI.Toolkit
         public void Initialize()
         {
             _uiAssetBlock = UIAssetBlock.Create();
-            _uiAssetBlock.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_ASSET_BLOCK_UXML));
+            _uiAssetBlock.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_UXML));
         }
 
         public void Dispose()

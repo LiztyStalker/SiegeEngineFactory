@@ -9,7 +9,7 @@ namespace SEF.UI.Toolkit
         public new class UxmlFactory : UxmlFactory<UIWorkshopLine, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
-        internal static readonly string PATH_UI_WORKSHOP_LINE_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLineUXML.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLine.uxml";
 
         private int _index;
 
@@ -62,7 +62,7 @@ namespace SEF.UI.Toolkit
 
         public static UIWorkshopLine Create()
         {
-             return UIUXML.GetVisualElement<UIWorkshopLine>(PATH_UI_WORKSHOP_LINE_UXML);
+             return UIUXML.GetVisualElement<UIWorkshopLine>(PATH_UI_UXML);
         }
 
         public void Initialize()
@@ -297,7 +297,7 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UIWorkshopLine.PATH_UI_WORKSHOP_LINE_UXML);
+            var root = UIUXML.GetVisualElement(gameObject, UIWorkshopLine.PATH_UI_UXML);
             _instance = root.Q<UIWorkshopLine>();
             _instance.Initialize();
         }

@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="UIAssetBlockUSS.uss" />
+    <Style src="UIAssetBlock.uss" />
     <ui:VisualElement name="block_panel">
         <ui:VisualElement name="asset_icon" class="asset_icon" style="background-image: url(&apos;/Assets/Clean Vector Icons/T_4_eye_bleed_.png&apos;);" />
         <ui:VisualElement name="value_panel" style="align-items: flex-end;">

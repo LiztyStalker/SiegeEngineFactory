@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="UIAssetBlock" src="UIAssetBlock/UIAssetBlock.uxml" />
+    <Style src="UIAsset.uss" />
+    <ui:VisualElement class="ui-asset">
+        <ui:Instance template="UIAssetBlock" name="UIAssetBlock" />
+        <ui:Instance template="UIAssetBlock" name="UIAssetBlock" />
+        <ui:Instance template="UIAssetBlock" name="UIAssetBlock" />
+        <ui:Instance template="UIAssetBlock" name="UIAssetBlock" />
+        <ui:Instance template="UIAssetBlock" name="UIAssetBlock" />
+    </ui:VisualElement>
+</ui:UXML>
