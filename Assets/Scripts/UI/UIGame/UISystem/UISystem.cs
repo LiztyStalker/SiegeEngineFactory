@@ -31,11 +31,6 @@ namespace SEF.UI.Toolkit
 
         private List<ISystemPanel> _list = new List<ISystemPanel>();
 
-        //private UIWorkshop _uiWorkshop;
-        //private UIBlacksmith _uiBlacksmith;
-        //UIVillage
-        //UIResearch
-
         public void Initialize()
         {
 
@@ -47,6 +42,7 @@ namespace SEF.UI.Toolkit
 
 
 
+            //UISystem에 등록되어있지 않으면 자동 생성 필요
             UIWorkshop uiWorkshop = this.Q<UIWorkshop>();
 
             Debug.Assert(uiWorkshop != null, "uiWorkshop 이 등록되지 않았습니다");
@@ -57,16 +53,21 @@ namespace SEF.UI.Toolkit
 
             UIBlacksmith uiBlacksmith = this.Q<UIBlacksmith>();
 
+            //UISystem에 등록되어있지 않으면 자동 생성 필요
             Debug.Assert(uiBlacksmith != null, "uiBlacksmith 이 등록되지 않았습니다");
 
             _uiBlacksmithButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
 
-            //            _uiVillageButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
-            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+            UIVillage uiVillage = this.Q<UIVillage>();
+
+            //UISystem에 등록되어있지 않으면 자동 생성 필요
+            Debug.Assert(uiVillage != null, "uiBlacksmith 이 등록되지 않았습니다");
+
+            _uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
 
             _list.Add(uiWorkshop);
             _list.Add(uiBlacksmith);
-
+            _list.Add(uiVillage);
 
             for (int i = 0; i < _list.Count; i++)
             {
@@ -90,6 +91,8 @@ namespace SEF.UI.Toolkit
             var uiBlacksmith = GetSystemPanel<UIBlacksmith>();
             _uiBlacksmithButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
 
+            var uiVillage = GetSystemPanel<UIVillage>();
+            _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
             //            _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
             //            _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
 
