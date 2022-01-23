@@ -65,9 +65,19 @@ namespace SEF.UI.Toolkit
 
             _uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
 
+
+            UIResearch uiResearch = this.Q<UIResearch>();
+
+            //UISystem에 등록되어있지 않으면 자동 생성 필요
+            Debug.Assert(uiResearch != null, "uiResearch 이 등록되지 않았습니다");
+
+            _uiResearchButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+
+
             _list.Add(uiWorkshop);
             _list.Add(uiBlacksmith);
             _list.Add(uiVillage);
+            _list.Add(uiResearch);
 
             for (int i = 0; i < _list.Count; i++)
             {
@@ -93,8 +103,9 @@ namespace SEF.UI.Toolkit
 
             var uiVillage = GetSystemPanel<UIVillage>();
             _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
-            //            _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
-            //            _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
+
+            var uiResearch = GetSystemPanel<UIVillage>();
+            _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });
 
             for (int i = 0; i < _list.Count; i++)
             {

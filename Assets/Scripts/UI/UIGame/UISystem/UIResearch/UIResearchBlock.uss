@@ -1,0 +1,99 @@
+.research-name-label {
+    font-size: 36px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: normal;
+}
+
+.research-ability-label {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+.research-line-panel {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    position: absolute;
+}
+
+.research-upgrade-button {
+    width: 200px;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.research-button-panel {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    align-items: center;
+}
+
+.research-activate-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.research-inactivate-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.expend_asset_value_label {
+}
+
+.research-value-panel {
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.fillable-block {
+    width: 100%;
+    height: 100%;
+}
+
+.research-level-label {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+}
+
+.research-content-label {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+}
+
+.research-information-panel {
+    justify-content: center;
+    align-items: stretch;
+}
+
+.research-advanced-information-panel {
+    flex-direction: row;
+}
+
+.research-icon {
+    width: 180px;
+    height: 180px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+}

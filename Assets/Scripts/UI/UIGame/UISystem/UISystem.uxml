@@ -2,6 +2,7 @@
     <ui:Template name="UIBlacksmith" src="UIBlacksmith/UIBlacksmith.uxml" />
     <ui:Template name="UIWorkshop" src="UIWorkshop/UIWorkshop.uxml" />
     <ui:Template name="UIVillage" src="UIVillage/UIVillage.uxml" />
+    <ui:Template name="UIResearch" src="UIResearch/UIResearch.uxml" />
     <Style src="UISystem.uss" />
     <Style src="UIWorkshop/UIWorkshop.uss" />
     <Style src="UIWorkshop/UIWorkshopLine.uss" />
@@ -16,6 +17,7 @@
             <ui:Instance template="UIWorkshop" name="UIWorkshop" />
             <ui:Instance template="UIBlacksmith" name="UIBlacksmith" />
             <ui:Instance template="UIVillage" name="UIVillage" />
+            <ui:Instance template="UIResearch" name="UIResearch" />
         </ui:VisualElement>
     </SEF.UI.Toolkit.UISystem>
 </ui:UXML>
