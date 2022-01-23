@@ -2,10 +2,13 @@
     <ui:Template name="UIAsset" src="UIAsset/UIAsset.uxml" />
     <ui:Template name="UIPlay" src="UIPlay/UIPlay.uxml" />
     <ui:Template name="UISystem" src="UISystem/UISystem.uxml" />
+    <ui:Template name="UIQuest" src="UIQuest/UIQuest.uxml" />
     <Style src="UIGame.uss" />
     <ui:VisualElement name="window" class="window" style="align-items: center; justify-content: space-between;">
         <ui:Instance template="UIAsset" name="UIAsset" />
         <ui:Instance template="UIPlay" name="UIPlay" />
         <ui:Instance template="UISystem" name="UISystem" />
     </ui:VisualElement>
+    <ui:Button text="Q" display-tooltip-when-elided="true" name="quest-button" class="quest-button" style="height: 73px; width: 68px; top: 106px; left: 990px;" />
+    <ui:Instance template="UIQuest" name="UIQuest" />
 </ui:UXML>

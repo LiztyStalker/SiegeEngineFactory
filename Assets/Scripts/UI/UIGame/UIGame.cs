@@ -20,6 +20,9 @@ namespace SEF.UI.Toolkit
         private UIAsset _uiAsset;
         private UISystem _uiSystem;
         private UIPlay _uiPlay;
+        private UIQuest _uiQuest;
+
+        private Button _questButton;
         //private UIOfflineReward _uiOfflineReward;
 
         public static UIGame Create()
@@ -38,24 +41,34 @@ namespace SEF.UI.Toolkit
         {
             _root = UIUXML.GetVisualElement(gameObject, PATH_UI_GAME_UXML);
 
+            _questButton = _root.Q<Button>("quest-button");
+
             _uiAsset = UIAsset.Create();
             _uiSystem = _root.Q<UISystem>();
             _uiPlay = _root.Q<UIPlay>();
+            _uiQuest = _root.Q<UIQuest>();
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
             Debug.Assert(_uiPlay != null, "_uiPlay 가 등록되지 않았습니다");
+            Debug.Assert(_uiQuest != null, "_uiQuest 가 등록되지 않았습니다");
 
             _uiAsset.Initialize(_root.Q<VisualElement>("UIAsset"));
             _uiSystem.Initialize();
             _uiPlay.Initialize(transform);
+            _uiQuest.Initialize();
+
+            _questButton.RegisterCallback<ClickEvent>(e => _uiQuest.Show());
         }
 
         public void CleanUp()
-        {            
+        {
+            _questButton.UnregisterCallback<ClickEvent>(e => _uiQuest.Show());
+
             _uiAsset.CleanUp();
             _uiSystem.CleanUp();
             _uiPlay.CleanUp();
+            _uiQuest.CleanUp();
         }
 
         public void RunProcess(float deltaTime)

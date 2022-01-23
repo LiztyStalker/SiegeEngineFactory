@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UIFillable" />
+    <Style src="UIQuestLine.uss" />
+    <SEF.UI.Toolkit.UIQuestLine style="height: 200px;">
+        <ui:VisualElement name="activate-panel" class="quest-activate-panel" style="display: flex;">
+            <ui:VisualElement name="line-panel" class="quest-line-panel">
+                <ui:VisualElement name="line-icon" class="quest-icon" style="background-color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="information-panel" class="quest-information-panel">
+                    <ui:VisualElement name="name_type_panel" style="flex-direction: row; align-items: flex-end;">
+                        <ui:Label text="투창병" display-tooltip-when-elided="true" name="name-label" class="quest-name-label" />
+                        <ui:Label text="Lv" display-tooltip-when-elided="true" name="level-label" class="unit_name_label quest-level-label" />
+                        <ui:Label text="03" display-tooltip-when-elided="true" name="level-value-label" class="dps_label unit_name_label quest-level-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="advanced_information_panel" class="quest-advanced-information-panel">
+                        <ui:VisualElement name="information-view">
+                            <ui:VisualElement name="information-panel" class="quest-value-panel">
+                                <ui:Label text="설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 " display-tooltip-when-elided="true" name="content-label" enable-rich-text="false" class="quest-content-label" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Instance template="UIFillable" name="UIFillable" class="quest-fillable-block" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="button-panel" class="quest-button-panel" style="justify-content: flex-end; position: absolute;">
+                <ui:Button display-tooltip-when-elided="true" name="reward-button" class="quest-upgrade-button">
+                    <ui:Label text="보상" display-tooltip-when-elided="true" name="upgrade-label" style="font-size: 16px;" />
+                    <ui:VisualElement name="upgrade-asset-panel" style="flex-direction: row;">
+                        <ui:VisualElement name="upgrade-asset-icon" style="width: 30px; height: 30px; background-color: rgb(0, 0, 0);" />
+                        <ui:Label text="1.000A" display-tooltip-when-elided="true" name="upgrade-asset-value-label" style="font-size: 16px;" />
+                    </ui:VisualElement>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="inactivate-panel" class="quest-inactivate-panel">
+            <ui:Label text="---" display-tooltip-when-elided="true" style="font-size: 60px;" />
+        </ui:VisualElement>
+    </SEF.UI.Toolkit.UIQuestLine>
+</ui:UXML>

@@ -34,3 +34,13 @@
     width: 100%;
     height: 30%;
 }
+
+.quest-button {
+    position: absolute;
+}
+
+#UIQuest {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

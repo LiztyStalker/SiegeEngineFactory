@@ -1,0 +1,98 @@
+.quest-name-label {
+    font-size: 36px;
+    color: rgb(0, 0, 0);
+    -unity-font-style: normal;
+}
+
+.quest-ability-label {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+.quest-line-panel {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    position: absolute;
+}
+
+.quest-upgrade-button {
+    width: 200px;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.quest-button-panel {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    align-items: center;
+}
+
+.quest-activate-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.quest-inactivate-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.expend_asset_value_label {
+}
+
+.quest-value-panel {
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.quest-level-label {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+}
+
+.quest-content-label {
+    font-size: 24px;
+    color: rgb(0, 0, 0);
+}
+
+.quest-information-panel {
+    justify-content: center;
+    align-items: stretch;
+}
+
+.quest-advanced-information-panel {
+    flex-direction: row;
+}
+
+.quest-icon {
+    width: 180px;
+    height: 180px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+}
+
+.quest-fillable-block {
+    height: 20px;
+}
