@@ -7,6 +7,14 @@ namespace SEF.UI.Toolkit
     using Entity;
     using Data;
 
+    public interface ISystemPanel
+    {
+        void Initialize();
+        void CleanUp();
+        void Show();
+        void Hide();
+    }
+
     public class UISystem : VisualElement 
     {
 
@@ -16,44 +24,142 @@ namespace SEF.UI.Toolkit
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
 
+        private Button _uiWorkshopButton;
+        private Button _uiBlacksmithButton;
+        private Button _uiVillageButton;
+        private Button _uiResearchButton;
 
-        private UIWorkshop _uiWorkshop;
-        //UIBlacksmith
+        private List<ISystemPanel> _list = new List<ISystemPanel>();
+
+        //private UIWorkshop _uiWorkshop;
+        //private UIBlacksmith _uiBlacksmith;
         //UIVillage
         //UIResearch
 
-
-        //public static UISystem Create()
-        //{
-        //    return UIUXML.GetVisualElement<UISystem>(PATH_UI_SYSTEM_UXML);
-        //}
-
         public void Initialize()
         {
-            _uiWorkshop = this.Q<UIWorkshop>();
 
-            Debug.Assert(_uiWorkshop != null, "_uiWorkshop 이 등록되지 않았습니다");
 
-            _uiWorkshop.Initialize();
+            _uiWorkshopButton = this.Q<Button>("workshop-button");
+            _uiBlacksmithButton = this.Q<Button>("blacksmith-button");
+            _uiVillageButton = this.Q<Button>("village-button");
+            _uiResearchButton = this.Q<Button>("research-button");
+
+
+
+            UIWorkshop uiWorkshop = this.Q<UIWorkshop>();
+
+            Debug.Assert(uiWorkshop != null, "uiWorkshop 이 등록되지 않았습니다");
+
+            _uiWorkshopButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiWorkshop); });
+
+
+
+            UIBlacksmith uiBlacksmith = this.Q<UIBlacksmith>();
+
+            Debug.Assert(uiBlacksmith != null, "uiBlacksmith 이 등록되지 않았습니다");
+
+            _uiBlacksmithButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
+
+            //            _uiVillageButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+
+            _list.Add(uiWorkshop);
+            _list.Add(uiBlacksmith);
+
+
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].Initialize();
+            }
+
+            OnShowPanelEvent(uiWorkshop);
+        }
+
+        private T GetSystemPanel<T>() where T : ISystemPanel
+        {
+            return (T)_list.Find(panel => panel is T);
         }
 
         public void CleanUp()
         {
-            _uiWorkshop.CleanUp();
-            _uiWorkshop = null;
+
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            _uiWorkshopButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiWorkshop); });
+
+            var uiBlacksmith = GetSystemPanel<UIBlacksmith>();
+            _uiBlacksmithButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
+
+            //            _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
+            //            _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(_uiWorkshop); });
+
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].CleanUp();
+            }
+            _list.Clear();
+
         }
 
-        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
-        public void RefreshAssetEntity(AssetEntity assetEntity) => _uiWorkshop.RefreshAssetEntity(assetEntity);
 
+        public void RefreshBlacksmith(int index)
+        {
+            var uiBlacksmith = GetSystemPanel<UIBlacksmith>();
+            uiBlacksmith.RefreshBlacksmith(index);
+        }
+        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
+        }
+        public void RefreshAssetEntity(AssetEntity assetEntity)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RefreshAssetEntity(assetEntity);
+        }
+
+        public void OnShowPanelEvent(ISystemPanel element)
+        {
+            for(int i = 0; i < _list.Count; i++)
+            {
+                if (_list[i] == element)
+                    _list[i].Show();
+                else
+                    _list[i].Hide();
+            }
+        }
 
         #region ##### Listener #####
-        public void AddUpgradeListener(System.Action<int> act) => _uiWorkshop.AddUpgradeListener(act);
-        public void RemoveUpgradeListener(System.Action<int> act) => _uiWorkshop.RemoveUpgradeListener(act);
-        public void AddUpTechListener(System.Action<int, UnitData> act) => _uiWorkshop.AddUpTechListener(act);
-        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiWorkshop.RemoveUpTechListener(act);
-        public void AddExpendListener(System.Action act) => _uiWorkshop.AddExpendListener(act);
-        public void RemoveExpendListener(System.Action act) => _uiWorkshop.RemoveExpendListener(act);
+        public void AddUpgradeListener(System.Action<int> act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.AddUpgradeListener(act);
+        }
+        public void RemoveUpgradeListener(System.Action<int> act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RemoveUpgradeListener(act);
+        }
+        public void AddUpTechListener(System.Action<int, UnitData> act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.AddUpTechListener(act);
+        }
+        public void RemoveUpTechListener(System.Action<int, UnitData> act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RemoveUpTechListener(act);
+        }
+        public void AddExpendListener(System.Action act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.AddExpendListener(act);
+        }
+        public void RemoveExpendListener(System.Action act)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RemoveExpendListener(act);
+        }
 
         #endregion
     }

@@ -46,7 +46,7 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
             Debug.Assert(_uiPlay != null, "_uiPlay 가 등록되지 않았습니다");
 
-            _uiAsset.Initialize(_root.Q<VisualElement>("UIAssetUXML"));
+            _uiAsset.Initialize(_root.Q<VisualElement>("UIAsset"));
             _uiSystem.Initialize();
             _uiPlay.Initialize(transform);
         }

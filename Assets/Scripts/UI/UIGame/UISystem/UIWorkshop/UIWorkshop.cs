@@ -7,7 +7,7 @@ namespace SEF.UI.Toolkit
     using Data;
     using Entity;
 
-    public class UIWorkshop : VisualElement
+    public class UIWorkshop : VisualElement, ISystemPanel
     {
         public new class UxmlFactory : UxmlFactory<UIWorkshop, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
@@ -50,7 +50,15 @@ namespace SEF.UI.Toolkit
             _scrollView = null;
         }
 
+        public void Show()
+        {
+            this.style.display = DisplayStyle.Flex;
+        }
 
+        public void Hide()
+        {
+            this.style.display = DisplayStyle.None;
+        }
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
         {
             if (!_dic.ContainsKey(index))
