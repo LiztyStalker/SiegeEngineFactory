@@ -17,8 +17,6 @@ namespace SEF.UI.Toolkit
 
         private Dictionary<int, UIBlacksmithLine> _dic = new Dictionary<int, UIBlacksmithLine>();
 
-        private int _lineCount = 0;
-
         private ScrollView _scrollView;
 
         public static UIBlacksmith Create()
@@ -52,12 +50,13 @@ namespace SEF.UI.Toolkit
             this.style.display = DisplayStyle.None;
         }
 
+        //private bool IsView() => this.style.display == DisplayStyle.Flex;
 
-        //BlacksmithEntity
-        public void RefreshBlacksmith(int index)
+        public void RefreshBlacksmith(int index, BlacksmithEntity entity)
         {
             if (!_dic.ContainsKey(index))
             {
+                Debug.Log("Create");
                 var line = UIBlacksmithLine.Create();
                 line.Initialize();
                 line.SetIndex(index);
@@ -65,7 +64,7 @@ namespace SEF.UI.Toolkit
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
-            _dic[index].RefreshBlacksmithLine();
+            _dic[index].RefreshBlacksmithLine(entity);
         }
 
         public void RefreshAssetEntity(AssetEntity assetEntity)

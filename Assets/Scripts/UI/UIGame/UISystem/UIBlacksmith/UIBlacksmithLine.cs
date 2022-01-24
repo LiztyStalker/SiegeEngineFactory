@@ -35,6 +35,8 @@ namespace SEF.UI.Toolkit {
 
         public void SetIndex(int index) => _index = index;
 
+        private BlacksmithEntity _entity;
+
         public static UIBlacksmithLine Create()
         {
             return UIUXML.GetVisualElement<UIBlacksmithLine>(PATH_UI_UXML);
@@ -56,7 +58,7 @@ namespace SEF.UI.Toolkit {
             _upgradeAssetIcon = this.Q<VisualElement>("upgrade-asset-icon");
             _upgradeValueLabel = this.Q<Label>("upgrade-asset-value-label");
 
-            _inactivatePanel = this.Q<VisualElement>("inactivate_panel");
+            _inactivatePanel = this.Q<VisualElement>("inactivate-panel");
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
@@ -88,19 +90,28 @@ namespace SEF.UI.Toolkit {
         }
 
 
-        public void RefreshBlacksmithLine()
+        public void RefreshBlacksmithLine(BlacksmithEntity entity)
         {
             if (_activatePanel.style.display == DisplayStyle.None)
             {
                 _activatePanel.style.display = DisplayStyle.Flex;
                 _inactivatePanel.style.display = DisplayStyle.None;
             }
+
+            _entity = entity;
+
+            _nameLabel.text = entity.Name;
+            _levelValueLabel.text = entity.UpgradeValue.ToString();
+
+//            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
+
+            _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
         }
 
         public void RefreshAssetEntity(AssetEntity assetEntity)
         {
-            //var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);
-            //_upgradeButton.SetEnabled(isEnough);
+            var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+            _upgradeButton.SetEnabled(isEnough);
         }
 
         public void CleanUp()

@@ -13,6 +13,8 @@ namespace SEF.UI.Toolkit
         void CleanUp();
         void Show();
         void Hide();
+
+        void RefreshAssetEntity(AssetEntity assetEntity);
     }
 
     public class UISystem : VisualElement 
@@ -116,25 +118,9 @@ namespace SEF.UI.Toolkit
         }
 
 
-        public void RefreshBlacksmith(int index)
-        {
-            var uiBlacksmith = GetSystemPanel<UIBlacksmith>();
-            uiBlacksmith.RefreshBlacksmith(index);
-        }
-        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
-        {
-            var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
-        }
-        public void RefreshAssetEntity(AssetEntity assetEntity)
-        {
-            var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshAssetEntity(assetEntity);
-        }
-
         public void OnShowPanelEvent(ISystemPanel element)
         {
-            for(int i = 0; i < _list.Count; i++)
+            for (int i = 0; i < _list.Count; i++)
             {
                 if (_list[i] == element)
                     _list[i].Show();
@@ -143,17 +129,60 @@ namespace SEF.UI.Toolkit
             }
         }
 
+
+        #region ##### Entity #####
+
+        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
+        }     
+
+
+        public void RefreshBlacksmith(int index, BlacksmithEntity entity)
+        {
+            var ui = GetSystemPanel<UIBlacksmith>();
+            ui.RefreshBlacksmith(index, entity);
+        }
+
+        public void RefreshAssetEntity(AssetEntity assetEntity)
+        {
+
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].RefreshAssetEntity(assetEntity);
+            }
+
+            //var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            //uiWorkshop.RefreshAssetEntity(assetEntity);
+        }
+
+        #endregion
+
+
         #region ##### Listener #####
-        public void AddUpgradeListener(System.Action<int> act)
+        public void AddOnWorkshopUpgradeListener(System.Action<int> act)
         {
-            var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.AddUpgradeListener(act);
+            var ui = GetSystemPanel<UIWorkshop>();
+            ui.AddUpgradeListener(act);
         }
-        public void RemoveUpgradeListener(System.Action<int> act)
+        public void RemoveOnWorkshopUpgradeListener(System.Action<int> act)
         {
-            var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RemoveUpgradeListener(act);
+            var ui = GetSystemPanel<UIWorkshop>();
+            ui.RemoveUpgradeListener(act);
         }
+
+        public void AddOnBlacksmithUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIBlacksmith>();
+            ui.AddUpgradeListener(act);
+        }
+        public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIBlacksmith>();
+            ui.RemoveUpgradeListener(act);
+        }
+
         public void AddUpTechListener(System.Action<int, UnitData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
