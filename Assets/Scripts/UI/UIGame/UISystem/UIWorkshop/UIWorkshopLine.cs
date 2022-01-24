@@ -230,8 +230,6 @@ namespace SEF.UI.Toolkit
             _uiFillable.FillAmount = nowTime / unitData.ProductTime;
 
             _upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
-
-            //Debug.Log(_index + " " + _uiProgressbar.FillAmount);
         }
 
         public void RefreshAssetEntity(AssetEntity assetEntity)

@@ -102,6 +102,8 @@ namespace SEF.UI.Toolkit {
 
             _nameLabel.text = entity.Name;
             _levelValueLabel.text = entity.UpgradeValue.ToString();
+            _contentLabel.text = entity.Content;
+            _abilityLabel.text = entity.Ability;
 
 //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
 

@@ -97,7 +97,7 @@ namespace SEF.Test
         public IEnumerator WorkshopManagerTest_Upgrade()
         {
             _workshopManager.AddRefreshListener(UpgradeMessageEvent);
-            _workshopManager.UpgradeWorkshop(0);
+            _workshopManager.Upgrade(0);
             yield return null;
             _workshopManager.RemoveRefreshListener(UpgradeMessageEvent);
         }
@@ -124,7 +124,7 @@ namespace SEF.Test
         public IEnumerator WorkshopManagerTest_UpTech_And_InitializeUpgrade()
         {
             _workshopManager.AddRefreshListener(UpgradeMessageEvent);
-            _workshopManager.UpgradeWorkshop(0);
+            _workshopManager.Upgrade(0);
             yield return null;
             _workshopManager.RemoveRefreshListener(UpgradeMessageEvent);
 

@@ -54,7 +54,7 @@ namespace SEF.UI.Toolkit
 
 
         //BlacksmithEntity
-        public void RefreshBlacksmith(int index)
+        public void RefreshVillage(int index, VillageEntity entity)
         {
             if (!_dic.ContainsKey(index))
             {
@@ -65,7 +65,7 @@ namespace SEF.UI.Toolkit
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
-            _dic[index].RefreshVillageLine();
+            _dic[index].RefreshVillageLine(entity);
         }
 
         public void RefreshAssetEntity(AssetEntity assetEntity)

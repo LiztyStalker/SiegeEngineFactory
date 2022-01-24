@@ -8,24 +8,22 @@ namespace SEF.Manager
     using UnityEngine;
     using Storage;
 
-    public class BlacksmithManager
+    public class VillageManager : MonoBehaviour
     {
 
-        private List<BlacksmithLine> _list;
+        private List<VillageLine> _list;
 
-        public static BlacksmithManager Create()
+        public static VillageManager Create()
         {
-            return new BlacksmithManager();
+            return new VillageManager();
         }
 
         public void Initialize(IAccountData accountData)
         {
-            _list = new List<BlacksmithLine>();
-            var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
+            _list = new List<VillageLine>();
+            var arr = DataStorage.Instance.GetAllDataArrayOrZero<VillageData>();
 
-            Debug.Log(arr.Length);
-
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 var line = CreateLine();
                 line.SetData(arr[i]);
@@ -69,9 +67,9 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
-        private BlacksmithLine CreateLine()
+        private VillageLine CreateLine()
         {
-            var line = BlacksmithLine.Create();
+            var line = VillageLine.Create();
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
@@ -84,12 +82,12 @@ namespace SEF.Manager
         #region ##### Listener #####
 
 
-        private System.Action<int, BlacksmithEntity> _refreshEvent;
-        public void AddOnRefreshListener(System.Action<int, BlacksmithEntity> act) => _refreshEvent += act;
-        public void RemoveOnRefreshListener(System.Action<int, BlacksmithEntity> act) => _refreshEvent -= act;
-        private void OnRefreshEvent(int index, BlacksmithEntity unitEntity)
+        private System.Action<int, VillageEntity> _refreshEvent;
+        public void AddOnRefreshListener(System.Action<int, VillageEntity> act) => _refreshEvent += act;
+        public void RemoveOnRefreshListener(System.Action<int, VillageEntity> act) => _refreshEvent -= act;
+        private void OnRefreshEvent(int index, VillageEntity entity)
         {
-            _refreshEvent?.Invoke(index, unitEntity);
+            _refreshEvent?.Invoke(index, entity);
         }
 
         private System.Func<StatusPackage> _statusPackageEvent;
@@ -123,7 +121,7 @@ namespace SEF.Manager
         {
             if (accountData == null)
             {
-                _list = new List<BlacksmithLine>();
+                _list = new List<VillageLine>();
                 var line = CreateLine();
                 line.SetIndex(Count);
             }

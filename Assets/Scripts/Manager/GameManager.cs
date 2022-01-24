@@ -34,7 +34,11 @@ namespace SEF.Manager
 
 
             //Event 연결
+            //RefreshEntity 통합 필요?
             _gameSystem.AddRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.AddOnRefreshBlacksmithListener(_uiGame.RefreshBlacksmith);
+            _gameSystem.AddOnRefreshVillageListener(_uiGame.RefreshVillage);
+
             _gameSystem.AddRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
@@ -46,7 +50,9 @@ namespace SEF.Manager
 //            _unitManager.AddOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
             _unitManager.SetOnStatusPackageListener(_gameSystem.GetStatusPackage);
 
-            _uiGame.AddUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.AddOnBlacksmithUpgradeListener(_gameSystem.UpgradeBlacksmith);
+            _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
 
@@ -66,6 +72,10 @@ namespace SEF.Manager
         {
             //Event 해제
             _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.RemoveOnRefreshBlacksmithListener(_uiGame.RefreshBlacksmith);
+            _gameSystem.RemoveOnRefreshVillageListener(_uiGame.RefreshVillage);
+
+
             _gameSystem.RemoveRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
@@ -77,7 +87,9 @@ namespace SEF.Manager
             //            _unitManager.RemoveOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
             _unitManager.SetOnStatusPackageListener(null);
 
-            _uiGame.RemoveUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.RemoveOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.RemoveOnBlacksmithUpgradeListener(_gameSystem.UpgradeBlacksmith);
+            _uiGame.RemoveOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
 

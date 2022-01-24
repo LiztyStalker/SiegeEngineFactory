@@ -56,14 +56,12 @@ namespace SEF.UI.Toolkit
         {
             this.parent.style.display = DisplayStyle.Flex;
             this.style.display = DisplayStyle.Flex;
-            Debug.Log(this.style.display);
         }
 
         public void Hide()
         {
             this.parent.style.display = DisplayStyle.None;
             this.style.display = DisplayStyle.None;
-            Debug.Log(this.style.display);
         }
 
 

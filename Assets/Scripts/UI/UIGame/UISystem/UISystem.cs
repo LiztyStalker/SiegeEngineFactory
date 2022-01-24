@@ -63,9 +63,9 @@ namespace SEF.UI.Toolkit
             UIVillage uiVillage = this.Q<UIVillage>();
 
             //UISystem에 등록되어있지 않으면 자동 생성 필요
-            Debug.Assert(uiVillage != null, "uiBlacksmith 이 등록되지 않았습니다");
+            Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
 
-            _uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+            _uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
 
 
             UIResearch uiResearch = this.Q<UIResearch>();
@@ -73,7 +73,7 @@ namespace SEF.UI.Toolkit
             //UISystem에 등록되어있지 않으면 자동 생성 필요
             Debug.Assert(uiResearch != null, "uiResearch 이 등록되지 않았습니다");
 
-            _uiResearchButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });            //            _uiResearchButton.RegisterCallback<ClickEvent>(OnShowPanelEvent);
+            _uiResearchButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });
 
 
             _list.Add(uiWorkshop);
@@ -132,10 +132,10 @@ namespace SEF.UI.Toolkit
 
         #region ##### Entity #####
 
-        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
+        public void RefreshUnit(int index, UnitEntity entity, float nowTime)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshUnit(index, unitEntity, nowTime);
+            uiWorkshop.RefreshUnit(index, entity, nowTime);
         }     
 
 
@@ -145,6 +145,12 @@ namespace SEF.UI.Toolkit
             ui.RefreshBlacksmith(index, entity);
         }
 
+        public void RefreshVillage(int index, VillageEntity entity)
+        {
+            var ui = GetSystemPanel<UIVillage>();
+            ui.RefreshVillage(index, entity);
+        }
+
         public void RefreshAssetEntity(AssetEntity assetEntity)
         {
 
@@ -152,9 +158,6 @@ namespace SEF.UI.Toolkit
             {
                 _list[i].RefreshAssetEntity(assetEntity);
             }
-
-            //var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            //uiWorkshop.RefreshAssetEntity(assetEntity);
         }
 
         #endregion
@@ -171,18 +174,6 @@ namespace SEF.UI.Toolkit
             var ui = GetSystemPanel<UIWorkshop>();
             ui.RemoveUpgradeListener(act);
         }
-
-        public void AddOnBlacksmithUpgradeListener(System.Action<int> act)
-        {
-            var ui = GetSystemPanel<UIBlacksmith>();
-            ui.AddUpgradeListener(act);
-        }
-        public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act)
-        {
-            var ui = GetSystemPanel<UIBlacksmith>();
-            ui.RemoveUpgradeListener(act);
-        }
-
         public void AddUpTechListener(System.Action<int, UnitData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
@@ -203,6 +194,31 @@ namespace SEF.UI.Toolkit
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             uiWorkshop.RemoveExpendListener(act);
         }
+
+
+
+        public void AddOnBlacksmithUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIBlacksmith>();
+            ui.AddUpgradeListener(act);
+        }
+        public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIBlacksmith>();
+            ui.RemoveUpgradeListener(act);
+        }
+
+        public void AddOnVillageUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIVillage>();
+            ui.AddUpgradeListener(act);
+        }
+        public void RemoveOnVillageUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIVillage>();
+            ui.RemoveUpgradeListener(act);
+        }
+
 
         #endregion
     }

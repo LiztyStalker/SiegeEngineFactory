@@ -19,6 +19,12 @@ namespace SEF.Data
             Value = NumberDataUtility.GetCompoundInterest(unitData.StartUpgradeAsset.Value, unitData.IncreaseUpgradeAssetValue, unitData.IncreaseUpgradeAssetRate, upgradeData.Value) + (upgradeData.Value);
         }
 
+        public void SetAssetData(BigNumberData data, int increaseValue, float increateRate, int value)
+        {
+            Value = NumberDataUtility.GetCompoundInterest(data.Value, increaseValue, increateRate, value);
+        }
+            
+
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
             var level = levelWaveData.GetLevel();

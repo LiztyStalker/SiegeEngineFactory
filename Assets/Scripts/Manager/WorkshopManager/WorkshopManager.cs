@@ -56,7 +56,7 @@ namespace SEF.Manager
             }
         }
 
-        public IAssetData UpgradeWorkshop(int index)
+        public IAssetData Upgrade(int index)
         {
             return _list[index].Upgrade();
         }

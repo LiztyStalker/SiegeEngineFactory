@@ -5,9 +5,9 @@ namespace SEF.Entity
     using System.Collections.Generic;
     using UnityEngine;
 
-    public struct BlacksmithEntity
+    public struct VillageEntity
     {
-        private BlacksmithData _data;
+        private VillageData _data;
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
 
@@ -42,12 +42,12 @@ namespace SEF.Entity
             _upgradeData = null;
         }
 
-        public void SetData(BlacksmithData data)
+        public void SetData(VillageData data)
         {
-            _data = data;            
+            _data = data;
         }
 
-        public void SetData(BlacksmithData data, UpgradeData upgradeData)
+        public void SetData(VillageData data, UpgradeData upgradeData)
         {
             _data = data;
             _upgradeData = upgradeData;
@@ -73,6 +73,5 @@ namespace SEF.Entity
         public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
         private StatusPackage GetStatusPackage() => _statusPackageEvent();
         #endregion
-
     }
 }
