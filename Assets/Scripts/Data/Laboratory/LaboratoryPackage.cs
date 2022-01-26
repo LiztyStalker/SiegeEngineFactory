@@ -52,10 +52,7 @@ namespace SEF.Research
             }
 
             var index = GetIndex<T>();
-            if (index == -1)
-            {
-                return false;
-            }
+            if (index == -1) return false;
 
             var entity = _list[index];
             return entity.GetResearchValue() >= value;
