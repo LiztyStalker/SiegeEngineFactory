@@ -67,6 +67,11 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
+        public void UpTech(int index)
+        {
+
+        }
+
         private VillageLine CreateLine()
         {
             var line = VillageLine.Create();

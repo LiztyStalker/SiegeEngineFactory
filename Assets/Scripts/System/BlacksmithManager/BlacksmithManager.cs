@@ -69,6 +69,11 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
+        public void UpTech(int index)
+        {
+            Debug.Log("UpTech" + index);
+        }
+
         private BlacksmithLine CreateLine()
         {
             var line = BlacksmithLine.Create();
