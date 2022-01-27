@@ -7,6 +7,9 @@ namespace SEF.Manager
     using Entity;
     using Account;
     using Unit;
+    using Statistics;
+    using Research;
+    using Quest;
 
 
     public class GameSystem
@@ -14,19 +17,23 @@ namespace SEF.Manager
 
         private Account _account;
 
-        private StatusPackage _statusPackage;
+        private StatusPackage _status;
 
         private WorkshopManager _workshopManager;
         private BlacksmithManager _blacksmithManager;
         private VillageManager _villageManager;
         //ResearchManager
 
+
+        private StatisticsPackage _statistics;
+
+
         public static GameSystem Create()
         {
             return new GameSystem();
         }
 
-        public void Initialize() 
+        public void Initialize(IAccountData data = null) 
         {
             _account = Account.Current;
 
@@ -46,17 +53,20 @@ namespace SEF.Manager
 
             //ResearchManager
 
-            _statusPackage = StatusPackage.Create();
-            _statusPackage.Initialize();
-            _statusPackage.AddOnProductListener(OnStatusProductEvent);
+            _statistics = StatisticsPackage.Create();
+            _statistics.Initialize(null);
+
+            _status = StatusPackage.Create();
+            _status.Initialize();
+            _status.AddOnProductListener(OnStatusProductEvent);
 
 
         }
 
         public void CleanUp()
         {
-            _statusPackage.RemoveOnProductListener(OnStatusProductEvent);
-            _statusPackage.CleanUp();
+            _status.RemoveOnProductListener(OnStatusProductEvent);
+            _status.CleanUp();
 
             _workshopManager.CleanUp();
             _blacksmithManager.CleanUp();
@@ -70,7 +80,7 @@ namespace SEF.Manager
             _blacksmithManager.RunProcess(deltaTime);
             //VillageManager
 
-            _statusPackage.RunProcess(deltaTime);
+            _status.RunProcess(deltaTime);
         }
 
         public void Refresh()
@@ -83,11 +93,13 @@ namespace SEF.Manager
             _account.RefreshAssetEntity();
         }
 
+
+
         #region ##### StatusEntity #####
 
         //        public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData => _statusEntity.GetStatusDataToBigNumberData<T, U>(data);
 
-        public StatusPackage GetStatusPackage() => _statusPackage;
+        public StatusPackage GetStatusPackage() => _status;
 
         private void OnStatusProductEvent(IAssetData[] assetDataArr)
         {
@@ -100,15 +112,43 @@ namespace SEF.Manager
         #endregion
 
 
+
         #region ##### AssetEntity #####
 
-        public void AddAsset(IAssetData assetData) => _account.AddAsset(assetData);
-        public void SubjectAsset(IAssetData assetData) => _account.SubjectAsset(assetData);
-        public void SetAsset(IAssetData assetData) => _account.SetAsset(assetData);
+        public void AddAsset(IAssetData assetData)
+        {
+            _account.AddAsset(assetData);
+
+        }
+        public void SubjectAsset(IAssetData assetData)
+        {
+            _account.SubjectAsset(assetData);
+//            AddStatisticsData(assetData.StatisticsType, assetData.AssetValue);
+        }
+        public void SetAsset(IAssetData assetData)
+        {
+            _account.SetAsset(assetData);
+
+        }
 
         #endregion
 
-              
+
+
+        #region ##### Statistics #####
+        public void AddStatisticsData<T>(int value = 1) where T : IStatisticsData => _statistics.AddStatisticsData<T>(value);
+        public void SetStatisticsData<T>(int value) where T : IStatisticsData => _statistics.SetStatisticsData<T>(value);
+        public void AddStatisticsData<T>(System.Numerics.BigInteger value) where T : IStatisticsData => _statistics.AddStatisticsData<T>(value);
+        public void SetStatisticsData<T>(System.Numerics.BigInteger value) where T : IStatisticsData => _statistics.SetStatisticsData<T>(value);
+        public void AddStatisticsData(System.Type type, int value = 1) => _statistics.AddStatisticsData(type, value);
+        public void SetStatisticsData(System.Type type, int value = 1) => _statistics.SetStatisticsData(type, value);
+        public void GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
+        public void GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
+        private System.Type FindType(string key, System.Type classType) => _statistics.FindType(key, classType);
+
+        #endregion
+
+
 
         public IAssetData GetAssetData()
         {
@@ -116,21 +156,31 @@ namespace SEF.Manager
         }
 
 
-        //DestroyedActor가 여기 있을 필요가 있는지 의문
-        [System.Obsolete("StatusPackage 적용 보상")]
         public void DestroyedActor(PlayActor playActor)
         {
             switch (playActor)
             {
                 case UnitActor unitActor:
+                    AddStatisticsData<DestroyUnitStatisticsData>();
+                    var unitType = FindType(unitActor.Key, typeof(DestroyUnitStatisticsData));
+                    if (unitType != null)
+                    {
+                        _statistics.AddStatisticsData(unitType, 1);
+                    }
                     break;
                 case EnemyActor enemyActor:
                     //[System.Obsolete("StatusPackage 적용 보상")]
                     _account.AddAsset(enemyActor.GetRewardAssetData());
+
+                    AddStatisticsData<DestroyEnemyStatisticsData>();
+                    var enemyType = FindType(enemyActor.Key, typeof(DestroyEnemyStatisticsData));
+                    if (enemyType != null)
+                    {
+                        _statistics.AddStatisticsData(enemyType, 1);
+                    }
                     break;
             }
         }
-
 
 
 
@@ -188,10 +238,40 @@ namespace SEF.Manager
         public void AddOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.AddOnRefreshListener(act);
         public void RemoveOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.RemoveOnRefreshListener(act);
 
+        public void AddProductUnitListener(System.Action<UnitEntity> act) 
+        {
+            _workshopManager.AddProductUnitListener(entity =>
+            {
+                act?.Invoke(entity);
 
+                //유닛 생성
+                AddStatisticsData<CreateUnitStatisticsData>(1);
 
-        public void AddProductUnitListener(System.Action<UnitEntity> act) => _workshopManager.AddProductUnitListener(act);
-        public void RemoveProductUnitListener(System.Action<UnitEntity> act) => _workshopManager.RemoveProductUnitListener(act);
+                //특정 유닛 생성
+                var type = System.Type.GetType($"SEF.Statistics.{entity.UnitData.Key}CreateUnitStatisticsData");
+                if(type != null)
+                {
+                    _statistics.AddStatisticsData(type, 1);
+                }
+            });            
+        }
+        public void RemoveProductUnitListener(System.Action<UnitEntity> act)
+        {
+            _workshopManager.RemoveProductUnitListener(entity =>
+            {
+                act?.Invoke(entity);
+
+                //유닛 생성
+                AddStatisticsData<CreateUnitStatisticsData>(1);
+
+                //특정 유닛 생성
+                var type = System.Type.GetType($"SEF.Statistics.{entity.UnitData.Key}CreateUnitStatisticsData");
+                if (type != null)
+                {
+                    _statistics.AddStatisticsData(type, 1);
+                }
+            });
+        }
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);
         public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _account.AddRefreshAssetDataListener(act);
