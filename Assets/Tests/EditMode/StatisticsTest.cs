@@ -76,7 +76,17 @@ namespace SEF.Test
         }
 
 
+        [Test]
+        public void StatisticsTest_HasType() 
+        {
+            var test = new StatisticsTest1();
+            Debug.Log(test.GetType().FullName);
+            var type1 = System.Type.GetType($"SEF.Test.StatisticsTest+StatisticsTest1");
+            Debug.Log(type1);
+            var type2 = System.Type.GetType($"SEF.Test.StatisticsTest+StatisticsTest4");
+            Debug.Log(type2);
 
+        }
 
 
 

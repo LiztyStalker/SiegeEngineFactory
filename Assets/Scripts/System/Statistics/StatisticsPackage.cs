@@ -34,15 +34,23 @@ namespace SEF.Statistics
         }
         public void AddStatisticsData<T>(BigInteger value) where T : IStatisticsData
         {
-            var index = GetIndex<T>();
-            if(index == -1)
+            AddStatisticsData(typeof(T), value);
+        }
+        public void AddStatisticsData(System.Type type, BigInteger value)
+        {
+            var iType = type.GetInterface(typeof(IStatisticsData).Name);
+            if (iType != null)
             {
-                _list.Add(StatisticsEntity.Create<T>());
-                index = _list.Count - 1;
+                var index = GetIndex(type);
+                if (index == -1)
+                {
+                    _list.Add(StatisticsEntity.Create(type));
+                    index = _list.Count - 1;
+                }
+                var entity = _list[index];
+                entity.AddStatisticsData(value);
+                _list[index] = entity;
             }
-            var entity = _list[index];
-            entity.AddStatisticsData(value);
-            _list[index] = entity;
         }
 
         public void SetStatisticsData<T>(int value) where T : IStatisticsData
@@ -52,28 +60,46 @@ namespace SEF.Statistics
 
         public void SetStatisticsData<T>(BigInteger value) where T : IStatisticsData
         {
-            var index = GetIndex<T>();
-            if (index == -1)
-            {
-                _list.Add(StatisticsEntity.Create<T>());
-                index = _list.Count - 1;
-            }
-            var entity = _list[index];
-            entity.SetStatisticsData(value);
-            _list[index] = entity;
+            SetStatisticsData(typeof(T), value);
         }
 
-        private int GetIndex<T>() => _list.FindIndex(entity => entity.GetStatisticsType() == typeof(T));
+        public void SetStatisticsData(System.Type type, BigInteger value)
+        {
+            var iType = type.GetInterface(typeof(IStatisticsData).Name);
+            if (iType != null)
+            {
 
+                var index = GetIndex(type);
+                if (index == -1)
+                {
+                    _list.Add(StatisticsEntity.Create(type));
+                    index = _list.Count - 1;
+                }
+                var entity = _list[index];
+                entity.SetStatisticsData(value);
+                _list[index] = entity;
+            }
+        }
+        private int GetIndex(System.Type type) => _list.FindIndex(entity => entity.GetStatisticsType() == type);
         public BigInteger? GetStatisticsValue<T>() where T : IStatisticsData
         {
-            var index = GetIndex<T>();
-            if (index != -1)
+            return GetStatisticsValue(typeof(T));
+        }
+
+        public BigInteger? GetStatisticsValue(System.Type type)
+        {
+            var iType = type.GetInterface(typeof(IStatisticsData).Name);
+            if (iType != null)
             {
-                return _list[index].GetStatisticsValue();
+                var index = GetIndex(type);
+                if (index != -1)
+                {
+                    return _list[index].GetStatisticsValue();
+                }
             }
             return null;
         }
+        public System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");
 
         public IAccountData GetSaveData()
         {
