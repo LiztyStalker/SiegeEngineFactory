@@ -56,14 +56,15 @@ namespace SEF.Manager
             }
         }
 
-        public IAssetData Upgrade(int index)
+        public IAssetData Upgrade(int index, out string key)
         {
-            return _list[index].Upgrade();
+            return _list[index].Upgrade(out key);
         }
 
-        public void ExpendWorkshop() 
+        public int ExpendWorkshop() 
         {
             CreateLine();
+            return _list.Count;
             //return ExpendAssetData to Count
         }
 

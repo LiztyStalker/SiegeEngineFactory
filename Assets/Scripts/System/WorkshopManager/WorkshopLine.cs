@@ -50,10 +50,11 @@ namespace SEF.Manager
         }
 
 
-        public IAssetData Upgrade()
+        public IAssetData Upgrade(out string key)
         {
             var assetData = _unitEntity.UpgradeAssetData;
             _unitEntity.Upgrade();
+            key = _unitEntity.UnitData.Key;
             OnRefreshEvent();
             return assetData;
         }
