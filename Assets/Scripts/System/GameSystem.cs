@@ -118,17 +118,17 @@ namespace SEF.Manager
         public void AddAsset(IAssetData assetData)
         {
             _account.AddAsset(assetData);
-
         }
         public void SubjectAsset(IAssetData assetData)
         {
             _account.SubjectAsset(assetData);
-//            AddStatisticsData(assetData.StatisticsType, assetData.AssetValue);
+            AddStatisticsData(assetData.UsedStatisticsType(), assetData.AssetValue);
+            AddStatisticsData(assetData.AccumulateStatisticsType(), assetData.AssetValue);
         }
         public void SetAsset(IAssetData assetData)
         {
             _account.SetAsset(assetData);
-
+            SetStatisticsData(assetData.GetStatisticsType(), assetData.AssetValue);
         }
 
         #endregion
@@ -142,9 +142,11 @@ namespace SEF.Manager
         public void SetStatisticsData<T>(System.Numerics.BigInteger value) where T : IStatisticsData => _statistics.SetStatisticsData<T>(value);
         public void AddStatisticsData(System.Type type, int value = 1) => _statistics.AddStatisticsData(type, value);
         public void SetStatisticsData(System.Type type, int value = 1) => _statistics.SetStatisticsData(type, value);
-        public void GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
-        public void GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
-        private System.Type FindType(string key, System.Type classType) => _statistics.FindType(key, classType);
+        public void AddStatisticsData(System.Type type, System.Numerics.BigInteger value) => _statistics.AddStatisticsData(type, value);
+        public void SetStatisticsData(System.Type type, System.Numerics.BigInteger value) => _statistics.SetStatisticsData(type, value);
+        public System.Numerics.BigInteger? GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
+        public System.Numerics.BigInteger? GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
+        private System.Type FindType(string key, System.Type classType) => StatisticsPackage.FindType(key, classType);
 
         #endregion
 
@@ -187,32 +189,35 @@ namespace SEF.Manager
         #region ##### Workshop #####
         public void UpgradeWorkshop(int index)
         {
-            var assetData = _workshopManager.Upgrade(index);
+            var assetData = _workshopManager.Upgrade(index, out string key);
             _account.SubjectAsset(assetData);
-        }
 
-        public void UpgradeBlacksmith(int index)
-        {
-            var assetData = _blacksmithManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
+            AddStatisticsData<UpgradeUnitStatisticsData>();
+            var type = FindType(key, typeof(UpgradeUnitStatisticsData));
+            if (type != null)
+            {
+                _statistics.AddStatisticsData(type, 1);
+            }
         }
-        public void UpgradeVillage(int index)
-        {
-            var assetData = _villageManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
-        }
-
-
 
 
         public void ExpendWorkshop()
         {
-            _workshopManager.ExpendWorkshop();
+            int count = _workshopManager.ExpendWorkshop();
+            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
         }
         public void UpTechWorkshop(int index, UnitData unitData)
         {
             _workshopManager.UpTechWorkshop(index, unitData);
+
             //unitData TechAssetData 소비
+
+            AddStatisticsData<TechUnitStatisticsData>();
+            var type = FindType(unitData.Key, typeof(TechUnitStatisticsData));
+            if (type != null)
+            {
+                _statistics.AddStatisticsData(type, 1);
+            }
         }
 
         private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
@@ -223,11 +228,39 @@ namespace SEF.Manager
 
         //BlacksmithCondition 적용
         //VillageCondition적용
-        
+
 
         #endregion
 
 
+        public void UpgradeBlacksmith(int index)
+        {
+            var assetData = _blacksmithManager.Upgrade(index);
+            _account.SubjectAsset(assetData);
+            AddStatisticsData<UpgradeBlacksmithStatisticsData>();
+        }
+        public void UpTechBlacksmith(int index)
+        {
+            _blacksmithManager.UpTech(index);
+            AddStatisticsData<TechBlacksmithStatisticsData>();
+        }
+        public void UpgradeVillage(int index)
+        {
+            var assetData = _villageManager.Upgrade(index);
+            _account.SubjectAsset(assetData);
+            AddStatisticsData<UpgradeVillageStatisticsData>();
+        }
+
+        public void UpTechVillage(int index)
+        {
+            _villageManager.UpTech(index);
+            AddStatisticsData<TechVillageStatisticsData>();
+        }
+
+        public void SuccessedResearchData()
+        {
+            AddStatisticsData<SuccessResearchStatisticsData>();
+        }
 
 
         #region ##### Listener #####
@@ -287,7 +320,25 @@ namespace SEF.Manager
 
         public void Save() { }
 
-        #endregion 
+        #endregion
+
+
+
+
+        #region ##### LevelWave #####
+
+        public void ArrivedLevelWave(LevelWaveData levelWaveData)
+        {
+            SetStatisticsData<ArrivedLevelStatisticsData>(levelWaveData.GetLevel());
+
+            var type = FindType($"Lv{levelWaveData.GetLevel()}", typeof(ArrivedLevelStatisticsData));
+            if (type != null)
+            {
+                if(levelWaveData.GetWave() == 0)
+                    _statistics.SetStatisticsData(type, 1);
+            }
+        }
+        #endregion
     }
 
 }
