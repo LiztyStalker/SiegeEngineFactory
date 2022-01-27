@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_Test
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
-  _key: 
+  _key: Test
   _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
   _spineModelKey: BowSoldier_SkeletonData
   _spineSkinKey: 
@@ -24,6 +24,7 @@ MonoBehaviour:
   _increaseHealthValue: 1
   _increaseHealthRate: 0.05
   _productTime: 0
+  _isAttack: 0
   _attackValue:
     _valueText: 15
   _increaseAttackValue: 1
@@ -33,6 +34,7 @@ MonoBehaviour:
   _attackCount: 1
   _attackDelay: 1
   _attackBulletKey: BulletData_Arrow
+  _attackerDataList: []
   _attackBulletData: {fileID: 11400000, guid: f095821eb4d298643beef0d9261160b0, type: 2}
   _bulletScale: 0.3
   _startUpgradeAsset:

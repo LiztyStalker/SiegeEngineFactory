@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
   m_Name: EnemyData_Test
   m_EditorClassIdentifier: 
-  _key: EnemyData_Test
+  _key: Test
   _skeletonDataAsset: {fileID: 11400000, guid: 27c4b1926486e9549b1ee170edf7586c, type: 2}
   _spineModelKey: BowSoldier_SkeletonData
   _spineSkinKey: 
