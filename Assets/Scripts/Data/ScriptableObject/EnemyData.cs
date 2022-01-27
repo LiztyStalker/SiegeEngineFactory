@@ -14,14 +14,7 @@ namespace SEF.Data
     {
         [SerializeField]
         private string _key;
-        public string Key
-        {
-            get
-            {
-                _key = name;
-                return _key;
-            }
-        }
+        public string Key => _key;
 
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;

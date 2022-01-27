@@ -25,6 +25,7 @@ namespace SEF.Unit
         public bool IsArriveAction() => (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
         private UnitEntity _unitEntity;
+        public string Key => _unitEntity.UnitData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
         

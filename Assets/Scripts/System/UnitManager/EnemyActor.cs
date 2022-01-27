@@ -23,6 +23,7 @@ namespace SEF.Unit {
 #endif
 
         private EnemyEntity _enemyEntity;
+        public string Key => _enemyEntity.EnemyData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
 
