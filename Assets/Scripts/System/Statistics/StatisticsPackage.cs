@@ -99,7 +99,7 @@ namespace SEF.Statistics
             }
             return null;
         }
-        public System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");
+        public static System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");
 
         public IAccountData GetSaveData()
         {
