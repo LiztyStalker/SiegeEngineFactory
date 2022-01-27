@@ -23,9 +23,12 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.GetStatusDataToBigNumberData<DamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.AttackDelay));
-                return (float)data.GetDecimalValue();
-                //return _unitData.AttackDelay;
+                if (StatusPackage != null)
+                {
+                    var data = StatusPackage.GetStatusDataToBigNumberData<DamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.AttackDelay));
+                    return (float)data.GetDecimalValue();
+                }
+                return _unitData.AttackDelay;
             }
         }
 
@@ -33,9 +36,12 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.GetStatusDataToBigNumberData<ProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.ProductTime));
-                return (float)data.GetDecimalValue();
-                //return _unitData.ProductTime;
+                if (StatusPackage != null)
+                {
+                    var data = StatusPackage.GetStatusDataToBigNumberData<ProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.ProductTime));
+                    return (float)data.GetDecimalValue();
+                }
+                return _unitData.ProductTime;
             }
         }
 
@@ -47,7 +53,8 @@ namespace SEF.Entity
                 {
                     _healthData = CalculateHealthData();
                 }
-                return StatusPackage.GetStatusDataToBigNumberData<HealthDataStatusData, HealthData>(_healthData);
+                if(StatusPackage != null) return StatusPackage.GetStatusDataToBigNumberData<HealthDataStatusData, HealthData>(_healthData);
+                return _healthData;
 //                return _healthData;
             }
         }
@@ -61,8 +68,10 @@ namespace SEF.Entity
                 {
                     _damageData = CalculateAttackData();
                 }
-                return StatusPackage.GetStatusDataToBigNumberData<DamageValueStatusData, DamageData>(_damageData);
-//                return _damageData;
+
+                if(StatusPackage != null)
+                    return StatusPackage.GetStatusDataToBigNumberData<DamageValueStatusData, DamageData>(_damageData);
+                return _damageData;
             }
         }
 
@@ -129,7 +138,12 @@ namespace SEF.Entity
         #region ##### Listener #####
         private System.Func<StatusPackage> _statusPackageEvent;
         public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        private StatusPackage GetStatusPackage()
+        {
+            if (_statusPackageEvent != null)
+                return _statusPackageEvent();
+            return null;
+        }
         #endregion
 
 
