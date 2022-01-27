@@ -16,10 +16,16 @@ namespace SEF.Statistics
         internal void AddStatisticsData(BigInteger value)
         {
             _value += value;
+#if UNITY_EDITOR
+            UnityEngine.Debug.Log(_type.Name + " " + _value);
+#endif
         }
         internal void SetStatisticsData(BigInteger value)
         {
             _value = value;
+#if UNITY_EDITOR
+            UnityEngine.Debug.Log(_type.Name + " " + _value);
+#endif
         }
         internal BigInteger GetStatisticsValue() => _value;
         internal System.Type GetStatisticsType() => _type;
@@ -27,6 +33,11 @@ namespace SEF.Statistics
         internal static StatisticsEntity Create<T>() where T : IStatisticsData
         {
             return new StatisticsEntity(typeof(T));
+        }
+        
+        internal static StatisticsEntity Create(System.Type type)
+        {
+            return new StatisticsEntity(type);
         }
     }
 }
