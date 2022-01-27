@@ -56,8 +56,10 @@ namespace SEF.Entity
         }
 
         public new System.Type GetType() => _nowAssetData.GetType();
+        public System.Type UsedStatisticsType() => _nowAssetData.UsedStatisticsType();
+        public System.Type GetStatisticsType() => _nowAssetData.GetStatisticsType();
+        public System.Type AccumulateStatisticsType() => _nowAssetData.AccumulateStatisticsType();
 
-        
     }
 
     public class AssetEntity

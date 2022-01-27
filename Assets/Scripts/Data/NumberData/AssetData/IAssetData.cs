@@ -10,5 +10,8 @@ namespace SEF.Data
         BigInteger AssetValue { get; set; }
         string GetValue();
         System.Type GetType();
+        System.Type UsedStatisticsType();
+        System.Type GetStatisticsType();
+        System.Type AccumulateStatisticsType();
     }
 }

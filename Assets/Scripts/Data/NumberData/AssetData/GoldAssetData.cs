@@ -57,6 +57,12 @@ namespace SEF.Data
             data.ValueText = value.ToString();
             return data;
         }
+
+        public System.Type UsedStatisticsType() => typeof(Statistics.GoldUsedAssetStatisticsData);
+
+        public System.Type GetStatisticsType() => typeof(Statistics.GoldGetAssetStatisticsData);
+
+        public System.Type AccumulateStatisticsType() => typeof(Statistics.GoldAccumulateAssetStatisticsData);
 #endif
 
     }

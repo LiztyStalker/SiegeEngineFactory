@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    using System;
     using System.Numerics;
 
     public class ResourceAssetData : BigNumberData, IAssetData
@@ -29,6 +30,12 @@ namespace SEF.Data
             data.ValueText = value.ToString();
             return data;
         }
+
+        public Type UsedStatisticsType() => typeof(Statistics.ResourceUsedAssetStatisticsData);
+
+        public Type GetStatisticsType() => typeof(Statistics.ResourceGetAssetStatisticsData);
+
+        public Type AccumulateStatisticsType() => typeof(Statistics.ResourceAccumulateAssetStatisticsData);
 #endif
     }
 }

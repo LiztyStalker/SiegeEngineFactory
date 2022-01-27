@@ -4,6 +4,7 @@ namespace SEF.Data
     using System.Collections.Generic;
     using UnityEngine;
     using System.Numerics;
+    using System;
 
     public class PopulationAssetData : NumberData, IAssetData
     {
@@ -39,6 +40,24 @@ namespace SEF.Data
             data.Value = value;
             return data;
         }
+
+        /// <summary>
+        /// null 반환
+        /// </summary>
+        /// <returns></returns>
+        public Type UsedStatisticsType() => null;
+
+        /// <summary>
+        /// null 반환
+        /// </summary>
+        /// <returns></returns>
+        public Type GetStatisticsType() => null;
+
+        /// <summary>
+        /// null 반환
+        /// </summary>
+        /// <returns></returns>
+        public Type AccumulateStatisticsType() => null;
 #endif
     }
 }

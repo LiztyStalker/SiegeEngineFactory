@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    using System;
     using System.Numerics;
 
     public class MeteoriteAssetData : NumberData, IAssetData
@@ -30,6 +31,10 @@ namespace SEF.Data
             data.Value = value;
             return data;
         }
+
+        public Type UsedStatisticsType() => typeof(Statistics.MeteoriteUsedAssetStatisticsData);
+        public Type GetStatisticsType() => typeof(Statistics.MeteoriteGetAssetStatisticsData);
+        public Type AccumulateStatisticsType() => typeof(Statistics.MeteoriteAccumulateAssetStatisticsData);
 #endif
     }
 }
