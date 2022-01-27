@@ -56,7 +56,7 @@ namespace SEF.UI.Toolkit
         {
             if (!_dic.ContainsKey(index))
             {
-                Debug.Log("Create");
+                //Debug.Log("Create");
                 var line = UIBlacksmithLine.Create();
                 line.Initialize();
                 line.SetIndex(index);

@@ -23,7 +23,7 @@ namespace SEF.Manager
             _list = new List<BlacksmithLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
 
-            Debug.Log(arr.Length);
+            //Debug.Log(arr.Length);
 
             for(int i = 0; i < arr.Length; i++)
             {
