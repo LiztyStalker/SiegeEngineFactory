@@ -7,11 +7,13 @@ namespace SEF.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using Quest;
+    using SEF.Manager;
 
     public class QuestTest
     {
 
         private QuestPackage _package;
+        private QuestManager _manager;
 
         private class Test1 : IQuestData
         {
@@ -32,14 +34,28 @@ namespace SEF.Test
         {
             _package = QuestPackage.Create();
             _package.Initialize(null);
+
+            _manager = QuestManager.Create();
+            _manager.Initialize(null);
         }
 
         [TearDown]
         public void TearDown()
         {
             _package.CleanUp();
+            _manager.CleanUp();
         }
                 
+        [Test]
+        public void QuestManagerTest_QuestData()
+        {
+            _manager.AddOnRefreshListener(entity =>
+            {
+                Debug.Log(entity.Key);
+            });
+            _manager.RefreshAllQuests();
+        }
+
         [Test]
         public void QuestTest_Initialize()
         {
