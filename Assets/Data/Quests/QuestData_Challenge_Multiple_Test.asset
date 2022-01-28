@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
-  m_Name: QuestData_Daily_Test
+  m_Name: QuestData_Challenge_Multiple_Test
   m_EditorClassIdentifier: 
-  _key: DailyTest
-  _typeQuestGroup: 0
+  _key: ChallengeMultipleTest
+  _typeQuestGroup: 2
   _icon: {fileID: 0}
-  _isMultipleQuest: 0
+  _isMultipleQuest: 1
   _questConditionData:
     _serializedConditionQuestData:
       _className: 

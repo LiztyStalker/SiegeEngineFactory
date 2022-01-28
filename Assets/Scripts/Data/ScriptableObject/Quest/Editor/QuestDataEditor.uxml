@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="QuestDataEditor.uss" />
+    <uie:ObjectField label="Object Field" name="quest-icon-field" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="quest-key-field" />
+    <uie:EnumField label="Enum" value="Center" name="quest-type-group-field" />
+    <ui:Toggle label="Toggle" name="quest-multiple-toggle" />
+    <ui:VisualElement name="quest-single-condition-layout" />
+    <ui:VisualElement name="quest-multiple-condition-panel">
+        <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+            <ui:Button text="Add" display-tooltip-when-elided="true" name="quest-multiple-add-button" />
+            <ui:Button text="Remove" display-tooltip-when-elided="true" name="quest-multiple-remove-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="quest-multiple-condition-layout" />
+    </ui:VisualElement>
+</ui:UXML>

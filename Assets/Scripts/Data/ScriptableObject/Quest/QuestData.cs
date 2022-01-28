@@ -8,7 +8,6 @@ namespace SEF.Data
 
     public class QuestData : ScriptableObject
     {
-
         public enum TYPE_QUEST_GROUP { Daily, Weekly, Challenge, Goal}
 
 
@@ -23,12 +22,58 @@ namespace SEF.Data
 
 
         [SerializeField]
-        private SerializedConditionQuestData _serializedConditionQuestData;
+        private Sprite _icon;
+        public Sprite Icon => _icon;
 
+
+        [SerializeField]
+        private bool _isMultipleQuest = false;
+        private bool IsMultipleQuest => _isMultipleQuest;
+
+        [SerializeField]
+        private QuestConditionData _questConditionData;
+        public QuestConditionData QuestConditionData => _questConditionData;
+
+        [SerializeField]
+        private QuestConditionData[] _questConditionDataArray;
+        public QuestConditionData[] QuestConditionDataArray => _questConditionDataArray;
+
+        public int GetGoalValue(int index) 
+        {
+            if (IsMultipleQuest)
+                return _questConditionDataArray[index].ConditionValue;
+            return _questConditionData.ConditionValue;
+        }
+
+
+        public bool HasQuestGoal(int index, int value)
+        {
+            if (IsMultipleQuest)
+            {
+                return _questConditionDataArray[index].ConditionValue >= value;
+            }
+            return _questConditionData.ConditionValue >= value;
+        }
+
+        public IAssetData GetRewardAssetData(int index)
+        {
+            if (IsMultipleQuest)
+            {
+                return _questConditionDataArray[index].RewardAssetData;
+            }
+            return _questConditionData.RewardAssetData;
+        }
+
+    }
+
+    [System.Serializable]
+    public struct QuestConditionData
+    {
+        [SerializeField]
+        private SerializedConditionQuestData _serializedConditionQuestData;
 
         [NonSerialized]
         private IConditionQuestData _conditionQuestData;
-
 
         /// <summary>
         /// null 가능
@@ -37,7 +82,7 @@ namespace SEF.Data
         {
             get
             {
-                if(_conditionQuestData == null)
+                if (_conditionQuestData == null)
                 {
                     _conditionQuestData = _serializedConditionQuestData.GetSerializeData();
                 }
@@ -51,34 +96,40 @@ namespace SEF.Data
         public int ConditionValue => _conditionValue;
 
 
-//        [SerializeField]
-        //private SerializedAssetData _serializedAssetData;
+        [SerializeField]
+        private SerializedAssetData _serializedAssetData;
 
-
-//        [SerializeField]
         [NonSerialized]
         private IAssetData _rewardAssetData;
         public IAssetData RewardAssetData => _rewardAssetData;
 
-
-        [SerializeField]
-        private string _nextQuestDataKey;
-        public string NextQuestDataKey => _nextQuestDataKey;
-
-
-        [SerializeField]
-        private QuestData _nextQuestData;
-        public QuestData NextQuestData => _nextQuestData;
     }
 
-    internal class SerializedConditionQuestData
+    [System.Serializable]
+    public struct SerializedConditionQuestData
     {
         [SerializeField]
-        private string className;
+        private string _className;
 
         internal IConditionQuestData GetSerializeData()
         {
-            //ClassName에 맞춰 직렬 데이터 가져오기
+            //ClassName에 맞춰 데이터 가져오기
+            return null;
+        }
+    }
+
+    [System.Serializable]
+    public struct SerializedAssetData
+    {
+        [SerializeField]
+        private string _assetData;
+
+        [SerializeField]
+        private string _assetValue;
+
+        internal IAssetData GetData()
+        {
+            //_assetData에 맞춰 데이터 가져오기
             return null;
         }
     }

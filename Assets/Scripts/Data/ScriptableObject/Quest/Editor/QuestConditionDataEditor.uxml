@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="QuestConditionDataEditor.uss" />
+    <uie:PropertyField name="quest-condition-data-field" />
+    <uie:IntegerField label="Int Field" value="42" name="quest-condition-value-field" />
+    <uie:PropertyField name="quest-reward-assetdata-field" />
+    <ui:Button text="Remove" display-tooltip-when-elided="true" name="quest-remove-button" />
+</ui:UXML>
