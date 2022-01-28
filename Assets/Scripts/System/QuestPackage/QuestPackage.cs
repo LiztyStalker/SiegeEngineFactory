@@ -5,7 +5,7 @@ namespace SEF.Quest
 
     public class QuestPackage
     {
-        private List<QuestEntity> _list;
+        private List<RewardedQuestEntity> _list;
 
         public static QuestPackage Create()
         {
@@ -14,7 +14,7 @@ namespace SEF.Quest
 
         public void Initialize(IAccountData data)
         {
-            _list = new List<QuestEntity>();
+            _list = new List<RewardedQuestEntity>();
 
             if (data != null)
             {
@@ -32,7 +32,7 @@ namespace SEF.Quest
             var index = GetIndex(data);
             if (index == -1)
             {
-                _list.Add(QuestEntity.Create(data));
+                _list.Add(RewardedQuestEntity.Create(data));
                 index = _list.Count - 1;
             }
             var entity = _list[index];

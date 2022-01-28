@@ -4,12 +4,12 @@ namespace SEF.Quest
     using System.Collections.Generic;
     using UnityEngine;
 
-    public struct QuestEntity
+    public struct RewardedQuestEntity
     {
         private IQuestData _data;
         private int _value;
 
-        private QuestEntity(IQuestData data)
+        public RewardedQuestEntity(IQuestData data)
         {
             _data = data;
             _value = 0;
@@ -23,9 +23,9 @@ namespace SEF.Quest
         internal IQuestData GetQuestData() => _data;
         internal int GetQuestValue() => _value;
 
-        internal static QuestEntity Create(IQuestData data)
+        internal static RewardedQuestEntity Create(IQuestData data)
         {
-            return new QuestEntity(data);
+            return new RewardedQuestEntity(data);
         }
     }
 }
