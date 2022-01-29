@@ -30,7 +30,6 @@ namespace SEF.Entity
             get => _nowAssetData.AssetValue;
             set => _nowAssetData.AssetValue = value;
         }
-
         public bool IsOverflow(IAssetData data)
         {
             if (_limitAssetData == null) return false;
@@ -60,6 +59,9 @@ namespace SEF.Entity
         public System.Type GetStatisticsType() => _nowAssetData.GetStatisticsType();
         public System.Type AccumulateStatisticsType() => _nowAssetData.AccumulateStatisticsType();
 
+        public void SetValue(string value)
+        {
+        }
     }
 
     public class AssetEntity

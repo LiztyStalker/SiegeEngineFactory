@@ -19,7 +19,10 @@ namespace SEF.Data
         {
             Value = data.Value;
         }
-
+        public void SetValue(string value)
+        {
+            Value = int.Parse(value);
+        }
         public override INumberData Clone()
         {
             return new PopulationAssetData(this);

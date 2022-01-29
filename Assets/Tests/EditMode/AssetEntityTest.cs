@@ -6,7 +6,7 @@ namespace SEF.Test
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Account;
+    using SEF.Account;
     using Data;
     using Entity;
 
@@ -296,6 +296,14 @@ namespace SEF.Test
             Debug.Log(upgradeAssetData.GetValue());
             Assert.IsTrue(upgradeAssetData.GetValue() == "302", "재화 계산이 잘못되었습니다");
 
+        }
+
+        [Test]
+        public void AssetDataTest_SerializedAssetDataTest()
+        {
+            SerializedAssetData data = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Meteorite, "100");
+            var assetData = data.GetData();
+            Debug.Log(assetData.GetType() + " " + assetData.AssetValue);
         }
 
     }

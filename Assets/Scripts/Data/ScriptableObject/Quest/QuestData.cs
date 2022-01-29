@@ -97,13 +97,10 @@ namespace SEF.Data
         private int _conditionValue;
         public int ConditionValue => _conditionValue;
 
-
         [SerializeField]
         private SerializedAssetData _serializedAssetData;
 
-        [NonSerialized]
-        private IAssetData _rewardAssetData;
-        public IAssetData RewardAssetData => _rewardAssetData;
+        public IAssetData RewardAssetData => _serializedAssetData.GetData();
 
     }
 
@@ -120,19 +117,5 @@ namespace SEF.Data
         }
     }
 
-    [System.Serializable]
-    public struct SerializedAssetData
-    {
-        [SerializeField]
-        private string _assetData;
 
-        [SerializeField]
-        private string _assetValue;
-
-        internal IAssetData GetData()
-        {
-            //_assetData에 맞춰 데이터 가져오기
-            return null;
-        }
-    }
 }

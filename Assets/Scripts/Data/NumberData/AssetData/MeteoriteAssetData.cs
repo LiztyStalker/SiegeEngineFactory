@@ -12,6 +12,11 @@ namespace SEF.Data
         {
             Value = data.Value;
         }
+        public void SetValue(string value)
+        {
+            Value = int.Parse(value);
+        }
+
         public override INumberData Clone()
         {
             return new MeteoriteAssetData(this);
@@ -35,6 +40,8 @@ namespace SEF.Data
         public Type UsedStatisticsType() => typeof(Statistics.MeteoriteUsedAssetStatisticsData);
         public Type GetStatisticsType() => typeof(Statistics.MeteoriteGetAssetStatisticsData);
         public Type AccumulateStatisticsType() => typeof(Statistics.MeteoriteAccumulateAssetStatisticsData);
+
+
 #endif
     }
 }
