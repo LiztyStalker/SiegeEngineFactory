@@ -29,7 +29,7 @@ namespace SEF.Data
 
         [SerializeField]
         private bool _isMultipleQuest = false;
-        private bool IsMultipleQuest => _isMultipleQuest;
+        public bool IsMultipleQuest => _isMultipleQuest;
 
         [SerializeField]
         private QuestConditionData _questConditionData;
@@ -39,6 +39,7 @@ namespace SEF.Data
         private QuestConditionData[] _questConditionDataArray = new QuestConditionData[1];
         public QuestConditionData[] QuestConditionDataArray => _questConditionDataArray;
 
+        public int MaximumIndex => _questConditionDataArray.Length;
 
         public int GetGoalValue(int index) 
         {
@@ -75,12 +76,12 @@ namespace SEF.Data
         private SerializedConditionQuestData _serializedConditionQuestData;
 
         [NonSerialized]
-        private Statistics.IStatisticsData _conditionQuestData;
+        private IConditionQuestData _conditionQuestData;
 
         /// <summary>
         /// null 가능
         /// </summary>
-        public Statistics.IStatisticsData ConditionQuestData
+        public IConditionQuestData ConditionQuestData
         {
             get
             {
@@ -107,14 +108,14 @@ namespace SEF.Data
     [System.Serializable]
     public struct SerializedConditionQuestData
     {
-        [SerializeField, Statistics.StatisticsListToPopup]
+        [SerializeField, ConditionQuestDataListToPopup]
         private string _classTypeName;
 
-        internal Statistics.IStatisticsData GetSerializeData()
+        internal IConditionQuestData GetSerializeData()
         {
             //ClassName에 맞춰 데이터 가져오기
             var type = System.Type.GetType(_classTypeName);
-            if(type != null) return (Statistics.IStatisticsData)Activator.CreateInstance(type);
+            if(type != null) return (IConditionQuestData)Activator.CreateInstance(type);
             return null;
         }
     }

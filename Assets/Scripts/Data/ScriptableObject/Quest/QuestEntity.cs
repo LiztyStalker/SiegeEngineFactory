@@ -36,6 +36,17 @@ namespace SEF.Entity
             _nowValue = value;
         }
 
+        public bool HasNextIndex()
+        {
+            if (_data.IsMultipleQuest)
+            {
+                return _nowIndex < _data.MaximumIndex;
+            }
+            return false;
+        }
+
+        public void NextIndex() => _nowIndex++;        
+
         public void SetRewarded(bool hasRewarded)
         {
             _hasRewarded = hasRewarded;
