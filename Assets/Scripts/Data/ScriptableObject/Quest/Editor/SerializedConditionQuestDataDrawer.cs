@@ -9,7 +9,7 @@ namespace SEF.Data.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var field = property.FindPropertyRelative("_className");
+            var field = property.FindPropertyRelative("_classTypeName");
             EditorGUI.PropertyField(position, field, new GUIContent("Á¶°Ç"));
         }
     }

@@ -75,12 +75,12 @@ namespace SEF.Data
         private SerializedConditionQuestData _serializedConditionQuestData;
 
         [NonSerialized]
-        private IConditionQuestData _conditionQuestData;
+        private Statistics.IStatisticsData _conditionQuestData;
 
         /// <summary>
         /// null 가능
         /// </summary>
-        public IConditionQuestData ConditionQuestData
+        public Statistics.IStatisticsData ConditionQuestData
         {
             get
             {
@@ -107,12 +107,14 @@ namespace SEF.Data
     [System.Serializable]
     public struct SerializedConditionQuestData
     {
-        [SerializeField]
-        private string _className;
+        [SerializeField, Statistics.StatisticsListToPopup]
+        private string _classTypeName;
 
-        internal IConditionQuestData GetSerializeData()
+        internal Statistics.IStatisticsData GetSerializeData()
         {
             //ClassName에 맞춰 데이터 가져오기
+            var type = System.Type.GetType(_classTypeName);
+            if(type != null) return (Statistics.IStatisticsData)Activator.CreateInstance(type);
             return null;
         }
     }
