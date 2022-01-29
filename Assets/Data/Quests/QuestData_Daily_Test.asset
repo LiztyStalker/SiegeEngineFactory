@@ -18,9 +18,15 @@ MonoBehaviour:
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
+      _className: asfdsa
+    _conditionValue: 4
+    _serializedAssetData:
+      _assetData: dfs
+      _assetValue: fdsa
+  _questConditionDataArray:
+  - _serializedConditionQuestData:
       _className: 
     _conditionValue: 0
     _serializedAssetData:
       _assetData: 
       _assetValue: 
-  _questConditionDataArray: []

@@ -3,47 +3,26 @@ namespace SEF.Data.Editor
     using UnityEditor;
     using UnityEngine.UIElements;
     using UnityEditor.UIElements;
-    using UnityEngine;
 
-    [CustomPropertyDrawer(typeof(QuestConditionData))]
-    public class QuestConditionDataEditor : PropertyDrawer
+    public class QuestConditionDataEditor : VisualElement
     {
-
-        private VisualElement _element;
-
-        private PropertyField _conditionField;
-        private IntegerField _conditionValueField;
-        private PropertyField _rewardAssetDataField;
-        private Button _removeButton;
-
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
+        public QuestConditionDataEditor(SerializedProperty property)
         {
-            var container = new VisualElement();
-
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Data/ScriptableObject/Quest/Editor/QuestConditionDataEditor.uxml");
-            _element = visualTree.CloneTree(property.propertyPath);
+            visualTree.CloneTree(this);
 
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Data/ScriptableObject/Quest/Editor/QuestConditionDataEditor.uss");
-            container.styleSheets.Add(styleSheet);
+            this.styleSheets.Add(styleSheet);
 
-            _conditionField = _element.Query<PropertyField>("quest-condition-data-field").First();
-            _conditionField.BindProperty(property.FindPropertyRelative("_serializedConditionQuestData"));
+            PropertyField conditionField = this.Query<PropertyField>("quest-condition-data-field").First();
+            conditionField.BindProperty(property.FindPropertyRelative("_serializedConditionQuestData"));
 
-            _conditionValueField = _element.Query<IntegerField>("quest-condition-value-field").First();
-            _conditionValueField.BindProperty(property.FindPropertyRelative("_conditionValue"));
-            _conditionValueField.label = "조건값";
+            PropertyField conditionValueField = this.Query<PropertyField>("quest-condition-value-field").First();
+            conditionValueField.BindProperty(property.FindPropertyRelative("_conditionValue"));
+            conditionValueField.label = "조건값";
 
-            _rewardAssetDataField = _element.Query<PropertyField>("quest-reward-assetdata-field").First();
-            _rewardAssetDataField.BindProperty(property.FindPropertyRelative("_serializedAssetData"));
-
-            //_removeButton = _element.Query<Button>("quest-remove-button").First();
-            //_removeButton.RegisterCallback<ClickEvent>();
-
-            container.Add(_element);
-
-            return container;
+            PropertyField rewardAssetDataField = this.Query<PropertyField>("quest-reward-assetdata-field").First();
+            rewardAssetDataField.BindProperty(property.FindPropertyRelative("_serializedAssetData"));
         }
-
-
     }
 }

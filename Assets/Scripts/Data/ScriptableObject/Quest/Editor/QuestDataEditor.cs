@@ -18,6 +18,7 @@ namespace SEF.Data.Editor
         private Toggle _multipleToggle;
         private VisualElement _singleConditionLayout;
         private VisualElement _multipleConditionLayout;
+        private VisualElement _multipleConditionPanel;
         private Button _addButton;
         private Button _removeButton;
 
@@ -55,49 +56,68 @@ namespace SEF.Data.Editor
             _multipleToggle.BindProperty(serializedObject.FindProperty("_isMultipleQuest"));
             _multipleToggle.RegisterCallback<ClickEvent>(UpdateLayout);
 
+            _multipleConditionPanel = _root.Query<VisualElement>("quest-multiple-condition-panel");
             _multipleConditionLayout = _root.Query<VisualElement>("quest-multiple-condition-layout");
             _singleConditionLayout = _root.Query<VisualElement>("quest-single-condition-layout");
 
             _addButton = _root.Query<Button>("quest-multiple-add-button");
             _removeButton = _root.Query<Button>("quest-multiple-remove-button");
 
-            //_addButton.RegisterCallback<ClickEvent>();
-            //_removeButton.RegisterCallback<ClickEvent>();
-
-
-            UpdateQuestConditionData(_multipleConditionLayout, serializedObject.FindProperty("_questConditionDataArray"));
-            var property = serializedObject.FindProperty("_questConditionData");
-            UpdateQuestConditionData(_singleConditionLayout, property);
+            _addButton.RegisterCallback<ClickEvent>(AddQuestConditionData);
+            _removeButton.RegisterCallback<ClickEvent>(RemoveQuestConditionData);
 
             UpdateLayout(null);
 
             return _root;
         }
 
+        private void AddQuestConditionData(ClickEvent e)
+        {
+            var property = serializedObject.FindProperty("_questConditionDataArray");
+            property.arraySize++;
+            serializedObject.ApplyModifiedProperties();
+            UpdateLayout(null);
+        }
+
+        private void RemoveQuestConditionData(ClickEvent e)
+        {
+            var property = serializedObject.FindProperty("_questConditionDataArray");
+            property.arraySize--;
+            serializedObject.ApplyModifiedProperties();
+            UpdateLayout(null);
+        }
+
         private void UpdateLayout(ClickEvent e)
         {
-            _multipleConditionLayout.style.display = DisplayStyle.None;
+            _multipleConditionPanel.style.display = DisplayStyle.None;
             _singleConditionLayout.style.display = DisplayStyle.None;
 
             if (_multipleToggle.value)
-                _multipleConditionLayout.style.display = DisplayStyle.Flex;
+            {
+                _multipleConditionPanel.style.display = DisplayStyle.Flex;
+                UpdateQuestConditionData(_multipleConditionLayout, serializedObject.FindProperty("_questConditionDataArray"));
+            }
             else
+            {
                 _singleConditionLayout.style.display = DisplayStyle.Flex;
+                var property = serializedObject.FindProperty("_questConditionData");
+                UpdateQuestConditionData(_singleConditionLayout, property);
+            }
         }
 
         private void UpdateQuestConditionData(VisualElement layout, SerializedProperty conditionProperty)
         {
+            layout.Clear();
             if (conditionProperty.isArray)
             {
                 for (int i = 0; i < conditionProperty.arraySize; i++)
                 {
-                    layout.Add(new PropertyField(conditionProperty.GetArrayElementAtIndex(i)));
+                    layout.Add(new QuestConditionDataEditor(conditionProperty.GetArrayElementAtIndex(i)));
                 }
             }
             else
             {
-                var property = new PropertyField(conditionProperty);
-                layout.Add(property);                
+                layout.Add(new QuestConditionDataEditor(conditionProperty));                
             }
         }
 

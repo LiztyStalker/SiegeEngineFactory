@@ -4,12 +4,12 @@
     <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="quest-key-field" />
     <uie:EnumField label="Enum" value="Center" name="quest-type-group-field" />
     <ui:Toggle label="Toggle" name="quest-multiple-toggle" />
-    <ui:VisualElement name="quest-single-condition-layout" />
+    <ui:VisualElement name="quest-single-condition-layout" class="quest-condition-layout" />
     <ui:VisualElement name="quest-multiple-condition-panel">
         <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
             <ui:Button text="Add" display-tooltip-when-elided="true" name="quest-multiple-add-button" />
             <ui:Button text="Remove" display-tooltip-when-elided="true" name="quest-multiple-remove-button" />
         </ui:VisualElement>
-        <ui:VisualElement name="quest-multiple-condition-layout" />
+        <ui:VisualElement name="quest-multiple-condition-layout" class="quest-condition-layout" />
     </ui:VisualElement>
 </ui:UXML>

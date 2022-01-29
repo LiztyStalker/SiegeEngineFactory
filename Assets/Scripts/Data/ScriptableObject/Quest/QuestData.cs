@@ -1,5 +1,6 @@
 namespace SEF.Data
 {
+    using System.Collections.Generic;
     using System;
     using UnityEngine;
     using Quest;
@@ -35,8 +36,9 @@ namespace SEF.Data
         public QuestConditionData QuestConditionData => _questConditionData;
 
         [SerializeField]
-        private QuestConditionData[] _questConditionDataArray;
+        private QuestConditionData[] _questConditionDataArray = new QuestConditionData[1];
         public QuestConditionData[] QuestConditionDataArray => _questConditionDataArray;
+
 
         public int GetGoalValue(int index) 
         {

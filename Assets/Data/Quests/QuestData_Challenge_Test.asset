@@ -15,12 +15,12 @@ MonoBehaviour:
   _key: ChallengeTest
   _typeQuestGroup: 2
   _icon: {fileID: 0}
-  _isMultipleQuest: 1
+  _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _className: 
-    _conditionValue: 0
+      _className: asdf
+    _conditionValue: 324234
     _serializedAssetData:
-      _assetData: 
-      _assetValue: 
+      _assetData: asdf
+      _assetValue: asdf
   _questConditionDataArray: []

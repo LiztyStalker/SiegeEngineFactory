@@ -23,4 +23,22 @@ MonoBehaviour:
     _serializedAssetData:
       _assetData: 
       _assetValue: 
-  _questConditionDataArray: []
+  _questConditionDataArray:
+  - _serializedConditionQuestData:
+      _className: 
+    _conditionValue: 0
+    _serializedAssetData:
+      _assetData: 
+      _assetValue: 
+  - _serializedConditionQuestData:
+      _className: 
+    _conditionValue: 0
+    _serializedAssetData:
+      _assetData: 
+      _assetValue: 
+  - _serializedConditionQuestData:
+      _className: 
+    _conditionValue: 0
+    _serializedAssetData:
+      _assetData: 
+      _assetValue: 
