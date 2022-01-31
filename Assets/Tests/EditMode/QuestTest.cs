@@ -223,129 +223,272 @@ namespace SEF.Test
         [Test]
         public void QuestIntegrationTest_DestroyEnemyConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyEnemyConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+
+            var enemyActor = SEF.Unit.EnemyActor.Create_Test();
+            var enemyEntity = new EnemyEntity();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor.SetData(enemyEntity);
+
+            _gameSystem.DestroyedActor(enemyActor);
         }
 
         [Test]
         public void QuestIntegrationTest_DestroyEnemyConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyEnemyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+
+            var enemyEntity = new EnemyEntity();
+            enemyEntity.SetData(enemyData, levelWaveData);
+
+
+
+            var enemyActor1 = SEF.Unit.EnemyActor.Create_Test();
+            enemyActor1.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor1);
+            var enemyActor2 = SEF.Unit.EnemyActor.Create_Test();
+            enemyActor2.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor2);
+            var enemyActor3 = SEF.Unit.EnemyActor.Create_Test();
+            enemyActor3.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor3);
 
         }
 
         [Test]
         public void QuestIntegrationTest_UpgradeUnitConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeWorkshop(0);
         }
 
         [Test]
         public void QuestIntegrationTest_UpgradeUnitConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeWorkshop(0);
+            _gameSystem.UpgradeWorkshop(0);
+            _gameSystem.UpgradeWorkshop(0);
         }
 
         [Test]
         public void QuestIntegrationTest_TechUnitConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
         }
         [Test]
         public void QuestIntegrationTest_TechUnitConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            //결과가 3/1이 나옴
         }
 
         [Test]
         public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeBlacksmithConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeBlacksmith(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeBlacksmithConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeBlacksmith(0);
+            _gameSystem.UpgradeBlacksmith(0);
+            _gameSystem.UpgradeBlacksmith(0);
         }
         [Test]
         public void QuestIntegrationTest_TechBlacksmithConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechBlacksmithConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechBlacksmith(0);
         }
         [Test]
         public void QuestIntegrationTest_TechBlacksmithConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechBlacksmithConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechBlacksmith(0);
+            _gameSystem.UpTechBlacksmith(0);
+            _gameSystem.UpTechBlacksmith(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeVillageConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeVillageConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeVillage(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeVillageConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeVillage(0);
+            _gameSystem.UpgradeVillage(0);
+            _gameSystem.UpgradeVillage(0);
         }
         [Test]
         public void QuestIntegrationTest_TechVillageConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechVillageConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechVillage(0);
         }
         [Test]
         public void QuestIntegrationTest_TechVillageConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpTechVillage(0);
+            _gameSystem.UpTechVillage(0);
+            _gameSystem.UpTechVillage(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeCommanderConditionQuestData()
         {
-
+            Assert.Fail("개발되지 않음");
         }
         [Test]
         public void QuestIntegrationTest_UpgradeCommanderConditionQuestData_x3()
         {
-
+            Assert.Fail("개발되지 않음");
         }
         [Test]
         public void QuestIntegrationTest_SuccessedResearchConditionQuestData()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessedResearchConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.SuccessedResearchData();
         }
         [Test]
         public void QuestIntegrationTest_SuccessedResearchConditionQuestData_x3()
         {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessedResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.SuccessedResearchData();
+            _gameSystem.SuccessedResearchData();
+            _gameSystem.SuccessedResearchData();
         }
 
         [Test]
         public void QuestIntegrationTest_SuccessedDailyConditionQuestData()
         {
+            Assert.Fail("개발되지 않음");
 
         }
         [Test]
         public void QuestIntegrationTest_SuccessedDailyConditionQuestData_x3()
         {
+            Assert.Fail("개발되지 않음");
 
         }
         [Test]
         public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData()
         {
+            Assert.Fail("개발되지 않음");
 
         }
         [Test]
         public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData_x3()
         {
+            Assert.Fail("개발되지 않음");
 
         }
         [Test]
         public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData()
         {
+            Assert.Fail("개발되지 않음");
 
         }
         [Test]
         public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData_x3()
         {
+            Assert.Fail("개발되지 않음");
 
-        }       
+        }
     }
 }
 #endif
