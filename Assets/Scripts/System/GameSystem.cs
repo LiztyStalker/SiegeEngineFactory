@@ -27,6 +27,8 @@ namespace SEF.Manager
 
         private StatisticsPackage _statistics;
 
+        private QuestManager _questManager;
+
 
         public static GameSystem Create()
         {
@@ -56,6 +58,9 @@ namespace SEF.Manager
             _statistics = StatisticsPackage.Create();
             _statistics.Initialize(null);
 
+            _questManager = QuestManager.Create();
+            _questManager.Initialize(null);
+
             _status = StatusPackage.Create();
             _status.Initialize();
             _status.AddOnProductListener(OnStatusProductEvent);
@@ -65,6 +70,10 @@ namespace SEF.Manager
 
         public void CleanUp()
         {
+            _questManager.CleanUp();
+
+            _statistics.CleanUp();
+
             _status.RemoveOnProductListener(OnStatusProductEvent);
             _status.CleanUp();
 
@@ -88,6 +97,8 @@ namespace SEF.Manager
             _workshopManager.Refresh();
             _blacksmithManager.Refresh();
             _villageManager.Refresh();
+
+            _questManager.RefreshAllQuests();
 
             //UI는 나중에 갱신 필요 - Data -> UI
             _account.RefreshAssetEntity();
@@ -152,6 +163,24 @@ namespace SEF.Manager
 
 
 
+        #region ##### QuestManager #####
+
+        public void SetQuestValue(System.Type type, int value) => _questManager.SetQuestValue(type, value);
+        public void SetQuestValue<T>(int value) where T : IConditionQuestData => _questManager.SetQuestValue<T>(value);
+        public void AddQuestValue(System.Type type, int value = 1) => _questManager.AddQuestValue(type, value);
+        public void AddQuestValue<T>(int value = 1) where T : IConditionQuestData => _questManager.AddQuestValue<T>(value);
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void AddQuestEntity(QuestData.TYPE_QUEST_GROUP typeQuestGroup, QuestEntity entity)
+        {
+            _questManager.SetQuestEntity_Test(typeQuestGroup, entity);
+        }
+#endif
+
+#endregion
+
+
+
         public IAssetData GetAssetData()
         {
             return null;
@@ -180,6 +209,9 @@ namespace SEF.Manager
                     {
                         _statistics.AddStatisticsData(enemyType, 1);
                     }
+
+                    AddQuestValue<DestroyEnemyConditionQuestData>(1);
+                    
                     break;
             }
         }
@@ -198,6 +230,8 @@ namespace SEF.Manager
             {
                 _statistics.AddStatisticsData(type, 1);
             }
+
+            AddQuestValue<UpgradeUnitConditionQuestData>();
         }
 
 
@@ -218,6 +252,7 @@ namespace SEF.Manager
             {
                 _statistics.AddStatisticsData(type, 1);
             }
+            AddQuestValue<TechUnitConditionQuestData>();
         }
 
         private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
@@ -238,28 +273,33 @@ namespace SEF.Manager
             var assetData = _blacksmithManager.Upgrade(index);
             _account.SubjectAsset(assetData);
             AddStatisticsData<UpgradeBlacksmithStatisticsData>();
+            AddQuestValue<UpgradeBlacksmithConditionQuestData>();
         }
         public void UpTechBlacksmith(int index)
         {
             _blacksmithManager.UpTech(index);
             AddStatisticsData<TechBlacksmithStatisticsData>();
+            AddQuestValue<TechBlacksmithConditionQuestData>();
         }
         public void UpgradeVillage(int index)
         {
             var assetData = _villageManager.Upgrade(index);
             _account.SubjectAsset(assetData);
             AddStatisticsData<UpgradeVillageStatisticsData>();
+            AddQuestValue<UpgradeVillageConditionQuestData>();
         }
 
         public void UpTechVillage(int index)
         {
             _villageManager.UpTech(index);
             AddStatisticsData<TechVillageStatisticsData>();
+            AddQuestValue<TechVillageConditionQuestData>();
         }
 
         public void SuccessedResearchData()
         {
             AddStatisticsData<SuccessResearchStatisticsData>();
+            AddQuestValue<SuccessedResearchConditionQuestData>();
         }
 
 
@@ -311,6 +351,11 @@ namespace SEF.Manager
         public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _account.RemoveRefreshAssetDataListener(act);
 
 
+
+        public void AddOnRefreshQuestEntityListener(System.Action<QuestEntity> act) => _questManager.AddOnRefreshListener(act);
+        public void RemoveOnRefreshQuestEntityListener(System.Action<QuestEntity> act) => _questManager.RemoveOnRefreshListener(act);
+
+
         #endregion
 
 
@@ -337,6 +382,8 @@ namespace SEF.Manager
                 if(levelWaveData.GetWave() == 0)
                     _statistics.SetStatisticsData(type, 1);
             }
+
+            AddQuestValue<ArrivedLevelConditionQuestData>(1);
         }
         #endregion
     }

@@ -137,10 +137,110 @@ namespace SEF.Quest
         {
             OnRefreshEvent(entity);
         }
-        public void SetQuestValue(int value)
+        public void SetQuestValue(System.Type type, int value)
         {
-             
+            var entityNullable = FindQuestEntity(type);
+            if (entityNullable != null)
+            {
+                var entity = entityNullable.Value;
+                entity.AddQuestValue(value);
+                SetQuestEntity(entity);
+                RefreshQuest(entity);
+            }
         }
+        public void SetQuestValue<T>(int value) where T : IConditionQuestData
+        {
+            var entityNullable = FindQuestEntity<T>();
+            if (entityNullable != null)
+            {
+                var entity = entityNullable.Value;
+                entity.AddQuestValue(value);
+                SetQuestEntity(entity);
+                RefreshQuest(entity);
+            }
+        }
+        public void AddQuestValue(System.Type type, int value)
+        {
+            var entityNullable = FindQuestEntity(type);
+            if (entityNullable != null)
+            {
+                var entity = entityNullable.Value;
+                entity.AddQuestValue(value);
+                SetQuestEntity(entity);
+                RefreshQuest(entity);
+            }
+        }
+        public void AddQuestValue<T>(int value) where T : IConditionQuestData
+        {
+            var entityNullable = FindQuestEntity<T>();
+            if (entityNullable != null) 
+            {
+                var entity = entityNullable.Value;
+                entity.AddQuestValue(value);
+                SetQuestEntity(entity);
+                RefreshQuest(entity);
+            }
+        }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetQuestEntity_Test(QuestData.TYPE_QUEST_GROUP typeQuestGroup, QuestEntity entity)
+        {
+            if (_dic.ContainsKey(typeQuestGroup))
+            {
+                _dic[typeQuestGroup].Add(entity);
+            }
+        }
+#endif
+
+        private void SetQuestEntity(QuestEntity entity)
+        {
+            if (_dic.ContainsKey(entity.TypeQuestGroup))
+            {
+                var list = _dic[entity.TypeQuestGroup];
+                var index = list.FindIndex(e => e.Key == entity.Key);
+                if(index >= 0)
+                {
+                    list[index] = entity;
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError($"{entity.Key}을 찾을 수 없습니다");
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogError($"{entity.TypeQuestGroup}을 찾을 수 없습니다");
+            }
+        }
+
+        private QuestEntity? FindQuestEntity<T>() where T : IConditionQuestData
+        {
+            foreach(var key in _dic.Keys)
+            {
+                var list = _dic[key];
+                for(int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].HasConditionQuestData<T>())
+                        return list[i];
+                }
+            }
+            return null;
+        }
+
+        private QuestEntity? FindQuestEntity(System.Type type)
+        {
+            foreach (var key in _dic.Keys)
+            {
+                var list = _dic[key];
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].HasConditionQuestData(type))
+                        return list[i];
+                }
+            }
+            return null;
+        }
+
         public IAssetData GetRewardAssetData(string key)
         {
             return null;

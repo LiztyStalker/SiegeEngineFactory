@@ -7,13 +7,16 @@ namespace SEF.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using Quest;
-    using SEF.Manager;
+    using Manager;
+    using Data;
+    using Entity;
 
     public class QuestTest
     {
 
         private QuestPackage _package;
         private QuestManager _manager;
+        private GameSystem _gameSystem;
 
         private class Test1 : IQuestData
         {
@@ -37,6 +40,13 @@ namespace SEF.Test
 
             _manager = QuestManager.Create();
             _manager.Initialize(null);
+
+            _gameSystem = GameSystem.Create();
+            _gameSystem.Initialize(null);
+            _gameSystem.AddOnRefreshQuestEntityListener(entity =>
+            {
+                Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue}");
+            });
         }
 
         [TearDown]
@@ -44,6 +54,11 @@ namespace SEF.Test
         {
             _package.CleanUp();
             _manager.CleanUp();
+            _gameSystem.CleanUp();
+            _gameSystem.RemoveOnRefreshQuestEntityListener(entity =>
+            {
+                Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue}");
+            });
         }
                 
         [Test]
@@ -51,7 +66,7 @@ namespace SEF.Test
         {
             _manager.AddOnRefreshListener(entity =>
             {
-                Debug.Log(entity.Key);
+                Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue}");
             });
             _manager.RefreshAllQuests();
         }
@@ -168,6 +183,169 @@ namespace SEF.Test
                 Assert.Pass();
             }
         }
+
+        [Test]
+        public void QuestIntegrationTest_ArrivedLevelConditionQuestData()
+        {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedLevelConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_ArrivedLevelConditionQuestData_x3()
+        {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedLevelConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+        }
+
+
+        [Test]
+        public void QuestIntegrationTest_DestroyEnemyConditionQuestData()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_DestroyEnemyConditionQuestData_x3()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_UpgradeUnitConditionQuestData()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_UpgradeUnitConditionQuestData_x3()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_TechUnitConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_TechUnitConditionQuestData_x3()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_TechBlacksmithConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_TechBlacksmithConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_UpgradeVillageConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_UpgradeVillageConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_TechVillageConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_TechVillageConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_UpgradeCommanderConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_UpgradeCommanderConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedResearchConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedResearchConditionQuestData_x3()
+        {
+
+        }
+
+        [Test]
+        public void QuestIntegrationTest_SuccessedDailyConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedDailyConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData_x3()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData()
+        {
+
+        }
+        [Test]
+        public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData_x3()
+        {
+
+        }       
     }
 }
 #endif

@@ -67,6 +67,38 @@ namespace SEF.Data
             return _questConditionData.RewardAssetData;
         }
 
+        public bool IsConditionQuestData<T>(int index) where T : IConditionQuestData
+        {
+            if (IsMultipleQuest)
+            {
+                return _questConditionDataArray[index].ConditionQuestData is T;
+            }
+            return _questConditionData.ConditionQuestData.GetType() == typeof(T);
+        }
+        public bool IsConditionQuestData(System.Type type, int index)
+        {
+            //IConditionQuestData 확인 조건 필요
+            if (IsMultipleQuest)
+            {
+                return _questConditionDataArray[index].ConditionQuestData.GetType() == type;
+            }
+            return _questConditionData.ConditionQuestData.GetType() == type;
+        }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static QuestData Create_Test(string key, TYPE_QUEST_GROUP typeQuestGroup, System.Type conditionType, int value, System.Type assetType, int assetValue)
+        {
+            return new QuestData(key, typeQuestGroup, conditionType, value, assetType, assetValue);
+        }
+
+        private QuestData(string key, TYPE_QUEST_GROUP typeQuestGroup, System.Type conditionType, int conditionValue, System.Type assetType, int assetValue)
+        {
+            _key = key;
+            _typeQuestGroup = typeQuestGroup;
+            _questConditionData = QuestConditionData.Create_Test(conditionType, conditionValue, assetType, assetValue);
+           
+        }
+#endif
     }
 
     [System.Serializable]
@@ -101,7 +133,37 @@ namespace SEF.Data
         [SerializeField]
         private SerializedAssetData _serializedAssetData;
 
-        public IAssetData RewardAssetData => _serializedAssetData.GetData();
+        [NonSerialized]
+        private IAssetData _rewardAssetData;
+        public IAssetData RewardAssetData {
+            get
+            {
+                if(_rewardAssetData == null)
+                {
+                    _rewardAssetData = _serializedAssetData.GetData();
+                }
+                return _rewardAssetData;
+            }
+        }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static QuestConditionData Create_Test(System.Type conditionType, int conditionValue, System.Type assetType, int assetValue)
+        {
+            return new QuestConditionData(conditionType, conditionValue, assetType, assetValue);
+        }
+
+        private QuestConditionData(System.Type conditionType, int conditionValue, System.Type assetType, int assetValue)
+        {
+            _serializedConditionQuestData = default;
+            _conditionQuestData = SerializedConditionQuestData.GetData(conditionType);
+            _conditionValue = conditionValue;
+            _serializedAssetData = default;
+            _rewardAssetData = SerializedAssetData.GetData(assetType, assetValue);
+
+            Debug.Assert(_conditionQuestData != null, "_conditionQuestData 가 null입니다");
+            Debug.Assert(_rewardAssetData != null, "_rewardAssetData 가 null입니다");
+        }
+#endif
 
     }
 
@@ -115,8 +177,13 @@ namespace SEF.Data
         {
             //ClassName에 맞춰 데이터 가져오기
             var type = System.Type.GetType(_classTypeName);
-            if(type != null) return (IConditionQuestData)Activator.CreateInstance(type);
+            if (type != null) return GetData(type);
             return null;
+        }
+
+        public static IConditionQuestData GetData(System.Type type)
+        {
+            return (IConditionQuestData)Activator.CreateInstance(type);
         }
     }
 

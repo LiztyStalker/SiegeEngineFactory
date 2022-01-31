@@ -37,6 +37,13 @@ namespace SEF.Data
             _assetData = typeAssetDataAttribute;
             _assetValue = value;
         }
+
+        public static IAssetData GetData(System.Type type, int value)
+        {
+            var assetData = (IAssetData)System.Activator.CreateInstance(type);
+            assetData.SetValue(value.ToString());
+            return assetData;
+        }
 #endif
     }
 }

@@ -36,6 +36,11 @@ namespace SEF.Entity
             _nowValue = value;
         }
 
+        public void AddQuestValue(int value = 1)
+        {
+            _nowValue += value;
+        }
+
         public bool HasNextIndex()
         {
             if (_data.IsMultipleQuest)
@@ -67,10 +72,19 @@ namespace SEF.Entity
             return _data.HasQuestGoal(_nowIndex, _nowValue);
         }
 
+        public bool HasConditionQuestData<T>() where T : IConditionQuestData => _data.IsConditionQuestData<T>(_nowIndex);
+        public bool HasConditionQuestData(System.Type type) => _data.IsConditionQuestData(type, _nowIndex);
+
         public IAssetData GetRewardAssetData()
         {
             return _data.GetRewardAssetData(_nowIndex);
         }
 
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public static QuestEntity Create()
+        {
+            return new QuestEntity();
+        }
+#endif
     }
 }
