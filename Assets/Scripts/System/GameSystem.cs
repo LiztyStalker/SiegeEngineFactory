@@ -170,7 +170,10 @@ namespace SEF.Manager
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
             if(assetData != null) _account.AddAsset(assetData);
         }
-
+        public void RefreshQuest(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
+        {
+            _questManager.RefreshAllQuests(typeQuestGroup);
+        }
         public void SetQuestValue(System.Type type, int value) => _questManager.SetQuestValue(type, value);
         public void SetQuestValue<T>(int value) where T : IConditionQuestData => _questManager.SetQuestValue<T>(value);
         public void AddQuestValue(System.Type type, int value = 1) => _questManager.AddQuestValue(type, value);

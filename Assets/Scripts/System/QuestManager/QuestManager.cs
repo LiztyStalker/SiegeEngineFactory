@@ -33,7 +33,7 @@ namespace SEF.Quest
             //목표
             SetDictionary(arr, QuestData.TYPE_QUEST_GROUP.Goal);
 
-            if(data != null)
+            if (data != null)
             {
                 //저장된 데이터 적용
                 //하루 이상 지났으면 일일 데이터 미적용
@@ -66,7 +66,7 @@ namespace SEF.Quest
             //NextQuest끼리는 한 묶음으로 봐야 함
 
             QuestEntity[] entities = new QuestEntity[filterArr.Length];
-            for (int i = 0; i < filterArr.Length; i++) 
+            for (int i = 0; i < filterArr.Length; i++)
             {
                 var questData = filterArr[i];
 
@@ -95,14 +95,14 @@ namespace SEF.Quest
 
                 //데이터 부족
                 //모든 데이터 충전
-                if(questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
+                if (questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
                 {
                     break;
                 }
             }
 
             QuestEntity[] entities = new QuestEntity[questList.Count];
-            while(questList.Count > 0)
+            while (questList.Count > 0)
             {
                 var questData = questList[0];
 
@@ -125,11 +125,16 @@ namespace SEF.Quest
         {
             foreach (var key in _dic.Keys)
             {
-                var values = _dic[key];
-                for(int i = 0; i < values.Count; i++)
-                {
-                    RefreshQuest(values[i]);
-                }
+                RefreshAllQuests(key);
+            }
+        }
+
+        public void RefreshAllQuests(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
+        {
+            var values = _dic[typeQuestGroup];
+            for (int i = 0; i < values.Count; i++)
+            {
+                RefreshQuest(values[i]);
             }
         }
 

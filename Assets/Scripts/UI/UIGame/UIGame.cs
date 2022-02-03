@@ -92,7 +92,6 @@ namespace SEF.UI.Toolkit
 
         public void RefreshQuest(QuestEntity entity) => _uiQuest.RefreshQuest(entity);
 
-
         #region ##### Listener #####
 
         ///
@@ -113,6 +112,8 @@ namespace SEF.UI.Toolkit
         public void AddOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.AddOnRewardListener(act);
         public void RemoveOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.RemoveOnRewardListener(act);
 
+        public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.AddOnRefreshListener(act);
+        public void RemoveOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.RemoveOnRefreshListener(act);
         #endregion
 
     }

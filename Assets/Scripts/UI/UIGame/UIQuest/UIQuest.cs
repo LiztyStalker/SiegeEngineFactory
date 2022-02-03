@@ -23,6 +23,10 @@ namespace SEF.UI.Toolkit
 
         private Button _exitButton;
 
+        private Button _dailyButton;
+        private Button _weeklyButton;
+        private Button _challengeButton;
+
         private QuestData.TYPE_QUEST_GROUP _typeQuestGroup;
 
         public static UIQuest Create()
@@ -34,6 +38,14 @@ namespace SEF.UI.Toolkit
         {
             _scrollView = this.Q<ScrollView>();
             _exitButton = this.Q<Button>("exit-button");
+
+            _dailyButton = this.Q<Button>("quest-daily-button");
+            _weeklyButton = this.Q<Button>("quest-weekly-button");
+            _challengeButton = this.Q<Button>("quest-challenge-button");
+
+            _dailyButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Daily));
+            _weeklyButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Weekly));
+            _challengeButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Challenge));
 
             _exitButton.RegisterCallback<ClickEvent>(e => { Hide(); });
 
@@ -51,7 +63,18 @@ namespace SEF.UI.Toolkit
             _dic.Clear();
             _scrollView = null;
 
+            _dailyButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Daily));
+            _weeklyButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Weekly));
+            _challengeButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Challenge));
             _exitButton.UnregisterCallback<ClickEvent>(e => { Hide(); });
+        }
+
+        private void ClearDictionary()
+        {
+            foreach (var value in _dic.Values)
+            {
+                value.style.display = DisplayStyle.None;
+            }
         }
 
         public void Show()
@@ -68,8 +91,8 @@ namespace SEF.UI.Toolkit
 
         public void RefreshQuest(QuestEntity entity)
         {
-            //if (entity.TypeQuestGroup == _typeQuestGroup)
-            //{
+            if (entity.TypeQuestGroup == _typeQuestGroup)
+            {
                 var key = entity.Key;
                 if (!_dic.ContainsKey(key))
                 {
@@ -80,7 +103,8 @@ namespace SEF.UI.Toolkit
                     _dic.Add(key, line);
                 }
                 _dic[key].RefreshQuestLine(entity);
-            //}
+                _dic[key].style.display = DisplayStyle.Flex;
+            }
         }
 
         #region ##### Listener #####
@@ -92,6 +116,17 @@ namespace SEF.UI.Toolkit
         private void OnRewardEvent(string key)
         {
             _rewardEvent?.Invoke(_typeQuestGroup, key);
+        }
+
+        private System.Action<QuestData.TYPE_QUEST_GROUP> _refreshEvent;
+        public void AddOnRefreshListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _refreshEvent += act;
+        public void RemoveOnRefreshListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _refreshEvent -= act;
+        private void RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP typeQuestData)
+        {
+            _typeQuestGroup = typeQuestData;
+            ClearDictionary();
+            _refreshEvent?.Invoke(_typeQuestGroup);
+
         }
 
         #endregion

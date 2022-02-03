@@ -58,6 +58,8 @@ namespace SEF.Manager
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
 
+            _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
+
             
             _uiGame.AddOnRewardQuestListener(_gameSystem.GetRewardAssetData);
         }
