@@ -74,6 +74,7 @@ namespace SEF.UI.Toolkit
 
             _activatePanel.style.display = DisplayStyle.Flex;
             _rewardedPanel.style.display = DisplayStyle.None;
+            _fillable.DisplayStyle = DisplayStyle.Flex;
         }
 
 
@@ -91,6 +92,7 @@ namespace SEF.UI.Toolkit
                 _rewardButton.SetEnabled(entity.HasQuestGoal());
             }
 
+            _contentLabel.text = entity.Key;
             _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
 
         }

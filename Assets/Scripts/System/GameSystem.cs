@@ -168,7 +168,7 @@ namespace SEF.Manager
         public void GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
         {
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
-            _account.AddAsset(assetData);
+            if(assetData != null) _account.AddAsset(assetData);
         }
 
         public void SetQuestValue(System.Type type, int value) => _questManager.SetQuestValue(type, value);
@@ -378,6 +378,7 @@ namespace SEF.Manager
 
         #region ##### LevelWave #####
 
+        private LevelWaveData _nowLevelWaveData;
         public void ArrivedLevelWave(LevelWaveData levelWaveData)
         {
             SetStatisticsData<ArrivedLevelStatisticsData>(levelWaveData.GetLevel());
@@ -389,7 +390,16 @@ namespace SEF.Manager
                     _statistics.SetStatisticsData(type, 1);
             }
 
-            AddQuestValue<ArrivedLevelConditionQuestData>(1);
+            if (_nowLevelWaveData == null)
+            {
+                _nowLevelWaveData = levelWaveData;
+            }
+            else
+            {
+                var length = levelWaveData.GetLevel() - _nowLevelWaveData.GetLevel();
+                if (length > 0)
+                    AddQuestValue<ArrivedLevelConditionQuestData>(length);
+            }
         }
         #endregion
     }

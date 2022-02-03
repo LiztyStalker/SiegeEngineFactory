@@ -17,7 +17,7 @@ namespace SEF.UI.Toolkit
 
         internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UIQuest/UIQuest.uss";
 
-        private Dictionary<int, UIQuestLine> _dic = new Dictionary<int, UIQuestLine>();
+        private Dictionary<string, UIQuestLine> _dic = new Dictionary<string, UIQuestLine>();
 
         private ScrollView _scrollView;
 
@@ -70,17 +70,16 @@ namespace SEF.UI.Toolkit
         {
             //if (entity.TypeQuestGroup == _typeQuestGroup)
             //{
-            Debug.Log(entity.Key);
-                var hashcode = entity.GetHashCode();
-                if (!_dic.ContainsKey(hashcode))
+                var key = entity.Key;
+                if (!_dic.ContainsKey(key))
                 {
                     var line = UIQuestLine.Create();
                     line.Initialize();
                     line.AddOnRewardListener(OnRewardEvent);
                     _scrollView.Add(line);
-                    _dic.Add(hashcode, line);
+                    _dic.Add(key, line);
                 }
-                _dic[hashcode].RefreshQuestLine(entity);
+                _dic[key].RefreshQuestLine(entity);
             //}
         }
 

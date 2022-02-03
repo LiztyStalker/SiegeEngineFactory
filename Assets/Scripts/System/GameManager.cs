@@ -6,6 +6,7 @@ namespace SEF.Manager
     using SEF.UI.Toolkit;
     using Account;
     using Unit;
+    using SEF.Data;
 
     public class GameManager : MonoBehaviour
     {
@@ -46,7 +47,7 @@ namespace SEF.Manager
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
-            _unitManager.AddOnNextEnemyListener(_uiGame.RefreshNextEnemyUnit);
+            _unitManager.AddOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 //            _unitManager.AddOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
             _unitManager.SetOnStatusPackageListener(_gameSystem.GetStatusPackage);
@@ -84,7 +85,7 @@ namespace SEF.Manager
 
             _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
-            _unitManager.RemoveOnNextEnemyListener(_uiGame.RefreshNextEnemyUnit);
+            _unitManager.RemoveOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.RemoveOnRefreshPopulationListener(_gameSystem.SetAsset);
             //            _unitManager.RemoveOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
             _unitManager.SetOnStatusPackageListener(null);
@@ -118,7 +119,11 @@ namespace SEF.Manager
             _gameSystem.DestroyedActor(playActor);
         }
 
-
+        public void OnNextEnemyEvent(EnemyActor enemyActor, LevelWaveData levelWaveData)
+        {
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+            _uiGame.RefreshNextEnemyUnit(enemyActor, levelWaveData);
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public void AddAssetData(Data.IAssetData assetData)
