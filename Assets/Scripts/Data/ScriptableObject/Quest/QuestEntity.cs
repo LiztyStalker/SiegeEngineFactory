@@ -45,7 +45,7 @@ namespace SEF.Entity
         {
             if (_data.IsMultipleQuest)
             {
-                return _nowIndex < _data.MaximumIndex;
+                return _nowIndex + 1 < _data.MaximumIndex;
             }
             return false;
         }
@@ -72,6 +72,7 @@ namespace SEF.Entity
         }
         public bool HasQuestGoal()
         {
+            if (HasRewarded) return false;
             return _data.HasQuestGoal(_nowIndex, _nowValue);
         }
 

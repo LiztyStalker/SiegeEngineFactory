@@ -144,10 +144,10 @@ namespace SEF.Quest
         }
         public void SetQuestValue(System.Type type, int value)
         {
-            var entityNullable = FindQuestEntity(type);
-            if (entityNullable != null)
+            var entities = FindQuestEntities(type);
+            for (int i = 0; i < entities.Length; i++)
             {
-                var entity = entityNullable.Value;
+                var entity = entities[i];
                 entity.AddQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
@@ -155,10 +155,10 @@ namespace SEF.Quest
         }
         public void SetQuestValue<T>(int value) where T : IConditionQuestData
         {
-            var entityNullable = FindQuestEntity<T>();
-            if (entityNullable != null)
+            var entities = FindQuestEntities<T>();
+            for (int i = 0; i < entities.Length; i++)
             {
-                var entity = entityNullable.Value;
+                var entity = entities[i];
                 entity.AddQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
@@ -166,10 +166,10 @@ namespace SEF.Quest
         }
         public void AddQuestValue(System.Type type, int value)
         {
-            var entityNullable = FindQuestEntity(type);
-            if (entityNullable != null)
+            var entities = FindQuestEntities(type);
+            for (int i = 0; i < entities.Length; i++)
             {
-                var entity = entityNullable.Value;
+                var entity = entities[i];
                 entity.AddQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
@@ -177,10 +177,10 @@ namespace SEF.Quest
         }
         public void AddQuestValue<T>(int value) where T : IConditionQuestData
         {
-            var entityNullable = FindQuestEntity<T>();
-            if (entityNullable != null) 
+            var entities = FindQuestEntities<T>();
+            for(int i = 0; i < entities.Length; i++)
             {
-                var entity = entityNullable.Value;
+                var entity = entities[i];
                 entity.AddQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
@@ -218,32 +218,28 @@ namespace SEF.Quest
             }
         }
 
-        private QuestEntity? FindQuestEntity<T>() where T : IConditionQuestData
+        private QuestEntity[] FindQuestEntities<T>() where T : IConditionQuestData
         {
-            foreach(var key in _dic.Keys)
-            {
-                var list = _dic[key];
-                for(int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].HasConditionQuestData<T>())
-                        return list[i];
-                }
-            }
-            return null;
-        }
-
-        private QuestEntity? FindQuestEntity(System.Type type)
-        {
+            List<QuestEntity> entities = new List<QuestEntity>();
             foreach (var key in _dic.Keys)
             {
                 var list = _dic[key];
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].HasConditionQuestData(type))
-                        return list[i];
-                }
+                var arr = list.Where(entity => entity.HasConditionQuestData<T>()).ToArray();
+                entities.AddRange(arr);
             }
-            return null;
+            return entities.ToArray();
+        }
+
+        private QuestEntity[] FindQuestEntities(System.Type type)
+        {
+            List<QuestEntity> entities = new List<QuestEntity>();
+            foreach (var key in _dic.Keys)
+            {
+                var list = _dic[key];
+                var arr = list.Where(entity => entity.HasConditionQuestData(type)).ToArray();
+                entities.AddRange(arr);
+            }
+            return entities.ToArray();
         }
 
         public IAssetData GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)

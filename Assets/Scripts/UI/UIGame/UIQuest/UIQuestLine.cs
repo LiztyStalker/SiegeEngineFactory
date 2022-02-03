@@ -85,6 +85,7 @@ namespace SEF.UI.Toolkit
             if (entity.HasRewarded)
             {
                 _rewardedPanel.style.display = DisplayStyle.Flex;
+                _rewardButton.SetEnabled(false);
             }
             else
             {

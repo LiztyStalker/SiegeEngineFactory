@@ -123,9 +123,14 @@ namespace SEF.Data.Editor
 
         private void OnDisable()
         {
-            _multipleConditionLayout.Clear();
-            _singleConditionLayout.Clear();
-            _multipleToggle.UnregisterCallback<ClickEvent>(UpdateLayout);
+            if(_multipleConditionLayout != null)
+                _multipleConditionLayout.Clear();
+
+            if (_singleConditionLayout != null)
+                _singleConditionLayout.Clear();
+
+            if (_multipleToggle != null)
+                _multipleToggle.UnregisterCallback<ClickEvent>(UpdateLayout);
         }
     }
 }
