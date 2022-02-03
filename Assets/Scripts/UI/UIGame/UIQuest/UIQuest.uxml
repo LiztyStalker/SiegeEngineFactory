@@ -1,9 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UIQuest.uss" />
+    <Style src="UIQuestLine.uss" />
     <SEF.UI.Toolkit.UIQuest>
         <ui:VisualElement name="quest-background" class="quest-background" />
-        <ui:Button display-tooltip-when-elided="true" name="exit-button" class="quest-bacckground-button" />
-        <ui:VisualElement name="quest-layout" class="quest-layout" style="background-color: rgba(255, 255, 255, 255);">
+        <ui:Button display-tooltip-when-elided="true" name="exit-button" class="quest-background-button" />
+        <ui:VisualElement name="quest-layout" class="quest-layout" style="background-color: rgb(255, 255, 255);">
+            <ui:VisualElement class="quest-button-layout">
+                <ui:Button text="일일" display-tooltip-when-elided="true" class="quest-tab-button" />
+                <ui:Button text="주간" display-tooltip-when-elided="true" class="quest-tab-button" />
+                <ui:Button text="도전" display-tooltip-when-elided="true" class="quest-tab-button" />
+            </ui:VisualElement>
             <ui:ScrollView name="scrollview" horizontal-page-size="0" horizontal-scroller-visibility="Hidden" touch-scroll-type="Clamped" class="quest-scroll-view" />
         </ui:VisualElement>
     </SEF.UI.Toolkit.UIQuest>

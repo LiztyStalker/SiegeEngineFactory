@@ -42,6 +42,7 @@ namespace SEF.Manager
             _gameSystem.AddRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
+            _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
@@ -56,8 +57,8 @@ namespace SEF.Manager
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
 
-
-
+            
+            _uiGame.AddOnRewardQuestListener(_gameSystem.GetRewardAssetData);
         }
 
         private void Start()
@@ -79,6 +80,7 @@ namespace SEF.Manager
             _gameSystem.RemoveRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
+            _gameSystem.RemoveOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
 
             _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
@@ -92,6 +94,8 @@ namespace SEF.Manager
             _uiGame.RemoveOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
+
+            _uiGame.RemoveOnRewardQuestListener(_gameSystem.GetRewardAssetData);
 
             //CleanUp
             _gameSystem.CleanUp();

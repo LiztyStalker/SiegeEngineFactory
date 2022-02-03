@@ -11,16 +11,13 @@ namespace SEF.UI.Toolkit
         public new class UxmlFactory : UxmlFactory<UIQuestLine, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
-        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIQuest/UIQuestLine.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIQuest/UIQuestLine.uxml";
 
-
-        private int _index;
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UIQuest/UIQuestLine.uss";
 
         private VisualElement _activatePanel;
 
         private VisualElement _icon;
-
-        private Label _nameLabel;
 
         private Label _contentLabel;
 
@@ -30,10 +27,10 @@ namespace SEF.UI.Toolkit
         private VisualElement _rewardAssetIcon;
         private Label _rewardValueLabel;
 
-        private VisualElement _inactivatePanel;
-        private Label _inactivateLabel;
+        private VisualElement _rewardedPanel;
+        private Label _rewardedLabel;
 
-        public void SetIndex(int index) => _index = index;
+        private string _key;
 
         public static UIQuestLine Create()
         {
@@ -42,25 +39,22 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            _activatePanel = this.Q<VisualElement>("activate-panel");
+            _activatePanel = this.Q<VisualElement>("quest-activate-panel");
 
             _icon = this.Q<VisualElement>("line-icon");
-
-            _nameLabel = this.Q<Label>("name-label");
 
             _contentLabel = this.Q<Label>("content-label");
 
             _fillable = this.Q<UIFillable>();
 
-            _rewardButton = this.Q<Button>("upgrade-button");
-            _rewardAssetIcon = this.Q<VisualElement>("upgrade-asset-icon");
-            _rewardValueLabel = this.Q<Label>("upgrade-asset-value-label");
+            _rewardButton = this.Q<Button>("reward-button");
+            _rewardAssetIcon = this.Q<VisualElement>("reward-asset-icon");
+            _rewardValueLabel = this.Q<Label>("reward-asset-value-label");
 
-            _inactivatePanel = this.Q<VisualElement>("inactivate_panel");
+            _rewardedPanel = this.Q<VisualElement>("quest-rewarded-panel");
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
-            Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
 
             Debug.Assert(_contentLabel != null, "_contentLabel element 를 찾지 못했습니다");
 
@@ -70,34 +64,35 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_rewardAssetIcon != null, "_rewardAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_rewardValueLabel != null, "_rewardValueLabel element 를 찾지 못했습니다");
 
-            Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
+            Debug.Assert(_rewardedPanel != null, "_rewardedPanel element 를 찾지 못했습니다");
 
 
             //_icon
-
-            _nameLabel.text = "이름";
             _contentLabel.text = "설명";
 
             _rewardButton.RegisterCallback<ClickEvent>(OnRewardClickedEvent);
 
-            _activatePanel.style.display = DisplayStyle.None;
-            _inactivatePanel.style.display = DisplayStyle.Flex;
+            _activatePanel.style.display = DisplayStyle.Flex;
+            _rewardedPanel.style.display = DisplayStyle.None;
         }
 
 
-        public void RefreshQuestLine()
+        public void RefreshQuestLine(QuestEntity entity)
         {
-            if (_activatePanel.style.display == DisplayStyle.None)
+            _key = entity.Key;
+
+            if (entity.HasRewarded)
             {
-                _activatePanel.style.display = DisplayStyle.Flex;
-                _inactivatePanel.style.display = DisplayStyle.None;
+                _rewardedPanel.style.display = DisplayStyle.Flex;
             }
-        }
+            else
+            {
+                _rewardedPanel.style.display = DisplayStyle.None;
+                _rewardButton.SetEnabled(entity.HasQuestGoal());
+            }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
-        {
-            //var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);
-            //_upgradeButton.SetEnabled(isEnough);
+            _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
+
         }
 
         public void CleanUp()
@@ -111,12 +106,12 @@ namespace SEF.UI.Toolkit
         #region ##### Listener #####
 
 
-        private System.Action<int> _rewardEvent;
-        public void AddOnRewardListener(System.Action<int> act) => _rewardEvent += act;
-        public void RemoveOnRewardListener(System.Action<int> act) => _rewardEvent -= act;
+        private System.Action<string> _rewardEvent;
+        public void AddOnRewardListener(System.Action<string> act) => _rewardEvent += act;
+        public void RemoveOnRewardListener(System.Action<string> act) => _rewardEvent -= act;
         private void OnRewardClickedEvent(ClickEvent e)
         {
-            _rewardEvent?.Invoke(_index);
+            _rewardEvent?.Invoke(_key);
         }
 
         #endregion

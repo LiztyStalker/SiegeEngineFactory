@@ -22,9 +22,9 @@
     position: absolute;
 }
 
-.quest-upgrade-button {
-    width: 200px;
-    height: 80%;
+.quest-reward-button {
+    width: 160px;
+    height: 70%;
     justify-content: center;
     align-items: center;
 }
@@ -85,8 +85,8 @@
 }
 
 .quest-icon {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
     border-left-width: 10px;
     border-right-width: 10px;
     border-top-width: 10px;
@@ -94,5 +94,9 @@
 }
 
 .quest-fillable-block {
+    height: 20px;
+}
+
+.quest-progressbar {
     height: 20px;
 }

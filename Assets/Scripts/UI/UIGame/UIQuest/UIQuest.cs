@@ -15,13 +15,15 @@ namespace SEF.UI.Toolkit
 
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIQuest/UIQuest.uxml";
 
-        private Dictionary<int, UIQuestLine> _dic = new Dictionary<int, UIQuestLine>();
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UIQuest/UIQuest.uss";
 
-        private int _lineCount = 0;
+        private Dictionary<int, UIQuestLine> _dic = new Dictionary<int, UIQuestLine>();
 
         private ScrollView _scrollView;
 
         private Button _exitButton;
+
+        private QuestData.TYPE_QUEST_GROUP _typeQuestGroup;
 
         public static UIQuest Create()
         {
@@ -64,39 +66,33 @@ namespace SEF.UI.Toolkit
             this.style.display = DisplayStyle.None;
         }
 
-
-        //BlacksmithEntity
-        public void RefreshQuest(int index)
+        public void RefreshQuest(QuestEntity entity)
         {
-            if (!_dic.ContainsKey(index))
-            {
-                var line = UIQuestLine.Create();
-                line.Initialize();
-                line.SetIndex(index);
-                line.AddOnRewardListener(OnRewardEvent);
-                _scrollView.Add(line);
-                _dic.Add(index, line);
-            }
-            _dic[index].RefreshQuestLine();
-        }
-
-        public void RefreshAssetEntity(AssetEntity assetEntity)
-        {
-            foreach (var value in _dic.Values)
-            {
-                value.RefreshAssetEntity(assetEntity);
-            }
+            //if (entity.TypeQuestGroup == _typeQuestGroup)
+            //{
+            Debug.Log(entity.Key);
+                var hashcode = entity.GetHashCode();
+                if (!_dic.ContainsKey(hashcode))
+                {
+                    var line = UIQuestLine.Create();
+                    line.Initialize();
+                    line.AddOnRewardListener(OnRewardEvent);
+                    _scrollView.Add(line);
+                    _dic.Add(hashcode, line);
+                }
+                _dic[hashcode].RefreshQuestLine(entity);
+            //}
         }
 
         #region ##### Listener #####
 
 
-        private System.Action<int> _rewardEvent;
-        public void AddOnRewardListener(System.Action<int> act) => _rewardEvent += act;
-        public void RemoveOnRewardListener(System.Action<int> act) => _rewardEvent -= act;
-        private void OnRewardEvent(int index)
+        private System.Action<QuestData.TYPE_QUEST_GROUP, string> _rewardEvent;
+        public void AddOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent += act;
+        public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent -= act;
+        private void OnRewardEvent(string key)
         {
-            _rewardEvent?.Invoke(index);
+            _rewardEvent?.Invoke(_typeQuestGroup, key);
         }
 
         #endregion

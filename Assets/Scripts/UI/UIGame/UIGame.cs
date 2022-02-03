@@ -90,6 +90,7 @@ namespace SEF.UI.Toolkit
         public void ShowHit(PlayActor playActor, DamageData attackData) => _uiPlay.ShowHit(playActor, attackData);
 
 
+        public void RefreshQuest(QuestEntity entity) => _uiQuest.RefreshQuest(entity);
 
 
         #region ##### Listener #####
@@ -107,6 +108,10 @@ namespace SEF.UI.Toolkit
         public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiSystem.RemoveUpTechListener(act);
         public void AddExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
         public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
+
+
+        public void AddOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.AddOnRewardListener(act);
+        public void RemoveOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.RemoveOnRewardListener(act);
 
         #endregion
 

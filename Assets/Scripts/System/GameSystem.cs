@@ -165,11 +165,10 @@ namespace SEF.Manager
 
         #region ##### QuestManager #####
 
-        public IAssetData GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
+        public void GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
         {
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
             _account.AddAsset(assetData);
-            return assetData;
         }
 
         public void SetQuestValue(System.Type type, int value) => _questManager.SetQuestValue(type, value);

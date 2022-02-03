@@ -14,6 +14,8 @@ UIQuest {
 }
 
 .quest-scroll-view {
+    width: 100%;
+    height: 95%;
 }
 
 .quest-background {
@@ -23,9 +25,25 @@ UIQuest {
     background-color: rgba(0, 0, 0, 0.25);
 }
 
-.quest-bacckground-button {
+.quest-background-button {
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.quest-button-layout {
+    flex-direction: row;
+    width: 100%;
+    height: 5%;
+}
+
+.quest-tab-button {
+    width: 100px;
+    font-size: 24px;
+}
+
+UIQuestLine {
+    width: 100%;
+    height: 100px;
 }
