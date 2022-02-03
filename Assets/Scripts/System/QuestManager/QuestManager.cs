@@ -241,8 +241,27 @@ namespace SEF.Quest
             return null;
         }
 
-        public IAssetData GetRewardAssetData(string key)
+        public IAssetData GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
         {
+            if (_dic.ContainsKey(typeQuestGroup))
+            {
+                var list = _dic[typeQuestGroup];
+                for(int i = 0; i < list.Count; i++)
+                {
+                    var entity = list[i];
+                    if (entity.Key == key)
+                    {
+                        var assetData = entity.GetRewardAssetData();
+                        if (entity.HasNextIndex())
+                            entity.NextIndex();
+                        else
+                            entity.SetRewarded(true);
+                        list[i] = entity;
+                        RefreshQuest(entity);
+                        return assetData;
+                    }
+                }
+            }
             return null;
         }
 

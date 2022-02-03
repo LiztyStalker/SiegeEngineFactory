@@ -53,9 +53,9 @@ namespace SEF.Data
         {
             if (IsMultipleQuest)
             {
-                return _questConditionDataArray[index].ConditionValue >= value;
+                return _questConditionDataArray[index].ConditionValue <= value;
             }
-            return _questConditionData.ConditionValue >= value;
+            return _questConditionData.ConditionValue <= value;
         }
 
         public IAssetData GetRewardAssetData(int index)
@@ -95,8 +95,12 @@ namespace SEF.Data
         {
             _key = key;
             _typeQuestGroup = typeQuestGroup;
-            _questConditionData = QuestConditionData.Create_Test(conditionType, conditionValue, assetType, assetValue);
-           
+            _questConditionData = QuestConditionData.Create_Test(conditionType, conditionValue, assetType, assetValue);           
+        }
+        public void SetQuestDataArray_Test(QuestConditionData[] arr)
+        {
+            _isMultipleQuest = true;
+            _questConditionDataArray = arr;
         }
 #endif
     }

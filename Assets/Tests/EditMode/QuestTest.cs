@@ -45,7 +45,7 @@ namespace SEF.Test
             _gameSystem.Initialize(null);
             _gameSystem.AddOnRefreshQuestEntityListener(entity =>
             {
-                Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue}");
+                Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue} {entity.HasQuestGoal()}");
             });
         }
 
@@ -451,6 +451,8 @@ namespace SEF.Test
             _gameSystem.SuccessedResearchData();
             _gameSystem.SuccessedResearchData();
             _gameSystem.SuccessedResearchData();
+
+            
         }
 
         [Test]
@@ -487,7 +489,49 @@ namespace SEF.Test
         public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData_x3()
         {
             Assert.Fail("개발되지 않음");
+        }
 
+        [Test]
+        public void QuestTest_GetRewardAssetData()
+        {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeWorkshop(0);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "Test"); 
+        }
+
+        [Test]
+        public void QuestTest_GetRewardAssetData_Multiple()
+        {
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
+
+            var arr = new QuestConditionData[3];
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = QuestConditionData.Create_Test(typeof(UpgradeUnitConditionQuestData), i + 1, typeof(GoldAssetData), 100);
+            }
+            data.SetQuestDataArray_Test(arr);
+
+            var entity = QuestEntity.Create();
+            entity.SetData(data);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+            _gameSystem.UpgradeWorkshop(0);
+            
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "Test");
+
+            _gameSystem.UpgradeWorkshop(0);
+            _gameSystem.UpgradeWorkshop(0);
+            _gameSystem.UpgradeWorkshop(0);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "Test");
+
+            _gameSystem.UpgradeWorkshop(0);
         }
     }
 }

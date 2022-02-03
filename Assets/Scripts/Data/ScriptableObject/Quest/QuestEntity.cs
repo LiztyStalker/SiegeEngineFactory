@@ -15,7 +15,7 @@ namespace SEF.Entity
         public string Key => _data.Key;
         public QuestData.TYPE_QUEST_GROUP TypeQuestGroup => _data.TypeQuestGroup;
         public int NowValue => _nowValue;
-        public int GoalValue => _data.GetGoalValue(_nowValue);
+        public int GoalValue => _data.GetGoalValue(_nowIndex);
         public bool HasRewarded => _hasRewarded;
         public void Initialize(IAccountData data)
         {
@@ -50,7 +50,10 @@ namespace SEF.Entity
             return false;
         }
 
-        public void NextIndex() => _nowIndex++;        
+        public void NextIndex()
+        {
+            _nowIndex++;
+        }
 
         public void SetRewarded(bool hasRewarded)
         {
