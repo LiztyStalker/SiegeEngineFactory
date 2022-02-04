@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UIFillable" src="/Assets/Scripts/UI/UIUtility/UIFillable.uxml" />
+    <Style src="UIQuestTab.uss" />
+    <SEF.UI.Toolkit.UIQuestTab class="quest-tab-layout">
+        <ui:VisualElement class="quest-tab-info-layout">
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="quest-tab-content-label" class="quest-tab-label" />
+            <ui:Instance template="UIFillable" name="UIFillable" class="quest-tab-fillable" />
+        </ui:VisualElement>
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="quest-tab-reward-button" class="quest-tab-button" />
+    </SEF.UI.Toolkit.UIQuestTab>
+</ui:UXML>

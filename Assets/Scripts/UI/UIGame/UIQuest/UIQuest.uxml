@@ -9,6 +9,7 @@
                 <ui:Button text="일일" display-tooltip-when-elided="true" name="quest-daily-button" class="quest-tab-button" />
                 <ui:Button text="주간" display-tooltip-when-elided="true" name="quest-weekly-button" class="quest-tab-button" />
                 <ui:Button text="도전" display-tooltip-when-elided="true" name="quest-challenge-button" class="quest-tab-button" />
+                <ui:Button text="목표" display-tooltip-when-elided="true" name="quest-goal-button" class="quest-tab-button" />
             </ui:VisualElement>
             <ui:ScrollView name="scrollview" horizontal-page-size="0" horizontal-scroller-visibility="Hidden" touch-scroll-type="Clamped" class="quest-scroll-view" />
         </ui:VisualElement>

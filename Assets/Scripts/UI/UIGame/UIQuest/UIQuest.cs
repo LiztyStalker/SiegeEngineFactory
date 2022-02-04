@@ -26,6 +26,7 @@ namespace SEF.UI.Toolkit
         private Button _dailyButton;
         private Button _weeklyButton;
         private Button _challengeButton;
+        private Button _goalButton;
 
         private QuestData.TYPE_QUEST_GROUP _typeQuestGroup;
 
@@ -42,10 +43,12 @@ namespace SEF.UI.Toolkit
             _dailyButton = this.Q<Button>("quest-daily-button");
             _weeklyButton = this.Q<Button>("quest-weekly-button");
             _challengeButton = this.Q<Button>("quest-challenge-button");
+            _goalButton = this.Q<Button>("quest-goal-button");
 
             _dailyButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Daily));
             _weeklyButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Weekly));
             _challengeButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Challenge));
+            _goalButton.RegisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Goal));
 
             _exitButton.RegisterCallback<ClickEvent>(e => { Hide(); });
 
@@ -66,6 +69,8 @@ namespace SEF.UI.Toolkit
             _dailyButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Daily));
             _weeklyButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Weekly));
             _challengeButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Challenge));
+            _goalButton.UnregisterCallback<ClickEvent>(e => RefreshTypeQuestData(QuestData.TYPE_QUEST_GROUP.Goal));
+
             _exitButton.UnregisterCallback<ClickEvent>(e => { Hide(); });
         }
 
@@ -126,7 +131,6 @@ namespace SEF.UI.Toolkit
             _typeQuestGroup = typeQuestData;
             ClearDictionary();
             _refreshEvent?.Invoke(_typeQuestGroup);
-
         }
 
         #endregion

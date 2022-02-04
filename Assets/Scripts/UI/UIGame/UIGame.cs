@@ -21,6 +21,7 @@ namespace SEF.UI.Toolkit
         private UISystem _uiSystem;
         private UIPlay _uiPlay;
         private UIQuest _uiQuest;
+        private UIQuestTab _uiQuestTab;
 
         private Button _questButton;
         //private UIOfflineReward _uiOfflineReward;
@@ -47,16 +48,19 @@ namespace SEF.UI.Toolkit
             _uiSystem = _root.Q<UISystem>();
             _uiPlay = _root.Q<UIPlay>();
             _uiQuest = _root.Q<UIQuest>();
+            _uiQuestTab = _root.Q<UIQuestTab>();
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
             Debug.Assert(_uiPlay != null, "_uiPlay 가 등록되지 않았습니다");
             Debug.Assert(_uiQuest != null, "_uiQuest 가 등록되지 않았습니다");
+            Debug.Assert(_uiQuestTab != null, "_uiQuestTab 가 등록되지 않았습니다");
 
             _uiAsset.Initialize(_root.Q<VisualElement>("UIAsset"));
             _uiSystem.Initialize();
             _uiPlay.Initialize(transform);
             _uiQuest.Initialize();
+            _uiQuestTab.Initialize();
 
             _questButton.RegisterCallback<ClickEvent>(e => _uiQuest.Show());
         }
@@ -69,6 +73,7 @@ namespace SEF.UI.Toolkit
             _uiSystem.CleanUp();
             _uiPlay.CleanUp();
             _uiQuest.CleanUp();
+            _uiQuestTab.CleanUp();
         }
 
         public void RunProcess(float deltaTime)
@@ -90,7 +95,12 @@ namespace SEF.UI.Toolkit
         public void ShowHit(PlayActor playActor, DamageData attackData) => _uiPlay.ShowHit(playActor, attackData);
 
 
-        public void RefreshQuest(QuestEntity entity) => _uiQuest.RefreshQuest(entity);
+        public void RefreshQuest(QuestEntity entity)
+        {
+            _uiQuest.RefreshQuest(entity);
+            if (entity.TypeQuestGroup == QuestData.TYPE_QUEST_GROUP.Goal)
+                _uiQuestTab.RefreshQuest(entity);
+        }
 
         #region ##### Listener #####
 
@@ -109,11 +119,25 @@ namespace SEF.UI.Toolkit
         public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
 
 
-        public void AddOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.AddOnRewardListener(act);
-        public void RemoveOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _uiQuest.RemoveOnRewardListener(act);
+        public void AddOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act)
+        {
+            _uiQuest.AddOnRewardListener(act);
+            _uiQuestTab.AddOnRewardListener(act);
+        }
+        public void RemoveOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act)
+        {
+            _uiQuest.RemoveOnRewardListener(act);
+            _uiQuestTab.RemoveOnRewardListener(act);
+        }
 
-        public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.AddOnRefreshListener(act);
-        public void RemoveOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.RemoveOnRefreshListener(act);
+        public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
+        {
+            _uiQuest.AddOnRefreshListener(act);
+        }
+        public void RemoveOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
+        {
+            _uiQuest.RemoveOnRefreshListener(act);
+        }
         #endregion
 
     }
