@@ -76,7 +76,7 @@ namespace SEF.Entity
 
             U absoluteData = NumberDataUtility.Create<U>();
             U valueData = NumberDataUtility.Create<U>();
-            int rate = 0;
+            float rate = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -87,7 +87,8 @@ namespace SEF.Entity
                         valueData.Value += statusData.GetValue().Value;
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Rate:
-                        rate += (int)statusData.GetValue().Value;
+                        rate += (float)statusData.GetValue().Value;
+                        //Debug.Log(rate);
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Absolute:
                         absoluteData.Value += statusData.GetValue().Value;
@@ -106,7 +107,7 @@ namespace SEF.Entity
             //data + data * rate + value
             else
             {
-                calData.Value += (data.Value * rate / 100) + valueData.Value;
+                calData.Value += (data.Value * rate) + valueData.Value;
             }
             return calData;
         }

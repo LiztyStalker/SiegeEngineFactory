@@ -7,20 +7,17 @@ namespace SEF.Data
     public class DamageDelayStatusData : IStatusData
     {
         private IStatusData.TYPE_STATUS_DATA _typeStatusData;
-        private float _value;
+        private UniversalBigNumberData _value;
 
         public IAssetData[] AssetDataArray => null;
         public float ProductTime => 0f;
 
         public IStatusData.TYPE_STATUS_DATA TypeStatusData => _typeStatusData;
-        public UniversalBigNumberData GetValue()
-        {
-            throw new System.NotImplementedException();
-        }
+        public UniversalBigNumberData GetValue() => _value;
 
         public DamageDelayStatusData(float value, IStatusData.TYPE_STATUS_DATA typeStatusData)
         {
-            _value = value;
+            _value = UniversalBigNumberData.Create(value);
             _typeStatusData = typeStatusData;
         }
     }

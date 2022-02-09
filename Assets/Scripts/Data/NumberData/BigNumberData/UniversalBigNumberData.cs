@@ -8,7 +8,7 @@ namespace SEF.Data
     public class UniversalBigNumberData : BigNumberData
     {
         //¼Ò¼ýÁ¡
-        private int _dot = 0;
+        //private int _dot = 0;
         public UniversalBigNumberData() : base() { }
         //public UniversalBigNumberData(double value)
         //{
@@ -77,6 +77,7 @@ namespace SEF.Data
             data.ValueText = value.ToString();
             return data;
         }
+#endif
 
         public static UniversalBigNumberData Create(int value)
         {
@@ -84,6 +85,12 @@ namespace SEF.Data
             data.ValueText = value.ToString();
             return data;
         }
-#endif
+
+        public static UniversalBigNumberData Create(float value)
+        {
+            var data = new UniversalBigNumberData();
+            data.ValueText = value.ToString();
+            return data;
+        }
     }
 }

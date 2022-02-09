@@ -6,8 +6,6 @@ namespace SEF.Data
 
     public class DamageValueStatusData : IStatusData
     {
-
-
         private UniversalBigNumberData _value;
         private IStatusData.TYPE_STATUS_DATA _typeStatusData;
 
@@ -16,7 +14,6 @@ namespace SEF.Data
         public float ProductTime => -1f;
 
         public IStatusData.TYPE_STATUS_DATA TypeStatusData => _typeStatusData;
-
 
         public UniversalBigNumberData GetValue() => _value;
 

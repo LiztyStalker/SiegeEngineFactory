@@ -54,7 +54,13 @@ namespace SEF.Test
             Debug.Log(pre?.Invoke(1));
         }
 
-
+        [Test]
+        public void CodeTest_DecimalPoint()
+        {
+            Debug.Log(double.TryParse("1000.11", out double value1)); // T
+            Debug.Log(double.TryParse("1A.11", out double value2)); // F
+            Debug.Log(double.TryParse("1000000000000000000000000000000000000.11", out double value3)); // F
+        }
     }
 }
 #endif

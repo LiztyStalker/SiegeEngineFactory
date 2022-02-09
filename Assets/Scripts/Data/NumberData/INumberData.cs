@@ -34,13 +34,13 @@ namespace SEF.Data
         /// <param name="rate">증가율</param>
         /// <param name="length">기간</param>
         /// <returns></returns>
-        public static BigInteger GetCompoundInterest(BigInteger startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
-        {
-            var exponent = length;
-            var nv = nowValue * 1000;
-            var rt = (int)UnityEngine.Mathf.Round(rate * 1000f);
-            return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(1000, exponent);
-        }
+        //public static BigInteger GetCompoundInterest(BigInteger startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
+        //{
+        //    var exponent = length;
+        //    var nv = nowValue * 1000;
+        //    var rt = (int)UnityEngine.Mathf.Round(rate * 1000f);
+        //    return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(1000, exponent);
+        //}
 
 
 

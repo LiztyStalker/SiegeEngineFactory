@@ -6,15 +6,13 @@ namespace SEF.Data
 
     public class AttackerDamageValueStatusData : IStatusData
     {
+        private UniversalBigNumberData _value;
         public IAssetData[] AssetDataArray => throw new System.NotImplementedException();
 
         public float ProductTime => throw new System.NotImplementedException();
 
         public IStatusData.TYPE_STATUS_DATA TypeStatusData => throw new System.NotImplementedException();
 
-        public UniversalBigNumberData GetValue()
-        {
-            throw new System.NotImplementedException();
-        }
+        public UniversalBigNumberData GetValue() => _value;
     }
 }

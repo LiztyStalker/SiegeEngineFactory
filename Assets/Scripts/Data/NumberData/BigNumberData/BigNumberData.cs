@@ -10,6 +10,8 @@ namespace SEF.Data
     [System.Serializable]
     public abstract class BigNumberData : INumberData
     {
+        private const int NUMBER_ALPHABET = 'Z' - 'A'; //26
+
         [SerializeField]
         private string _valueText;
         public string ValueText { get { return _valueText; } set { _valueText = value; } }
@@ -48,15 +50,15 @@ namespace SEF.Data
                 _value = new BigDecimal();
         }
 
-        public void SetValue(string value)
-        {
 
+        private BigDecimal GetStringToBigDecimal(string value)
+        {
             var str = value;
 
             Dictionary<string, int> dic = new Dictionary<string, int>();
             int digit = 0;
             string letter = null;
-            for(int i = 0; i < str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 var ch = str[i];
                 //숫자 - 배수 곱하기 1, 10, 100...
@@ -76,7 +78,7 @@ namespace SEF.Data
                 else if (char.IsDigit(ch))
                 {
                     //조립
-                    if(digit > 0 && !string.IsNullOrEmpty(letter))
+                    if (digit > 0 && !string.IsNullOrEmpty(letter))
                     {
                         if (!dic.ContainsKey(letter))
                             dic.Add(letter, digit);
@@ -100,7 +102,7 @@ namespace SEF.Data
                 }
             }
 
-            if(digit > 0 && !string.IsNullOrEmpty(letter))
+            if (digit > 0 && !string.IsNullOrEmpty(letter))
             {
                 dic.Add(letter, digit);
             }
@@ -110,6 +112,8 @@ namespace SEF.Data
             }
 
 
+            //var decimalPoint = s
+
             BigDecimal bigdec = new BigDecimal();
 
             foreach (var key in dic.Keys)
@@ -117,7 +121,30 @@ namespace SEF.Data
                 var result = new BigDecimal(BigInteger.Multiply(dic[key], GetDigit(key)));
                 bigdec += result;
             }
+            return bigdec;
+        }
 
+
+        public void SetValue(string value)
+        {
+            BigDecimal bigdec;
+            var str = value;
+
+            if (int.TryParse(str, out int intTmp))
+            {
+                //숫자로만 이루어짐
+                bigdec = new BigDecimal(intTmp);
+            }
+            else if(double.TryParse(str, out double doubleTmp))
+            {
+                bigdec = new BigDecimal(doubleTmp);
+                //소수로만 이루어짐 
+            }
+            else
+            {
+                //문자 1.000A
+                bigdec = GetStringToBigDecimal(str);
+            }
             Value = bigdec;
         }
 
@@ -226,15 +253,15 @@ namespace SEF.Data
 
             while (true)
             {
-                if (digit / 26 == 0)
+                if (digit / NUMBER_ALPHABET == 0)
                 {
                     builder.Append(GetAlphabet(digit));
                     break;
                 }
                 else
                 {
-                    digit = (digit / 26) - 1;
-                    builder.Append(GetAlphabet(digit % 26));
+                    digit = (digit / NUMBER_ALPHABET) - 1;
+                    builder.Append(GetAlphabet(digit % NUMBER_ALPHABET));
                     //Debug.Log(digit);
                 }
             }
