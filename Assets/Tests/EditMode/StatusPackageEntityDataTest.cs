@@ -51,7 +51,7 @@ namespace SEF.Test
             _enemyEntity_Dummy.CleanUp();
             _levelWaveData = null;
             _upgradeData = null;
-            _statusPackage.CleanUp();
+            _statusPackage.Dispose();
             _statusProvider = null;
         }
 

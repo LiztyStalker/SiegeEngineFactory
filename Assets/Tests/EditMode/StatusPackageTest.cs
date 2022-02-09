@@ -8,7 +8,7 @@ namespace SEF.Test
     using UnityEngine.TestTools;
     using Data;
     using Entity;
-
+    using SEF.Unit;
 
     public class StatusPackageTest
     {
@@ -53,6 +53,8 @@ namespace SEF.Test
         [SetUp]
         public void SetUp()
         {
+            StatusPackage.Current.Initialize();
+
             _statusPackage = StatusPackage.Create();
             _statusPackage.Initialize();
 
@@ -63,13 +65,15 @@ namespace SEF.Test
         [TearDown]
         public void TearDown()
         {
-            _statusPackage.CleanUp();
+            StatusPackage.Current.Dispose();
+            _statusPackage.Dispose();
         }
 
         [Test]
         public void StatusPackageTest_Initialize()
         {
         }
+
 
         [Test]
         public void StatusPackageTest_AddStatusData()
@@ -134,7 +138,7 @@ namespace SEF.Test
 
             var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
-            Assert.IsTrue(value.GetValue() == "1.100A");
+            Assert.IsTrue(value.GetValue() == "100");
         }
 
         [Test]
@@ -164,7 +168,7 @@ namespace SEF.Test
 
             var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
-            Assert.IsTrue(value.GetValue() == "1.300A");
+            Assert.IsTrue(value.GetValue() == "300");
         }
 
         [Test]
@@ -357,8 +361,374 @@ namespace SEF.Test
 
             var value = _statusPackage.GetStatusDataToBigNumberData<StatusData_Test, GoldAssetData>(GoldAssetData.Create_Test(1000));
             Debug.Log(value.GetValue());
-            Assert.IsTrue(value.GetValue() == "1.100A");
+            Assert.IsTrue(value.GetValue() == "100");
         }
+
+
+        private UnitEntity CreateEntity()
+        {
+            var unitData = UnitData.Create_Test();
+            var entity = new UnitEntity();
+            entity.Initialize();
+            entity.UpTech(unitData);
+            return entity;
+        }
+
+        private AttackerActor CreateAttackerActor()
+        {
+            var data = AttackerData.Create_Test();
+            var actor = new AttackerActor();
+            actor.SetData_Test(data, NumberDataUtility.Create<UpgradeData>());
+            return actor;
+        }
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_DamageValueStatusData()
+        {
+            var entity1 = CreateEntity();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new DamageValueStatusData(5, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(entity1.DamageData.GetValue());
+            Assert.AreEqual(entity1.DamageData.GetValue(), "20");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity2 = CreateEntity();
+
+            var statusData2 = new DamageValueStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(entity2.DamageData.GetValue());
+            Assert.AreEqual(entity2.DamageData.GetValue(), "22");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity3 = CreateEntity();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new DamageValueStatusData(3, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new DamageValueStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(entity3.DamageData.GetValue());
+            Assert.AreEqual(entity3.DamageData.GetValue(), "22");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var entity4 = CreateEntity();
+
+            var statusData5 = new DamageValueStatusData(20, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(entity4.DamageData.GetValue());
+            Assert.AreEqual(entity4.DamageData.GetValue(), "20");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
+
+
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_DamageDelayStatusData()
+        {
+            var entity1 = CreateEntity();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new DamageDelayStatusData(0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(entity1.AttackDelay);
+            Assert.AreEqual(entity1.AttackDelay, 0.9f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity2 = CreateEntity();
+
+            var statusData2 = new DamageDelayStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(entity2.AttackDelay);
+            Assert.AreEqual(entity2.AttackDelay, 0.5f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity3 = CreateEntity();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new DamageDelayStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new DamageDelayStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(entity3.AttackDelay);
+            Assert.AreEqual(entity3.AttackDelay, 0.4f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var entity4 = CreateEntity();
+
+            var statusData5 = new DamageDelayStatusData(2, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(entity4.AttackDelay);
+            Assert.AreEqual(entity4.AttackDelay, 2f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
+
+
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_ProductTimeStatusData()
+        {
+            var entity1 = CreateEntity();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new ProductTimeStatusData(0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(entity1.ProductTime);
+            Assert.AreEqual(entity1.ProductTime, 0.9f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity2 = CreateEntity();
+
+            var statusData2 = new ProductTimeStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(entity2.ProductTime);
+            Assert.AreEqual(entity2.ProductTime, 0.5f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity3 = CreateEntity();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new ProductTimeStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new ProductTimeStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(entity3.ProductTime);
+            Assert.AreEqual(entity3.ProductTime, 0.4f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var entity4 = CreateEntity();
+
+            var statusData5 = new ProductTimeStatusData(2, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(entity4.ProductTime);
+            Assert.AreEqual(entity4.ProductTime, 2f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
+
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_HealthDataStatusData()
+        {
+            var entity1 = CreateEntity();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new HealthDataStatusData(5, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(entity1.HealthData.GetValue());
+            Assert.AreEqual(entity1.HealthData.GetValue(), "105");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity2 = CreateEntity();
+
+            var statusData2 = new HealthDataStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(entity2.HealthData.GetValue());
+            Assert.AreEqual(entity2.HealthData.GetValue(), "150");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var entity3 = CreateEntity();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new HealthDataStatusData(3, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new HealthDataStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(entity3.HealthData.GetValue());
+            Assert.AreEqual(entity3.HealthData.GetValue(), "133");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var entity4 = CreateEntity();
+
+            var statusData5 = new HealthDataStatusData(200, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(entity4.HealthData.GetValue());
+            Assert.AreEqual(entity4.HealthData.GetValue(), "200");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+        }
+
+
+
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_AttackerDamageValueStatusData()
+        {
+            var actor1 = CreateAttackerActor();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new AttackerDamageValueStatusData(5, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(actor1.DamageData.GetValue());
+            Assert.AreEqual(actor1.DamageData.GetValue(), "35");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var actor2 = CreateAttackerActor();
+
+            var statusData2 = new AttackerDamageValueStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(actor2.DamageData.GetValue());
+            Assert.AreEqual(actor2.DamageData.GetValue(), "45");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var actor3 = CreateAttackerActor();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new AttackerDamageValueStatusData(3, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new AttackerDamageValueStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(actor3.DamageData.GetValue());
+            Assert.AreEqual(actor3.DamageData.GetValue(), "42");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var actor4 = CreateAttackerActor();
+
+            var statusData5 = new AttackerDamageValueStatusData(20, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(actor4.DamageData.GetValue());
+            Assert.AreEqual(actor4.DamageData.GetValue(), "20");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+        }
+
+
+
+        [Test]
+        public void StatusPackageTest_UnitEntity_AttackerDamageDelayStatusData()
+        {
+            var actor1= CreateAttackerActor();
+
+            var statusProvider1 = new StatusProvider_Test();
+            var statusData1 = new AttackerDamageDelayStatusData(0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData1);
+
+            Debug.Log(actor1.AttackDelay);
+            Assert.AreEqual(actor1.AttackDelay, 0.9f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var actor2 = CreateAttackerActor();
+
+            var statusData2 = new AttackerDamageDelayStatusData(0.5f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData2);
+
+            Debug.Log(actor1.AttackDelay);
+            Assert.AreEqual(actor1.AttackDelay, 0.5f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+            var actor3 = CreateAttackerActor();
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = new AttackerDamageDelayStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData4 = new AttackerDamageDelayStatusData(0.3f, IStatusData.TYPE_STATUS_DATA.Rate);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData3);
+            StatusPackage.Current.SetStatusData(statusProvider2, statusData4);
+
+            Debug.Log(actor1.AttackDelay);
+            Assert.AreEqual(actor1.AttackDelay, 0.4f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+            var actor4 = CreateAttackerActor();
+
+            var statusData5 = new AttackerDamageDelayStatusData(2, IStatusData.TYPE_STATUS_DATA.Absolute);
+            StatusPackage.Current.SetStatusData(statusProvider1, statusData5);
+
+            Debug.Log(actor1.AttackDelay);
+            Assert.AreEqual(actor1.AttackDelay, 2f);
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
+
+
     }
 }
 #endif

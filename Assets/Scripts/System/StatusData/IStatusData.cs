@@ -9,6 +9,7 @@ namespace SEF.Data
     {
         public enum TYPE_STATUS_DATA { Value, Rate, Absolute}
 
+        //ProcessPackage로 이동 예정
         public IAssetData[] AssetDataArray { get; }
         public float ProductTime { get; }
 

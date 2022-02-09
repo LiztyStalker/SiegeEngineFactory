@@ -9,6 +9,22 @@ namespace SEF.Entity
     public class StatusPackage
     {
 
+
+        private static StatusPackage _current;
+
+        public static StatusPackage Current
+        {
+            get
+            {
+                if(_current == null)
+                {
+                    _current = Create();
+                }
+                return _current;
+            }
+        }
+
+
         #region ##### StatusCase #####
         private class StatusCase
         {
@@ -53,9 +69,10 @@ namespace SEF.Entity
             _dic = new Dictionary<IStatusProvider, StatusCase>();
         }
 
-        public void CleanUp()
+        public void Dispose()
         {
             Dictionary.Clear();
+            _current = null;
         }
 
         public void SetStatusData(IStatusProvider provider, IStatusData statusData)
@@ -67,6 +84,14 @@ namespace SEF.Entity
                 Dictionary.Add(provider, statusCase);
             }
             Dictionary[provider].SetStatusData(statusData);
+        }
+
+        public void RemoveStatusData(IStatusProvider provider)
+        {
+            if (Dictionary.ContainsKey(provider))
+            {
+                Dictionary.Remove(provider);
+            }
         }
 
         public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData
@@ -101,8 +126,8 @@ namespace SEF.Entity
 
             //data + absolute
             if (!absoluteData.Value.IsZero)
-            {
-                calData.Value += absoluteData.Value;
+            {                
+                calData.Value = absoluteData.Value;
             }
             //data + data * rate + value
             else
@@ -124,6 +149,9 @@ namespace SEF.Entity
         {
             return new StatusPackage();
         }
+
+
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TEST
         public bool HasStatusProvider(IStatusProvider provider)

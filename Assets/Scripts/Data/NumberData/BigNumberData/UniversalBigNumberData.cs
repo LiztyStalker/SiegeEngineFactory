@@ -10,22 +10,22 @@ namespace SEF.Data
         //¼Ò¼ýÁ¡
         //private int _dot = 0;
         public UniversalBigNumberData() : base() { }
-        //public UniversalBigNumberData(double value)
-        //{
-        //    Value = ConvertToBigInteger((decimal)value);
-        //}
-        //public UniversalBigNumberData(float value)
-        //{
-        //    Value = ConvertToBigInteger((decimal)value);
-        //}
-        //public UniversalBigNumberData(decimal value)
-        //{
-        //    Value = ConvertToBigInteger(value);
-        //}
-        //public UniversalBigNumberData(int value)
-        //{
-        //    Value = ConvertToBigInteger(value);
-        //}
+        public UniversalBigNumberData(double value)
+        {
+            Value = new System.Numerics.BigDecimal(value);
+        }
+        public UniversalBigNumberData(float value)
+        {
+            Value = new System.Numerics.BigDecimal(value);
+        }
+        public UniversalBigNumberData(decimal value)
+        {
+            Value = new System.Numerics.BigDecimal(value);
+        }
+        public UniversalBigNumberData(int value)
+        {
+            Value = new System.Numerics.BigDecimal(value);
+        }
 
         //public decimal GetDecimalValue()
         //{

@@ -7,12 +7,40 @@ namespace SEF.Data
     public class HealthDataStatusData : IStatusData
     {
         private UniversalBigNumberData _value;
-        public IAssetData[] AssetDataArray => throw new System.NotImplementedException();
+        private IStatusData.TYPE_STATUS_DATA _typeStatusData;
 
-        public float ProductTime => throw new System.NotImplementedException();
+        public IAssetData[] AssetDataArray => null;
 
-        public IStatusData.TYPE_STATUS_DATA TypeStatusData => throw new System.NotImplementedException();
+        public float ProductTime => -1f;
+
+        public IStatusData.TYPE_STATUS_DATA TypeStatusData => _typeStatusData;
 
         public UniversalBigNumberData GetValue() => _value;
+
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public static HealthDataStatusData Create(int value, IStatusData.TYPE_STATUS_DATA typeStatusData)
+        {
+            return new HealthDataStatusData(value, typeStatusData);
+        }
+
+#endif
+
+        public HealthDataStatusData(int value, IStatusData.TYPE_STATUS_DATA typeStatusData)
+        {
+            _value = NumberDataUtility.Create<UniversalBigNumberData>();
+            _value.ValueText = value.ToString();
+            _value.SetValue();
+            _typeStatusData = typeStatusData;
+        }
+
+        public HealthDataStatusData(float value, IStatusData.TYPE_STATUS_DATA typeStatusData)
+        {
+            _value = NumberDataUtility.Create<UniversalBigNumberData>();
+            _value.ValueText = value.ToString();
+            _value.SetValue();
+            _typeStatusData = typeStatusData;
+        }
     }
 }

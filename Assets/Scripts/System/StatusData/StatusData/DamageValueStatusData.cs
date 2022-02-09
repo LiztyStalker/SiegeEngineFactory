@@ -18,12 +18,14 @@ namespace SEF.Data
         public UniversalBigNumberData GetValue() => _value;
 
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+//#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
-        public static DamageValueStatusData Create(int value, IStatusData.TYPE_STATUS_DATA typeStatusData)
-        {
-            return new DamageValueStatusData(value, typeStatusData);
-        }
+//        public static DamageValueStatusData Create(int value, IStatusData.TYPE_STATUS_DATA typeStatusData)
+//        {
+//            return new DamageValueStatusData(value, typeStatusData);
+//        }
+
+//#endif
 
         public DamageValueStatusData(int value, IStatusData.TYPE_STATUS_DATA typeStatusData)
         {
@@ -33,6 +35,12 @@ namespace SEF.Data
             _typeStatusData = typeStatusData;
         }
 
-#endif
+        public DamageValueStatusData(float value, IStatusData.TYPE_STATUS_DATA typeStatusData)
+        {
+            _value = NumberDataUtility.Create<UniversalBigNumberData>();
+            _value.ValueText = value.ToString();
+            _value.SetValue();
+            _typeStatusData = typeStatusData;
+        }
     }
 }

@@ -17,7 +17,10 @@ namespace SEF.Data
 
         public DamageDelayStatusData(float value, IStatusData.TYPE_STATUS_DATA typeStatusData)
         {
-            _value = UniversalBigNumberData.Create(value);
+            if(typeStatusData == IStatusData.TYPE_STATUS_DATA.Absolute)
+                _value = UniversalBigNumberData.Create(value);
+            else
+                _value = UniversalBigNumberData.Create(-value);
             _typeStatusData = typeStatusData;
         }
     }
