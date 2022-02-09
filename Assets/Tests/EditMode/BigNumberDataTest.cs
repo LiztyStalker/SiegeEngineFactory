@@ -32,13 +32,13 @@ namespace SEF.Test {
         }
 
  
-        [Test]
-        public void BigNumberDataTest_BigNumberDigit()
-        {
-            var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
-            assetData.Value = BigInteger.Pow(ulong.MaxValue, 1000);
-            Debug.Log(assetData.GetDigitValue());
-        }
+        //[Test]
+        //public void BigNumberDataTest_BigNumberDigit()
+        //{
+        //    var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
+        //    assetData.Value = BigInteger.Pow(ulong.MaxValue, 1000);
+        //    Debug.Log(assetData.GetDigitValue());
+        //}
 
         [Test]
         public void BigNumberDataTest_Digit_999()
@@ -96,44 +96,44 @@ namespace SEF.Test {
             Debug.Log(assetData.GetValue());
         }
 
-        [Test]
-        public void BigNumberDataTest_Digit_MaxZ()
-        {
-            var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            for (int i = 0; i < 27; i++)
-            {
-                builder.Append("999");
-            }
-            assetData.Value = BigInteger.Parse(builder.ToString());
-            Debug.Log(assetData.GetValue());
-        }
+        //[Test]
+        //public void BigNumberDataTest_Digit_MaxZ()
+        //{
+        //    var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
+        //    System.Text.StringBuilder builder = new System.Text.StringBuilder();
+        //    for (int i = 0; i < 27; i++)
+        //    {
+        //        builder.Append("999");
+        //    }
+        //    assetData.Value = BigInteger.Parse(builder.ToString());
+        //    Debug.Log(assetData.GetValue());
+        //}
 
-        [Test]
-        public void BigNumberDataTest_Digit_MaxZZ()
-        {
-            var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            for(int i = 0; i < 703; i++)
-            {
-                builder.Append("999");
-            }
-            assetData.Value = BigInteger.Parse(builder.ToString());
-            Debug.Log(assetData.GetValue());
-        }
+        //[Test]
+        //public void BigNumberDataTest_Digit_MaxZZ()
+        //{
+        //    var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
+        //    System.Text.StringBuilder builder = new System.Text.StringBuilder();
+        //    for(int i = 0; i < 703; i++)
+        //    {
+        //        builder.Append("999");
+        //    }
+        //    assetData.Value = BigInteger.Parse(builder.ToString());
+        //    Debug.Log(assetData.GetValue());
+        //}
 
-        [Test]
-        public void BigNumberDataTest_Digit_MaxZZZ()
-        {
-            var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            for (int i = 0; i < 18279; i++)
-            {
-                builder.Append("999");
-            }
-            assetData.Value = BigInteger.Parse(builder.ToString());
-            Debug.Log(assetData.GetValue());
-        }
+        //[Test]
+        //public void BigNumberDataTest_Digit_MaxZZZ()
+        //{
+        //    var assetData = NumberDataUtility.Create<TestBigNumber_Data>();
+        //    System.Text.StringBuilder builder = new System.Text.StringBuilder();
+        //    for (int i = 0; i < 18279; i++)
+        //    {
+        //        builder.Append("999");
+        //    }
+        //    assetData.Value = BigInteger.Parse(builder.ToString());
+        //    Debug.Log(assetData.GetValue());
+        //}
 
 
         //[Test]

@@ -19,7 +19,7 @@ namespace System.Numerics
 
         public bool IsZero => (_value.IsZero && _decimalPoint == 0);
 
-        //public BigInteger Value { get => _value; set => _value = value; }
+        public BigInteger Value { get => _value / BigInteger.Pow(10, _decimalPoint); set => _value = value; }
 
         public BigDecimal(int value)
         {
@@ -56,6 +56,12 @@ namespace System.Numerics
         {
             _value = bigdec._value;
             _decimalPoint = bigdec._decimalPoint;
+        }
+
+        public BigDecimal(BigInteger value, int decimalPoint = 0)
+        {
+            _value = value;
+            _decimalPoint = (byte)decimalPoint;
         }
 
         public void Clear()
@@ -264,7 +270,8 @@ namespace System.Numerics
         public static implicit operator BigDecimal(float value) => new BigDecimal(value);
         public static implicit operator BigDecimal(double value) => new BigDecimal(value);
         public static implicit operator BigDecimal(decimal value) => new BigDecimal(value);
-        
+//        public static implicit operator BigDecimal(BigInteger value) => new BigDecimal(value);
+
 
         //public static explicit operator byte(BigDecimal value);
         public static explicit operator decimal(BigDecimal value) => GetDecimalValue(value._value, value._decimalPoint);
@@ -295,6 +302,14 @@ namespace System.Numerics
             {
                 b = b.MatchingDecimalPoint(a._decimalPoint);
             }
+        }
+
+
+        public static BigDecimal Pow(BigDecimal value, int exponent)
+        {
+            var bigint = BigInteger.Pow(value._value, exponent);
+            var dPoint = value._decimalPoint * exponent;
+            return new BigDecimal(bigint, dPoint);
         }
 
         public override bool Equals(object obj)

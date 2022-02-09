@@ -284,17 +284,17 @@ namespace SEF.Test
             var upgradeAssetData = unitEntity.UpgradeAssetData;
 
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "100", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "10", "재화 계산이 잘못되었습니다");
 
             unitEntity.Upgrade();
             upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "201", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "11", "재화 계산이 잘못되었습니다");
 
             unitEntity.Upgrade();
             upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "302", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "13", "재화 계산이 잘못되었습니다");
 
         }
 

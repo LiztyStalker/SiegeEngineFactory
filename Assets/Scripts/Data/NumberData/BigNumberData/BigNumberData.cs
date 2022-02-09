@@ -14,8 +14,8 @@ namespace SEF.Data
         private string _valueText;
         public string ValueText { get { return _valueText; } set { _valueText = value; } }
 
-        private BigInteger? _value;
-        public BigInteger Value 
+        private BigDecimal? _value;
+        public BigDecimal Value 
         { 
             get {
                 if (_value == null)
@@ -45,7 +45,7 @@ namespace SEF.Data
             if (!string.IsNullOrEmpty(_valueText))
                 SetValue(_valueText);
             else
-                _value = new BigInteger();
+                _value = new BigDecimal();
         }
 
         public void SetValue(string value)
@@ -110,15 +110,15 @@ namespace SEF.Data
             }
 
 
-            BigInteger bigint = new BigInteger();
+            BigDecimal bigdec = new BigDecimal();
 
             foreach (var key in dic.Keys)
             {
-                var result = BigInteger.Multiply(dic[key], GetDigit(key));
-                bigint = BigInteger.Add(bigint, result);
+                var result = new BigDecimal(BigInteger.Multiply(dic[key], GetDigit(key)));
+                bigdec += result;
             }
 
-            Value = bigint;
+            Value = bigdec;
         }
 
         private BigInteger GetDigit(string letter)
@@ -137,9 +137,10 @@ namespace SEF.Data
 
         public string GetValue() => GetValue(Value);
 
-        private string GetValue(BigInteger bigInt)
+        private string GetValue(BigDecimal bigInt)
         {
-            var str = bigInt.ToString();
+            var str = bigInt.Value.ToString();
+            //Debug.Log(str);
             int capacity = GetDigitCapacity(bigInt);
 
             if (capacity > 0)
@@ -159,15 +160,15 @@ namespace SEF.Data
 
                 var str1 = str.Substring(0, length);
                 var str2 = str.Substring(length, 4 - length);
-                return str1 + "." + str2 + digit;
+                return $"{str1}.{str2}{digit}";
             }
             //Ãâ·Â
             return str;
         }
 
-        private int GetDigitCapacity(BigInteger bigInt)
+        private int GetDigitCapacity(BigDecimal bigInt)
         {
-            var value = bigInt;
+            var value = bigInt.Value;
             var capacity = 0;
             while (true)
             {
@@ -183,7 +184,7 @@ namespace SEF.Data
 
         public string GetDigitValue() => GetDigitValue(Value);
 
-        public string GetDigitValue(BigInteger bigInt)
+        public string GetDigitValue(BigDecimal bigInt)
         {
             Stack<string> stack = new Stack<string>();
             var value = bigInt;

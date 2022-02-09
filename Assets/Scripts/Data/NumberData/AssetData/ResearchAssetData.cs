@@ -5,7 +5,16 @@ namespace SEF.Data
 
     public class ResearchAssetData : BigNumberData, IAssetData
     {
-        public BigInteger AssetValue { get => Value; set => Value = value; }
+        public BigInteger AssetValue
+        {
+            get => Value.Value;
+            set
+            {
+                var val = Value;
+                val.Value = value;
+                Value = val;
+            }
+        }
 
         public ResearchAssetData() { }
         private ResearchAssetData(ResearchAssetData researchAssetData) : base(researchAssetData) {  }
