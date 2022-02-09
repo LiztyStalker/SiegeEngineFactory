@@ -246,8 +246,10 @@ namespace SEF.Manager
 
         public void ExpendWorkshop()
         {
+            var assetData = _workshopManager.ExpendAssetData;
             int count = _workshopManager.ExpendWorkshop();
             SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
+            SubjectAsset(assetData);
         }
         public void UpTechWorkshop(int index, UnitData unitData)
         {
@@ -354,11 +356,36 @@ namespace SEF.Manager
                 }
             });
         }
+
+        private System.Action<IAssetData, bool> _refreshExpendEvent;
+        public void AddRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent += act;
+        public void RemoveRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent -= act;
+        private void OnRefreshExpendEvent(IAssetData assetData)
+        {
+            var isActive = assetData.AssetValue >= _workshopManager.ExpendAssetData.AssetValue;
+            _refreshExpendEvent?.Invoke(_workshopManager.ExpendAssetData, isActive);
+        }
+
+
         public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
         public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);
-        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _account.AddRefreshAssetDataListener(act);
-        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _account.RemoveRefreshAssetDataListener(act);
 
+        public void AddRefreshAssetDataListener(System.Action<IAssetData> act)
+        {
+            _account.AddRefreshAssetDataListener(data =>
+            {
+                act?.Invoke(data);
+                OnRefreshExpendEvent(data);
+            });
+        }
+        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act)
+        {
+            _account.RemoveRefreshAssetDataListener(data =>
+            {
+                act?.Invoke(data);
+                OnRefreshExpendEvent(data);
+            });
+        }
 
 
         public void AddOnRefreshQuestEntityListener(System.Action<QuestEntity> act) => _questManager.AddOnRefreshListener(act);

@@ -144,20 +144,19 @@ namespace UtilityManager
 
         private Vector3 GetEuler(Vector3 startPos, Vector3 arrivePos, float nowTime)
         {
+            var nowPos = startPos;
             switch (_data.TypeBulletAction)
             {
-                case BulletData.TYPE_BULLET_ACTION.Drop:
-                    startPos = new Vector2(arrivePos.x, arrivePos.y + 10f);
+                case BulletData.TYPE_BULLET_ACTION.Curve:
+                    nowPos = Ditzel.Parabola.MathParabola.Parabola(startPos, arrivePos, 0.5f, nowTime);
+                    arrivePos = Ditzel.Parabola.MathParabola.Parabola(startPos, arrivePos, 0.5f, nowTime + 0.1f);
                     break;
-                    //case BulletData.TYPE_BULLET_ACTION.Curve:
-                    //    //현재 위치에서 미래 위치를 예측해서 각도 찾기
-                    //    var futurePos = GetSlerp(startPos, arrivePos, CalculateTime(nowTime));
-                    //    startPos = transform.position;
-                    //    arrivePos = futurePos;
-                    //    break;
+                case BulletData.TYPE_BULLET_ACTION.Drop:
+                    nowPos = new Vector2(arrivePos.x, arrivePos.y + 10f);
+                    break;
             }
 
-            var direction = arrivePos - startPos;
+            var direction = arrivePos - nowPos;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             return Vector3.forward * angle;
         }
@@ -167,6 +166,7 @@ namespace UtilityManager
             switch (_data.TypeBulletAction)
             {
                 case BulletData.TYPE_BULLET_ACTION.Curve:
+                    return Ditzel.Parabola.MathParabola.Parabola(startPos, arrivePos, 0.5f, nowTime);
                 case BulletData.TYPE_BULLET_ACTION.Move:
                     return Vector2.MoveTowards(startPos, arrivePos, nowTime);
                 case BulletData.TYPE_BULLET_ACTION.Drop:
@@ -174,9 +174,6 @@ namespace UtilityManager
                     return Vector2.MoveTowards(pos, arrivePos, nowTime);
                 case BulletData.TYPE_BULLET_ACTION.Direct:
                     return arrivePos;
-                    //case BulletData.TYPE_BULLET_ACTION.Curve:
-                    //return GetSlerp(startPos, arrivePos, nowTime);
-
             }
             return Vector2.zero;
         }

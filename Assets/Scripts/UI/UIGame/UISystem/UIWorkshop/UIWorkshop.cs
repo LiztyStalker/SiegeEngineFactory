@@ -83,6 +83,8 @@ namespace SEF.UI.Toolkit
             }
         }
 
+        public void RefreshExpend(IAssetData assetData, bool isActive) => _expendWorkshopLine.RefreshExpend(assetData, isActive);
+
         private void CreateExpendWorkshopLine()
         {
             _expendWorkshopLine = UIWorkshopLine.Create();

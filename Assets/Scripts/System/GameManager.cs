@@ -44,6 +44,7 @@ namespace SEF.Manager
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
+            _gameSystem.AddRefreshExpendListener(_uiGame.RefreshExpend);
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);

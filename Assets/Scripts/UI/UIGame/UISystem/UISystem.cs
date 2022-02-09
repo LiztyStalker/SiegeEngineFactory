@@ -13,7 +13,6 @@ namespace SEF.UI.Toolkit
         void CleanUp();
         void Show();
         void Hide();
-
         void RefreshAssetEntity(AssetEntity assetEntity);
     }
 
@@ -158,6 +157,12 @@ namespace SEF.UI.Toolkit
             {
                 _list[i].RefreshAssetEntity(assetEntity);
             }
+        }
+
+        public void RefreshExpend(IAssetData assetData, bool isActive)
+        {
+            var uiWorkshop = GetSystemPanel<UIWorkshop>();
+            uiWorkshop.RefreshExpend(assetData, isActive);
         }
 
         #endregion

@@ -61,9 +61,26 @@ namespace SEF.Manager
             return _list[index].Upgrade(out key);
         }
 
+        private IAssetData _expendAssetData;
+
+        public IAssetData ExpendAssetData
+        {
+            get
+            {
+                if(_expendAssetData == null)
+                {
+                    var assetData = NumberDataUtility.CreateAssetData<GoldAssetData>();
+                    assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count).ToString();
+                    _expendAssetData = assetData;
+                }
+                return _expendAssetData;
+            }
+        }
+
         public int ExpendWorkshop() 
         {
             CreateLine();
+            _expendAssetData = null;
             return _list.Count;
             //return ExpendAssetData to Count
         }
@@ -83,12 +100,9 @@ namespace SEF.Manager
             workshopLine.SetOnConditionProductUnitListener(OnConditionProductUnitEvent);
             workshopLine.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(workshopLine);
-//            workshopLine.UpTech(UnitData.Create_Test());
-            //기본 유닛 적용 workshopLine.UpTech()
-            workshopLine.UpTech(Storage.DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_Test", null, null));
-        
 
-
+            //기본 유닛 적용
+            workshopLine.UpTech(Storage.DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_Test", null, null)); 
             return workshopLine;
         }
 
