@@ -7,9 +7,9 @@
         "Unity.RenderPipelines.Universal.Shaders",
         "Unity.RenderPipeline.Universal.ShaderLibrary",
         "Unity.RenderPipelines.Universal.Runtime",
-        "ScriptAsmdef",
         "spine-csharp",
-        "spine-unity"
+        "spine-unity",
+        "ScriptAsmdef"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

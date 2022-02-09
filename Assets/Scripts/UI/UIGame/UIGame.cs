@@ -91,6 +91,7 @@ namespace SEF.UI.Toolkit
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
 
         public void RefreshAssetEntity(AssetEntity assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
+        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpend(assetData, isActive);
         public void RefreshAssetData(IAssetData assetData) => _uiAsset.RefreshAssetData(assetData);
         public void ShowHit(PlayActor playActor, DamageData attackData) => _uiPlay.ShowHit(playActor, attackData);
 

@@ -239,6 +239,13 @@ namespace SEF.UI.Toolkit
             _upgradeButton.SetEnabled(isEnough);
         }
 
+        public void RefreshExpend(IAssetData assetData, bool isActive)
+        {
+            //_expendAssetIcon = 
+            _expendValueLabel.text = assetData.GetValue();
+            _expendButton.SetEnabled(isActive);
+        }
+
         public void CleanUp()
         {
             _upgradeButton.UnregisterCallback<ClickEvent>(OnUpgradeEvent);
