@@ -1,5 +1,6 @@
 namespace SEF.Process
 {
+    using SEF.Data;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -7,40 +8,39 @@ namespace SEF.Process
     public struct ProcessEntity
     {
         private IProcessData _data;
-        private int _value;
+        private UpgradeData _upgradeData;
 
         private float _nowTime;
 
-        private ProcessEntity(IProcessData data)
+        public ProcessEntity(IProcessData data, UpgradeData upgradeData)
         {
             _data = data;
-            _value = 0;
+            _upgradeData = upgradeData;
             _nowTime = 0;
         }
 
-        internal void SetProcessData(int value)
-        {
-            _value = value;
-        }
-        internal void RunProcess(float deltaTime, System.Action processCallback)
+        internal void RunProcess(float deltaTime, System.Action<ProcessEntity> processCallback)
         {
             _nowTime += deltaTime;
-            Debug.Log(_nowTime);
             //시간 진행
             if (_nowTime >= _data.ProcessTime)
             {
                 //시간 도달하면 프로세스 이벤트 실행
                 //IProcessData의 내역을 전송
-                processCallback?.Invoke();
+                processCallback?.Invoke(this);
                 _nowTime -= _data.ProcessTime;
             }
         }
 
-        internal IProcessData GetProcessData() => _data;
-
-        internal static ProcessEntity Create(IProcessData data)
+        //internal IProcessData GetProcessData() => _data;
+        public IAssetData GetAssetData()
         {
-            return new ProcessEntity(data);
+            if(_data is AssetProcessData)
+            {
+                var data = _data as AssetProcessData;
+                return data.GetAssetData(_upgradeData);
+            }
+            return null;
         }
     }
 }

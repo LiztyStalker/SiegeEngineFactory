@@ -2,10 +2,13 @@ namespace SEF.Process
 {
     using SEF.Account;
     using System.Collections.Generic;
+    using System.Linq;
+
+    public interface IProcessProvider { }
 
     public class ProcessPackage
     {
-        private List<ProcessEntity> _list;
+        private Dictionary<IProcessProvider, ProcessEntity> _dic;
 
         public static ProcessPackage Create()
         {
@@ -14,7 +17,7 @@ namespace SEF.Process
 
         public void Initialize(IAccountData data)
         {
-            _list = new List<ProcessEntity>();
+            _dic = new Dictionary<IProcessProvider, ProcessEntity>();
 
             if (data != null)
             {
@@ -24,32 +27,39 @@ namespace SEF.Process
 
         public void CleanUp()
         {
-            _list.Clear();
+            _dic.Clear();
         }
 
-        public void SetProcessData(IProcessData data, int value = 1)
+        public void SetProcessEntity(IProcessProvider provider, ProcessEntity entity)
         {
-            var index = GetIndex(data);
-            if (index == -1)
+            if (!_dic.ContainsKey(provider))
             {
-                _list.Add(ProcessEntity.Create(data));
-                index = _list.Count - 1;
+                _dic.Add(provider, entity);
             }
-            var entity = _list[index];
-            entity.SetProcessData(value);
-            _list[index] = entity;
+            else
+            {
+                _dic[provider] = entity;
+            }
         }
 
-        private int GetIndex(IProcessData data) => _list.FindIndex(entity => entity.GetProcessData() == data);
-
+        public void RemoveProcessEntity(IProcessProvider provider)
+        {
+            if (_dic.ContainsKey(provider))
+            {
+                _dic.Remove(provider);
+            }
+        }
 
         public void RunProcess(float deltaTime)
         {
-            for(int i = 0; i < _list.Count; i++)
+            var keys = _dic.Keys.ToArray();
+
+            for(int i = 0; i < keys.Length; i++)
             {
-                var entity = _list[i];
-                entity.RunProcess(deltaTime, OnProcessEvent);
-                _list[i] = entity;
+                var key = keys[i];
+                var entity = _dic[key];
+                entity.RunProcess(deltaTime, OnCompleteProcessEvent);
+                _dic[key] = entity;
             }
         }
 
@@ -61,12 +71,10 @@ namespace SEF.Process
 
         #region ##### Listener #####
 
-        private System.Action _processEvent;
-
-        public void AddOnProcessEvent(System.Action act) => _processEvent += act;
-        public void RemoveOnProcessEvent(System.Action act) => _processEvent -= act;
-
-        private void OnProcessEvent() { _processEvent?.Invoke(); }
+        private System.Action<ProcessEntity> _completeProcessEvent;
+        public void AddOnCompleteProcessEvent(System.Action<ProcessEntity> act) => _completeProcessEvent += act;
+        public void RemoveOnCompleteProcessEvent(System.Action<ProcessEntity> act) => _completeProcessEvent -= act;
+        private void OnCompleteProcessEvent(ProcessEntity entity) => _completeProcessEvent?.Invoke(entity);
         
         #endregion
     }

@@ -3,6 +3,7 @@ namespace SEF.Manager
     using SEF.Account;
     using SEF.Data;
     using SEF.Entity;
+    using SEF.Process;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
@@ -21,12 +22,14 @@ namespace SEF.Manager
         public void Initialize()
         {
             _entity.Initialize();
+            _entity.SetOnProcessEntityListener(OnProcessEntityEvent);
             //_entity.SetOnStatusPackageListener(GetStatusPackage);
             //_nowTime = 0;
         }
         public void CleanUp()
         {
             //_entity.SetOnStatusPackageListener(null);
+            _entity.SetOnProcessEntityListener(null);
             _entity.CleanUp();
             //_nowTime = 0;            
             _refreshEvent = null;
@@ -61,7 +64,11 @@ namespace SEF.Manager
         {
             var assetData = _entity.UpgradeAssetData;
             _entity.Upgrade();
+            
+            
             OnRefreshEvent();
+
+
             return assetData;
         }
 
@@ -82,9 +89,9 @@ namespace SEF.Manager
             _refreshEvent?.Invoke(_index, _entity);
         }
 
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        private System.Action<IProcessProvider, ProcessEntity> _processEntityEvent;
+        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _processEntityEvent = act;
+        private void OnProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _processEntityEvent?.Invoke(provider, entity);
         #endregion
 
 

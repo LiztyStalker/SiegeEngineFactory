@@ -58,7 +58,7 @@ namespace SEF.Data
             var nv = nowValue;
             var rt = rate;
             var value = startValue * BigDecimal.Pow(nv + rt, exponent);
-            Debug.Log(value.GetDecimalValue());
+            //Debug.Log(value.GetDecimalValue());
             return value;
         }
 

@@ -11,7 +11,7 @@ namespace SEF.Manager
     using Research;
     using Quest;
     using Status;
-
+    using Process;
 
     public class GameSystem
     {
@@ -27,6 +27,8 @@ namespace SEF.Manager
 
 
         private StatisticsPackage _statistics;
+
+        private ProcessPackage _process;
 
         private QuestManager _questManager;
 
@@ -54,11 +56,16 @@ namespace SEF.Manager
             _villageManager = VillageManager.Create();
             //_villageManager.SetOnStatusPackageListener(GetStatusPackage);
             _villageManager.Initialize(null);
+            _villageManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
 
             //ResearchManager
 
             _statistics = StatisticsPackage.Create();
             _statistics.Initialize(null);
+
+            _process = ProcessPackage.Create();
+            _process.Initialize(null);
+            _process.AddOnCompleteProcessEvent(OnCompleteProcessEvent);
 
             _questManager = QuestManager.Create();
             _questManager.Initialize(null);
@@ -78,6 +85,9 @@ namespace SEF.Manager
 
             _statistics.CleanUp();
 
+            _process.RemoveOnCompleteProcessEvent(OnCompleteProcessEvent);
+            _process.CleanUp();
+
             //_status.RemoveOnProductListener(OnStatusProductEvent);
             //_status.CleanUp();
 
@@ -90,9 +100,8 @@ namespace SEF.Manager
         public void RunProcess(float deltaTime)
         {
             _workshopManager.RunProcess(deltaTime);
-            _blacksmithManager.RunProcess(deltaTime);
-            //VillageManager
-
+            //_blacksmithManager.RunProcess(deltaTime);
+            _process.RunProcess(deltaTime);
             //_status.RunProcess(deltaTime);
         }
 
@@ -144,6 +153,20 @@ namespace SEF.Manager
         public System.Numerics.BigInteger? GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
         public System.Numerics.BigInteger? GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
         private System.Type FindType(string key, System.Type classType) => StatisticsPackage.FindType(key, classType);
+
+        #endregion
+
+
+
+        #region ##### Process #####
+
+        private void OnSetProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _process.SetProcessEntity(provider, entity);
+
+        private void OnCompleteProcessEvent(ProcessEntity entity)
+        {
+            var assetData = entity.GetAssetData();
+            if (assetData != null) AddAsset(assetData);
+        }
 
         #endregion
 

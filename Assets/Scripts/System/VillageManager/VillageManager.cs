@@ -7,6 +7,7 @@ namespace SEF.Manager
     using System.Collections.Generic;
     using UnityEngine;
     using Storage;
+    using SEF.Process;
 
     public class VillageManager : MonoBehaviour
     {
@@ -78,6 +79,7 @@ namespace SEF.Manager
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
+            line.SetOnProcessEntityListener(OnProcessEntityEvent);
             //line.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(line);
             return line;
@@ -95,11 +97,10 @@ namespace SEF.Manager
             _refreshEvent?.Invoke(index, entity);
         }
 
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
 
-        //LineEvent
+        private System.Action<IProcessProvider, ProcessEntity> _setProcessEvent;
+        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _setProcessEvent = act;
+        private void OnProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _setProcessEvent?.Invoke(provider, entity);
 
         #endregion
 

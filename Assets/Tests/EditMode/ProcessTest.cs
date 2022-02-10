@@ -7,22 +7,35 @@ namespace SEF.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using Process;
+    using SEF.Data;
 
     public class ProcessTest
     {
 
         private ProcessPackage _package;
 
+        private class Provider_Test : IProcessProvider { }
+
         private class Test1 : IProcessData
         {
             public float ProcessTime => 1f;
+
+            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            {
+            }
         }
         private class Test2 : IProcessData {
             public float ProcessTime => 1.5f;
+            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            {
+            }
 
         }
         private class Test3 : IProcessData {
             public float ProcessTime => 3f;
+            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            {
+            }
         }
 
 
@@ -50,9 +63,10 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator ProcessTest_SetProcessData_Test1()
         {
-            _package.SetProcessData(new Test1(), 1);
+            var entity = new ProcessEntity(new Test1(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(),  entity);
             int count = 0;
-            _package.AddOnProcessEvent(delegate
+            _package.AddOnCompleteProcessEvent(delegate
             {
                 Debug.Log("End");
                 count++;
@@ -71,9 +85,11 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator ProcessTest_SetProcessData_Test2()
         {
-            _package.SetProcessData(new Test2(), 1);
+            var entity = new ProcessEntity(new Test2(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(), entity);
+
             int count = 0;
-            _package.AddOnProcessEvent(delegate
+            _package.AddOnCompleteProcessEvent(delegate
             {
                 Debug.Log("End");
                 count++;
@@ -93,9 +109,10 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator ProcessTest_SetProcessData_Test3()
         {
-            _package.SetProcessData(new Test3(), 1);
+            var entity = new ProcessEntity(new Test3(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(), entity);
             int count = 0;
-            _package.AddOnProcessEvent(delegate
+            _package.AddOnCompleteProcessEvent(delegate
             {
                 Debug.Log("End");
                 count++;
@@ -115,11 +132,17 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator ProcessTest_SetProcessData_Test1_Test2_Test3()
         {
-            _package.SetProcessData(new Test1(), 1);
-            _package.SetProcessData(new Test2(), 1);
-            _package.SetProcessData(new Test3(), 1);
+            var entity1 = new ProcessEntity(new Test1(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(), entity1);
+
+            var entity2 = new ProcessEntity(new Test2(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(), entity2);
+
+            var entity3 = new ProcessEntity(new Test3(), NumberDataUtility.Create<UpgradeData>());
+            _package.SetProcessEntity(new Provider_Test(), entity3);
+
             int count = 0;
-            _package.AddOnProcessEvent(delegate
+            _package.AddOnCompleteProcessEvent(delegate
             {
                 Debug.Log("End");
                 count++;

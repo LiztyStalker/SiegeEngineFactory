@@ -1,17 +1,16 @@
 namespace SEF.Entity
 {
     using SEF.Data;
+    using SEF.Process;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
-    public struct VillageEntity
+    public struct VillageEntity : IProcessProvider
     {
         private VillageData _data;
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
-
-        //public StatusPackage StatusPackage => GetStatusPackage();
 
         //번역 작업 필요 - TranslatorStorage
         public string Name => _data.Key;
@@ -57,21 +56,31 @@ namespace SEF.Entity
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
+
+            //ProcessPackage에 등록
+
+            OnProcessEntityEvent(this);
         }
 
         private IAssetData CalculateUpgradeData()
         {
-            var assetData = new GoldAssetData();
-            assetData.SetAssetData(_data.StartUpgradeValue, _data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
+            var assetData = (IAssetData)_data.StartUpgradeAssetData.Clone();
+            assetData.SetCompoundInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
             return assetData;
         }
 
+        #region ##### Listener #####
 
+        private System.Action<IProcessProvider, ProcessEntity> _processEntityEvent;
+        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _processEntityEvent = act;
 
-        //#region ##### Listener #####
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
-        //#endregion
+        private void OnProcessEntityEvent(IProcessProvider provider)
+        {
+            var entity = new ProcessEntity(_data.ProcessData, _upgradeData);
+            _processEntityEvent?.Invoke(provider, entity);
+        }
+
+        #endregion
+
     }
 }
