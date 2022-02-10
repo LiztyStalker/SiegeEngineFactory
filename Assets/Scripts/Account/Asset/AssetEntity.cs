@@ -59,7 +59,19 @@ namespace SEF.Entity
         public System.Type GetStatisticsType() => _nowAssetData.GetStatisticsType();
         public System.Type AccumulateStatisticsType() => _nowAssetData.AccumulateStatisticsType();
 
-        public void SetValue(string value)
+        public void SetValue(string value) => _nowAssetData.SetValue(value);
+
+        public void SetCompoundInterest(float nowValue, float rate, int length = 1) => _nowAssetData.SetCompoundInterest(nowValue, rate, length);
+
+        public INumberData Clone()
+        {
+            var assetCase = new AssetDataCase();
+            assetCase._limitAssetData = (IAssetData)_limitAssetData.Clone();
+            assetCase._nowAssetData = (IAssetData)_nowAssetData.Clone();
+            return assetCase;
+        }
+
+        public void CleanUp()
         {
         }
     }
