@@ -10,6 +10,7 @@ namespace SEF.Manager
     using Statistics;
     using Research;
     using Quest;
+    using Status;
 
 
     public class GameSystem

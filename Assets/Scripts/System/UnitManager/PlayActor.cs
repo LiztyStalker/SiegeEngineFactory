@@ -267,9 +267,9 @@ namespace SEF.Unit
         protected bool HasTarget() => _hasTargetEvent(this);
 
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        protected StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //protected StatusPackage GetStatusPackage() => _statusPackageEvent();
 
         //protected U GetStatusData<T, U>(U data) where T : IStatusData where U : BigNumberData
         //{

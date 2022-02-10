@@ -1,5 +1,6 @@
 namespace SEF.Entity
 {
+    using Status;
     using Data;
     public struct UnitEntity : IEntity
     {
@@ -10,7 +11,7 @@ namespace SEF.Entity
         private DamageData _damageData;
 
         //        private StatusPackage _statusPackage;
-        public StatusPackage StatusPackage => GetStatusPackage();
+        //public StatusPackage StatusPackage => GetStatusPackage();
         //public void SetStatusPackage(StatusPackage statusPackage) => _statusPackage = statusPackage;
 
         public UnitData UnitData => _unitData;

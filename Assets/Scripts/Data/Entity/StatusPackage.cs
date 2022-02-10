@@ -1,4 +1,4 @@
-namespace SEF.Entity
+namespace SEF.Status
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -8,8 +8,6 @@ namespace SEF.Entity
 
     public class StatusPackage
     {
-
-
         private static StatusPackage _current;
 
         public static StatusPackage Current
@@ -25,37 +23,10 @@ namespace SEF.Entity
         }
 
 
-        #region ##### StatusCase #####
-        private class StatusCase
-        {
-            private IStatusData _statusData;
-            private float _nowTime;
 
-            internal IStatusData StatusData => _statusData;
+        private Dictionary<IStatusProvider, StatusEntity> _dic;
 
-            internal void SetStatusData(IStatusData statusData)
-            {
-                _statusData = statusData;
-            }
-
-            internal void RunProcess(float deltaTime)
-            {
-                _nowTime += deltaTime;
-                if(_nowTime > _statusData.ProductTime)
-                {
-                    ProductEvent?.Invoke(_statusData.AssetDataArray);
-                    _nowTime -= _statusData.ProductTime;
-                }
-            }
-
-            internal event System.Action<IAssetData[]> ProductEvent;
-        }
-
-        #endregion
-
-        private Dictionary<IStatusProvider, StatusCase> _dic;
-
-        private Dictionary<IStatusProvider, StatusCase> Dictionary
+        private Dictionary<IStatusProvider, StatusEntity> Dictionary
         {
             get
             {
@@ -66,7 +37,7 @@ namespace SEF.Entity
 
         public void Initialize()
         {
-            _dic = new Dictionary<IStatusProvider, StatusCase>();
+            _dic = new Dictionary<IStatusProvider, StatusEntity>();
         }
 
         public void Dispose()
@@ -75,15 +46,13 @@ namespace SEF.Entity
             _current = null;
         }
 
-        public void SetStatusData(IStatusProvider provider, IStatusData statusData)
+        public void SetStatusEntity(IStatusProvider provider, StatusEntity entity)
         {
             if (!Dictionary.ContainsKey(provider))
             {
-                var statusCase = new StatusCase();
-                statusCase.ProductEvent += OnProductEvent;
-                Dictionary.Add(provider, statusCase);
+                Dictionary.Add(provider, entity);
             }
-            Dictionary[provider].SetStatusData(statusData);
+            Dictionary[provider] = entity;
         }
 
         public void RemoveStatusData(IStatusProvider provider)
@@ -105,7 +74,7 @@ namespace SEF.Entity
 
             for (int i = 0; i < values.Length; i++)
             {
-                var statusData = values[i].StatusData;
+                var statusData = values[i];
                 switch (statusData.TypeStatusData)
                 {
                     case IStatusData.TYPE_STATUS_DATA.Value:
@@ -135,14 +104,6 @@ namespace SEF.Entity
                 calData.Value += (data.Value * rate) + valueData.Value;
             }
             return calData;
-        }
-
-        public void RunProcess(float deltaTime)
-        {
-            foreach(var value in Dictionary.Values)
-            {
-                value.RunProcess(deltaTime);
-            }
         }
 
         public static StatusPackage Create()

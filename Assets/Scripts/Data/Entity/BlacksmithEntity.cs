@@ -11,8 +11,6 @@ namespace SEF.Entity
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
 
-        public StatusPackage StatusPackage => GetStatusPackage();
-
         //번역 작업 필요 - TranslatorStorage
         public string Name => _data.Key;
         public string Content => _data.Key;
@@ -68,11 +66,11 @@ namespace SEF.Entity
 
 
 
-        #region ##### Listener #####
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
-        #endregion
+        //#region ##### Listener #####
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //#endregion
 
     }
 }

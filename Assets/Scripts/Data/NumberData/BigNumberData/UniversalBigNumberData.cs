@@ -2,6 +2,7 @@ namespace SEF.Data
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Numerics;
     using UnityEngine;
 
     [System.Serializable]
@@ -26,35 +27,10 @@ namespace SEF.Data
         {
             Value = new System.Numerics.BigDecimal(value);
         }
-
-        //public decimal GetDecimalValue()
-        //{
-        //    return ((decimal)Value) * (decimal)Mathf.Pow(0.1f, _dot);
-
-        //}
-
-        //private System.Numerics.BigInteger ConvertToBigInteger(decimal value)
-        //{
-        //    int integer = 0;
-        //    CalculateDot((decimal)value, out _dot, out integer);
-        //    return new System.Numerics.BigInteger(integer);
-        //}
-
-        //public static void CalculateDot(decimal value, out int dot, out int integer)
-        //{
-        //    decimal nowValue = value;
-        //    dot = 0;
-        //    while (true)
-        //    {
-        //        if (nowValue % 1 == 0)
-        //        {
-        //            break;
-        //        }
-        //        nowValue *= 10;
-        //        dot++;
-        //    }
-        //    integer = (int)nowValue;
-        //}
+        public UniversalBigNumberData(BigDecimal bigdec)
+        {
+            Value = bigdec;
+        }
 
         protected UniversalBigNumberData(BigNumberData value) : base(value) { }
 

@@ -4,9 +4,8 @@ namespace SEF.Unit
     using Spine.Unity;
     using Data;
     using Spine;
-    using UtilityManager;
     using PoolSystem;
-    using SEF.Entity;
+    using Status;
 
     [RequireComponent(typeof(SkeletonAnimation))]
     public class AttackerActor : MonoBehaviour, IPoolElement

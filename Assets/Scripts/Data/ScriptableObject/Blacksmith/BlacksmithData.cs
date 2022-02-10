@@ -1,15 +1,27 @@
-namespace SEF.Data 
+namespace SEF.Data
 {
     using UnityEngine;
+    using SEF.Status;
+
 
     [CreateAssetMenu(fileName = "BlacksmithData", menuName = "ScriptableObjects/BlacksmithData")]
 
     public class BlacksmithData : ScriptableObject
     {
-        public string Key => name;
 
-        //Name
-        //SerializedStatusData
+        [SerializeField]
+        private Sprite _icon;
+        public Sprite Icon => _icon;
+
+
+        [SerializeField]
+        private string _key;
+        public string Key => _key;
+
+
+        [SerializeField]
+        private SerializedStatusData _serializedStatusData;
+        public IStatusData StatusData => _serializedStatusData.GetSerializeData();
 
         [SerializeField]
         private GoldAssetData _startUpgradeValue;

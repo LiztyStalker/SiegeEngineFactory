@@ -320,7 +320,7 @@ namespace SEF.Unit
             unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(null);
             unitActor.SetOnHasAttackTargetListener(null);
-            unitActor.SetOnStatusPackageListener(null);
+            //unitActor.SetOnStatusPackageListener(null);
             unitActor.InActivate();
 
             _unitDic.Remove(unitActor.GetHashCode());
@@ -334,7 +334,7 @@ namespace SEF.Unit
             enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             enemyActor.SetOnAttackTargetListener(null);
             enemyActor.SetOnHasAttackTargetListener(null);
-            enemyActor.SetOnStatusPackageListener(null);
+            //enemyActor.SetOnStatusPackageListener(null);
             enemyActor.InActivate();
             
             _enemyQueueData.RetrieveEnemyActor(enemyActor);

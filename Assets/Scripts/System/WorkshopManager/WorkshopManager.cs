@@ -98,7 +98,7 @@ namespace SEF.Manager
             workshopLine.SetOnProductUnitListener(OnProductUnitEvent);
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
             workshopLine.SetOnConditionProductUnitListener(OnConditionProductUnitEvent);
-            workshopLine.SetOnStatusPackageListener(GetStatusPackage);
+            //workshopLine.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(workshopLine);
 
             //기본 유닛 적용
@@ -138,9 +138,9 @@ namespace SEF.Manager
         }
 
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
 
         //LineEvent
 

@@ -18,12 +18,12 @@ namespace SEF.Manager
         public void Initialize()
         {
             _unitEntity.Initialize();
-            _unitEntity.SetOnStatusPackageListener(GetStatusPackage);
+            //_unitEntity.SetOnStatusPackageListener(GetStatusPackage);
             _nowTime = 0;
         }
         public void CleanUp()
         {
-            _unitEntity.SetOnStatusPackageListener(null);
+            //_unitEntity.SetOnStatusPackageListener(null);
             _unitEntity.CleanUp();
             _nowTime = 0;
             _productUnitEvent = null;
@@ -89,9 +89,9 @@ namespace SEF.Manager
             _refreshEvent?.Invoke(_index, _unitEntity, _nowTime);
         }
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
         #endregion
 
 

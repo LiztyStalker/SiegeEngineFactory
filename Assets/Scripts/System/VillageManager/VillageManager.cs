@@ -78,7 +78,7 @@ namespace SEF.Manager
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
-            line.SetOnStatusPackageListener(GetStatusPackage);
+            //line.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(line);
             return line;
         }
@@ -95,9 +95,9 @@ namespace SEF.Manager
             _refreshEvent?.Invoke(index, entity);
         }
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
 
         //LineEvent
 
