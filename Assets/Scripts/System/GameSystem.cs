@@ -10,6 +10,7 @@ namespace SEF.Manager
     using Statistics;
     using Research;
     using Quest;
+    using Status;
 
 
     public class GameSystem
@@ -17,7 +18,7 @@ namespace SEF.Manager
 
         private Account _account;
 
-        private StatusPackage _status;
+        //private StatusPackage _status;
 
         private WorkshopManager _workshopManager;
         private BlacksmithManager _blacksmithManager;
@@ -29,7 +30,6 @@ namespace SEF.Manager
 
         private QuestManager _questManager;
 
-
         public static GameSystem Create()
         {
             return new GameSystem();
@@ -39,18 +39,20 @@ namespace SEF.Manager
         {
             _account = Account.Current;
 
+            StatusPackage.Current.Initialize();
+
             _workshopManager = WorkshopManager.Create();
 
             _workshopManager.SetOnConditionProductUnitListener(IsConditionProductUnitEvent);
-            _workshopManager.SetOnStatusPackageListener(GetStatusPackage);
+            //_workshopManager.SetOnStatusPackageListener(GetStatusPackage);
             _workshopManager.Initialize(null);
 
             _blacksmithManager = BlacksmithManager.Create();
-            _blacksmithManager.SetOnStatusPackageListener(GetStatusPackage);
+            //_blacksmithManager.SetOnStatusPackageListener(GetStatusPackage);
             _blacksmithManager.Initialize(null);
 
             _villageManager = VillageManager.Create();
-            _villageManager.SetOnStatusPackageListener(GetStatusPackage);
+            //_villageManager.SetOnStatusPackageListener(GetStatusPackage);
             _villageManager.Initialize(null);
 
             //ResearchManager
@@ -61,9 +63,9 @@ namespace SEF.Manager
             _questManager = QuestManager.Create();
             _questManager.Initialize(null);
 
-            _status = StatusPackage.Create();
-            _status.Initialize();
-            _status.AddOnProductListener(OnStatusProductEvent);
+            //_status = StatusPackage.Create();
+            //_status.Initialize();
+            //_status.AddOnProductListener(OnStatusProductEvent);
 
 
         }
@@ -72,10 +74,12 @@ namespace SEF.Manager
         {
             _questManager.CleanUp();
 
+            StatusPackage.Current.Dispose();
+
             _statistics.CleanUp();
 
-            _status.RemoveOnProductListener(OnStatusProductEvent);
-            _status.CleanUp();
+            //_status.RemoveOnProductListener(OnStatusProductEvent);
+            //_status.CleanUp();
 
             _workshopManager.CleanUp();
             _blacksmithManager.CleanUp();
@@ -89,7 +93,7 @@ namespace SEF.Manager
             _blacksmithManager.RunProcess(deltaTime);
             //VillageManager
 
-            _status.RunProcess(deltaTime);
+            //_status.RunProcess(deltaTime);
         }
 
         public void Refresh()
@@ -103,24 +107,6 @@ namespace SEF.Manager
             //UI는 나중에 갱신 필요 - Data -> UI
             _account.RefreshAssetEntity();
         }
-
-
-
-        #region ##### StatusEntity #####
-
-        //        public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData => _statusEntity.GetStatusDataToBigNumberData<T, U>(data);
-
-        public StatusPackage GetStatusPackage() => _status;
-
-        private void OnStatusProductEvent(IAssetData[] assetDataArr)
-        {
-            for(int i = 0; i < assetDataArr.Length; i++)
-            {
-                AddAsset(assetDataArr[i]);
-            }
-        }
-
-        #endregion
 
 
 
@@ -279,6 +265,35 @@ namespace SEF.Manager
         #endregion
 
 
+        #region ##### LevelWave #####
+
+        private LevelWaveData _nowLevelWaveData;
+        public void ArrivedLevelWave(LevelWaveData levelWaveData)
+        {
+            SetStatisticsData<ArrivedLevelStatisticsData>(levelWaveData.GetLevel());
+
+            var type = FindType($"Lv{levelWaveData.GetLevel()}", typeof(ArrivedLevelStatisticsData));
+            if (type != null)
+            {
+                if (levelWaveData.GetWave() == 0)
+                    _statistics.SetStatisticsData(type, 1);
+            }
+
+            if (_nowLevelWaveData == null)
+            {
+                _nowLevelWaveData = levelWaveData;
+            }
+            else
+            {
+                var length = levelWaveData.GetLevel() - _nowLevelWaveData.GetLevel();
+                if (length > 0)
+                    AddQuestValue<ArrivedLevelConditionQuestData>(length);
+            }
+        }
+        #endregion
+
+
+
         public void UpgradeBlacksmith(int index)
         {
             var assetData = _blacksmithManager.Upgrade(index);
@@ -405,33 +420,6 @@ namespace SEF.Manager
 
 
 
-
-        #region ##### LevelWave #####
-
-        private LevelWaveData _nowLevelWaveData;
-        public void ArrivedLevelWave(LevelWaveData levelWaveData)
-        {
-            SetStatisticsData<ArrivedLevelStatisticsData>(levelWaveData.GetLevel());
-
-            var type = FindType($"Lv{levelWaveData.GetLevel()}", typeof(ArrivedLevelStatisticsData));
-            if (type != null)
-            {
-                if(levelWaveData.GetWave() == 0)
-                    _statistics.SetStatisticsData(type, 1);
-            }
-
-            if (_nowLevelWaveData == null)
-            {
-                _nowLevelWaveData = levelWaveData;
-            }
-            else
-            {
-                var length = levelWaveData.GetLevel() - _nowLevelWaveData.GetLevel();
-                if (length > 0)
-                    AddQuestValue<ArrivedLevelConditionQuestData>(length);
-            }
-        }
-        #endregion
     }
 
 }

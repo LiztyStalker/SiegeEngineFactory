@@ -10,12 +10,14 @@ namespace SEF.Data
     [System.Serializable]
     public abstract class BigNumberData : INumberData
     {
+        private const int NUMBER_ALPHABET = 'Z' - 'A'; //26
+
         [SerializeField]
         private string _valueText;
         public string ValueText { get { return _valueText; } set { _valueText = value; } }
 
-        private BigInteger? _value;
-        public BigInteger Value 
+        private BigDecimal? _value;
+        public BigDecimal Value 
         { 
             get {
                 if (_value == null)
@@ -45,18 +47,18 @@ namespace SEF.Data
             if (!string.IsNullOrEmpty(_valueText))
                 SetValue(_valueText);
             else
-                _value = new BigInteger();
+                _value = new BigDecimal();
         }
 
-        public void SetValue(string value)
-        {
 
+        private BigDecimal GetStringToBigDecimal(string value)
+        {
             var str = value;
 
             Dictionary<string, int> dic = new Dictionary<string, int>();
             int digit = 0;
             string letter = null;
-            for(int i = 0; i < str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 var ch = str[i];
                 //숫자 - 배수 곱하기 1, 10, 100...
@@ -76,7 +78,7 @@ namespace SEF.Data
                 else if (char.IsDigit(ch))
                 {
                     //조립
-                    if(digit > 0 && !string.IsNullOrEmpty(letter))
+                    if (digit > 0 && !string.IsNullOrEmpty(letter))
                     {
                         if (!dic.ContainsKey(letter))
                             dic.Add(letter, digit);
@@ -100,7 +102,7 @@ namespace SEF.Data
                 }
             }
 
-            if(digit > 0 && !string.IsNullOrEmpty(letter))
+            if (digit > 0 && !string.IsNullOrEmpty(letter))
             {
                 dic.Add(letter, digit);
             }
@@ -110,15 +112,40 @@ namespace SEF.Data
             }
 
 
-            BigInteger bigint = new BigInteger();
+            //var decimalPoint = s
+
+            BigDecimal bigdec = new BigDecimal();
 
             foreach (var key in dic.Keys)
             {
-                var result = BigInteger.Multiply(dic[key], GetDigit(key));
-                bigint = BigInteger.Add(bigint, result);
+                var result = new BigDecimal(BigInteger.Multiply(dic[key], GetDigit(key)));
+                bigdec += result;
             }
+            return bigdec;
+        }
 
-            Value = bigint;
+
+        public void SetValue(string value)
+        {
+            BigDecimal bigdec;
+            var str = value;
+
+            if (int.TryParse(str, out int intTmp))
+            {
+                //숫자로만 이루어짐
+                bigdec = new BigDecimal(intTmp);
+            }
+            else if(double.TryParse(str, out double doubleTmp))
+            {
+                bigdec = new BigDecimal(doubleTmp);
+                //소수로만 이루어짐 
+            }
+            else
+            {
+                //문자 1.000A
+                bigdec = GetStringToBigDecimal(str);
+            }
+            Value = bigdec;
         }
 
         private BigInteger GetDigit(string letter)
@@ -137,9 +164,10 @@ namespace SEF.Data
 
         public string GetValue() => GetValue(Value);
 
-        private string GetValue(BigInteger bigInt)
+        private string GetValue(BigDecimal bigInt)
         {
-            var str = bigInt.ToString();
+            var str = bigInt.Value.ToString();
+            //Debug.Log(str);
             int capacity = GetDigitCapacity(bigInt);
 
             if (capacity > 0)
@@ -159,15 +187,15 @@ namespace SEF.Data
 
                 var str1 = str.Substring(0, length);
                 var str2 = str.Substring(length, 4 - length);
-                return str1 + "." + str2 + digit;
+                return $"{str1}.{str2}{digit}";
             }
             //출력
             return str;
         }
 
-        private int GetDigitCapacity(BigInteger bigInt)
+        private int GetDigitCapacity(BigDecimal bigInt)
         {
-            var value = bigInt;
+            var value = bigInt.Value;
             var capacity = 0;
             while (true)
             {
@@ -183,7 +211,7 @@ namespace SEF.Data
 
         public string GetDigitValue() => GetDigitValue(Value);
 
-        public string GetDigitValue(BigInteger bigInt)
+        public string GetDigitValue(BigDecimal bigInt)
         {
             Stack<string> stack = new Stack<string>();
             var value = bigInt;
@@ -225,15 +253,15 @@ namespace SEF.Data
 
             while (true)
             {
-                if (digit / 26 == 0)
+                if (digit / NUMBER_ALPHABET == 0)
                 {
                     builder.Append(GetAlphabet(digit));
                     break;
                 }
                 else
                 {
-                    digit = (digit / 26) - 1;
-                    builder.Append(GetAlphabet(digit % 26));
+                    digit = (digit / NUMBER_ALPHABET) - 1;
+                    builder.Append(GetAlphabet(digit % NUMBER_ALPHABET));
                     //Debug.Log(digit);
                 }
             }
@@ -253,6 +281,11 @@ namespace SEF.Data
         }
 
         protected BigInteger Pow(BigInteger value, int exponent) => BigInteger.Pow(value, exponent);
+
+        public void SetCompoundInterest(float nowValue, float rate, int length = 1)
+        {
+            _value = NumberDataUtility.GetCompoundInterest(_value.Value, nowValue, rate, length);
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         protected void Clear()

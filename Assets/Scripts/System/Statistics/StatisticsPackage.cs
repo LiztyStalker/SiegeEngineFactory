@@ -40,18 +40,21 @@ namespace SEF.Statistics
         }
         public void AddStatisticsData(System.Type type, BigInteger value)
         {
-            var iType = type.GetInterface(typeof(IStatisticsData).Name);
-            if (iType != null)
+            if (type != null)
             {
-                var index = GetIndex(type);
-                if (index == -1)
+                var iType = type.GetInterface(typeof(IStatisticsData).Name);
+                if (iType != null)
                 {
-                    _list.Add(StatisticsEntity.Create(type));
-                    index = _list.Count - 1;
+                    var index = GetIndex(type);
+                    if (index == -1)
+                    {
+                        _list.Add(StatisticsEntity.Create(type));
+                        index = _list.Count - 1;
+                    }
+                    var entity = _list[index];
+                    entity.AddStatisticsData(value);
+                    _list[index] = entity;
                 }
-                var entity = _list[index];
-                entity.AddStatisticsData(value);
-                _list[index] = entity;
             }
         }
 
@@ -67,19 +70,23 @@ namespace SEF.Statistics
 
         public void SetStatisticsData(System.Type type, BigInteger value)
         {
-            var iType = type.GetInterface(typeof(IStatisticsData).Name);
-            if (iType != null)
+            //UnityEngine.Debug.Log(type);
+            if (type != null)
             {
-
-                var index = GetIndex(type);
-                if (index == -1)
+                var iType = type.GetInterface(typeof(IStatisticsData).Name);
+                if (iType != null)
                 {
-                    _list.Add(StatisticsEntity.Create(type));
-                    index = _list.Count - 1;
+
+                    var index = GetIndex(type);
+                    if (index == -1)
+                    {
+                        _list.Add(StatisticsEntity.Create(type));
+                        index = _list.Count - 1;
+                    }
+                    var entity = _list[index];
+                    entity.SetStatisticsData(value);
+                    _list[index] = entity;
                 }
-                var entity = _list[index];
-                entity.SetStatisticsData(value);
-                _list[index] = entity;
             }
         }
         private int GetIndex(System.Type type) => _list.FindIndex(entity => entity.GetStatisticsType() == type);
@@ -90,15 +97,21 @@ namespace SEF.Statistics
 
         public BigInteger? GetStatisticsValue(System.Type type)
         {
-            var iType = type.GetInterface(typeof(IStatisticsData).Name);
-            if (iType != null)
+            if (type != null)
             {
-                var index = GetIndex(type);
-                if (index != -1)
+                var iType = type.GetInterface(typeof(IStatisticsData).Name);
+                if (iType != null)
                 {
-                    return _list[index].GetStatisticsValue();
+                    var index = GetIndex(type);
+                    if (index != -1)
+                    {
+                        return _list[index].GetStatisticsValue();
+                    }
                 }
             }
+#if UNITY_EDITOR
+            UnityEngine.Debug.LogWarning("GetStatisticsValue type을 지정하지 않았습니다");
+#endif
             return null;
         }
         public static System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");

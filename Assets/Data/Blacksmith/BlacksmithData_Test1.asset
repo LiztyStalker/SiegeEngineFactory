@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7311407be61c63b479298e8f0cddc8c7, type: 3}
   m_Name: BlacksmithData_Test1
   m_EditorClassIdentifier: 
-  _startUpgradeValue:
-    _valueText: 100
+  _icon: {fileID: 0}
+  _key: 
+  _serializedStatusData:
+    _classTypeName: SEF.Data.DamageValueStatusData
+    _typeStatusData: 0
+    _startValue: 1
+    _increaseValue: 1
+  _serializedAssetData:
+    _assetData: 0
+    _assetValue: 100
   _increaseUpgradeValue: 1
   _increaseUpgradeRate: 0.125

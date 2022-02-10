@@ -5,7 +5,15 @@ namespace SEF.Data
     [System.Serializable]
     public class GoldAssetData : BigNumberData, IAssetData
     {
-        public BigInteger AssetValue { get => Value; set => Value = value; }
+        public BigInteger AssetValue { 
+            get => Value.Value;
+            set
+            {
+                var val = Value;
+                val.Value = value;
+                Value = val;
+            }
+        }
 
         public GoldAssetData() { }
         private GoldAssetData(GoldAssetData data) : base(data) { }

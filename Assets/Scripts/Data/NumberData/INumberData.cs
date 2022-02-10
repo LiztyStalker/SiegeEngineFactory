@@ -34,15 +34,33 @@ namespace SEF.Data
         /// <param name="rate">증가율</param>
         /// <param name="length">기간</param>
         /// <returns></returns>
-        public static BigInteger GetCompoundInterest(BigInteger startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
+        //public static BigInteger GetCompoundInterest(BigInteger startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
+        //{
+        //    var exponent = length;
+        //    var nv = nowValue * 1000;
+        //    var rt = (int)UnityEngine.Mathf.Round(rate * 1000f);
+        //    return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(1000, exponent);
+        //}
+
+
+
+        /// <summary>
+        /// <br>복리 계산식</br>
+        /// </summary>
+        /// <param name="startValue">초기값</param>
+        /// <param name="nowValue">증가량</param>
+        /// <param name="rate">증가율</param>
+        /// <param name="length">기간</param>
+        /// <returns></returns>
+        public static BigDecimal GetCompoundInterest(BigDecimal startValue, float nowValue = 1, float rate = 0.1f, int length = 1)
         {
             var exponent = length;
-            var nv = nowValue * 1000;
-            var rt = (int)UnityEngine.Mathf.Round(rate * 1000f);
-            return startValue * BigInteger.Pow(nv + rt, exponent) / BigInteger.Pow(1000, exponent);
+            var nv = nowValue;
+            var rt = rate;
+            var value = startValue * BigDecimal.Pow(nv + rt, exponent);
+            Debug.Log(value.GetDecimalValue());
+            return value;
         }
-
-
 
     }
 }

@@ -5,14 +5,14 @@ namespace SEF.Data
     using UnityEngine;
     using System.Numerics;
 
-    public interface IAssetData
+    public interface IAssetData : INumberData
     {
         BigInteger AssetValue { get; set; }
-        string GetValue();
         void SetValue(string value);
         System.Type GetType();
         System.Type UsedStatisticsType();
         System.Type GetStatisticsType();
         System.Type AccumulateStatisticsType();
+        void SetCompoundInterest(float nowValue, float rate, int length = 1);
     }
 }

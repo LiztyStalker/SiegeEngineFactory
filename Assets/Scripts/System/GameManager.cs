@@ -51,7 +51,7 @@ namespace SEF.Manager
             _unitManager.AddOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 //            _unitManager.AddOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
-            _unitManager.SetOnStatusPackageListener(_gameSystem.GetStatusPackage);
+//            _unitManager.SetOnStatusPackageListener(_gameSystem.GetStatusPackage);
 
             _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddOnBlacksmithUpgradeListener(_gameSystem.UpgradeBlacksmith);
@@ -91,7 +91,7 @@ namespace SEF.Manager
             _unitManager.RemoveOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.RemoveOnRefreshPopulationListener(_gameSystem.SetAsset);
             //            _unitManager.RemoveOnCalculateStatusDataListener(_gameSystem.GetStatusDataToBigNumberData);
-            _unitManager.SetOnStatusPackageListener(null);
+            //_unitManager.SetOnStatusPackageListener(null);
 
             _uiGame.RemoveOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveOnBlacksmithUpgradeListener(_gameSystem.UpgradeBlacksmith);

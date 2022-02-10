@@ -303,7 +303,7 @@ namespace SEF.Unit
             unitActor.AddOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(OnAttackTargetEvent);
             unitActor.SetOnHasAttackTargetListener(HasAttackTarget);
-            unitActor.SetOnStatusPackageListener(GetStatusPackage);
+            //unitActor.SetOnStatusPackageListener(GetStatusPackage);
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
@@ -320,7 +320,7 @@ namespace SEF.Unit
             unitActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(null);
             unitActor.SetOnHasAttackTargetListener(null);
-            unitActor.SetOnStatusPackageListener(null);
+            //unitActor.SetOnStatusPackageListener(null);
             unitActor.InActivate();
 
             _unitDic.Remove(unitActor.GetHashCode());
@@ -334,7 +334,7 @@ namespace SEF.Unit
             enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             enemyActor.SetOnAttackTargetListener(null);
             enemyActor.SetOnHasAttackTargetListener(null);
-            enemyActor.SetOnStatusPackageListener(null);
+            //enemyActor.SetOnStatusPackageListener(null);
             enemyActor.InActivate();
             
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
@@ -382,7 +382,7 @@ namespace SEF.Unit
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
             _enemyQueueData.NowEnemy.SetOnAttackTargetListener(OnAttackTargetEvent);
             _enemyQueueData.NowEnemy.SetOnHasAttackTargetListener(HasAttackTarget);
-            _enemyQueueData.NowEnemy.SetOnStatusPackageListener(GetStatusPackage);
+            //_enemyQueueData.NowEnemy.SetOnStatusPackageListener(GetStatusPackage);
 
         }
 
@@ -529,9 +529,9 @@ namespace SEF.Unit
             _refreshPopulationEvent?.Invoke(data);
         }
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
 
         #endregion
 

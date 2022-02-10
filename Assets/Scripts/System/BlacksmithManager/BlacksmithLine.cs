@@ -6,6 +6,7 @@ namespace SEF.Manager
     using Data;
     using Entity;
     using SEF.Account;
+    using Status;
 
     public class BlacksmithLine
     {
@@ -21,12 +22,12 @@ namespace SEF.Manager
         public void Initialize()
         {
             _entity.Initialize();
-            _entity.SetOnStatusPackageListener(GetStatusPackage);
+            //_entity.SetOnStatusPackageListener(GetStatusPackage);
             //_nowTime = 0;
         }
         public void CleanUp()
         {
-            _entity.SetOnStatusPackageListener(null);
+            //_entity.SetOnStatusPackageListener(null);
             _entity.CleanUp();
             //_nowTime = 0;            
             _refreshEvent = null;
@@ -82,9 +83,9 @@ namespace SEF.Manager
             _refreshEvent?.Invoke(_index, _entity);
         }
 
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
         #endregion
 
 

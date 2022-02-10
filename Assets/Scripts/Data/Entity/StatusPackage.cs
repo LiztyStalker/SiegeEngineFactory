@@ -1,4 +1,4 @@
-namespace SEF.Entity
+namespace SEF.Status
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -8,38 +8,25 @@ namespace SEF.Entity
 
     public class StatusPackage
     {
+        private static StatusPackage _current;
 
-        #region ##### StatusCase #####
-        private class StatusCase
+        public static StatusPackage Current
         {
-            private IStatusData _statusData;
-            private float _nowTime;
-
-            internal IStatusData StatusData => _statusData;
-
-            internal void SetStatusData(IStatusData statusData)
+            get
             {
-                _statusData = statusData;
-            }
-
-            internal void RunProcess(float deltaTime)
-            {
-                _nowTime += deltaTime;
-                if(_nowTime > _statusData.ProductTime)
+                if(_current == null)
                 {
-                    ProductEvent?.Invoke(_statusData.AssetDataArray);
-                    _nowTime -= _statusData.ProductTime;
+                    _current = Create();
                 }
+                return _current;
             }
-
-            internal event System.Action<IAssetData[]> ProductEvent;
         }
 
-        #endregion
 
-        private Dictionary<IStatusProvider, StatusCase> _dic;
 
-        private Dictionary<IStatusProvider, StatusCase> Dictionary
+        private Dictionary<IStatusProvider, StatusEntity> _dic;
+
+        private Dictionary<IStatusProvider, StatusEntity> Dictionary
         {
             get
             {
@@ -50,23 +37,30 @@ namespace SEF.Entity
 
         public void Initialize()
         {
-            _dic = new Dictionary<IStatusProvider, StatusCase>();
+            _dic = new Dictionary<IStatusProvider, StatusEntity>();
         }
 
-        public void CleanUp()
+        public void Dispose()
         {
             Dictionary.Clear();
+            _current = null;
         }
 
-        public void SetStatusData(IStatusProvider provider, IStatusData statusData)
+        public void SetStatusEntity(IStatusProvider provider, StatusEntity entity)
         {
             if (!Dictionary.ContainsKey(provider))
             {
-                var statusCase = new StatusCase();
-                statusCase.ProductEvent += OnProductEvent;
-                Dictionary.Add(provider, statusCase);
+                Dictionary.Add(provider, entity);
             }
-            Dictionary[provider].SetStatusData(statusData);
+            Dictionary[provider] = entity;
+        }
+
+        public void RemoveStatusData(IStatusProvider provider)
+        {
+            if (Dictionary.ContainsKey(provider))
+            {
+                Dictionary.Remove(provider);
+            }
         }
 
         public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData
@@ -76,18 +70,19 @@ namespace SEF.Entity
 
             U absoluteData = NumberDataUtility.Create<U>();
             U valueData = NumberDataUtility.Create<U>();
-            int rate = 0;
+            float rate = 0;
 
             for (int i = 0; i < values.Length; i++)
             {
-                var statusData = values[i].StatusData;
+                var statusData = values[i];
                 switch (statusData.TypeStatusData)
                 {
                     case IStatusData.TYPE_STATUS_DATA.Value:
                         valueData.Value += statusData.GetValue().Value;
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Rate:
-                        rate += (int)statusData.GetValue().Value;
+                        rate += (float)statusData.GetValue().Value;
+                        //Debug.Log(rate);
                         break;
                     case IStatusData.TYPE_STATUS_DATA.Absolute:
                         absoluteData.Value += statusData.GetValue().Value;
@@ -100,29 +95,24 @@ namespace SEF.Entity
 
             //data + absolute
             if (!absoluteData.Value.IsZero)
-            {
-                calData.Value += absoluteData.Value;
+            {                
+                calData.Value = absoluteData.Value;
             }
             //data + data * rate + value
             else
             {
-                calData.Value += (data.Value * rate / 100) + valueData.Value;
+                calData.Value += (data.Value * rate) + valueData.Value;
             }
             return calData;
-        }
-
-        public void RunProcess(float deltaTime)
-        {
-            foreach(var value in Dictionary.Values)
-            {
-                value.RunProcess(deltaTime);
-            }
         }
 
         public static StatusPackage Create()
         {
             return new StatusPackage();
         }
+
+
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TEST
         public bool HasStatusProvider(IStatusProvider provider)

@@ -61,6 +61,10 @@ namespace SEF.Data
         /// </summary>
         /// <returns></returns>
         public Type AccumulateStatisticsType() => null;
+
+       
+
+
 #endif
     }
 }

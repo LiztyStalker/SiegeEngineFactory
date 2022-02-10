@@ -4,17 +4,9 @@ namespace SEF.Data
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class AttackerDamageValueStatusData : IStatusData
+    public class AttackerDamageValueStatusData : StatusData, IStatusData
     {
-        public IAssetData[] AssetDataArray => throw new System.NotImplementedException();
+        public AttackerDamageValueStatusData() { }
 
-        public float ProductTime => throw new System.NotImplementedException();
-
-        public IStatusData.TYPE_STATUS_DATA TypeStatusData => throw new System.NotImplementedException();
-
-        public UniversalBigNumberData GetValue()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

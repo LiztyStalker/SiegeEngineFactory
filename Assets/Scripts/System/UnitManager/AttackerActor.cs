@@ -4,9 +4,8 @@ namespace SEF.Unit
     using Spine.Unity;
     using Data;
     using Spine;
-    using UtilityManager;
     using PoolSystem;
-    using SEF.Entity;
+    using Status;
 
     [RequireComponent(typeof(SkeletonAnimation))]
     public class AttackerActor : MonoBehaviour, IPoolElement
@@ -45,8 +44,8 @@ namespace SEF.Unit
             internal AttackerData AttackerData;
             internal NumberData NumberData;
 
-            private StatusPackage _statusPackage;
-            internal void SetStatusPackage(StatusPackage statusPackage) => _statusPackage = statusPackage;
+            //private StatusPackage _statusPackage;
+            //internal void SetStatusPackage(StatusPackage statusPackage) => _statusPackage = statusPackage;
 
             private DamageData _damageData;
             internal DamageData DamageData
@@ -55,22 +54,27 @@ namespace SEF.Unit
                 {
                     //유닛만 사용
                     if(NumberData is UpgradeData)
-                        return _statusPackage.GetStatusDataToBigNumberData<AttackerDamageValueStatusData, DamageData>(_damageData);
+                        return StatusPackage.Current.GetStatusDataToBigNumberData<AttackerDamageValueStatusData, DamageData>(_damageData);
                     //적군은 미사용
                     return _damageData;
                 }
             }
 
-            private float AttackDalay
+            internal float AttackDalay
             {
                 get
                 {
-                    //유닛만 사용
                     if (NumberData is UpgradeData)
                     {
-                        var data = _statusPackage.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
-                        return (float)data.GetDecimalValue();
+                        var data = StatusPackage.Current.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
+                        return (float)data.Value;
                     }
+                    //유닛만 사용
+                    //if (NumberData is UpgradeData)
+                    //{
+                    //    var data = _statusPackage.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
+                    //    return (float)data.GetDecimalValue();
+                    //}
                     //적군은 미사용
                     return AttackerData.AttackData.AttackDelay;
                 }
@@ -80,7 +84,7 @@ namespace SEF.Unit
             {
                 AttackerData = null;
                 NumberData = null;
-                _statusPackage = null;
+                //_statusPackage = null;
                 _damageData = null;
 
             }
@@ -140,6 +144,13 @@ namespace SEF.Unit
         private AttackerCase _attackCase;
 
         private bool _isDestroy = false;
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public DamageData DamageData => _attackCase.DamageData;
+        public float AttackDelay => _attackCase.AttackDalay;
+#endif
+
         public void Initialize()
         {
             Inactivate();
@@ -164,6 +175,17 @@ namespace SEF.Unit
             transform.localPosition = attackerData.Position;
             transform.localScale = Vector3.one * attackerData.Scale;
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetData_Test(AttackerData attackerData, NumberData numberData)
+        {
+            _isDestroy = false;
+
+            _attackCase.AttackerData = attackerData;
+            _attackCase.NumberData = numberData;
+            _attackCase.CalculateDamageData();
+        }
+#endif
 
         public void SetParent(Transform parent)
         {

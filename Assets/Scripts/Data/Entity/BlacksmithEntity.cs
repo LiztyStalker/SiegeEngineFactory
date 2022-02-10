@@ -1,17 +1,17 @@
 namespace SEF.Entity
 {
     using SEF.Data;
+    using SEF.Status;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    
 
-    public struct BlacksmithEntity
+    public struct BlacksmithEntity : IStatusProvider
     {
         private BlacksmithData _data;
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
-
-        public StatusPackage StatusPackage => GetStatusPackage();
 
         //번역 작업 필요 - TranslatorStorage
         public string Name => _data.Key;
@@ -47,32 +47,35 @@ namespace SEF.Entity
             _data = data;            
         }
 
-        public void SetData(BlacksmithData data, UpgradeData upgradeData)
-        {
-            _data = data;
-            _upgradeData = upgradeData;
-        }
+        //public void SetData(BlacksmithData data, UpgradeData upgradeData)
+        //{
+        //    _data = data;
+        //    _upgradeData = upgradeData;
+        //}
 
         public void Upgrade()
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
+
+            SetStatusEntity();
         }
 
-        private IAssetData CalculateUpgradeData()
+        private void SetStatusEntity()
         {
-            var assetData = new GoldAssetData();
-            assetData.SetAssetData(_data.StartUpgradeValue, _data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
-            return assetData;
+            var entity = new StatusEntity(_data.StatusData, _upgradeData);
+            StatusPackage.Current.SetStatusEntity(this, entity);
         }
 
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeData(_upgradeData);
 
 
-        #region ##### Listener #####
-        private System.Func<StatusPackage> _statusPackageEvent;
-        public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        private StatusPackage GetStatusPackage() => _statusPackageEvent();
-        #endregion
+
+        //#region ##### Listener #####
+        //private System.Func<StatusPackage> _statusPackageEvent;
+        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
+        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
+        //#endregion
 
     }
 }

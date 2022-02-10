@@ -4,17 +4,23 @@ namespace SEF.Data
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class ProductTimeStatusData : IStatusData
+    public class ProductTimeStatusData : StatusData, IStatusData
     {
-        public IAssetData[] AssetDataArray => throw new System.NotImplementedException();
+        public ProductTimeStatusData() { }
 
-        public float ProductTime => throw new System.NotImplementedException();
-
-        public IStatusData.TYPE_STATUS_DATA TypeStatusData => throw new System.NotImplementedException();
-
-        public UniversalBigNumberData GetValue()
+        public override void SetValue(float startValue, float increaseValue, IStatusData.TYPE_STATUS_DATA typeStatusData)
         {
-            throw new System.NotImplementedException();
+            TypeStatusData = typeStatusData;
+            if (TypeStatusData == IStatusData.TYPE_STATUS_DATA.Absolute)
+            {
+                StartValue = UniversalBigNumberData.Create(startValue);
+                IncreaseValue = UniversalBigNumberData.Create(increaseValue);
+            }
+            else
+            {
+                StartValue = UniversalBigNumberData.Create(-startValue);
+                IncreaseValue = UniversalBigNumberData.Create(-increaseValue);
+            }
         }
     }
 }

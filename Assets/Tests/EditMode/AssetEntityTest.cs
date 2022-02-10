@@ -209,6 +209,19 @@ namespace SEF.Test
             Assert.IsTrue(_entity.IsOverflow(data5), "넘치지 않았습니다");
         }
 
+        [Test]
+        public void AssetEntityTest_CompoundInterest()
+        {
+            var data = GoldAssetData.Create_Test(100);
+            data.SetValue();
+            data.SetCompoundInterest(1f, 0.125f, 1);
+            Debug.Log(data.GetValue());
+
+            var clone = (IAssetData)data.Clone();
+            clone.SetCompoundInterest(1f, 0.125f, 1);
+            Debug.Log(clone.GetValue());
+        }
+
 
         //[Test]
         //public void AssetEntityTest_IsUnderflow()
@@ -239,7 +252,7 @@ namespace SEF.Test
         //}
 
 
-            [Test]
+        [Test]
         public void AssetEntityTest_IsEnough()
         {
 
@@ -284,17 +297,17 @@ namespace SEF.Test
             var upgradeAssetData = unitEntity.UpgradeAssetData;
 
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "100", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "10", "재화 계산이 잘못되었습니다");
 
             unitEntity.Upgrade();
             upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "201", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "11", "재화 계산이 잘못되었습니다");
 
             unitEntity.Upgrade();
             upgradeAssetData = unitEntity.UpgradeAssetData;
             Debug.Log(upgradeAssetData.GetValue());
-            Assert.IsTrue(upgradeAssetData.GetValue() == "302", "재화 계산이 잘못되었습니다");
+            Assert.IsTrue(upgradeAssetData.GetValue() == "13", "재화 계산이 잘못되었습니다");
 
         }
 
