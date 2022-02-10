@@ -31,6 +31,8 @@ namespace SEF.Data
             _value = 0;
         }
 
+        public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         /// <summary>

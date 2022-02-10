@@ -282,6 +282,11 @@ namespace SEF.Data
 
         protected BigInteger Pow(BigInteger value, int exponent) => BigInteger.Pow(value, exponent);
 
+        public void SetCompoundInterest(float nowValue, float rate, int length = 1)
+        {
+            _value = NumberDataUtility.GetCompoundInterest(_value.Value, nowValue, rate, length);
+        }
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         protected void Clear()
         {

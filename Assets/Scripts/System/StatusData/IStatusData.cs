@@ -28,7 +28,7 @@ namespace SEF.Data
         protected UniversalBigNumberData StartValue { get => _startValue; set => _startValue = value; }
         protected UniversalBigNumberData IncreaseValue { get => _increaseValue; set => _increaseValue = value; }
 
-        public virtual UniversalBigNumberData GetValue(UpgradeData upgradeData) => new UniversalBigNumberData(_startValue.Value + _increaseValue.Value * upgradeData.Value);
+        public virtual UniversalBigNumberData GetValue(UpgradeData upgradeData) => new UniversalBigNumberData(_startValue.Value + _increaseValue.Value * (upgradeData.Value - 1));
         public virtual void SetValue(float startValue, float increaseValue, IStatusData.TYPE_STATUS_DATA typeStatusData)
         {
             _typeStatusData = typeStatusData;

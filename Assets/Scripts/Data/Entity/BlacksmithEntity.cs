@@ -1,12 +1,13 @@
 namespace SEF.Entity
 {
     using SEF.Data;
+    using SEF.Status;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     
 
-    public struct BlacksmithEntity
+    public struct BlacksmithEntity : IStatusProvider
     {
         private BlacksmithData _data;
         private UpgradeData _upgradeData;
@@ -46,26 +47,27 @@ namespace SEF.Entity
             _data = data;            
         }
 
-        public void SetData(BlacksmithData data, UpgradeData upgradeData)
-        {
-            _data = data;
-            _upgradeData = upgradeData;
-        }
+        //public void SetData(BlacksmithData data, UpgradeData upgradeData)
+        //{
+        //    _data = data;
+        //    _upgradeData = upgradeData;
+        //}
 
         public void Upgrade()
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
 
-            
+            SetStatusEntity();
         }
 
-        private IAssetData CalculateUpgradeData()
+        private void SetStatusEntity()
         {
-            var assetData = new GoldAssetData();
-            //assetData.SetAssetData(_data.StartUpgradeValue, _data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
-            return assetData;
+            var entity = new StatusEntity(_data.StatusData, _upgradeData);
+            StatusPackage.Current.SetStatusEntity(this, entity);
         }
+
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeData(_upgradeData);
 
 
 

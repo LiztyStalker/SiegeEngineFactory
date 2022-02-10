@@ -46,21 +46,19 @@ namespace SEF.Data
 
         /// <summary>
         /// <br>복리 계산식</br>
-        /// <br>소숫점 0.001까지 사용가능</br>
-        /// <br>Pow를 두번 사용 O(a^n)</br>
         /// </summary>
         /// <param name="startValue">초기값</param>
         /// <param name="nowValue">증가량</param>
         /// <param name="rate">증가율</param>
         /// <param name="length">기간</param>
         /// <returns></returns>
-        public static BigDecimal GetCompoundInterest(BigDecimal startValue, int nowValue = 1, float rate = 0.1f, int length = 1)
+        public static BigDecimal GetCompoundInterest(BigDecimal startValue, float nowValue = 1, float rate = 0.1f, int length = 1)
         {
             var exponent = length;
-            var nv = (float)nowValue;
+            var nv = nowValue;
             var rt = rate;
             var value = startValue * BigDecimal.Pow(nv + rt, exponent);
-            //Debug.Log(value.GetDecimalValue());
+            Debug.Log(value.GetDecimalValue());
             return value;
         }
 

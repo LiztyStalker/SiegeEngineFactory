@@ -24,20 +24,26 @@ namespace SEF.Data
         public IStatusData StatusData => _serializedStatusData.GetSerializeData();
 
 
-
-
         [SerializeField]
         private SerializedAssetData _serializedAssetData;
         public IAssetData StartUpgradeAssetData => _serializedAssetData.GetData();
 
         [SerializeField]
         private int _increaseUpgradeValue;
-        public int IncreaseHealthValue => _increaseUpgradeValue;
+        public int IncreaseUpgradeValue => _increaseUpgradeValue;
 
         [SerializeField]
         private float _increaseUpgradeRate;
-        public float IncreaseHealthRate => _increaseUpgradeRate;
+        public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
+
+        public IAssetData GetUpgradeData(UpgradeData data)
+        {
+            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
+            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            return assetData;
+            
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static BlacksmithData Create_Test()
