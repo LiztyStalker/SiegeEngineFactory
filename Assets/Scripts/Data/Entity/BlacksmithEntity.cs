@@ -4,6 +4,7 @@ namespace SEF.Entity
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    
 
     public struct BlacksmithEntity
     {
@@ -55,12 +56,14 @@ namespace SEF.Entity
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
+
+            
         }
 
         private IAssetData CalculateUpgradeData()
         {
             var assetData = new GoldAssetData();
-            assetData.SetAssetData(_data.StartUpgradeValue, _data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
+            //assetData.SetAssetData(_data.StartUpgradeValue, _data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
             return assetData;
         }
 

@@ -3,12 +3,10 @@
     <uie:ObjectField label="Object Field" name="blacksmith-icon-field" />
     <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="blacksmith-key-field" />
     <ui:Toggle label="Toggle" name="blacksmith-multiple-toggle" style="display: none;" />
-    <ui:VisualElement name="blacksmith-single-condition-layout" class="blacksmith-condition-layout">
-        <uie:PropertyField name="blacksmith-status-field" />
-        <uie:EnumField label="Enum" value="Center" name="blacksmith-type-enum-field" />
-        <ui:TextField picking-mode="Ignore" label="Text Field" name="blacksmith-start-upgrade-field" />
-        <uie:IntegerField label="Int Field" value="42" name="blacksmith-upgrade-value-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="blacksmith-rate-value-field" />
+    <ui:VisualElement class="blacksmith-property-layout">
+        <uie:PropertyField name="blacksmith-asset-data-field" />
+        <uie:FloatField label="Float Field" value="42.2" name="blacksmith-increase-upgrade-value-field" />
+        <uie:FloatField label="Float Field" value="42.2" name="blacksmith-increase-upgrade-rate-field" />
     </ui:VisualElement>
     <ui:VisualElement name="blacksmith-multiple-condition-panel" style="display: none;">
         <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
@@ -16,5 +14,8 @@
             <ui:Button text="Remove" display-tooltip-when-elided="true" name="blacksmith-multiple-remove-button" />
         </ui:VisualElement>
         <ui:VisualElement name="blacksmith-multiple-condition-layout" class="blacksmith-condition-layout" />
+    </ui:VisualElement>
+    <ui:VisualElement class="blacksmith-property-layout">
+        <uie:PropertyField name="blacksmith-status-data-field" />
     </ui:VisualElement>
 </ui:UXML>

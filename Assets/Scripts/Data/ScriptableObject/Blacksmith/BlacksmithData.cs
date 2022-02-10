@@ -23,23 +23,21 @@ namespace SEF.Data
         private SerializedStatusData _serializedStatusData;
         public IStatusData StatusData => _serializedStatusData.GetSerializeData();
 
-        [SerializeField]
-        private GoldAssetData _startUpgradeValue;
-        public GoldAssetData StartUpgradeValue => _startUpgradeValue;
 
+
+
+        [SerializeField]
+        private SerializedAssetData _serializedAssetData;
+        public IAssetData StartUpgradeAssetData => _serializedAssetData.GetData();
 
         [SerializeField]
         private int _increaseUpgradeValue;
-        public int IncreaseUpgradeValue => _increaseUpgradeValue;
-
+        public int IncreaseHealthValue => _increaseUpgradeValue;
 
         [SerializeField]
         private float _increaseUpgradeRate;
-        public float IncreaseUpgradeRate => _increaseUpgradeRate;
+        public float IncreaseHealthRate => _increaseUpgradeRate;
 
-
-        //ConditionUnlock
-        //ConditionValue
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static BlacksmithData Create_Test()
@@ -49,9 +47,6 @@ namespace SEF.Data
 
         private BlacksmithData()
         {
-            _startUpgradeValue = GoldAssetData.Create_Test(100);
-            _increaseUpgradeValue = 1;
-            _increaseUpgradeRate = 0.125f;
         }
 #endif 
     }

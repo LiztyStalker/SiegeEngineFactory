@@ -14,12 +14,10 @@ namespace SEF.Data.Editor
 
         private ObjectField _iconField;
         private TextField _keyField;
-        private PropertyField _statusField;
-        private EnumField _typeField;
-        private TextField _startUpgradeField;
-        private IntegerField  _upgradeValueField;
-        private FloatField _upgradeRateField;
-
+        private PropertyField _statusDataField;
+        private PropertyField _assetDataField;
+        private FloatField _increaseValueField;
+        private FloatField _increaseRateField;
 
         public void OnEnable()
         {
@@ -44,21 +42,21 @@ namespace SEF.Data.Editor
             _keyField.label = "키";
             _keyField.BindProperty(serializedObject.FindProperty("_key"));
 
-            _statusField = _root.Query<PropertyField>("blacksmith-status-field").First();
-            _statusField.BindProperty(serializedObject.FindProperty("_serializedStatusData"));
+            _statusDataField = _root.Query<PropertyField>("blacksmith-status-data-field").First();
+            _statusDataField.BindProperty(serializedObject.FindProperty("_serializedStatusData"));
 
-            _startUpgradeField = _root.Query<TextField>("blacksmith-start-upgrade-field").First();
-            _startUpgradeField.label = "초기업글비용";
-            _startUpgradeField.BindProperty(serializedObject.FindProperty("_startUpgradeValue"));
+            _assetDataField = _root.Query<PropertyField>("blacksmith-asset-data-field").First();
+            _assetDataField.BindProperty(serializedObject.FindProperty("_serializedAssetData"));
 
-            _upgradeValueField = _root.Query<IntegerField>("blacksmith-upgrade-value-field").First();
-            _upgradeValueField.label = "증가량";
-            _upgradeValueField.BindProperty(serializedObject.FindProperty("_increaseUpgradeValue"));
+            _increaseValueField = _root.Query<FloatField>("blacksmith-increase-upgrade-value-field").First();
+            _increaseValueField.label = "업글증가량";
+            _increaseValueField.BindProperty(serializedObject.FindProperty("_increaseUpgradeValue"));
 
-            _upgradeRateField = _root.Query<FloatField>("blacksmith-rate-value-field").First();
-            _upgradeRateField.label = "증가비";
-            _upgradeRateField.BindProperty(serializedObject.FindProperty("_increaseUpgradeRate"));
+            _increaseRateField = _root.Query<FloatField>("blacksmith-increase-upgrade-rate-field").First();
+            _increaseRateField.label = "업글증가비";
+            _increaseRateField.BindProperty(serializedObject.FindProperty("_increaseUpgradeRate"));
 
+            
             return _root;
         }
 

@@ -22,9 +22,13 @@ namespace SEF.Status
 
         internal IStatusData GetSerializeData()
         {
-            //ClassName에 맞춰 데이터 가져오기
             var type = System.Type.GetType(_classTypeName);
-            if (type != null) return GetData(type);
+            if (type != null)
+            {
+                var data = GetData(type);
+                data.SetValue(_startValue, _increaseValue, _typeStatusData);
+                return data;
+            }
             return null;
         }
 
