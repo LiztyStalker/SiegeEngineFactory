@@ -115,12 +115,12 @@ namespace SEF.UI.Toolkit
         #region ##### Listener #####
 
 
-        private System.Action<QuestData.TYPE_QUEST_GROUP, string> _rewardEvent;
-        public void AddOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent += act;
-        public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent -= act;
-        private void OnRewardEvent(string key)
+        private System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> _rewardEvent;
+        public void AddOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> act) => _rewardEvent += act;
+        public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> act) => _rewardEvent -= act;
+        private void OnRewardEvent(string questKey, string addressKey, bool hasGoal)
         {
-            _rewardEvent?.Invoke(_typeQuestGroup, key);
+            _rewardEvent?.Invoke(_typeQuestGroup, questKey, addressKey, hasGoal);
         }
 
         private System.Action<QuestData.TYPE_QUEST_GROUP> _refreshEvent;

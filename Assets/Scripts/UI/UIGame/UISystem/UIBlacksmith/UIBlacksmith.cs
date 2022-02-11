@@ -7,6 +7,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Data;
     using Entity;
+    using Utility.Address;
 
     public class UIBlacksmith : VisualElement, ISystemPanel
     {

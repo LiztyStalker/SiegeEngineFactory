@@ -22,7 +22,9 @@ namespace SEF.UI.Toolkit
 
         private Button _rewardButton;
 
-        private string _key;
+        private string _questKey;
+        private string _addressKey;
+        private bool _hasGoal;
 
         public static UIQuestTab Create()
         {
@@ -52,8 +54,10 @@ namespace SEF.UI.Toolkit
 
         public void RefreshQuest(QuestEntity entity)
         {
-            _key = entity.Key;
-            _rewardButton.text = (entity.HasQuestGoal()) ? "보상" : "이동";
+            _questKey = entity.Key;
+            _addressKey = entity.AddressKey;
+            _hasGoal = entity.HasQuestGoal();
+            _rewardButton.text = (_hasGoal) ? "보상" : "이동";
             _contentLabel.text = entity.Key;
             _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
         }
@@ -62,14 +66,14 @@ namespace SEF.UI.Toolkit
         #region ##### Listener #####
 
 
-        private System.Action<QuestData.TYPE_QUEST_GROUP, string> _rewardEvent;
-        public void AddOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent += act;
-        public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act) => _rewardEvent -= act;
+        private System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> _rewardEvent;
+        public void AddOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> act) => _rewardEvent += act;
+        public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> act) => _rewardEvent -= act;
         private void OnRewardClickedEvent(ClickEvent e)
         {
             //바로가기
             //보상받기
-            _rewardEvent?.Invoke(QuestData.TYPE_QUEST_GROUP.Goal, _key);
+            _rewardEvent?.Invoke(QuestData.TYPE_QUEST_GROUP.Goal, _questKey, _addressKey, _hasGoal);
         }
 
         #endregion

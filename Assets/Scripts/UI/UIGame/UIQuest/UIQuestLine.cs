@@ -30,7 +30,9 @@ namespace SEF.UI.Toolkit
         private VisualElement _rewardedPanel;
         private Label _rewardedLabel;
 
-        private string _key;
+        private string _questKey;
+        private string _addressKey;
+        private bool _hasGoal = false;
 
         public static UIQuestLine Create()
         {
@@ -80,7 +82,9 @@ namespace SEF.UI.Toolkit
 
         public void RefreshQuestLine(QuestEntity entity)
         {
-            _key = entity.Key;
+            _questKey = entity.Key;
+            _addressKey = entity.AddressKey;
+            _hasGoal = entity.HasQuestGoal();
 
             if (entity.HasRewarded)
             {
@@ -90,8 +94,15 @@ namespace SEF.UI.Toolkit
             else
             {
                 _rewardedPanel.style.display = DisplayStyle.None;
-                _rewardButton.SetEnabled(entity.HasQuestGoal());
+                _rewardButton.SetEnabled(true);
+
+                //if (entity.HasQuestGoal())
+                    //보상
+                //else
+                    //이동
+
             }
+
 
             _contentLabel.text = entity.Key;
             _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
@@ -109,12 +120,12 @@ namespace SEF.UI.Toolkit
         #region ##### Listener #####
 
 
-        private System.Action<string> _rewardEvent;
-        public void AddOnRewardListener(System.Action<string> act) => _rewardEvent += act;
-        public void RemoveOnRewardListener(System.Action<string> act) => _rewardEvent -= act;
+        private System.Action<string, string, bool> _rewardEvent;
+        public void AddOnRewardListener(System.Action<string, string, bool> act) => _rewardEvent += act;
+        public void RemoveOnRewardListener(System.Action<string, string, bool> act) => _rewardEvent -= act;
         private void OnRewardClickedEvent(ClickEvent e)
         {
-            _rewardEvent?.Invoke(_key);
+            _rewardEvent?.Invoke(_questKey, _addressKey, _hasGoal);
         }
 
         #endregion

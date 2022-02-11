@@ -16,7 +16,6 @@ namespace SEF.Data
         private string _key;
         public string Key => _key;
 
-
         [SerializeField]
         private TYPE_QUEST_GROUP _typeQuestGroup;
         public TYPE_QUEST_GROUP TypeQuestGroup => _typeQuestGroup;
@@ -48,7 +47,12 @@ namespace SEF.Data
             return _questConditionData.ConditionValue;
         }
 
-
+        public string GetAddressKey(int index)
+        {
+            if (IsMultipleQuest)
+                return _questConditionDataArray[index].ConditionQuestData.AddressKey;
+            return _questConditionData.ConditionQuestData.AddressKey;
+        }
         public bool HasQuestGoal(int index, int value)
         {
             if (IsMultipleQuest)

@@ -7,6 +7,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Data;
     using Entity;
+    using Utility.Address;
 
     public class UIVillage : VisualElement, ISystemPanel
     {
@@ -51,7 +52,6 @@ namespace SEF.UI.Toolkit
         {
             this.style.display = DisplayStyle.None;
         }
-
 
         //BlacksmithEntity
         public void RefreshVillage(int index, VillageEntity entity)

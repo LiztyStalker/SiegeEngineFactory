@@ -18,27 +18,27 @@ MonoBehaviour:
   _isMultipleQuest: 1
   _questConditionData:
     _serializedConditionQuestData:
-      _className: 
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 0
     _serializedAssetData:
-      _assetData: 
+      _assetData: 0
       _assetValue: 
   _questConditionDataArray:
   - _serializedConditionQuestData:
-      _className: 
-    _conditionValue: 0
+      _classTypeName: SEF.Quest.UpgradeBlacksmithConditionQuestData
+    _conditionValue: 1
     _serializedAssetData:
-      _assetData: 
-      _assetValue: 
+      _assetData: 0
+      _assetValue: 100
   - _serializedConditionQuestData:
-      _className: 
-    _conditionValue: 0
+      _classTypeName: SEF.Quest.UpgradeVillageConditionQuestData
+    _conditionValue: 1
     _serializedAssetData:
-      _assetData: 
-      _assetValue: 
+      _assetData: 0
+      _assetValue: 100
   - _serializedConditionQuestData:
-      _className: 
-    _conditionValue: 0
+      _classTypeName: SEF.Quest.UpgradeUnitConditionQuestData
+    _conditionValue: 1
     _serializedAssetData:
-      _assetData: 
-      _assetValue: 
+      _assetData: 0
+      _assetValue: 100

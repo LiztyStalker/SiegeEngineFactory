@@ -17,6 +17,8 @@ namespace SEF.Entity
         public int NowValue => _nowValue;
         public int GoalValue => _data.GetGoalValue(_nowIndex);
         public bool HasRewarded => _hasRewarded;
+        public string AddressKey => _data.GetAddressKey(_nowIndex);
+
         public void Initialize(IAccountData data)
         {
             Clear();

@@ -6,6 +6,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Data;
     using Entity;
+    using Utility.Address;
 
     public class UIWorkshop : VisualElement, ISystemPanel
     {
@@ -59,6 +60,7 @@ namespace SEF.UI.Toolkit
         {
             this.style.display = DisplayStyle.None;
         }
+
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
         {
             if (!_dic.ContainsKey(index))

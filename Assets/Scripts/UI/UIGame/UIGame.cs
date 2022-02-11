@@ -5,15 +5,17 @@ namespace SEF.UI.Toolkit
     using Entity;
     using Data;
     using Unit;
-
+    using Utility.Address;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIGame : MonoBehaviour
     {
         public static event System.Action<float> ProcessEvent;
 
-        private readonly string PATH_UI_GAME_UXML = "Assets/Scripts/UI/UIGame/UIGameUXML.uxml";
+        private readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIGameUXML.uxml";
 
+
+        private AddressDictionary _addressDictionary;
 
         private VisualElement _root = null;
 
@@ -40,7 +42,9 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_GAME_UXML);
+
+            _root = UIUXML.GetVisualElement(gameObject, PATH_UI_UXML);
+
 
             _questButton = _root.Q<Button>("quest-button");
 
@@ -49,6 +53,7 @@ namespace SEF.UI.Toolkit
             _uiPlay = _root.Q<UIPlay>();
             _uiQuest = _root.Q<UIQuest>();
             _uiQuestTab = _root.Q<UIQuestTab>();
+            
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
@@ -62,12 +67,19 @@ namespace SEF.UI.Toolkit
             _uiQuest.Initialize();
             _uiQuestTab.Initialize();
 
+            _addressDictionary = AddressDictionary.Create();
+            _addressDictionary.Initialize();
+            _addressDictionary.AddAddresses(_uiSystem.GetAddresses());
+
             _questButton.RegisterCallback<ClickEvent>(e => _uiQuest.Show());
+
         }
 
         public void CleanUp()
         {
             _questButton.UnregisterCallback<ClickEvent>(e => _uiQuest.Show());
+
+            _addressDictionary.CleanUp();
 
             _uiAsset.CleanUp();
             _uiSystem.CleanUp();
@@ -83,6 +95,9 @@ namespace SEF.UI.Toolkit
 
         //오프라인 보상
         //public void CompensateOffline(AccountData)
+
+        
+
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
@@ -120,16 +135,34 @@ namespace SEF.UI.Toolkit
         public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
 
 
+        private System.Action<QuestData.TYPE_QUEST_GROUP, string> _rewardQuestEvent;
+
         public void AddOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act)
         {
-            _uiQuest.AddOnRewardListener(act);
-            _uiQuestTab.AddOnRewardListener(act);
+            _rewardQuestEvent += act;            
+            _uiQuest.AddOnRewardListener(OnRewardQuestEvent);
+            _uiQuestTab.AddOnRewardListener(OnRewardQuestEvent);
         }
         public void RemoveOnRewardQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP, string> act)
         {
-            _uiQuest.RemoveOnRewardListener(act);
-            _uiQuestTab.RemoveOnRewardListener(act);
+            _rewardQuestEvent -= act;
+            _uiQuest.RemoveOnRewardListener(OnRewardQuestEvent);
+            _uiQuestTab.RemoveOnRewardListener(OnRewardQuestEvent);
         }
+
+        private void OnRewardQuestEvent(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string questKey, string addressKey, bool hasGoal)
+        {
+            Debug.Log(questKey + " " + addressKey + " " + hasGoal);
+            if (hasGoal)
+            {
+                _rewardQuestEvent?.Invoke(typeQuestGroup, questKey);
+            }
+            else
+            {
+                _addressDictionary.ShowAddress(addressKey);
+            }
+        }
+
 
         public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
         {

@@ -1,22 +1,62 @@
 
 namespace SEF.Quest
 {
+    using SEF.UI.Toolkit;
     using System.Collections.Generic;
     using System.Linq;
 
-    public class ArrivedLevelConditionQuestData : IConditionQuestData { }
-    public class DestroyEnemyConditionQuestData : IConditionQuestData { }
-    public class UpgradeUnitConditionQuestData : IConditionQuestData { }
-    public class TechUnitConditionQuestData : IConditionQuestData { }
-    public class UpgradeBlacksmithConditionQuestData : IConditionQuestData { }
-    public class TechBlacksmithConditionQuestData : IConditionQuestData { }
-    public class UpgradeVillageConditionQuestData : IConditionQuestData { }
-    public class TechVillageConditionQuestData : IConditionQuestData { }
-    public class UpgradeCommanderConditionQuestData : IConditionQuestData { }
-    public class SuccessedResearchConditionQuestData : IConditionQuestData { }
-    public class SuccessedDailyConditionQuestData : IConditionQuestData { }
-    public class SuccessedWeeklyConditionQuestData : IConditionQuestData { }
-    public class SuccessedExpeditionConditionQuestData : IConditionQuestData { }
+    public class ArrivedLevelConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => null;
+    }
+    public class DestroyEnemyConditionQuestData : IConditionQuestData 
+    {
+        public string AddressKey => null;
+    }
+    public class UpgradeUnitConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIWorkshop).Name;
+
+    }
+    public class TechUnitConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIWorkshop).Name;
+    }
+    public class UpgradeBlacksmithConditionQuestData : IConditionQuestData 
+    {
+        public string AddressKey => typeof(UIBlacksmith).Name;
+    }
+    public class TechBlacksmithConditionQuestData : IConditionQuestData 
+    {
+        public string AddressKey => typeof(UIBlacksmith).Name;
+    }
+    public class UpgradeVillageConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIVillage).Name;
+    }
+    public class TechVillageConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIVillage).Name;
+    }
+    public class UpgradeCommanderConditionQuestData : IConditionQuestData {
+        public string AddressKey => null;
+    }
+    public class SuccessedResearchConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => null;
+    }
+    public class SuccessedDailyConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => null;
+    }
+    public class SuccessedWeeklyConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => null;
+    }
+    public class SuccessedExpeditionConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => null;
+    }
 
 
 

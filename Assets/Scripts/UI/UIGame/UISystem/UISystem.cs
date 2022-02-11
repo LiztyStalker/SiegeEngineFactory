@@ -6,6 +6,7 @@ namespace SEF.UI.Toolkit
     using UnityEngine.UIElements;
     using Entity;
     using Data;
+    using Utility.Address;
 
     public interface ISystemPanel
     {
@@ -87,6 +88,17 @@ namespace SEF.UI.Toolkit
 
             OnShowPanelEvent(uiWorkshop);
         }
+
+        public KeyValuePair<string, System.Action>[] GetAddresses()
+        {
+            List<KeyValuePair<string, System.Action>> list = new List<KeyValuePair<string, System.Action>>();
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UIWorkshop).Name, () => OnShowPanelEvent(GetSystemPanel<UIWorkshop>())));
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UIBlacksmith).Name, () => OnShowPanelEvent(GetSystemPanel<UIBlacksmith>())));
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UIResearch).Name, () => OnShowPanelEvent(GetSystemPanel<UIResearch>())));
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UIVillage).Name, () => OnShowPanelEvent(GetSystemPanel<UIVillage>())));
+            return list.ToArray();
+        }
+
 
         private T GetSystemPanel<T>() where T : ISystemPanel
         {
