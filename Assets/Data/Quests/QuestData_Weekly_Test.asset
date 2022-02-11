@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _key: WeeklyTest
   _typeQuestGroup: 1
-  _conditionValue: 0
-  _nextQuestDataKey: 
-  _nextQuestData: {fileID: 0}
+  _icon: {fileID: 0}
+  _isMultipleQuest: 0
+  _questConditionData:
+    _serializedConditionQuestData:
+      _classTypeName: SEF.Quest.UpgradeBlacksmithConditionQuestData
+    _conditionValue: 1
+    _serializedAssetData:
+      _assetData: 0
+      _assetValue: 100
+  _questConditionDataArray: []

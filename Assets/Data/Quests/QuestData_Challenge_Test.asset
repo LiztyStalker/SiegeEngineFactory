@@ -18,9 +18,9 @@ MonoBehaviour:
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _className: asdf
-    _conditionValue: 324234
+      _classTypeName: SEF.Quest.SuccessedResearchConditionQuestData
+    _conditionValue: 1
     _serializedAssetData:
-      _assetData: asdf
-      _assetValue: asdf
+      _assetData: 0
+      _assetValue: 100
   _questConditionDataArray: []

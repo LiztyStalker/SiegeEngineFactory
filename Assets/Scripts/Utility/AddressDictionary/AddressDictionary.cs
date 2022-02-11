@@ -39,7 +39,8 @@ namespace Utility.Address
             if (!_dic.ContainsKey(key))
                 _dic.Add(key, value);
 #if UNITY_EDITOR
-            Debug.LogWarning($"{key} 가 이미 등록되어 있습니다");
+            else
+                Debug.LogWarning($"{key} 가 이미 등록되어 있습니다");
 #endif
         }
 

@@ -159,6 +159,7 @@ namespace SEF.UI.Toolkit
             }
             else
             {
+                _uiQuest.Hide();
                 _addressDictionary.ShowAddress(addressKey);
             }
         }

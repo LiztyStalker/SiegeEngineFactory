@@ -52,6 +52,7 @@ namespace SEF.UI.Toolkit
             _rewardButton = this.Q<Button>("reward-button");
             _rewardAssetIcon = this.Q<VisualElement>("reward-asset-icon");
             _rewardValueLabel = this.Q<Label>("reward-asset-value-label");
+            _rewardedLabel = this.Q<Label>("reward-label");
 
             _rewardedPanel = this.Q<VisualElement>("quest-rewarded-panel");
 
@@ -90,19 +91,16 @@ namespace SEF.UI.Toolkit
             {
                 _rewardedPanel.style.display = DisplayStyle.Flex;
                 _rewardButton.SetEnabled(false);
+                _rewardedLabel.text = "완료";
             }
             else
             {
                 _rewardedPanel.style.display = DisplayStyle.None;
-                _rewardButton.SetEnabled(true);
+                _rewardButton.SetEnabled(!string.IsNullOrEmpty(_addressKey));
 
-                //if (entity.HasQuestGoal())
-                    //보상
-                //else
-                    //이동
-
+                bool isRewardLabel = (_hasGoal || string.IsNullOrEmpty(_addressKey));
+                _rewardedLabel.text = (isRewardLabel) ? "보상" : "이동";
             }
-
 
             _contentLabel.text = entity.Key;
             _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");

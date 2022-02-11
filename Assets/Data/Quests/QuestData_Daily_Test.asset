@@ -18,15 +18,15 @@ MonoBehaviour:
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _className: asfdsa
+      _classTypeName: SEF.Quest.UpgradeVillageConditionQuestData
     _conditionValue: 4
     _serializedAssetData:
-      _assetData: dfs
-      _assetValue: fdsa
+      _assetData: 0
+      _assetValue: 100
   _questConditionDataArray:
   - _serializedConditionQuestData:
-      _className: 
+      _classTypeName: 
     _conditionValue: 0
     _serializedAssetData:
-      _assetData: 
+      _assetData: 0
       _assetValue: 
