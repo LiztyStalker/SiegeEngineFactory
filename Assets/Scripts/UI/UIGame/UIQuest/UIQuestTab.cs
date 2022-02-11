@@ -54,12 +54,24 @@ namespace SEF.UI.Toolkit
 
         public void RefreshQuest(QuestEntity entity)
         {
-            _questKey = entity.Key;
-            _addressKey = entity.AddressKey;
-            _hasGoal = entity.HasQuestGoal();
-            _rewardButton.text = (_hasGoal) ? "보상" : "이동";
-            _contentLabel.text = entity.Key;
-            _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
+            if (entity.HasRewarded)
+            {
+                _hasGoal = false;
+                _contentLabel.text = "";
+                _rewardButton.text = "완료";
+                _rewardButton.SetEnabled(false);                
+                _fillable.SetLabel($"-");
+                _fillable.FillAmount = 1f;
+            }
+            else
+            {
+                _questKey = entity.Key;
+                _addressKey = entity.AddressKey;
+                _hasGoal = entity.HasQuestGoal();
+                _rewardButton.text = (_hasGoal) ? "보상" : "이동";
+                _contentLabel.text = entity.Key;
+                _fillable.SetLabel($"{entity.NowValue} / {entity.GoalValue}");
+            }
         }
 
 

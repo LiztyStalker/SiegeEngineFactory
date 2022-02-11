@@ -254,7 +254,10 @@ namespace SEF.Quest
                     {
                         var assetData = entity.GetRewardAssetData();
                         if (entity.HasNextIndex())
+                        {
                             entity.NextIndex();
+                            entity.ClearValue();
+                        }
                         else
                             entity.SetRewarded(true);
                         list[i] = entity;

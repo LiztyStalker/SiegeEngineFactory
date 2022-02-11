@@ -52,10 +52,8 @@ namespace SEF.Entity
             return false;
         }
 
-        public void NextIndex()
-        {
-            _nowIndex++;
-        }
+        public void NextIndex() => _nowIndex++;
+        public void ClearValue() => _nowValue = 0;
 
         public void SetRewarded(bool hasRewarded)
         {
