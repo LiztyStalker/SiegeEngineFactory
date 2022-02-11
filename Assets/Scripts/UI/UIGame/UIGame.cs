@@ -152,7 +152,7 @@ namespace SEF.UI.Toolkit
 
         private void OnRewardQuestEvent(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string questKey, string addressKey, bool hasGoal)
         {
-            Debug.Log(questKey + " " + addressKey + " " + hasGoal);
+            //Debug.Log(questKey + " " + addressKey + " " + hasGoal);
             if (hasGoal)
             {
                 _rewardQuestEvent?.Invoke(typeQuestGroup, questKey);

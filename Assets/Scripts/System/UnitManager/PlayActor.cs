@@ -5,8 +5,6 @@ namespace SEF.Unit
     using UnityEngine;
     using Data;
     using Spine.Unity;
-    using UtilityManager;
-    using SEF.Entity;
 
     public enum TYPE_UNIT_STATE { Idle, Ready, Appear, Action, Destroy}
 
@@ -113,12 +111,6 @@ namespace SEF.Unit
             }
         }
 
-
-        //public AssetData GetAssetData()
-        //{
-
-        //}
-
         private AttackerActor CreateAttackerActor()
         {
             var attackActor = AttackerActor.Create(transform);
@@ -134,12 +126,11 @@ namespace SEF.Unit
                 for(int i = 0; i < attackerDataArray.Length; i++)
                 {
                     var attackerData = attackerDataArray[i];
-                    var attackActor = AttackerActor.GetAttackerActor(CreateAttackerActor);// AttackerActor.Create(transform);
+                    var attackActor = AttackerActor.GetAttackerActor(CreateAttackerActor);
                     var skeletonDataAsset = FindSkeletonDataAsset(attackerData.SkeletonDataAssetKey);
                     attackActor.SetParent(transform);
                     attackActor.SetData(skeletonDataAsset, attackerData, numberData);
                     attackActor.SetOnAttackTargetListener(OnAttackTargetEvent);
-//                    attackActor.SetOnStatusPackageListener(GetStatusPackage);
                     attackActor.Initialize();
                     _attackActorList.Add(attackActor);
                 }
@@ -266,16 +257,6 @@ namespace SEF.Unit
         public void SetOnHasAttackTargetListener(System.Func<PlayActor, bool> act) => _hasTargetEvent = act;
         protected bool HasTarget() => _hasTargetEvent(this);
 
-
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //protected StatusPackage GetStatusPackage() => _statusPackageEvent();
-
-        //protected U GetStatusData<T, U>(U data) where T : IStatusData where U : BigNumberData
-        //{
-        //    var statusPackage = GetStatusPackage();
-        //    return statusPackage.GetStatusDataToBigNumberData<T, U>(data);
-        //}
 
         #endregion
 

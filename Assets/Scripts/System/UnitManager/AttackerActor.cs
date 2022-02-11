@@ -38,14 +38,13 @@ namespace SEF.Unit
 
         #endregion
 
-        #region ##### AttackerCase #####
-        private struct AttackerCase
+
+
+        #region ##### AttackerEntity #####
+        private struct AttackerEntity
         {
             internal AttackerData AttackerData;
             internal NumberData NumberData;
-
-            //private StatusPackage _statusPackage;
-            //internal void SetStatusPackage(StatusPackage statusPackage) => _statusPackage = statusPackage;
 
             private DamageData _damageData;
             internal DamageData DamageData
@@ -64,17 +63,12 @@ namespace SEF.Unit
             {
                 get
                 {
+                    //유닛만 사용
                     if (NumberData is UpgradeData)
                     {
                         var data = StatusPackage.Current.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
                         return (float)data.Value;
                     }
-                    //유닛만 사용
-                    //if (NumberData is UpgradeData)
-                    //{
-                    //    var data = _statusPackage.GetStatusDataToBigNumberData<AttackerDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(AttackerData.AttackData.AttackDelay));
-                    //    return (float)data.GetDecimalValue();
-                    //}
                     //적군은 미사용
                     return AttackerData.AttackData.AttackDelay;
                 }
@@ -84,7 +78,6 @@ namespace SEF.Unit
             {
                 AttackerData = null;
                 NumberData = null;
-                //_statusPackage = null;
                 _damageData = null;
 
             }
@@ -141,15 +134,25 @@ namespace SEF.Unit
 
         private Spine.AnimationState SkeletonAnimationState => _skeletonAnimation.AnimationState;
 
-        private AttackerCase _attackCase;
+        private AttackerEntity _entity;
 
         private bool _isDestroy = false;
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
-        public DamageData DamageData => _attackCase.DamageData;
-        public float AttackDelay => _attackCase.AttackDalay;
+        public DamageData DamageData => _entity.DamageData;
+        public float AttackDelay => _entity.AttackDalay;
 #endif
+
+
+        public static AttackerActor Create(Transform parent)
+        {
+            var obj = new GameObject();
+            obj.name = "AttackActor";
+            obj.transform.SetParent(parent);
+            return obj.AddComponent<AttackerActor>();
+        }
+
 
         public void Initialize()
         {
@@ -158,16 +161,16 @@ namespace SEF.Unit
 
         public void CleanUp()
         {
-            _attackCase.CleanUp();
+            _entity.CleanUp();
         }
 
         public void SetData(SkeletonDataAsset skeletonDataAsset, AttackerData attackerData, NumberData numberData)
         {
             _isDestroy = false;
 
-            _attackCase.AttackerData = attackerData;
-            _attackCase.NumberData = numberData;
-            _attackCase.CalculateDamageData();
+            _entity.AttackerData = attackerData;
+            _entity.NumberData = numberData;
+            _entity.CalculateDamageData();
 
             SkeletonAnimation.skeletonDataAsset = skeletonDataAsset;
             SetSkeletonAnimationState(SkeletonAnimationState);
@@ -181,9 +184,9 @@ namespace SEF.Unit
         {
             _isDestroy = false;
 
-            _attackCase.AttackerData = attackerData;
-            _attackCase.NumberData = numberData;
-            _attackCase.CalculateDamageData();
+            _entity.AttackerData = attackerData;
+            _entity.NumberData = numberData;
+            _entity.CalculateDamageData();
         }
 #endif
 
@@ -212,7 +215,7 @@ namespace SEF.Unit
 
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            OnAttackTargetEvent(_attackCase.AttackerData.AttackData.BulletDataKey, _attackCase.AttackerData.AttackData.BulletScale, _attackCase.DamageData);
+            OnAttackTargetEvent(_entity.AttackerData.AttackData.BulletDataKey, _entity.AttackerData.AttackData.BulletScale, _entity.DamageData);
             AddAnimation("Idle", true);
         }
 
@@ -225,7 +228,7 @@ namespace SEF.Unit
             }
             else
             {
-                OnAttackTargetEvent(_attackCase.AttackerData.AttackData.BulletDataKey, _attackCase.AttackerData.AttackData.BulletScale, _attackCase.DamageData);
+                OnAttackTargetEvent(_entity.AttackerData.AttackData.BulletDataKey, _entity.AttackerData.AttackData.BulletScale, _entity.DamageData);
             }
         }
 
@@ -277,7 +280,7 @@ namespace SEF.Unit
         {
             if (!_isDestroy)
             {
-                _attackCase.RunProcess(deltaTime, OnAttackEvent);
+                _entity.RunProcess(deltaTime, OnAttackEvent);
             }
         }
 
@@ -289,6 +292,7 @@ namespace SEF.Unit
             else
                 OnDestroyedEvent();
         }
+
 
         #region ##### Listener #####
 
@@ -307,13 +311,6 @@ namespace SEF.Unit
 
         #endregion
 
-        public static AttackerActor Create(Transform parent)
-        {
-            var obj = new GameObject();
-            obj.name = "AttackActor";
-            obj.transform.SetParent(parent);
-            return obj.AddComponent<AttackerActor>();
-        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static AttackerActor Create_Test()

@@ -37,7 +37,7 @@ namespace SEF.Data
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
 
-        public IAssetData GetUpgradeData(UpgradeData data)
+        public IAssetData GetUpgradeAssetData(UpgradeData data)
         {
             var assetData = (IAssetData)StartUpgradeAssetData.Clone();
             assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
@@ -53,6 +53,7 @@ namespace SEF.Data
 
         private BlacksmithData()
         {
+
         }
 #endif 
     }

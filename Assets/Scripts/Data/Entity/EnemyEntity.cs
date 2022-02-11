@@ -1,6 +1,5 @@
 namespace SEF.Entity
 {
-    using System.Numerics;
     using Data;
 
     public struct EnemyEntity : IEntity
@@ -12,7 +11,6 @@ namespace SEF.Entity
         private HealthData _healthData;
         private DamageData _attackData;
         private IAssetData _rewardAssetData;
-        //public StatusPackage StatusPackage => GetStatusPackage();
 
         public HealthData HealthData
         {
@@ -47,7 +45,6 @@ namespace SEF.Entity
                     _rewardAssetData = CalculateRewardAssetData();
                 }
                 return _rewardAssetData;
-//                return StatusPackage.GetStatusDataToBigNumberData<RewardAssetStatusData, IAssetData>(_rewardAssetData);
             }
         }
 
@@ -111,11 +108,5 @@ namespace SEF.Entity
             assetData.SetAssetData(_enemyData, _levelWaveData);
             return assetData;
         }
-
-        //#region ##### Listener #####
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
-        //#endregion
     }
 }

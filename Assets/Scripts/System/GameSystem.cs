@@ -18,8 +18,6 @@ namespace SEF.Manager
 
         private Account _account;
 
-        //private StatusPackage _status;
-
         private WorkshopManager _workshopManager;
         private BlacksmithManager _blacksmithManager;
         private VillageManager _villageManager;
@@ -46,15 +44,12 @@ namespace SEF.Manager
             _workshopManager = WorkshopManager.Create();
 
             _workshopManager.SetOnConditionProductUnitListener(IsConditionProductUnitEvent);
-            //_workshopManager.SetOnStatusPackageListener(GetStatusPackage);
             _workshopManager.Initialize(null);
 
             _blacksmithManager = BlacksmithManager.Create();
-            //_blacksmithManager.SetOnStatusPackageListener(GetStatusPackage);
             _blacksmithManager.Initialize(null);
 
             _villageManager = VillageManager.Create();
-            //_villageManager.SetOnStatusPackageListener(GetStatusPackage);
             _villageManager.Initialize(null);
             _villageManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
 
@@ -69,12 +64,6 @@ namespace SEF.Manager
 
             _questManager = QuestManager.Create();
             _questManager.Initialize(null);
-
-            //_status = StatusPackage.Create();
-            //_status.Initialize();
-            //_status.AddOnProductListener(OnStatusProductEvent);
-
-
         }
 
         public void CleanUp()
@@ -88,9 +77,6 @@ namespace SEF.Manager
             _process.RemoveOnCompleteProcessEvent(OnCompleteProcessEvent);
             _process.CleanUp();
 
-            //_status.RemoveOnProductListener(OnStatusProductEvent);
-            //_status.CleanUp();
-
             _workshopManager.CleanUp();
             _blacksmithManager.CleanUp();
             _villageManager.CleanUp();
@@ -100,9 +86,7 @@ namespace SEF.Manager
         public void RunProcess(float deltaTime)
         {
             _workshopManager.RunProcess(deltaTime);
-            //_blacksmithManager.RunProcess(deltaTime);
             _process.RunProcess(deltaTime);
-            //_status.RunProcess(deltaTime);
         }
 
         public void Refresh()
@@ -288,6 +272,57 @@ namespace SEF.Manager
         #endregion
 
 
+
+        #region ##### Blacksmith #####
+        public void UpgradeBlacksmith(int index)
+        {
+            var assetData = _blacksmithManager.Upgrade(index);
+            _account.SubjectAsset(assetData);
+            AddStatisticsData<UpgradeBlacksmithStatisticsData>();
+            AddQuestValue<UpgradeBlacksmithConditionQuestData>();
+        }
+        public void UpTechBlacksmith(int index)
+        {
+            _blacksmithManager.UpTech(index);
+            AddStatisticsData<TechBlacksmithStatisticsData>();
+            AddQuestValue<TechBlacksmithConditionQuestData>();
+        }
+        #endregion
+
+
+
+
+        #region ##### Villiage #####
+        public void UpgradeVillage(int index)
+        {
+            var assetData = _villageManager.Upgrade(index);
+            _account.SubjectAsset(assetData);
+            AddStatisticsData<UpgradeVillageStatisticsData>();
+            AddQuestValue<UpgradeVillageConditionQuestData>();
+        }
+
+        public void UpTechVillage(int index)
+        {
+            _villageManager.UpTech(index);
+            AddStatisticsData<TechVillageStatisticsData>();
+            AddQuestValue<TechVillageConditionQuestData>();
+        }
+        #endregion
+
+
+
+
+        #region ##### Research #####
+        public void SuccessedResearchData()
+        {
+            AddStatisticsData<SuccessResearchStatisticsData>();
+            AddQuestValue<SuccessedResearchConditionQuestData>();
+        }
+        #endregion
+
+
+
+
         #region ##### LevelWave #####
 
         private LevelWaveData _nowLevelWaveData;
@@ -316,40 +351,6 @@ namespace SEF.Manager
         #endregion
 
 
-
-        public void UpgradeBlacksmith(int index)
-        {
-            var assetData = _blacksmithManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
-            AddStatisticsData<UpgradeBlacksmithStatisticsData>();
-            AddQuestValue<UpgradeBlacksmithConditionQuestData>();
-        }
-        public void UpTechBlacksmith(int index)
-        {
-            _blacksmithManager.UpTech(index);
-            AddStatisticsData<TechBlacksmithStatisticsData>();
-            AddQuestValue<TechBlacksmithConditionQuestData>();
-        }
-        public void UpgradeVillage(int index)
-        {
-            var assetData = _villageManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
-            AddStatisticsData<UpgradeVillageStatisticsData>();
-            AddQuestValue<UpgradeVillageConditionQuestData>();
-        }
-
-        public void UpTechVillage(int index)
-        {
-            _villageManager.UpTech(index);
-            AddStatisticsData<TechVillageStatisticsData>();
-            AddQuestValue<TechVillageConditionQuestData>();
-        }
-
-        public void SuccessedResearchData()
-        {
-            AddStatisticsData<SuccessResearchStatisticsData>();
-            AddQuestValue<SuccessedResearchConditionQuestData>();
-        }
 
 
         #region ##### Listener #####

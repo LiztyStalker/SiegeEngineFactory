@@ -3,7 +3,6 @@ namespace SEF.Manager
     using SEF.Account;
     using SEF.Data;
     using SEF.Entity;
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using Storage;
@@ -22,8 +21,6 @@ namespace SEF.Manager
         {
             _list = new List<BlacksmithLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
-
-            //Debug.Log(arr.Length);
 
             for(int i = 0; i < arr.Length; i++)
             {
@@ -52,15 +49,7 @@ namespace SEF.Manager
         {
             for (int i = 0; i < _list.Count; i++)
             {
-                _list[i].RunProcess(0f);
-            }
-        }
-
-        public void RunProcess(float deltaTime)
-        {
-            for (int i = 0; i < _list.Count; i++)
-            {
-                _list[i].RunProcess(deltaTime);
+                _list[i].Refresh();
             }
         }
 
@@ -71,7 +60,6 @@ namespace SEF.Manager
 
         public void UpTech(int index)
         {
-            Debug.Log("UpTech" + index);
         }
 
         private BlacksmithLine CreateLine()
@@ -80,7 +68,6 @@ namespace SEF.Manager
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
-            //line.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(line);
             return line;
         }
@@ -96,12 +83,6 @@ namespace SEF.Manager
         {
             _refreshEvent?.Invoke(index, unitEntity);
         }
-
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
-
-        //LineEvent
 
         #endregion
 

@@ -1,6 +1,5 @@
 namespace SEF.Status
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using Data;
@@ -8,6 +7,9 @@ namespace SEF.Status
 
     public class StatusPackage
     {
+
+
+        #region ##### Singleton #####
         private static StatusPackage _current;
 
         public static StatusPackage Current
@@ -22,6 +24,7 @@ namespace SEF.Status
             }
         }
 
+        #endregion
 
 
         private Dictionary<IStatusProvider, StatusEntity> _dic;
@@ -112,8 +115,6 @@ namespace SEF.Status
         }
 
 
-
-
 #if UNITY_EDITOR || UNITY_INCLUDE_TEST
         public bool HasStatusProvider(IStatusProvider provider)
         {
@@ -129,19 +130,5 @@ namespace SEF.Status
             return false;            
         }
 #endif
-
-
-        #region ##### Listener #####
-
-        private System.Action<IAssetData[]> _productEvent;
-        public void AddOnProductListener(System.Action<IAssetData[]> act) => _productEvent += act;
-        public void RemoveOnProductListener(System.Action<IAssetData[]> act) => _productEvent -= act;
-
-        private void OnProductEvent(IAssetData[] assetDataArr)
-        {
-            _productEvent?.Invoke(assetDataArr);
-        }
-
-        #endregion
     }
 }

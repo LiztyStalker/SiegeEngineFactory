@@ -6,7 +6,6 @@ namespace SEF.Status
     {
         private IStatusData _statusData;
         private UpgradeData _upgradeData;
-
         public IStatusData StatusData => _statusData;
         public IStatusData.TYPE_STATUS_DATA TypeStatusData => _statusData.TypeStatusData;
         public StatusEntity(IStatusData statusData, UpgradeData upgradeData)
@@ -17,5 +16,4 @@ namespace SEF.Status
 
         public UniversalBigNumberData GetValue() => _statusData.GetValue(_upgradeData);
     }
-
 }
