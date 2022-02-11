@@ -50,6 +50,7 @@ namespace Storage
 
             InitializeDataFromAssetBundle<GameObject>("prefab", null);
 #elif UNITY_EDITOR
+            InitializeDatasFromAssetDatabase<Sprite>("Images/Icons/Assets");
             InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
             InitializeDatasFromAssetDatabase<BulletData>("Data/Bullets");
             InitializeDatasFromAssetDatabase<EnemyData>("Data/Enemies");

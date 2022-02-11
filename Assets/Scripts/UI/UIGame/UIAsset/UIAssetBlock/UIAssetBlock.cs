@@ -24,7 +24,7 @@ namespace SEF.UI.Toolkit
             return new UIAssetBlock();
         }
 
-        public void Initialize(VisualElement root)
+        public void Initialize(VisualElement root, string key)
         {
             _root = root;
             _icon = _root.Q<VisualElement>("asset_icon");
@@ -33,19 +33,17 @@ namespace SEF.UI.Toolkit
 
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nowValueLabel != null, "nowValueLabel element 를 찾지 못했습니다");
-//            Debug.Assert(_maxValueLabel != null, "maxValueLabel element 를 찾지 못했습니다");
+            //            Debug.Assert(_maxValueLabel != null, "maxValueLabel element 를 찾지 못했습니다");
 
+            var sprite = Storage.DataStorage.Instance.GetDataOrNull<Sprite>($"Icon_{key}", null, null);
+            _icon.style.backgroundImage = sprite.texture;
             _nowValueLabel.text = "0";
 //            _maxValueLabel.text = "0";
         }
 
-        //public void RefreshAssetData(AssetData assetData)
-        //{
-        //    _nowValueLabel.text = assetData.GetValue();
-        //}
-
         public void RefreshAssetData(IAssetData assetData)
         {
+            //Debug.Log(assetData.GetType().Name);
             _nowValueLabel.text = assetData.GetValue();
         }
 
@@ -78,7 +76,7 @@ namespace SEF.UI.Toolkit
         public void Initialize()
         {
             _uiAssetBlock = UIAssetBlock.Create();
-            _uiAssetBlock.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_UXML));
+            _uiAssetBlock.Initialize(UIUXML.GetVisualElement(gameObject, PATH_UI_UXML), null);
         }
 
         public void Dispose()

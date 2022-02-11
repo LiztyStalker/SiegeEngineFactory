@@ -32,7 +32,7 @@ namespace SEF.UI.Toolkit
             for (int i = 0; i < assetArray.Length; i++)
             {
                 var block = UIAssetBlock.Create();
-                block.Initialize(tr[i]);
+                block.Initialize(tr[i], assetArray[i]);
                 _dic.Add(assetArray[i], block);
             }
         }
