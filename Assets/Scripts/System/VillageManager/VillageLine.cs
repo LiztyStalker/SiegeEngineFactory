@@ -1,18 +1,14 @@
 namespace SEF.Manager
 {
-    using SEF.Account;
-    using SEF.Data;
-    using SEF.Entity;
-    using SEF.Process;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using Account;
+    using Data;
+    using Entity;
+    using Process;
 
     public class VillageLine
     {
         private int _index;
         private VillageEntity _entity;
-        //        private float _nowTime;
 
         public static VillageLine Create()
         {
@@ -23,15 +19,11 @@ namespace SEF.Manager
         {
             _entity.Initialize();
             _entity.SetOnProcessEntityListener(OnProcessEntityEvent);
-            //_entity.SetOnStatusPackageListener(GetStatusPackage);
-            //_nowTime = 0;
         }
         public void CleanUp()
         {
-            //_entity.SetOnStatusPackageListener(null);
             _entity.SetOnProcessEntityListener(null);
             _entity.CleanUp();
-            //_nowTime = 0;            
             _refreshEvent = null;
         }
 
@@ -45,20 +37,10 @@ namespace SEF.Manager
             _entity.SetData(data);
         }
 
-        public void RunProcess(float deltaTime)
+        public void Refresh()
         {
-            //if (OnConditionProductUnitEvent(_unitEntity))
-            //{
-            //    _nowTime += deltaTime;
-            //    if (_nowTime > _unitEntity.ProductTime)
-            //    {
-            //        OnProductUnitEvent();
-            //        _nowTime -= _unitEntity.UnitData.ProductTime;
-            //    }
-            //}
             OnRefreshEvent();
         }
-
 
         public IAssetData Upgrade()
         {
@@ -75,12 +57,12 @@ namespace SEF.Manager
         #region ##### Listener #####
 
 
-        private System.Func<UnitEntity, bool> _conditionProductEvent;
-        public void SetOnConditionProductUnitListener(System.Func<UnitEntity, bool> act) => _conditionProductEvent = act;
-        private bool OnConditionProductUnitEvent(UnitEntity unitEntity)
-        {
-            return _conditionProductEvent(unitEntity);
-        }
+        //private System.Func<UnitEntity, bool> _conditionProductEvent;
+        //public void SetOnConditionProductUnitListener(System.Func<UnitEntity, bool> act) => _conditionProductEvent = act;
+        //private bool OnConditionProductUnitEvent(UnitEntity unitEntity)
+        //{
+        //    return _conditionProductEvent(unitEntity);
+        //}
 
         private System.Action<int, VillageEntity> _refreshEvent;
         public void SetOnRefreshListener(System.Action<int, VillageEntity> act) => _refreshEvent = act;

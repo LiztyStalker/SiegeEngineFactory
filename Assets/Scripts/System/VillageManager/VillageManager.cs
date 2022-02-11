@@ -51,15 +51,7 @@ namespace SEF.Manager
         {
             for (int i = 0; i < _list.Count; i++)
             {
-                _list[i].RunProcess(0f);
-            }
-        }
-
-        public void RunProcess(float deltaTime)
-        {
-            for (int i = 0; i < _list.Count; i++)
-            {
-                _list[i].RunProcess(deltaTime);
+                _list[i].Refresh();
             }
         }
 
@@ -80,7 +72,6 @@ namespace SEF.Manager
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
             line.SetOnProcessEntityListener(OnProcessEntityEvent);
-            //line.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(line);
             return line;
         }

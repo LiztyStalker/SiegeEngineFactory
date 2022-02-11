@@ -14,7 +14,6 @@ namespace SEF.Data
 
         [SerializeField]
         private Sprite _icon;
-
         public Sprite Icon => _icon;
 
 
@@ -48,9 +47,10 @@ namespace SEF.Data
 
         private VillageData()
         {
-            //_startUpgradeValue = GoldAssetData.Create_Test(100);
-            //_increaseUpgradeValue = 1;
-            //_increaseUpgradeRate = 0.125f;
+            _serializedProcessData = SerializedProcessData.Create_Test(typeof(AssetProcessData));
+            _serializedStartUpgradeAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
+            _increaseUpgradeValue = 1;
+            _increaseUpgradeRate = 0.125f;
         }
 #endif 
     }

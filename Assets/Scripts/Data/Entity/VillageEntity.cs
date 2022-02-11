@@ -56,9 +56,6 @@ namespace SEF.Entity
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
-
-            //ProcessPackage¿¡ µî·Ï
-
             OnProcessEntityEvent(this);
         }
 
