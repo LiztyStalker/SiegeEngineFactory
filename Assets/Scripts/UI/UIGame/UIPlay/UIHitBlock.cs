@@ -3,6 +3,8 @@ namespace SEF.UI.Toolkit
     using UnityEngine;
     using UnityEngine.UIElements;
     using PoolSystem;
+    using DG.Tweening;
+    
 
     [RequireComponent(typeof(UIDocument))]
     public class UIHitBlock : MonoBehaviour, IPoolElement
@@ -11,11 +13,15 @@ namespace SEF.UI.Toolkit
         private VisualElement _root;
         private Label _label;
 
+        private float _opacity = 1f;
+
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIPlay/UIHitBlock.uxml";
 
         public void Initialize() {
             _uiDocument = GetComponent<UIDocument>();
             _root = _uiDocument.rootVisualElement;
+            _label = _uiDocument.rootVisualElement.Q<Label>("hit_label");
+
             Inactivate();
         }
 
@@ -25,6 +31,29 @@ namespace SEF.UI.Toolkit
             Inactivate();
         }
 
+        private Sequence AssembleSequence()
+        {
+            var scaleT = transform.DOScale(2f, 0.5f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.OutCirc).OnUpdate(SetScale);
+            var opacityT = DOTween.To(() => _opacity, o => _opacity = o, 0, 1f).SetEase(Ease.OutCirc).From(1, true).OnUpdate(SetOpercity);
+
+
+            return DOTween.Sequence()
+                .Append(scaleT)
+                .Join(opacityT)
+                .OnComplete(() => {
+                    _retrieveEvent?.Invoke(this);
+                    Inactivate();
+                });
+        }
+
+        private Sequence AssembleJumpSequence(Vector3 startPosition)
+        {
+            var endPosition = new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), -0.5f);
+            var jumpPow = UnityEngine.Random.Range(0.5f, 1f);
+            var jumpT = transform.DOJump(startPosition + endPosition, jumpPow, 1, 1f).SetEase(Ease.OutCirc).OnUpdate(SetPosition);
+            return DOTween.Sequence().Append(jumpT);
+        }
+
 
         public void ShowHit(string value, Vector2 position)
         {
@@ -32,17 +61,22 @@ namespace SEF.UI.Toolkit
             transform.position = position;
         }
 
-
         public void Activate()
         {
-            gameObject.SetActive(true);
+            _root.style.display = DisplayStyle.Flex;
+            transform.localScale = Vector3.one;
             SetPosition();
             SetLabel();
+
+            var seq = AssembleSequence();
+            var jumpSeq = AssembleJumpSequence(transform.position);
+            jumpSeq.Insert(0f, seq);
+            jumpSeq.Restart();
         }
 
         public void Inactivate()
         {
-            gameObject.SetActive(false);
+            _root.style.display = DisplayStyle.None;
         }
 
 
@@ -54,25 +88,38 @@ namespace SEF.UI.Toolkit
             _uiDocument.rootVisualElement.transform.position = screenPos;
         }
 
+        private void SetScale()
+        {
+            _uiDocument.rootVisualElement.transform.scale = transform.localScale;
+        }
+
+        private void SetOpercity()
+        {
+            var opercity = _root.style.opacity;
+            opercity.value = _opacity;
+            _root.style.opacity = opercity;
+        }
+
         private void SetLabel()
         {
             //Inactivate되면 기존에 연결한 VisualElement가 해제되므로 
             //Activate후 다시 연결할 필요 있음
-            _label = _uiDocument.rootVisualElement.Q<Label>("hit_label");
             _label.text = transform.name;
+
+
         }
 
-        private float nowTime = 0;
-        private void Update()
-        {
-            nowTime += Time.deltaTime;
-            if (nowTime > 1f) 
-            {
-                nowTime = 0;
-                _retrieveEvent?.Invoke(this);
-                Inactivate();
-            }
-        }
+        //private float nowTime = 0;
+        //private void Update()
+        //{
+        //    nowTime += Time.deltaTime;
+        //    if (nowTime > 1f) 
+        //    {
+        //        nowTime = 0;
+        //        _retrieveEvent?.Invoke(this);
+        //        Inactivate();
+        //    }
+        //}
 
         #region ##### Listener #####
 
