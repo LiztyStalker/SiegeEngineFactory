@@ -6,6 +6,7 @@
     <Style src="UISystem.uss" />
     <Style src="UIWorkshop/UIWorkshop.uss" />
     <Style src="UIWorkshop/UIWorkshopLine.uss" />
+    <Style src="UISystemBar.uss" />
     <SEF.UI.Toolkit.UISystem class="ui_system_panel">
         <ui:VisualElement name="menu_panel" class="ui_system_background">
             <ui:Button text="제작소" display-tooltip-when-elided="true" name="workshop-button" class="ui_system_button" />

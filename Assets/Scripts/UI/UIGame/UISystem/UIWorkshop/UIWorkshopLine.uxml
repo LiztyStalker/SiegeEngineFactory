@@ -1,12 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="UIFillable" src="/Assets/Scripts/UI/UIUtility/UIFillable.uxml" />
     <Style src="UIWorkshopLine.uss" />
-    <SEF.UI.Toolkit.UIWorkshopLine style="height: 200px;">
-        <ui:Instance template="UIFillable" name="fillable-block" class="fillable-block" />
-        <ui:VisualElement name="activate_panel" style="display: flex;">
-            <ui:VisualElement name="line_panel">
-                <ui:VisualElement name="line_icon" style="background-color: rgb(255, 255, 255);" />
-                <ui:VisualElement name="information_panel">
+    <Style src="/Assets/Scripts/UI/UIGame/UISystem/UISystemBar.uss" />
+    <SEF.UI.Toolkit.UIWorkshopLine class="ui_system_bar_background ui_workshop_bar_background" style="height: 200px;">
+        <ui:Instance template="UIFillable" name="fillable-block" class="ui_workshop_fillable_block" />
+        <ui:VisualElement name="activate_panel" class="ui_workshop_activate_panel" style="display: flex;">
+            <ui:VisualElement class="ui_workshop_info_panel">
+                <ui:VisualElement class="ui_workshop_icon" style="background-color: rgb(255, 255, 255);" />
+                <ui:VisualElement class="ui_workshop_info_layout">
                     <ui:VisualElement name="name_type_panel" style="flex-direction: row; align-items: flex-end;">
                         <ui:Label text="투창병" display-tooltip-when-elided="true" name="unit_name_label" class="unit_name_label" />
                         <ui:Label text="투척" display-tooltip-when-elided="true" name="unit_group_label" class="unit_type_label" />
@@ -54,30 +55,21 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="button_panel" style="justify-content: flex-end; position: absolute;">
-                <ui:Button display-tooltip-when-elided="true" name="upgrade_button" style="align-items: center; justify-content: center;">
+            <ui:VisualElement class="ui_workshop_button_panel" style="justify-content: flex-end; position: absolute;">
+                <ui:Button display-tooltip-when-elided="true" name="upgrade_button" class="ui_workshop_upgrade_button ui_system_bar_button" style="align-items: center; justify-content: center;">
                     <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="upgrade_label" style="font-size: 16px;" />
                     <ui:VisualElement name="upgrade_asset_panel" style="flex-direction: row;">
                         <ui:VisualElement name="upgrade_asset_icon" style="width: 30px; height: 30px; background-color: rgb(0, 0, 0);" />
                         <ui:Label text="1.000A" display-tooltip-when-elided="true" name="upgrade_asset_value_label" style="font-size: 16px;" />
                     </ui:VisualElement>
                 </ui:Button>
-                <ui:Button display-tooltip-when-elided="true" name="tech_button" style="display: flex;">
+                <ui:Button display-tooltip-when-elided="true" name="tech_button" class="ui_workshop_tech_button ui_system_bar_button" style="display: flex;">
                     <ui:Label text="테크 개발" display-tooltip-when-elided="true" name="upgrade_label" style="font-size: 16px;" />
                 </ui:Button>
             </ui:VisualElement>
-            <ui:VisualElement name="tech_button_panel" style="justify-content: flex-end; display: none; position: absolute; width: 100%; height: 100%; flex-direction: row; border-left-width: 10px; border-right-width: 10px; border-top-width: 10px; border-bottom-width: 10px;">
-                <ui:Button display-tooltip-when-elided="true" name="tech_button" style="align-items: center; justify-content: center;">
-                    <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="upgrade_label" style="font-size: 16px;" />
-                    <ui:VisualElement name="upgrade_asset_panel" style="flex-direction: row;">
-                        <ui:VisualElement name="asset_icon" style="width: 30px; height: 30px; background-color: rgb(0, 0, 0);" />
-                        <ui:Label text="1.000A" display-tooltip-when-elided="true" name="asset_value_label" style="font-size: 16px;" />
-                    </ui:VisualElement>
-                </ui:Button>
-            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="inactivate_panel">
-            <ui:Button display-tooltip-when-elided="true" name="expend_button" style="align-items: center; justify-content: center;">
+        <ui:VisualElement name="inactivate_panel" class="ui_workshop_inactivate_panel">
+            <ui:Button display-tooltip-when-elided="true" name="expend_button" class="ui_workshop_expend_button" style="align-items: center; justify-content: center;">
                 <ui:Label text="확장" display-tooltip-when-elided="true" name="expend_label" style="font-size: 16px;" />
                 <ui:VisualElement name="expend_asset_panel" style="flex-direction: row;">
                     <ui:VisualElement name="expend_asset_icon" style="width: 30px; height: 30px; background-color: rgb(0, 0, 0);" />

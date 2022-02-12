@@ -22,7 +22,7 @@
     color: rgb(0, 0, 0);
 }
 
-#line_panel {
+.ui_workshop_info_panel {
     width: 100%;
     height: 100%;
     align-items: center;
@@ -35,19 +35,19 @@
     position: absolute;
 }
 
-#upgrade_button {
+.ui_workshop_upgrade_button {
     width: 200px;
     height: 80%;
 }
 
-#tech_button {
+.ui_workshop_tech_button {
     height: 80%;
     width: 200px;
     align-items: center;
     justify-content: center;
 }
 
-#button_panel {
+.ui_workshop_button_panel {
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
@@ -59,7 +59,7 @@
     align-items: center;
 }
 
-#information_panel {
+.ui_workshop_info_layout {
     width: 90%;
     border-left-width: 10px;
     border-right-width: 10px;
@@ -70,16 +70,24 @@
     height: 100%;
 }
 
-#line_icon {
-    width: 180px;
-    height: 180px;
+.ui_workshop_icon {
+    width: 140px;
+    height: 140px;
     border-left-width: 10px;
     border-right-width: 10px;
     border-top-width: 10px;
     border-bottom-width: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-left: 20px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-UIWorkshopLine {
+.ui_workshop_bar_background {
     position: relative;
     align-items: center;
     justify-content: center;
@@ -89,23 +97,18 @@ UIWorkshopLine {
     flex-wrap: wrap;
 }
 
-#activate_panel {
+.ui_workshop_activate_panel {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-#inactivate_panel {
+.ui_workshop_inactivate_panel {
     position: absolute;
     width: 100%;
     height: 100%;
     align-items: center;
     justify-content: center;
-}
-
-#expend_button {
-    width: 20%;
-    height: 60%;
 }
 
 .expend_asset_value_label {
@@ -118,7 +121,18 @@ UIWorkshopLine {
     flex-wrap: nowrap;
 }
 
-.fillable-block {
+.ui_workshop_fillable_block {
     width: 100%;
     height: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+}
+
+.ui_workshop_expend_button {
+    background-image: url('/Assets/Images/UI/UIGame/UIWorkshop/ui_workshop_expend_button.png');
+    width: 20%;
+    height: 60%;
 }
