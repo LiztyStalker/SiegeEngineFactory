@@ -129,6 +129,12 @@ namespace SEF.Unit {
             SetTypeUnitState(TYPE_UNIT_STATE.Idle);
         }
 
+        public override void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+        {
+            base.SetTypeUnitState(typeUnitState);
+            OnEnemyStateEvent();
+        }
+
         public override void RunProcess(float deltaTime)
         {
             switch (TypeUnitState)
@@ -269,6 +275,18 @@ namespace SEF.Unit {
             if (trackEntry.Animation.Name == "Dead")
                 OnDestroyedEvent();
         }
+        #endregion
+
+
+        #region ##### Listener #####
+
+        private System.Action<TYPE_UNIT_STATE> _enemyStateEvent;
+        public void SetOnUnitStateListener(System.Action<TYPE_UNIT_STATE> act) => _enemyStateEvent = act;
+        private void OnEnemyStateEvent()
+        {
+            _enemyStateEvent?.Invoke(TypeUnitState);
+        }
+
         #endregion
 
     }

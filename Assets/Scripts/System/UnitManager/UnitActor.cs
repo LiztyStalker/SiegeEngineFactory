@@ -189,6 +189,10 @@ namespace SEF.Unit
                     break;
                 case TYPE_UNIT_STATE.Destroy:
                     //Destroy
+                    if(_typeUnitCycle == TYPE_UNIT_ACTION_CYCLE.Move)
+                    {
+                        Vector2.MoveTowards(transform.position, UNIT_APPEAR_POSITION, deltaTime);
+                    }
                     break;
             }
         }
@@ -206,7 +210,10 @@ namespace SEF.Unit
             {
                 //목표에 도달했으면 Action으로 변환
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
-                PlayAnimation("Idle", true);
+
+                //행동 사이클 - 이동중이 아니면 멈춤
+                if(_typeUnitCycle != TYPE_UNIT_ACTION_CYCLE.Move)
+                    PlayAnimation("Idle", true);
             }
         }
 
@@ -214,24 +221,28 @@ namespace SEF.Unit
         private float _nowAttackTime = 0f;
         protected override void ActionRunProcess(float deltaTime)
         {
-            if (HasTarget())
-            {
-                base.ActionRunProcess(deltaTime);
 
-                //자신 공격
-                //자신이 공격하면 가능
-                _nowAttackTime += deltaTime;
-                if (_nowAttackTime > _unitEntity.AttackDelay)
+            if (_typeUnitCycle == TYPE_UNIT_ACTION_CYCLE.Action)
+            {
+                if (HasTarget())
                 {
-                    if (IsHasAnimation("Attack"))
+                    base.ActionRunProcess(deltaTime);
+
+                    //자신 공격
+                    //자신이 공격하면 가능
+                    _nowAttackTime += deltaTime;
+                    if (_nowAttackTime > _unitEntity.AttackDelay)
                     {
-                        SetAnimation("Attack");
+                        if (IsHasAnimation("Attack"))
+                        {
+                            SetAnimation("Attack");
+                        }
+                        else
+                        {
+                            OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.DamageData);
+                        }
+                        _nowAttackTime = 0f;
                     }
-                    else
-                    {
-                        OnAttackTargetEvent(transform.position, _unitEntity.UnitData.AttackBulletKey, _unitEntity.UnitData.BulletScale, _unitEntity.DamageData);
-                    }
-                    _nowAttackTime = 0f;
                 }
             }
         }
@@ -240,6 +251,27 @@ namespace SEF.Unit
         {
             base.DestoryActor();
             PlayAnimation("Dead");
+        }
+        
+        public enum TYPE_UNIT_ACTION_CYCLE { Idle, Move, Action }
+
+        private TYPE_UNIT_ACTION_CYCLE _typeUnitCycle;
+        public void SetMovement(TYPE_UNIT_ACTION_CYCLE typeUnitCycle)
+        {
+            _typeUnitCycle = typeUnitCycle;
+            if (TypeUnitState == TYPE_UNIT_STATE.Action)
+            {
+                _nowAttackTime = 0f;
+                switch (typeUnitCycle)
+                {
+                    default:
+                        PlayAnimation("Idle", true);
+                        break;
+                    case TYPE_UNIT_ACTION_CYCLE.Move:
+                        PlayAnimation("Forward", true);
+                        break;
+                }
+            }
         }
 
         #region ##### Spine Event #####

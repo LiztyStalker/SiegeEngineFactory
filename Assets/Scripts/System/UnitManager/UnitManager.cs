@@ -51,7 +51,7 @@ namespace SEF.Unit
                 while (true)
                 {
                     var enemyActor = CreateEnemyActor(parent);//SetPosition
-                    ChangeEnemyActor(enemyActor);
+                    ChangeEnemyActor(enemyActor, null);
                     if (IsFull())
                     {
                         break;
@@ -84,9 +84,11 @@ namespace SEF.Unit
             }
 #endif
 
-            public void ChangeEnemyActor(EnemyActor enemyActor)
+            public void ChangeEnemyActor(EnemyActor enemyActor, System.Action eventCallback)
             {
                 _list.Add(enemyActor);
+
+                eventCallback?.Invoke();
 
                 if (_list.Count > 0)
                     _list[0].SetTypeUnitState(TYPE_UNIT_STATE.Appear);
@@ -328,6 +330,7 @@ namespace SEF.Unit
 
         public void RetrieveEnemyActor(EnemyActor enemyActor)
         {
+            enemyActor.SetOnUnitStateListener(null);
             enemyActor.RemoveOnHitListener(OnHitEvent);
             enemyActor.RemoveOnDestoryedListener(OnDestroyedEvent);
             enemyActor.SetOnAttackTargetListener(null);
@@ -368,9 +371,7 @@ namespace SEF.Unit
 
         public void ChangeNowEnemy(EnemyActor enemyActor)
         {
-            _enemyQueueData.ChangeEnemyActor(enemyActor);
-
-            SetNowEnemyListener();
+            _enemyQueueData.ChangeEnemyActor(enemyActor, SetNowEnemyListener);
         }
 
         private void SetNowEnemyListener()
@@ -379,6 +380,7 @@ namespace SEF.Unit
             _enemyQueueData.NowEnemy.AddOnDestoryedListener(OnDestroyedEvent);
             _enemyQueueData.NowEnemy.SetOnAttackTargetListener(OnAttackTargetEvent);
             _enemyQueueData.NowEnemy.SetOnHasAttackTargetListener(HasAttackTarget);
+            _enemyQueueData.NowEnemy.SetOnUnitStateListener(OnEnemyStateEvent);
         }
 
         private bool HasAttackTarget(PlayActor playActor)
@@ -452,6 +454,26 @@ namespace SEF.Unit
             OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
         }
 
+        private void OnEnemyStateEvent(TYPE_UNIT_STATE typeUnitState)
+        {
+            Debug.Log(typeUnitState);
+            foreach(var key in _unitDic.Keys)
+            {
+                switch (typeUnitState)
+                {
+                    case TYPE_UNIT_STATE.Action:
+                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Action);
+                        break;
+                    case TYPE_UNIT_STATE.Appear:
+                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Move);
+                        break;
+                    default:
+                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Idle);
+                        break;
+                }
+            }
+        }
+
         #region ##### Listener #####
 
         public System.Action<PlayActor, DamageData> _hitEvent;
@@ -477,7 +499,6 @@ namespace SEF.Unit
         private System.Action<PlayActor> _destroyedEvent;
         public void AddOnDestoryedListener(System.Action<PlayActor> act) => _destroyedEvent += act;
         public void RemoveOnDestoryedListener(System.Action<PlayActor> act) => _destroyedEvent -= act;
-
         private void OnDestroyedEvent(PlayActor playActor)
         {
             _destroyedEvent?.Invoke(playActor);
@@ -502,10 +523,8 @@ namespace SEF.Unit
 
 
         private System.Action<EnemyActor, LevelWaveData> _nextEvent;
-
         public void AddOnNextEnemyListener(System.Action<EnemyActor, LevelWaveData> act) => _nextEvent += act;
-        public void RemoveOnNextEnemyListener(System.Action<EnemyActor, LevelWaveData> act) => _nextEvent += act;
-
+        public void RemoveOnNextEnemyListener(System.Action<EnemyActor, LevelWaveData> act) => _nextEvent -= act;
         private void OnNextEnemyEvent(EnemyActor enemyActor, LevelWaveData levelWaveData)
         {
             _nextEvent?.Invoke(enemyActor, levelWaveData);

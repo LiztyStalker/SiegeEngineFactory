@@ -42,7 +42,7 @@ namespace SEF.Unit
         }
 #endif
 
-        public void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
+        public virtual void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
         {
             _typeUnitState = typeUnitState;
         }
@@ -256,6 +256,7 @@ namespace SEF.Unit
         private System.Func<PlayActor, bool> _hasTargetEvent;
         public void SetOnHasAttackTargetListener(System.Func<PlayActor, bool> act) => _hasTargetEvent = act;
         protected bool HasTarget() => _hasTargetEvent(this);
+
 
 
         #endregion
