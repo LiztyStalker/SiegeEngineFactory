@@ -1,4 +1,9 @@
-UIWorkshop {
+.ui_workshop_background {
+    width: 100%;
+    height: 100%;
+}
+
+.ui_workshop_scrollview_background {
     width: 100%;
     height: 100%;
 }

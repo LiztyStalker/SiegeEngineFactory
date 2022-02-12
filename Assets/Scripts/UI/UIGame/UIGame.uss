@@ -37,6 +37,16 @@
 
 .quest-button {
     position: absolute;
+    background-image: url('/Assets/Images/UI/UIGame/ui_quest_button.png');
+    background-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 #UIQuest {

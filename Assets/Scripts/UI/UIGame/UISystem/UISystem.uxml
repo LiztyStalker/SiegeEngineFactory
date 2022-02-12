@@ -1,19 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="UIBlacksmith" src="UIBlacksmith/UIBlacksmith.uxml" />
     <ui:Template name="UIWorkshop" src="UIWorkshop/UIWorkshop.uxml" />
+    <ui:Template name="UIBlacksmith" src="UIBlacksmith/UIBlacksmith.uxml" />
     <ui:Template name="UIVillage" src="UIVillage/UIVillage.uxml" />
     <ui:Template name="UIResearch" src="UIResearch/UIResearch.uxml" />
     <Style src="UISystem.uss" />
     <Style src="UIWorkshop/UIWorkshop.uss" />
     <Style src="UIWorkshop/UIWorkshopLine.uss" />
-    <SEF.UI.Toolkit.UISystem>
-        <ui:VisualElement name="menu_panel">
-            <ui:Button text="제작소" display-tooltip-when-elided="true" name="workshop-button" class="menu_button" />
-            <ui:Button text="대장간" display-tooltip-when-elided="true" name="blacksmith-button" class="menu_button" />
-            <ui:Button text="마을" display-tooltip-when-elided="true" name="village-button" class="menu_button" />
-            <ui:Button text="연구" display-tooltip-when-elided="true" name="research-button" class="menu_button" />
+    <SEF.UI.Toolkit.UISystem class="ui_system_panel">
+        <ui:VisualElement name="menu_panel" class="ui_system_background">
+            <ui:Button text="제작소" display-tooltip-when-elided="true" name="workshop-button" class="ui_system_button" />
+            <ui:Button text="대장간" display-tooltip-when-elided="true" name="blacksmith-button" class="ui_system_button" />
+            <ui:Button text="마을" display-tooltip-when-elided="true" name="village-button" class="ui_system_button" />
+            <ui:Button text="연구" display-tooltip-when-elided="true" name="research-button" class="ui_system_button" />
         </ui:VisualElement>
-        <ui:VisualElement name="menu_window">
+        <ui:VisualElement name="menu_window" class="ui_system_scroll_background">
             <ui:Instance template="UIWorkshop" name="UIWorkshop" />
             <ui:Instance template="UIBlacksmith" name="UIBlacksmith" />
             <ui:Instance template="UIVillage" name="UIVillage" />

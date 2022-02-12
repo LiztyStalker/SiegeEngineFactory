@@ -1,6 +1,7 @@
 .quest-tab-label {
     width: 100%;
     height: 20px;
+    color: rgb(0, 0, 0);
 }
 
 .quest-tab-fillable {
@@ -10,7 +11,13 @@
 
 .quest-tab-button {
     width: 20%;
-    height: 60%;
+    height: 100%;
+    background-image: url('/Assets/Images/UI/UIGame/UIQuestTab/ui_questtab_reward_button.png');
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .quest-tab-layout {
@@ -19,7 +26,11 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    background-color: rgb(84, 84, 84);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-image: url('/Assets/Images/UI/UIGame/UIQuestTab/ui_questtab_background.png');
 }
 
 .quest-tab-info-layout {

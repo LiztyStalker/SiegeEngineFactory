@@ -11,6 +11,6 @@
         <ui:Instance template="UISystem" name="UISystem" />
     </ui:VisualElement>
     <ui:Instance template="UIQuestTab" name="UIQuestTab" style="height: 97px; width: 254px; position: absolute; top: 100px; left: 811px;" />
-    <ui:Button text="Q" display-tooltip-when-elided="true" name="quest-button" class="quest-button" style="height: 73px; width: 68px; top: 202px; left: 994px;" />
+    <ui:Button display-tooltip-when-elided="true" name="quest-button" class="quest-button" style="height: 73px; width: 68px; top: 202px; left: 994px;" />
     <ui:Instance template="UIQuest" name="UIQuest" />
 </ui:UXML>
