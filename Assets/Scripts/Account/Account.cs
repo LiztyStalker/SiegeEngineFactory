@@ -63,9 +63,10 @@ namespace SEF.Account
         {
         }
 
-        public void SaveData(System.Action saveCallback, System.Action endCallback)
+        public void SaveData(System.Action saveCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            UnityEngine.Debug.Log(UnityEngine.JsonUtility.ToJson(_storableData));
+            StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
+            //StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
         }
 
 

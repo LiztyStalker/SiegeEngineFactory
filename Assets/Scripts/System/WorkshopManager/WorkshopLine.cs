@@ -13,9 +13,8 @@ namespace SEF.Manager
         [UnityEngine.SerializeField] private int _index;
         [UnityEngine.SerializeField] private float _nowTime;
 
-        public void LoadData(StorableData data)
-        {
-        }
+        public int Index => _index;
+        public float NowTime => _nowTime;
 
         public void SaveData(int index, float nowTime, StorableData[] children)
         {
@@ -120,12 +119,36 @@ namespace SEF.Manager
 
 
         #region ##### Data #####
-        
+
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (WorkshopLineStorableData)data;
+
+            _index = storableData.Index;
+            _nowTime = storableData.NowTime;
+
+            if (storableData.Children != null && storableData.Children.Length > 0) {
+
+                var children = (UnitEntityStorableData)storableData.Children[0];
+
+                var unitData = Storage.DataStorage.Instance.GetDataOrNull<UnitData>(children.UnitKey, null, null);
+                var upgradeData = new UpgradeData();
+                upgradeData.SetValue_Test(children.UpgradeValue);
+
+                _unitEntity.SetStorableData(unitData, upgradeData);
+            }
+            else
+            {
+#if UNITY_EDITOR
+                UnityEngine.Debug.LogWarning("UnitEntity를 구축하지 못했습니다");
+#endif
+            }
+        }
 
         public StorableData GetStorableData()
         {
-            if (_storableData == null)
-                _storableData = new WorkshopLineStorableData();
+            var _storableData = new WorkshopLineStorableData();
             _storableData.SaveData(_index, _nowTime, GetChildren());
             return _storableData;
         }

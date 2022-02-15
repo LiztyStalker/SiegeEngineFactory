@@ -153,7 +153,6 @@ namespace SEF.Entity
 
         public StorableData GetStorableData()
         {
-            //if(_storableData == null)
             var _storableData = new UnitEntityStorableData();
             _storableData.SaveData(_unitData.Key, _upgradeData.Value);
             return _storableData;

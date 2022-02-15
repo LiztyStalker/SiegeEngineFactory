@@ -12,9 +12,6 @@ namespace SEF.Manager
     [System.Serializable]
     public class WorkshopManagerStorableData : StorableData
     {
-        public void LoadData(StorableData data)
-        {
-        }
         public void SaveData(StorableData[] children)
         {
             Children = children;
@@ -25,10 +22,7 @@ namespace SEF.Manager
 
     public class WorkshopManager
     {
-
         private List<WorkshopLine> _list;
-
-        private WorkshopManagerStorableData _storableData;
 
         public static WorkshopManager Create()
         {
@@ -108,7 +102,6 @@ namespace SEF.Manager
             workshopLine.SetOnProductUnitListener(OnProductUnitEvent);
             workshopLine.SetOnRefreshListener(OnRefreshEvent);
             workshopLine.SetOnConditionProductUnitListener(OnConditionProductUnitEvent);
-            //workshopLine.SetOnStatusPackageListener(GetStatusPackage);
             _list.Add(workshopLine);
 
             //기본 유닛 적용
@@ -162,16 +155,29 @@ namespace SEF.Manager
 
         public StorableData GetStorableData()
         {
-            if (_storableData == null)
-                _storableData = new WorkshopManagerStorableData();
-
+            var _storableData = new WorkshopManagerStorableData();
             _storableData.SaveData(GetChildren());
             return _storableData;
         }
 
         public void SetStorableData(StorableData data)
         {
+            var storableData = data;
+            for(int i = 0; i < storableData.Children.Length; i++)
+            {
+                var children = storableData.Children[i];
 
+                if (_list.Count <= i)
+                {
+                    var line = CreateLine();
+                    line.SetStorableData(children);
+                }
+                else
+                {
+                    var line = _list[i];
+                    line.SetStorableData(children);
+                }
+            }
         }
 
 

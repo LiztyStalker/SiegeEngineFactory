@@ -16,15 +16,19 @@ namespace SEF.Manager
     public class SystemStorableData : StorableData
     {
         [UnityEngine.SerializeField] private string _version;
+        [UnityEngine.SerializeField] private Dictionary<string, int> _dic;
 
-        public void LoadData(StorableData data)
-        {
-        }
+        public Dictionary<string, int> Dictionary => _dic;
 
         public void SaveData(string version, StorableData[] children)
         {
             _version = version;
             Children = children;
+            _dic = new Dictionary<string, int>();
+            for(int i = 0; i < children.Length; i++)
+            {
+                _dic.Add(children[i].GetType().Name, i);
+            }
         }
     }
 
@@ -121,15 +125,27 @@ namespace SEF.Manager
         }
 
 
+        public void SetStorableData(Utility.IO.StorableData data)
+        {
+            _account.SetStorableData(data);
+        }
 
         public void SetStorableData()
         {
             _account.SetStorableData(SaveData());
+            _account.SaveData(null, null);
         }
 
-        public StorableData GetStorableData()
+        public void GetStorableData()
         {
-            return SaveData();
+            var data = (SystemStorableData)_account.GetStorableData();
+
+            if (data.Dictionary.ContainsKey(_workshopManager.GetType().Name))
+            {
+                var key = _workshopManager.GetType().Name;
+                var child = data.Children[data.Dictionary[key]];
+                _workshopManager.SetStorableData(child);
+            }
         }
 
 

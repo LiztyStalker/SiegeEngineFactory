@@ -298,18 +298,16 @@ namespace Utility.IO
         /// 파일 입출력 저장 - Formatter
         /// 암호화 할당
         /// </summary>
-        /// <returns><c>true</c>, if data was saved, <c>false</c> otherwise.</returns>
-        /// <param name="account">Account.</param>
-        public bool SaveFileData(StorableData account, string fileName)
+        public bool SaveFileData(object data, string fileName, System.Action<TYPE_IO_RESULT> endCallback)
         {
             try
             {
-                using (FileStream file = new FileStream(string.Format("{0}/{1}.dat", filePath, fileName), FileMode.Create, FileAccess.Write))
+                using (FileStream file = new FileStream(string.Format("{0}/{1}.txt", filePath, fileName), FileMode.Create, FileAccess.Write))
                 {
                     using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateEncryptor(key, salt), CryptoStreamMode.Write))
                     {
                         IFormatter bf = new BinaryFormatter();
-                        bf.Serialize(cryptoStream, account);
+                        bf.Serialize(cryptoStream, data);
                         cryptoStream.Close();
                         file.Close();
                         return true;
@@ -325,6 +323,27 @@ namespace Utility.IO
 
         }
 
+        /// <summary>
+        /// 파일 입출력 저장 - Formatter
+        /// 비암호화
+        /// </summary>
+        public bool SaveFileData_NotCrypto(object data, string fileName, System.Action<TYPE_IO_RESULT> endCallback)
+        {
+            try
+            {
+                using (FileStream file = new FileStream(string.Format("{0}/{1}.txt", filePath, fileName), FileMode.Create, FileAccess.Write))
+                {
+                    IFormatter bf = new BinaryFormatter();
+                    bf.Serialize(file, data);
+                    file.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
 
 

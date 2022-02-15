@@ -10,7 +10,6 @@ namespace SEF.Account
         public void SaveData(StorableData data)
         {
             _storableData = data;
-            UnityEngine.Debug.Log(UnityEngine.JsonUtility.ToJson(_storableData));
         }
     }
 }
