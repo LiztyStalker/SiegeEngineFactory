@@ -1,8 +1,5 @@
 namespace SEF.Manager
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
     using Data;
     using Entity;
     using Account;
@@ -12,6 +9,24 @@ namespace SEF.Manager
     using Quest;
     using Status;
     using Process;
+    using Utility.IO;
+    using System.Collections.Generic;
+
+    [System.Serializable]
+    public class SystemStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private string _version;
+
+        public void LoadData(StorableData data)
+        {
+        }
+
+        public void SaveData(string version, StorableData[] children)
+        {
+            _version = version;
+            Children = children;
+        }
+    }
 
     public class GameSystem
     {
@@ -30,12 +45,16 @@ namespace SEF.Manager
 
         private QuestManager _questManager;
 
+
+        //StorableData
+        private SystemStorableData _storableData;
+
         public static GameSystem Create()
         {
             return new GameSystem();
         }
 
-        public void Initialize(IAccountData data = null) 
+        public void Initialize() 
         {
             _account = Account.Current;
 
@@ -44,7 +63,7 @@ namespace SEF.Manager
             _workshopManager = WorkshopManager.Create();
 
             _workshopManager.SetOnConditionProductUnitListener(IsConditionProductUnitEvent);
-            _workshopManager.Initialize(null);
+            _workshopManager.Initialize();
 
             _blacksmithManager = BlacksmithManager.Create();
             _blacksmithManager.Initialize(null);
@@ -59,11 +78,11 @@ namespace SEF.Manager
             _statistics.Initialize(null);
 
             _process = ProcessPackage.Create();
-            _process.Initialize(null);
+            _process.Initialize();
             _process.AddOnCompleteProcessEvent(OnCompleteProcessEvent);
 
             _questManager = QuestManager.Create();
-            _questManager.Initialize(null);
+            _questManager.Initialize(null);            
         }
 
         public void CleanUp()
@@ -103,6 +122,30 @@ namespace SEF.Manager
 
 
 
+        public void SetStorableData()
+        {
+            _account.SetStorableData(SaveData());
+        }
+
+        public StorableData GetStorableData()
+        {
+            return SaveData();
+        }
+
+
+        public StorableData SaveData()
+        {
+            if (_storableData == null)
+                _storableData = new SystemStorableData();
+
+            List<StorableData> list = new List<StorableData>();
+            list.Add(_workshopManager.GetStorableData());
+            _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
+            return _storableData;
+        }
+
+
+
         #region ##### AssetEntity #####
 
         public void AddAsset(IAssetData assetData)
@@ -125,6 +168,7 @@ namespace SEF.Manager
 
 
 
+
         #region ##### Statistics #####
         public void AddStatisticsData<T>(int value = 1) where T : IStatisticsData => _statistics.AddStatisticsData<T>(value);
         public void SetStatisticsData<T>(int value) where T : IStatisticsData => _statistics.SetStatisticsData<T>(value);
@@ -142,6 +186,7 @@ namespace SEF.Manager
 
 
 
+
         #region ##### Process #####
 
         private void OnSetProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _process.SetProcessEntity(provider, entity);
@@ -153,6 +198,7 @@ namespace SEF.Manager
         }
 
         #endregion
+
 
 
 
@@ -181,42 +227,6 @@ namespace SEF.Manager
 
 #endregion
 
-
-
-        public IAssetData GetAssetData()
-        {
-            return null;
-        }
-
-
-        public void DestroyedActor(PlayActor playActor)
-        {
-            switch (playActor)
-            {
-                case UnitActor unitActor:
-                    AddStatisticsData<DestroyUnitStatisticsData>();
-                    var unitType = FindType(unitActor.Key, typeof(DestroyUnitStatisticsData));
-                    if (unitType != null)
-                    {
-                        _statistics.AddStatisticsData(unitType, 1);
-                    }
-                    break;
-                case EnemyActor enemyActor:
-                    //[System.Obsolete("StatusPackage 적용 보상")]
-                    _account.AddAsset(enemyActor.GetRewardAssetData());
-
-                    AddStatisticsData<DestroyEnemyStatisticsData>();
-                    var enemyType = FindType(enemyActor.Key, typeof(DestroyEnemyStatisticsData));
-                    if (enemyType != null)
-                    {
-                        _statistics.AddStatisticsData(enemyType, 1);
-                    }
-
-                    AddQuestValue<DestroyEnemyConditionQuestData>(1);
-                    
-                    break;
-            }
-        }
 
 
 
@@ -269,7 +279,39 @@ namespace SEF.Manager
         //VillageCondition적용
 
 
+
+        public void DestroyedActor(PlayActor playActor)
+        {
+            switch (playActor)
+            {
+                case UnitActor unitActor:
+                    AddStatisticsData<DestroyUnitStatisticsData>();
+                    var unitType = FindType(unitActor.Key, typeof(DestroyUnitStatisticsData));
+                    if (unitType != null)
+                    {
+                        _statistics.AddStatisticsData(unitType, 1);
+                    }
+                    break;
+                case EnemyActor enemyActor:
+                    //[System.Obsolete("StatusPackage 적용 보상")]
+                    _account.AddAsset(enemyActor.GetRewardAssetData());
+
+                    AddStatisticsData<DestroyEnemyStatisticsData>();
+                    var enemyType = FindType(enemyActor.Key, typeof(DestroyEnemyStatisticsData));
+                    if (enemyType != null)
+                    {
+                        _statistics.AddStatisticsData(enemyType, 1);
+                    }
+
+                    AddQuestValue<DestroyEnemyConditionQuestData>(1);
+
+                    break;
+            }
+        }
+
+
         #endregion
+
 
 
 
@@ -432,16 +474,6 @@ namespace SEF.Manager
 
 
         #endregion
-
-
-
-
-        #region ##### Data #####
-
-        public void Save() { }
-
-        #endregion
-
 
 
     }

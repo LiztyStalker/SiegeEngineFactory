@@ -2,13 +2,44 @@ namespace SEF.Entity
 {
     using Status;
     using Data;
+    using Utility.IO;
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public class UnitEntityStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private string _unitKey;
+        [UnityEngine.SerializeField] private int _upgradeValue;
+        public void LoadData(StorableData data)
+        {
+        }
+
+        internal void SaveData(string key, int value)
+        {
+            _unitKey = key;
+            _upgradeValue = value;
+            Children = null;
+        }
+    }
+
+    #endregion
+
+    [System.Serializable]
     public struct UnitEntity : IEntity
     {
+
+        //Data Member
         private UnitData _unitData;
         private UpgradeData _upgradeData;
+
+        //Lazy Data Member
         private IAssetData _upgradeAssetData;
         private HealthData _healthData;
         private DamageData _damageData;
+
+        //StorableData
+        private UnitEntityStorableData _storableData;
 
         public UnitData UnitData => _unitData;
         public UpgradeData UpgradeData => _upgradeData;
@@ -74,7 +105,8 @@ namespace SEF.Entity
         public void Initialize()
         {
             //UpTech와 Initialize의 순서가 필요하지 않도록 제작 필요
-            _upgradeData = NumberDataUtility.Create<UpgradeData>();            
+            _upgradeData = NumberDataUtility.Create<UpgradeData>();
+            _storableData = default;
         }
         public void CleanUp()
         {
@@ -117,5 +149,23 @@ namespace SEF.Entity
             assetData.SetAssetData(_unitData, _upgradeData);
             return assetData;
         }
+
+        #region ##### StorableData #####
+
+        public StorableData GetStorableData()
+        {
+            if(_storableData == null)
+                _storableData = new UnitEntityStorableData();
+            _storableData.SaveData(_unitData.Key, _upgradeData.Value);
+            return _storableData;
+        }
+
+        //public void SetStorableData(UnitData unitData, UpgradeData upgradeData)
+        //{
+        //    _unitData = unitData;
+        //    _upgradeData = upgradeData;
+        //}
+
+        #endregion
     }
 }

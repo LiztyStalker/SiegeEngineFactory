@@ -3,12 +3,36 @@ namespace SEF.Manager
     using Entity;
     using Account;
     using Data;
-        
+    using Utility.IO;
+
+
+    #region ##### Serialize #####
+    [System.Serializable]
+    public class WorkshopLineStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private int _index;
+        [UnityEngine.SerializeField] private float _nowTime;
+
+        public void LoadData(StorableData data)
+        {
+        }
+
+        public void SaveData(int index, float nowTime, StorableData[] children)
+        {
+            _index = index;
+            _nowTime = nowTime;
+            Children = children;
+        }
+    }
+    #endregion
+
     public class WorkshopLine
     {
         private int _index;
         private UnitEntity _unitEntity;
         private float _nowTime;
+
+        private WorkshopLineStorableData _storableData;
 
         public static WorkshopLine Create()
         {
@@ -96,17 +120,23 @@ namespace SEF.Manager
 
 
         #region ##### Data #####
-        public IAccountData GetData()
+        
+
+        public StorableData GetStorableData()
         {
-            return null;
+            if (_storableData == null)
+                _storableData = new WorkshopLineStorableData();
+            _storableData.SaveData(_index, _nowTime, GetChildren());
+            return _storableData;
         }
 
-        public void SetData(IAccountData accountData)
+        private StorableData[] GetChildren()
         {
-            //null이면 무시 (이미 Create할때 초기화 함)
-            //null이 아니면 accountData 적용
-
+            StorableData[] arr = new StorableData[1];
+            arr[0] = _unitEntity.GetStorableData();
+            return arr;
         }
+
         #endregion
 
 

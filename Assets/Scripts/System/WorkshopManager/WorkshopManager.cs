@@ -5,30 +5,40 @@ namespace SEF.Manager
     using Entity;
     using Data;
     using System.Linq;
+    using Utility.IO;
+
+    #region ##### Serialize #####
+
+    [System.Serializable]
+    public class WorkshopManagerStorableData : StorableData
+    {
+        public void LoadData(StorableData data)
+        {
+        }
+        public void SaveData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    #endregion
 
     public class WorkshopManager
     {
 
         private List<WorkshopLine> _list;
 
+        private WorkshopManagerStorableData _storableData;
+
         public static WorkshopManager Create()
         {
             return new WorkshopManager();
         }
 
-        public void Initialize(IAccountData accountData)
+        public void Initialize()
         {
-            if (accountData == null)
-            {
-                //null이면 초기화
-                _list = new List<WorkshopLine>();
-                CreateLine();
-            }
-            else
-            {
-                //null이 아니면 accountData 적용
-                UnityEngine.Debug.Log("AccountData Load");
-            }
+            _list = new List<WorkshopLine>();
+            CreateLine();
         }
 
         public void CleanUp()
@@ -69,7 +79,7 @@ namespace SEF.Manager
             {
                 if(_expendAssetData == null)
                 {
-                    var assetData = NumberDataUtility.CreateAssetData<GoldAssetData>();
+                    var assetData = NumberDataUtility.Create<GoldAssetData>();
                     assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count).ToString();
                     _expendAssetData = assetData;
                 }
@@ -148,10 +158,31 @@ namespace SEF.Manager
 
 
 
-        #region ##### Data #####
-        public IAccountData GetAccountData()
+        #region ##### StorableData #####
+
+        public StorableData GetStorableData()
         {
-            return null;
+            if (_storableData == null)
+                _storableData = new WorkshopManagerStorableData();
+
+            _storableData.SaveData(GetChildren());
+            return _storableData;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+
+        }
+
+
+        private StorableData[] GetChildren()
+        {
+            StorableData[] arr = new StorableData[_list.Count];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = _list[i].GetStorableData();
+            }
+            return arr.ToArray();
         }
 
         #endregion
@@ -165,19 +196,12 @@ namespace SEF.Manager
         /// 초기화 테스트
         /// </summary>
         /// <param name="accountData"></param>
-        public void Initialize_Test(IAccountData accountData)
+        public void Initialize_Test()
         {
-            if (accountData == null)
-            {
-                _list = new List<WorkshopLine>();
-                var line = CreateLine();
-                line.UpTech(UnitData.Create_Test());
-                line.SetIndex(Count);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("AccountData Load Test");
-            }
+            _list = new List<WorkshopLine>();
+            var line = CreateLine();
+            line.UpTech(UnitData.Create_Test());
+            line.SetIndex(Count);
         }
 
         /// <summary>
