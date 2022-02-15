@@ -3,6 +3,7 @@ namespace SEF.Account
     using Data;
     using Entity;
     using Storage;
+    using Utility.IO;
 
     public class Account
     {
@@ -22,6 +23,9 @@ namespace SEF.Account
         }
 
 
+        private AccountStorableData _storableData;
+
+
 
         private void Initialize()
         {
@@ -39,15 +43,41 @@ namespace SEF.Account
             _current = null;
         }
 
-        public void Load(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            AccountIO.Load(loadCallback, endCallback);
+            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
+            {
+                endCallback?.Invoke(result);
+                if(obj == null)
+                {
+                    _storableData = (AccountStorableData)obj;
+                }
+                else
+                {
+                    _storableData = new AccountStorableData();
+                }                    
+            });
         }
 
-        public void Save(System.Action saveCallback, System.Action endCallback)
+        public void LoadData(StorableData data)
         {
-            AccountIO.Save(saveCallback, endCallback);
         }
+
+        public void SaveData(System.Action saveCallback, System.Action endCallback)
+        {
+            UnityEngine.Debug.Log(UnityEngine.JsonUtility.ToJson(_storableData));
+        }
+
+
+
+        #region ##### StorableData #####
+
+        public void SetStorableData(StorableData data) => _storableData.SaveData(data);
+
+        public StorableData GetStorableData() => _storableData.LoadData();
+
+        #endregion
+
 
 
 
