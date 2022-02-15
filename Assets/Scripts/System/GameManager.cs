@@ -132,6 +132,11 @@ namespace SEF.Manager
         {
             _gameSystem.SetStorableData();
         }
+
+        public void LoadData()
+        {
+            _gameSystem.GetStorableData();
+        }
 #endif
     }
 }

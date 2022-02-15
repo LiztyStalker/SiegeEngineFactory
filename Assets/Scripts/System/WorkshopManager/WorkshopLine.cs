@@ -31,7 +31,7 @@ namespace SEF.Manager
         private UnitEntity _unitEntity;
         private float _nowTime;
 
-        private WorkshopLineStorableData _storableData;
+        //private WorkshopLineStorableData _storableData;
 
         public static WorkshopLine Create()
         {
@@ -41,12 +41,10 @@ namespace SEF.Manager
         public void Initialize()
         {
             _unitEntity.Initialize();
-            //_unitEntity.SetOnStatusPackageListener(GetStatusPackage);
             _nowTime = 0;
         }
         public void CleanUp()
         {
-            //_unitEntity.SetOnStatusPackageListener(null);
             _unitEntity.CleanUp();
             _nowTime = 0;
             _productUnitEvent = null;
@@ -144,6 +142,7 @@ namespace SEF.Manager
                 UnityEngine.Debug.LogWarning("UnitEntity를 구축하지 못했습니다");
 #endif
             }
+            OnRefreshEvent();
         }
 
         public StorableData GetStorableData()

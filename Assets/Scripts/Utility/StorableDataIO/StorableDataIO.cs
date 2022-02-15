@@ -22,6 +22,7 @@ namespace Utility.IO
 
     public class StorableDataIO
     {
+        private readonly string FILE_EXTENTION = "txt";
 
         private static StorableDataIO _current;
 
@@ -112,7 +113,7 @@ namespace Utility.IO
         /// <param name="fileName">File name.</param>
         public bool isFile(string fileName)
         {
-            return File.Exists(string.Format("{0}/{1}.dat", filePath, fileName));
+            return File.Exists(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION));
         }
 
 
@@ -285,7 +286,7 @@ namespace Utility.IO
         {
             if (isFile(fileName))
             {
-                return TimeZoneInfo.ConvertTimeToUtc(File.GetLastWriteTime(string.Format("{0}/{1}.dat", filePath, fileName)));
+                return TimeZoneInfo.ConvertTimeToUtc(File.GetLastWriteTime(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION)));
             }
 
             return null;
@@ -302,7 +303,7 @@ namespace Utility.IO
         {
             try
             {
-                using (FileStream file = new FileStream(string.Format("{0}/{1}.txt", filePath, fileName), FileMode.Create, FileAccess.Write))
+                using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Create, FileAccess.Write))
                 {
                     using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateEncryptor(key, salt), CryptoStreamMode.Write))
                     {
@@ -331,7 +332,7 @@ namespace Utility.IO
         {
             try
             {
-                using (FileStream file = new FileStream(string.Format("{0}/{1}.txt", filePath, fileName), FileMode.Create, FileAccess.Write))
+                using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Create, FileAccess.Write))
                 {
                     IFormatter bf = new BinaryFormatter();
                     bf.Serialize(file, data);
@@ -351,7 +352,6 @@ namespace Utility.IO
         /// 파일 입출력 불러오기 - Formatter
         /// 데이터 불러오기
         /// </summary>
-        /// <returns><c>true</c>, if data was loaded, <c>false</c> otherwise.</returns>
         public void LoadFileData(string fileName, Action<float> processCallback, Action<TYPE_IO_RESULT, object> endCallback)
         {
             //파일 유무 판단
@@ -361,7 +361,7 @@ namespace Utility.IO
                 try
                 {
 
-                    using (FileStream file = new FileStream(string.Format("{0}/{1}.dat", filePath, fileName), FileMode.Open, FileAccess.Read))
+                    using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
                     {
                         using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateDecryptor(key, salt), CryptoStreamMode.Read))
                         {
@@ -379,6 +379,37 @@ namespace Utility.IO
                     //Prep.LogError("파일 입출력 불러오기 오류 : ", e.Message, GetType());
                     //Debug.LogError("백업 파일 불러오기");
                     //return loadData(fileName + "_b");
+                    endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 파일 입출력 불러오기 - Formatter
+        /// 데이터 불러오기
+        /// </summary>
+        public void LoadFileData_NotCrypto(string fileName, Action<float> processCallback, Action<TYPE_IO_RESULT, object> endCallback)
+        {
+            //파일 유무 판단
+            if (isFile(fileName))
+            {
+
+                try
+                {
+
+                    using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
+                    {
+                        IFormatter bf = new BinaryFormatter();
+                        var data = bf.Deserialize(file);
+                        Debug.Log("파일 불러오기 완료 : " + data);
+                        file.Close();
+                        endCallback?.Invoke(TYPE_IO_RESULT.Success, data);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("파일 입출력 불러오기 오류 : " + e.Message + " " + GetType());
                     endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
                 }
             }

@@ -138,13 +138,19 @@ namespace SEF.Manager
 
         public void GetStorableData()
         {
+            //Test
+            _account.LoadData(null, null);
+
             var data = (SystemStorableData)_account.GetStorableData();
 
-            if (data.Dictionary.ContainsKey(_workshopManager.GetType().Name))
+            if (data.Dictionary != null)
             {
-                var key = _workshopManager.GetType().Name;
-                var child = data.Children[data.Dictionary[key]];
-                _workshopManager.SetStorableData(child);
+                if (data.Dictionary.ContainsKey(_workshopManager.GetType().Name))
+                {
+                    var key = _workshopManager.GetType().Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _workshopManager.SetStorableData(child);
+                }
             }
         }
 

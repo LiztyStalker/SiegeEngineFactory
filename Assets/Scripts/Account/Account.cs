@@ -45,10 +45,12 @@ namespace SEF.Account
 
         public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
+            UnityEngine.Debug.Log("LoadStart");
+//            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
+            StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
             {
                 endCallback?.Invoke(result);
-                if(obj == null)
+                if (obj != null)
                 {
                     _storableData = (AccountStorableData)obj;
                 }
@@ -57,10 +59,6 @@ namespace SEF.Account
                     _storableData = new AccountStorableData();
                 }                    
             });
-        }
-
-        public void LoadData(StorableData data)
-        {
         }
 
         public void SaveData(System.Action saveCallback, System.Action<TYPE_IO_RESULT> endCallback)
