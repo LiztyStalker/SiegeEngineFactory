@@ -66,7 +66,7 @@ namespace Storage
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
-        public static void Initialize(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        public static void Initialize(System.Action<float> loadCallback, System.Action<Utility.IO.TYPE_IO_RESULT> endCallback)
         {
             var loader = DataLoader.Create();
             loader.LoadTest(loadCallback, result => 

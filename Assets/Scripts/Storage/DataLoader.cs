@@ -3,20 +3,12 @@ namespace Storage
     using System.Collections;
     using UnityEngine;
     using UnityEngine.Networking;
+    using Utility.IO;
 
 
     /// <summary>
     /// UnityWebRequest.Result와 1대 1대응
     /// </summary>
-    public enum TYPE_IO_RESULT
-    {
-        InProgress = 0,
-        Success = 1,
-        ConnectionError = 2,
-        ProtocolError = 3,
-        DataProcessingError = 4
-    };
-
 
     public class DataLoader : MonoBehaviour
     {
