@@ -125,7 +125,7 @@ namespace SEF.UI.Test
         public IEnumerator UIMainTest_Account_Load()
         {            
             bool isClosed = true;
-            Account.Current.Load(progress => Debug.Log(progress), result => {
+            Account.Current.LoadData(progress => Debug.Log(progress), result => {
                 isClosed = false;
                 Debug.Log(result);
             });
@@ -140,7 +140,7 @@ namespace SEF.UI.Test
         public IEnumerator UIMainTest_Account_Save()
         {
             bool isClosed = true;
-            Account.Current.Save(null, delegate
+            Account.Current.SaveData(null, delegate
             {
                 Debug.Log("Save End");
                 isClosed = false;

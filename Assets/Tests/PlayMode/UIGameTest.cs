@@ -59,7 +59,7 @@ namespace SEF.UI.Test
         public IEnumerator UIGameTest_RefreshWorkshop()
         {
 
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 
@@ -72,7 +72,7 @@ namespace SEF.UI.Test
         public IEnumerator UIGameTest_RefreshWorkshop_line5()
         {
 
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 

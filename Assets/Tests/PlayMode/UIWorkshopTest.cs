@@ -55,7 +55,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIWorkshopTest_Create_UIWorkshopLine()
         {
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
             var workshop = UIWorkshop_Test.Create();
@@ -69,7 +69,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIWorkshopTest_Create5_UIWorkshopLine()
         {
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
             var workshop = UIWorkshop_Test.Create();
@@ -91,7 +91,7 @@ namespace SEF.UI.Test
         public IEnumerator UIWorkshopLineTest_UpgradeButton_Disable()
         {
 
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 
@@ -114,7 +114,7 @@ namespace SEF.UI.Test
         public IEnumerator UIWorkshopLineTest_UpgradeButton_Enable()
         {
 
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 

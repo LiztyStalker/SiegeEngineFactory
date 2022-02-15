@@ -290,7 +290,7 @@ namespace SEF.Test
         [Test]
         public void AssetEntityTest_GetUpgradeAssetData()
         {
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 

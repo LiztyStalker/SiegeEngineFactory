@@ -52,17 +52,45 @@ namespace SEF.Test
 
 
         [Test]
-        public void SerializeTest_UnitEntity()
+        public void SerializeTest_UnitEntity_Serialize()
         {
             var data = _unitEntity.GetStorableData();
-            Debug.Log(JsonUtility.ToJson(data));
+            Recursion(data);
+            WriteBinaryFormatter(data);
         }
+
+        [Test]
+        public void SerializeTest_UnitEntity_Serialize_Deserialize()
+        {
+            var data = _unitEntity.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            var des = (UnitEntityStorableData)ReadBinaryFormatter();
+
+            Debug.Log(des.UnitKey + " " + des.UpgradeValue);
+
+            var unitData = UnitData.Create_Test(des.UnitKey);
+            var upgradeData = new UpgradeData();
+            upgradeData.SetValue_Test(des.UpgradeValue);
+
+            var entity = new UnitEntity();
+            entity.SetStorableData(unitData, upgradeData);
+
+            Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
+            Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
+
+            Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
+            Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
+        }
+
 
         [Test]
         public void SerializeTest_WorkshopLine()
         {
             var data = _workshopLine.GetStorableData();
-            Debug.Log(JsonUtility.ToJson(data));
+            Recursion(data);
+            WriteBinaryFormatter(data);
         }
 
 
@@ -70,18 +98,58 @@ namespace SEF.Test
         public void SerializeTest_WorkshopManager()
         {
             var data = _workshopManager.GetStorableData();
-            Debug.Log(JsonUtility.ToJson(data));
+            Recursion(data);
+            WriteBinaryFormatter(data);
         }
 
         [Test]
         public void SerializeTest_GameSystem()
         {
             var data = _gameSystem.GetStorableData();
-            Debug.Log(JsonUtility.ToJson(data));
+            Recursion(data);
+            WriteBinaryFormatter(data);
         }
 
 
+        private void WriteBinaryFormatter(Utility.IO.StorableData data)
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Create);
+            formatter.Serialize(stream, data);
+            stream.Close();
+        }
 
+        private Utility.IO.StorableData ReadBinaryFormatter()
+        {
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Open);
+            var data = (Utility.IO.StorableData)formatter.Deserialize(stream);
+            stream.Close();
+            return data;
+
+        }
+
+        private void Recursion(Utility.IO.StorableData data)
+        {
+            if(data.Children != null)
+            {
+                for(int i = 0; i < data.Children.Length; i++)
+                {
+                    Recursion(data.Children[i]);
+                }
+            }
+            Debug.Log(data.ToString());
+        }
+
+        private void GetString(byte[] arr)
+        {
+            string str = "";
+            for (int i = 0; i < arr.Length; i++)
+            {
+                str += arr[i];
+            }
+            Debug.Log(str);
+        }
     }
 }
 #endif

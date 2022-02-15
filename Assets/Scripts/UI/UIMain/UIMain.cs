@@ -6,6 +6,7 @@ namespace SEF.UI.Toolkit
     using UnityEditor;
     using Storage;
     using SEF.Account;
+    using Utility.IO;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIMain : MonoBehaviour
@@ -58,7 +59,7 @@ namespace SEF.UI.Toolkit
         private void InitializeAccount()
         {
             //데이터 불러오기
-            Account.Current.Load(_uiLoad.ShowLoad, result =>
+            Account.Current.LoadData(_uiLoad.ShowLoad, result =>
             {
                 if (result == TYPE_IO_RESULT.Success)
                 {

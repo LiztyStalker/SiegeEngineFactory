@@ -45,7 +45,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UISystemTest_RefreshWorkshop()
         {
-            UnitEntity unitEntity;
+            UnitEntity unitEntity = new UnitEntity();
             unitEntity.Initialize();
             unitEntity.UpTech(UnitData.Create_Test());
 

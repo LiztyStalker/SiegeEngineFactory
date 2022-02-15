@@ -135,9 +135,7 @@ namespace SEF.Manager
 
         public StorableData SaveData()
         {
-            if (_storableData == null)
-                _storableData = new SystemStorableData();
-
+            var _storableData = new SystemStorableData();
             List<StorableData> list = new List<StorableData>();
             list.Add(_workshopManager.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());

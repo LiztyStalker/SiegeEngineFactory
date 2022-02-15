@@ -45,7 +45,7 @@ namespace SEF.Test
         public void SetUp()
         {
             _package = ProcessPackage.Create();
-            _package.Initialize(null);
+            _package.Initialize();
         }
 
         [TearDown]

@@ -17,7 +17,7 @@ namespace SEF.Test
         public void SetUp()
         {
             _workshopManager = WorkshopManager.Create();
-            _workshopManager.Initialize_Test(null);
+            _workshopManager.Initialize_Test();
         }
 
         [TearDown]

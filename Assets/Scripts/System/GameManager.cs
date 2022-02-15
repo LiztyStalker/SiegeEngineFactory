@@ -127,6 +127,11 @@ namespace SEF.Manager
         {
             _gameSystem.AddAsset(assetData);
         }
+
+        public void SaveData()
+        {
+            _gameSystem.SetStorableData();
+        }
 #endif
     }
 }

@@ -17,11 +17,10 @@ namespace SEF.Data
             return System.Activator.CreateInstance<T>();
         }
 
-        public static T CreateAssetData<T>() where T : IAssetData
+        public static INumberData Create(System.Type type)
         {
-            return System.Activator.CreateInstance<T>();
+            return (INumberData)System.Activator.CreateInstance(type);
         }
-
 
 
         /// <summary>

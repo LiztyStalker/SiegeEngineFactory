@@ -42,7 +42,7 @@ namespace SEF.Test
             _manager.Initialize(null);
 
             _gameSystem = GameSystem.Create();
-            _gameSystem.Initialize(null);
+            _gameSystem.Initialize();
             _gameSystem.AddOnRefreshQuestEntityListener(entity =>
             {
                 Debug.Log($"{entity.Key} {entity.NowValue}/{entity.GoalValue} {entity.HasQuestGoal()}");

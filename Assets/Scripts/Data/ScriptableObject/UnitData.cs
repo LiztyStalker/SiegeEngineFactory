@@ -163,15 +163,15 @@ namespace SEF.Data
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
-        public static UnitData Create_Test()
+        public static UnitData Create_Test(string name = null)
         {
-            return new UnitData();
+            return new UnitData(name);
         }
 
         private UnitData(string name = null)
         {
 
-            _key = "Test";
+            _key = (string.IsNullOrEmpty(name)) ? "Test" : name;
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_UNIT_GROUP.Thrower;
             _scale = 1f;
