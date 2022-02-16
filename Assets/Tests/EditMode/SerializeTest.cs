@@ -13,6 +13,16 @@ namespace SEF.Test
 
     public class SerializeTest
     {
+        [System.Serializable]
+        public class StorableData_Test
+        {
+            [SerializeField] public string _string = "StorableData_Test";
+            [SerializeField] public int _int = 1234567;
+            [SerializeField] public float _float = 1234.567f;
+        }
+
+
+
 
         private UnitEntity _unitEntity;
         private WorkshopLine _workshopLine;
@@ -86,16 +96,29 @@ namespace SEF.Test
 
 
         [Test]
-        public void SerializeTest_WorkshopLine()
+        public void SerializeTest_WorkshopLine_Serialize()
         {
             var data = _workshopLine.GetStorableData();
             Recursion(data);
             WriteBinaryFormatter(data);
         }
 
+        [Test]
+        public void SerializeTest_WorkshopLine_Serialize_And_Deserialize()
+        {
+            var data = _workshopLine.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            var des = (WorkshopLineStorableData)ReadBinaryFormatter();
+            _workshopLine.SetStorableData(des);
+
+            Debug.Log(des.Index + " " + des.NowTime + " " + des.Children.Length);
+        }
+
 
         [Test]
-        public void SerializeTest_WorkshopManager()
+        public void SerializeTest_WorkshopManager_Serialize()
         {
             var data = _workshopManager.GetStorableData();
             Recursion(data);
@@ -103,13 +126,75 @@ namespace SEF.Test
         }
 
         [Test]
-        public void SerializeTest_GameSystem()
+        public void SerializeTest_WorkshopManager_Serialize_Deserialize()
         {
-            var data = _gameSystem.GetStorableData();
+            var data = _workshopManager.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            var des = ReadBinaryFormatter();
+            _workshopManager.SetStorableData(des);
+
+            Debug.Log(des.Children.Length);
+        }
+
+
+        [Test]
+        public void SerializeTest_GameSystem_Serialize()
+        {
+            var data = _gameSystem.SaveData();
             Recursion(data);
             WriteBinaryFormatter(data);
         }
 
+        [Test]
+        public void SerializeTest_GameSystem_Serialize_Deserialize()
+        {
+            var data = _gameSystem.SaveData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            var des = (SystemStorableData)ReadBinaryFormatter();
+            _gameSystem.SetStorableData(des);
+
+            Debug.Log(des.Children.Length + " " + des.Dictionary.Count);
+        }
+
+        [UnityTest]
+        public IEnumerator SerializeTest_Encryption()
+        {
+            var data = new StorableData_Test();
+            Utility.IO.StorableDataIO.Current.SaveFileData(data, "strtest", null);
+            yield return null;
+            Utility.IO.StorableDataIO.Dispose();
+        }
+
+        [UnityTest]
+        public IEnumerator SerializeTest_Decryption()
+        {
+            Utility.IO.StorableDataIO.Current.LoadFileData("strtest", null, (result, obj) =>
+            {
+                if (result == Utility.IO.TYPE_IO_RESULT.Success)
+                {
+                    var dec = obj as StorableData_Test;
+                    Debug.Log($"{dec._string}{dec._int}{dec._float}");
+                }
+                else
+                {
+                    Debug.LogWarning("복호화 실패");
+                }
+            });
+            yield return null;
+            Utility.IO.StorableDataIO.Dispose();
+        }
+
+        [UnityTest]
+        public IEnumerator SerializeTest_Encryption_Decryption()
+        {
+            yield return SerializeTest_Encryption();
+            yield return SerializeTest_Decryption();
+           
+        }
 
         private void WriteBinaryFormatter(Utility.IO.StorableData data)
         {

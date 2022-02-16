@@ -43,9 +43,8 @@ namespace SEF.Account
 
         public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            //복호화 적용 필요
-            //StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
-            StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
+            //StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
+            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
             {
                 endCallback?.Invoke(result);
                 if (obj != null)
@@ -61,9 +60,8 @@ namespace SEF.Account
 
         public void SaveData(System.Action saveCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            //암호화 적용 필요
-            //StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
-            StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
+            StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
+            //StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
         }
 
 
