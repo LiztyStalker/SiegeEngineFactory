@@ -16,7 +16,6 @@ namespace SEF.Account
                 if (_current == null)
                 {
                     _current = new Account();
-                    _current.Initialize();
                 }
                 return _current;
             }
@@ -25,21 +24,6 @@ namespace SEF.Account
 
         private AccountStorableData _storableData;
 
-
-
-        private void Initialize()
-        {
-            //AccountData √ ±‚»≠
-            _assetEntity = AssetEntity.Create();
-            _assetEntity.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
-            _assetEntity.Initialize();
-        }
-        public void Dispose()
-        {
-            _assetEntity.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
-            _assetEntity.CleanUp();
-            _current = null;
-        }
 
         public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
@@ -71,90 +55,6 @@ namespace SEF.Account
         public void SetStorableData(StorableData data) => _storableData.SaveData(data);
 
         public StorableData GetStorableData() => _storableData.LoadData();
-
-        #endregion
-
-
-
-
-
-        private AssetEntity _assetEntity;
-
-        public void AddAsset(IAssetData assetData)
-        {
-            _assetEntity.Add(assetData);
-        }
-
-        public void SubjectAsset(IAssetData assetData)
-        {
-            _assetEntity.Subject(assetData);
-        }
-
-        public void SetAsset(IAssetData assetData)
-        {
-            _assetEntity.Set(assetData);
-        }
-
-        public bool IsEnoughAsset(IAssetData assetData)
-        {
-            return _assetEntity.IsEnough(assetData);
-        }
-               
-        public bool IsOverflow(IAssetData assetData)
-        {
-            return _assetEntity.IsOverflow(assetData);
-        }
-
-        public bool IsUnderflow(IAssetData assetData)
-        {
-            return _assetEntity.IsUnderflow(assetData);
-        }
-
-        public void RefreshAssetEntity()
-        {
-            _assetEntity.RefreshAssets();
-        }
-
-        //public void AddAsset(AssetData assetData)
-        //{
-        //    _assetEntity.Add(assetData);
-        //}
-
-        //public void SubjectAsset(AssetData assetData)
-        //{
-        //    _assetEntity.Subject(assetData);
-        //}
-
-        //public bool IsEnoughAsset(AssetData assetData)
-        //{
-        //    return _assetEntity.IsEnough(assetData);
-        //}
-
-
-
-        #region ##### Listener #####
-
-        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.AddRefreshAssetEntityListener(act);
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.RemoveRefreshAssetEntityListener(act);
-
-
-
-        //private System.Action<AssetData> _refreshAsseData;
-        //public void AddRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData += act;
-        //public void RemoveRefreshAssetDataListener(System.Action<AssetData> act) => _refreshAsseData -= act;
-        //private void OnRefreshAssetDataEvent(AssetData assetData)
-        //{
-        //    _refreshAsseData?.Invoke(assetData);
-        //}
-
-
-        private System.Action<IAssetData> _refreshAsseData;
-        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;
-        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData -= act;
-        private void OnRefreshAssetDataEvent(IAssetData assetData)
-        {
-            _refreshAsseData?.Invoke(assetData);
-        }
 
         #endregion
 

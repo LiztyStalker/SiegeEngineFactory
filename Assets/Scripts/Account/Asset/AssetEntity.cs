@@ -96,7 +96,7 @@ namespace SEF.Entity
 
         private AssetDataCase CreateAssetDataCase<T>(IAssetData limitData = null) where T : IAssetData
         {
-            var dataCase = new AssetDataCase(NumberDataUtility.CreateAssetData<T>());
+            var dataCase = new AssetDataCase(NumberDataUtility.Create<T>());
             dataCase.SetLimitAssetData(limitData);
             return dataCase;
         }
@@ -209,14 +209,13 @@ namespace SEF.Entity
 
         #region ##### Data #####
 
-        public IAccountData GetData()
+        public void GetData(out Utility.IO.StorableData data)
         {
-            return null;
+            data = null;
         }
 
-        public void SetData(IAccountData data)
+        public void SetData(Utility.IO.StorableData data)
         {
-
         }
 
         #endregion

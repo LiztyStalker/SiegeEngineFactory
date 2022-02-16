@@ -49,6 +49,8 @@ namespace SEF.Manager
 
         private QuestManager _questManager;
 
+        private AssetEntity _assetEntity;
+
 
         //StorableData
         private SystemStorableData _storableData;
@@ -63,6 +65,10 @@ namespace SEF.Manager
             _account = Account.Current;
 
             StatusPackage.Current.Initialize();
+
+            _assetEntity = AssetEntity.Create();
+            _assetEntity.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
+            _assetEntity.Initialize();
 
             _workshopManager = WorkshopManager.Create();
 
@@ -104,6 +110,9 @@ namespace SEF.Manager
             _blacksmithManager.CleanUp();
             _villageManager.CleanUp();
             //ResearchManager
+
+            _assetEntity.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
+            _assetEntity.CleanUp();
         }
 
         public void RunProcess(float deltaTime)
@@ -121,7 +130,7 @@ namespace SEF.Manager
             _questManager.RefreshAllQuests();
 
             //UI는 나중에 갱신 필요 - Data -> UI
-            _account.RefreshAssetEntity();
+            RefreshAssetEntity();
         }
 
 
@@ -143,10 +152,8 @@ namespace SEF.Manager
 
             var data = (SystemStorableData)_account.GetStorableData();
 
-            //UnityEngine.Debug.Log(data.Dictionary);
             if (data.Dictionary != null)
             {
-
                 //각각 적용하도록 필요
                 UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name))
@@ -173,20 +180,44 @@ namespace SEF.Manager
 
         #region ##### AssetEntity #####
 
+
+
         public void AddAsset(IAssetData assetData)
         {
-            _account.AddAsset(assetData);
+            _assetEntity.Add(assetData);
         }
+
         public void SubjectAsset(IAssetData assetData)
         {
-            _account.SubjectAsset(assetData);
+            _assetEntity.Subject(assetData);
             AddStatisticsData(assetData.UsedStatisticsType(), assetData.AssetValue);
             AddStatisticsData(assetData.AccumulateStatisticsType(), assetData.AssetValue);
         }
+
         public void SetAsset(IAssetData assetData)
         {
-            _account.SetAsset(assetData);
+            _assetEntity.Set(assetData);
             SetStatisticsData(assetData.GetStatisticsType(), assetData.AssetValue);
+        }
+
+        public bool IsEnoughAsset(IAssetData assetData)
+        {
+            return _assetEntity.IsEnough(assetData);
+        }
+
+        public bool IsOverflow(IAssetData assetData)
+        {
+            return _assetEntity.IsOverflow(assetData);
+        }
+
+        public bool IsUnderflow(IAssetData assetData)
+        {
+            return _assetEntity.IsUnderflow(assetData);
+        }
+
+        public void RefreshAssetEntity()
+        {
+            _assetEntity.RefreshAssets();
         }
 
         #endregion
@@ -232,7 +263,7 @@ namespace SEF.Manager
         public void GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
         {
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
-            if(assetData != null) _account.AddAsset(assetData);
+            if(assetData != null) AddAsset(assetData);
         }
         public void RefreshQuest(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
         {
@@ -259,7 +290,7 @@ namespace SEF.Manager
         public void UpgradeWorkshop(int index)
         {
             var assetData = _workshopManager.Upgrade(index, out string key);
-            _account.SubjectAsset(assetData);
+            SubjectAsset(assetData);
 
             AddStatisticsData<UpgradeUnitStatisticsData>();
             var type = FindType(key, typeof(UpgradeUnitStatisticsData));
@@ -297,7 +328,7 @@ namespace SEF.Manager
         private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
         {
             var population = new PopulationAssetData(unitEntity.Population);
-            return !_account.IsOverflow(population);
+            return !IsOverflow(population);
         }
 
         //BlacksmithCondition 적용
@@ -319,7 +350,7 @@ namespace SEF.Manager
                     break;
                 case EnemyActor enemyActor:
                     //[System.Obsolete("StatusPackage 적용 보상")]
-                    _account.AddAsset(enemyActor.GetRewardAssetData());
+                    AddAsset(enemyActor.GetRewardAssetData());
 
                     AddStatisticsData<DestroyEnemyStatisticsData>();
                     var enemyType = FindType(enemyActor.Key, typeof(DestroyEnemyStatisticsData));
@@ -344,7 +375,7 @@ namespace SEF.Manager
         public void UpgradeBlacksmith(int index)
         {
             var assetData = _blacksmithManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
+            SubjectAsset(assetData);
             AddStatisticsData<UpgradeBlacksmithStatisticsData>();
             AddQuestValue<UpgradeBlacksmithConditionQuestData>();
         }
@@ -363,7 +394,7 @@ namespace SEF.Manager
         public void UpgradeVillage(int index)
         {
             var assetData = _villageManager.Upgrade(index);
-            _account.SubjectAsset(assetData);
+            SubjectAsset(assetData);
             AddStatisticsData<UpgradeVillageStatisticsData>();
             AddQuestValue<UpgradeVillageConditionQuestData>();
         }
@@ -473,24 +504,17 @@ namespace SEF.Manager
         }
 
 
-        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.AddRefreshAssetEntityListener(act);
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _account.RemoveRefreshAssetEntityListener(act);
 
-        public void AddRefreshAssetDataListener(System.Action<IAssetData> act)
+        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.AddRefreshAssetEntityListener(act);
+        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.RemoveRefreshAssetEntityListener(act);
+
+        private System.Action<IAssetData> _refreshAsseData;
+        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;
+        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData -= act;
+        private void OnRefreshAssetDataEvent(IAssetData assetData)
         {
-            _account.AddRefreshAssetDataListener(data =>
-            {
-                act?.Invoke(data);
-                OnRefreshExpendEvent(data);
-            });
-        }
-        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act)
-        {
-            _account.RemoveRefreshAssetDataListener(data =>
-            {
-                act?.Invoke(data);
-                OnRefreshExpendEvent(data);
-            });
+            _refreshAsseData?.Invoke(assetData);
+            OnRefreshExpendEvent(assetData);
         }
 
 
