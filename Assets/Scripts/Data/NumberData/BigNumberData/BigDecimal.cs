@@ -9,6 +9,7 @@ namespace System.Numerics
     public struct BigDecimal : IComparable, IComparable<BigDecimal>, IConvertible, IEquatable<BigDecimal>, IFormattable
     {
 
+
         //private static Dictionary<byte, int> _powDic = new Dictionary<byte, int>();
 
         private const byte MAXIMUM_DIVIDE_DECIMAL_POINT = 10;
@@ -16,6 +17,7 @@ namespace System.Numerics
         [SerializeField] private BigInteger _value;
 
         [SerializeField] private byte _decimalPoint;
+        internal byte DecimalPoint => _decimalPoint;
 
         public bool IsZero => (_value.IsZero && _decimalPoint == 0);
 
@@ -361,5 +363,6 @@ namespace System.Numerics
         public ulong ToUInt64(IFormatProvider provider) => (ulong)Convert.ToInt64(_value, provider);
 
         public string ToString(string format, IFormatProvider formatProvider) => _value.ToString();
+
     }
 }

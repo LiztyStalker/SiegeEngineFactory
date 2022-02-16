@@ -142,7 +142,7 @@ namespace SEF.Test
         [Test]
         public void SerializeTest_GameSystem_Serialize()
         {
-            var data = _gameSystem.SaveData();
+            var data = _gameSystem.GetStorableData();
             Recursion(data);
             WriteBinaryFormatter(data);
         }
@@ -150,7 +150,7 @@ namespace SEF.Test
         [Test]
         public void SerializeTest_GameSystem_Serialize_Deserialize()
         {
-            var data = _gameSystem.SaveData();
+            var data = _gameSystem.GetStorableData();
             Recursion(data);
             WriteBinaryFormatter(data);
 
@@ -194,6 +194,23 @@ namespace SEF.Test
             yield return SerializeTest_Encryption();
             yield return SerializeTest_Decryption();
            
+        }
+
+
+        [Test]
+        public void SerializeTest_SerializeBigNumberData_DeserializeBigNumberData()
+        {
+            var data = NumberDataUtility.Create<HealthData>();
+            data.ValueText = "1000";
+            data.SetValue();
+            
+            var sData = data.GetSerializeData();
+
+            var dData = sData.GetDeserializeData();
+            Debug.Log(dData.GetType().Name + " " + data.GetType().Name);
+            Debug.Log(dData.GetValue() + " " + data.GetValue());
+            Assert.AreEqual(dData.GetType(), data.GetType());
+            Assert.AreEqual(dData.GetValue(), data.GetValue());
         }
 
         private void WriteBinaryFormatter(Utility.IO.StorableData data)

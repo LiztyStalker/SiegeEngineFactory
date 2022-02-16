@@ -15,7 +15,7 @@ namespace SEF.Entity
         public string UnitKey => _unitKey;
         public int UpgradeValue => _upgradeValue;
 
-        internal void SaveData(string key, int value)
+        internal void SetData(string key, int value)
         {
             _unitKey = key;
             _upgradeValue = value;
@@ -24,6 +24,9 @@ namespace SEF.Entity
     }
 
     #endregion
+
+
+
 
     [System.Serializable]
     public struct UnitEntity : IEntity
@@ -154,7 +157,7 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var _storableData = new UnitEntityStorableData();
-            _storableData.SaveData(_unitData.Key, _upgradeData.Value);
+            _storableData.SetData(_unitData.Key, _upgradeData.Value);
             return _storableData;
         }
 

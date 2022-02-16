@@ -8,6 +8,44 @@ namespace SEF.Unit
     using Data;
     using Storage;
     using UtilityManager;
+    using Utility.IO;
+
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class UnitActorsStorableData : StorableData
+    {
+        public void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    [System.Serializable]
+    public class EnemyActorsStorableData : StorableData
+    {
+        public void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    [System.Serializable]
+    public class UnitManagerStorableData : StorableData
+    {
+        //0 = unitActor
+        //1 = enemyActor
+        public void SetData(StorableData unitActors, StorableData enemyActors)
+        {
+            Children = new StorableData[2];
+            Children[0] = unitActors;
+            Children[1] = enemyActors;
+        }
+    }
+
+    #endregion
+
+
 
     public class UnitManager
     {
@@ -26,11 +64,11 @@ namespace SEF.Unit
 
             public LevelWaveData NowLevelWaveData => NowEnemy.GetLevelWaveData();
 
-            public int Count { 
+            public int Count {
                 get
                 {
                     return _list.Count;
-                } 
+                }
             }
 
 
@@ -72,7 +110,7 @@ namespace SEF.Unit
             }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-                       
+
 
             public void InitializePoolSystem_Test()
             {
@@ -118,6 +156,26 @@ namespace SEF.Unit
                 return enemyActor;
             }
 
+            public void CreateEnemyActor(Transform parent, StorableData data)
+            {
+                var storableData = (EnemyActorStorableData)data;
+
+                var entityStorableData = (EnemyEntityStorableData)storableData.Children[0];
+
+                var enemyData = DataStorage.Instance.GetDataOrNull<EnemyData>(entityStorableData.UnitKey);
+                var levelwaveData = new LevelWaveData();
+                levelwaveData.SetValue_Test(entityStorableData.LevelWaveValue);
+
+                EnemyEntity enemyEntity = new EnemyEntity();
+                enemyEntity.SetData(enemyData, levelwaveData);
+
+                var enemyActor = _poolEnemyActor.GiveElement();
+                enemyActor.SetData(enemyEntity);
+                enemyActor.SetParent(parent);
+                enemyActor.SetStorableData(storableData);
+                enemyActor.Activate();
+
+            }
             public EnemyActor CreateEnemyActor(Transform parent)
             {
                 EnemyEntity enemyEntity = new EnemyEntity();
@@ -132,7 +190,7 @@ namespace SEF.Unit
                 {
                     data = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.ThemeBoss).Single();
                 }
-                else if (levelWaveData.IsBoss()) 
+                else if (levelWaveData.IsBoss())
                 {
                     var bossArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Boss).ToArray();
                     data = bossArray[UnityEngine.Random.Range(0, bossArray.Length)];
@@ -166,6 +224,21 @@ namespace SEF.Unit
                 _poolEnemyActor?.CleanUp();
                 _list.Clear();
             }
+
+
+            public StorableData GetStorableData()
+            {
+                List<StorableData> list = new List<StorableData>();
+                for(int i = 0; i < _list.Count; i++)
+                {
+                    list.Add(_list[i].GetStorableData());
+                }
+
+                var data = new EnemyActorsStorableData();
+                data.SetData(list.ToArray());
+                return data;
+            }
+
         }
         #endregion
 
@@ -180,7 +253,6 @@ namespace SEF.Unit
         public int EnemyCount => _enemyQueueData.Count;
 
         public EnemyActor NowEnemy => _enemyQueueData.NowEnemy;
-        
 
         public static UnitManager Create()
         {
@@ -314,6 +386,21 @@ namespace SEF.Unit
             return unitActor;
         }
 
+        private void CreateUnitActor(UnitActorStorableData storableData)
+        {
+            var entityStorableData = (UnitEntityStorableData)storableData.Children[0];
+
+            var unitData = DataStorage.Instance.GetDataOrNull<UnitData>(entityStorableData.UnitKey);
+            var upgradeData = new UpgradeData();
+            upgradeData.SetValue_Test(entityStorableData.UpgradeValue);
+
+            var entity = new UnitEntity();
+            entity.SetStorableData(unitData, upgradeData);
+
+            var actor = CreateUnitActor(entity);
+            actor.SetStorableData(storableData);
+        }
+
 
         public void RetrieveUnitActor(UnitActor unitActor)
         {
@@ -360,6 +447,11 @@ namespace SEF.Unit
         public EnemyActor CreateEnemyActor()
         {
             return _enemyQueueData.CreateEnemyActor(_gameObject.transform);
+        }
+
+        private void CreateEnemyActor(StorableData data)
+        {
+            _enemyQueueData.CreateEnemyActor(_gameObject.transform, data);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -456,7 +548,6 @@ namespace SEF.Unit
 
         private void OnEnemyStateEvent(TYPE_UNIT_STATE typeUnitState)
         {
-            Debug.Log(typeUnitState);
             foreach(var key in _unitDic.Keys)
             {
                 switch (typeUnitState)
@@ -541,15 +632,53 @@ namespace SEF.Unit
             _refreshPopulationEvent?.Invoke(data);
         }
 
+
         #endregion
 
 
-        #region ##### Data #####
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new UnitManagerStorableData();
+            data.SetData(GetUnitStorableData(), _enemyQueueData.GetStorableData());
+            return data;
+        }
 
-        //public AccountData GetData()
-        //{
+        public void SetStorableData(StorableData data)
+        {
 
-        //}
+            var units = (UnitActorsStorableData)data.Children[0];
+            for(int i = 0; i < units.Children.Length; i++)
+            {
+                var child = (UnitActorStorableData)units.Children[i];
+                CreateUnitActor(child);
+            }
+
+
+            var enemies = (EnemyActorsStorableData)data.Children[1];
+            CreateEnemyActor();
+            for (int i = 0; i < enemies.Children.Length; i++)
+            {
+                var child = (EnemyActorStorableData)enemies.Children[i];
+                CreateEnemyActor(child);
+            }
+
+        }
+
+        private StorableData GetUnitStorableData()
+        {
+            List<StorableData> list = new List<StorableData>();
+
+            foreach(int key in _unitDic.Keys)
+            {
+                list.Add(_unitDic[key].GetStorableData());
+            }
+
+            var data = new UnitActorsStorableData();
+            data.SetData(list.ToArray());
+            return data;
+
+        }
         #endregion
 
 

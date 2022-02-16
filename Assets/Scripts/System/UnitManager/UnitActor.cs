@@ -10,6 +10,46 @@ namespace SEF.Unit
     using Storage;
     using UtilityManager;
     using Data;
+    using Utility.IO;
+    using System;
+
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public struct SerializeVector2
+    {
+        [SerializeField] public float x;
+        [SerializeField] public float y;
+
+        public SerializeVector2(Vector2 vec)
+        {
+            x = vec.x;
+            y = vec.y;
+        }
+
+        public static implicit operator Vector2(SerializeVector2 sVec) => new Vector2(sVec.x, sVec.y);
+        public static implicit operator Vector3(SerializeVector2 sVec) => new Vector3(sVec.x, sVec.y);
+    }
+
+    [System.Serializable]
+    internal class UnitActorStorableData : StorableData
+    {
+        [SerializeField] private SerializeVector2 _position;
+        [SerializeField] private SerializeBigNumberData _nowHealthData;
+
+        internal SerializeVector2 Position => _position;
+        internal SerializeBigNumberData NowHealthData => _nowHealthData;
+
+        internal void SetData(Vector2 position, BigNumberData data, StorableData entity)
+        {
+            _position = new SerializeVector2(position);
+            _nowHealthData = data.GetSerializeData();
+            Children = new Utility.IO.StorableData[1];
+            Children[0] = entity;
+        }
+    }
+    #endregion
 
     public class UnitActor : PlayActor, ITarget, IPoolElement
     {
@@ -28,12 +68,12 @@ namespace SEF.Unit
         public string Key => _unitEntity.UnitData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
-        
+
         private SkeletonAnimation SkeletonAnimation
         {
             get
             {
-                if(_skeletonAnimation == null)
+                if (_skeletonAnimation == null)
                 {
                     _skeletonAnimation = GetComponent<SkeletonAnimation>();
                 }
@@ -42,12 +82,12 @@ namespace SEF.Unit
         }
 
         private Spine.AnimationState _skeletonAnimationState;
-        
+
         private Spine.AnimationState SkeletonAnimationState
         {
             get
             {
-                if(_skeletonAnimationState == null)
+                if (_skeletonAnimationState == null)
                 {
                     if (SkeletonAnimation.AnimationState != null)
                     {
@@ -68,7 +108,7 @@ namespace SEF.Unit
 
         public static UnitActor Create()
         {
-            var obj = new GameObject(); 
+            var obj = new GameObject();
             obj.name = "Actor@Unit";
             obj.AddComponent<SkeletonAnimation>();
             var unitActor = obj.AddComponent<UnitActor>();
@@ -189,7 +229,7 @@ namespace SEF.Unit
                     break;
                 case TYPE_UNIT_STATE.Destroy:
                     //Destroy
-                    if(_typeUnitCycle == TYPE_UNIT_ACTION_CYCLE.Move)
+                    if (_typeUnitCycle == TYPE_UNIT_ACTION_CYCLE.Move)
                     {
                         Vector2.MoveTowards(transform.position, UNIT_APPEAR_POSITION, deltaTime);
                     }
@@ -212,7 +252,7 @@ namespace SEF.Unit
                 SetTypeUnitState(TYPE_UNIT_STATE.Action);
 
                 //행동 사이클 - 이동중이 아니면 멈춤
-                if(_typeUnitCycle != TYPE_UNIT_ACTION_CYCLE.Move)
+                if (_typeUnitCycle != TYPE_UNIT_ACTION_CYCLE.Move)
                     PlayAnimation("Idle", true);
             }
         }
@@ -252,7 +292,7 @@ namespace SEF.Unit
             base.DestoryActor();
             PlayAnimation("Dead");
         }
-        
+
         public enum TYPE_UNIT_ACTION_CYCLE { Idle, Move, Action }
 
         private TYPE_UNIT_ACTION_CYCLE _typeUnitCycle;
@@ -288,6 +328,23 @@ namespace SEF.Unit
         #endregion
 
 
-        
+
+
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new UnitActorStorableData();
+            data.SetData(transform.position, NowHealthData, _unitEntity.GetStorableData());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (UnitActorStorableData)data;
+            transform.position = storableData.Position;
+            NowHealthData = (HealthData)storableData.NowHealthData.GetDeserializeData();
+        }
+        #endregion
+
     }
 }

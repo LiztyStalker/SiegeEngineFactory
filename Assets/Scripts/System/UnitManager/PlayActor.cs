@@ -25,7 +25,7 @@ namespace SEF.Unit
         public Vector2 NowPosition => transform.position;
 
         private HealthData _nowHealthData;
-        protected HealthData NowHealthData => _nowHealthData;
+        protected HealthData NowHealthData { get => _nowHealthData; set => _nowHealthData = value; }
 
         public abstract float NowHealthRate();
 

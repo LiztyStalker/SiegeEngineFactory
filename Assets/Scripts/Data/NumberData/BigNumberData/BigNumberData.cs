@@ -7,6 +7,53 @@ namespace SEF.Data
     using System.Numerics;
 
 
+    //type을 찾지 못하는 버그 있음
+    #region ##### Serialize #####
+
+    [System.Serializable]
+    public struct SerializeBigNumberData
+    {
+        [SerializeField] private string _type;
+        [SerializeField] private string _value;
+
+        public string @Type => _type;
+        public string @Value => _value; //ex) 1B1A
+
+        internal void SetData(string type, string value)
+        {
+//            Debug.Log(type);
+            _type = type;
+            _value = value;
+        }
+
+        public BigNumberData GetDeserializeData()
+        {
+            try
+            {
+                var type = System.Type.GetType(_type, true);
+                if (type != null)
+                {
+                    var data = (BigNumberData)NumberDataUtility.Create(type);
+                    data.ValueText = _value;
+                    return data;
+                }
+            }
+            catch (Exception e)
+            {
+#if UNITY_EDITOR
+                Debug.LogWarning($"Deserialize에 실패했습니다 : {e.Message}");
+#endif
+            }
+            return null;
+        }
+    }
+    #endregion
+
+
+
+
+
+
     [System.Serializable]
     public abstract class BigNumberData : INumberData
     {
@@ -214,7 +261,7 @@ namespace SEF.Data
         public string GetDigitValue(BigDecimal bigInt)
         {
             Stack<string> stack = new Stack<string>();
-            var value = bigInt;
+            var value = bigInt.Value;
             while (true)
             {
                 var digit = GetDigit(stack.Count);
@@ -295,6 +342,17 @@ namespace SEF.Data
 #endif
 
 
+
+        #region ##### SerializeData #####
+
+        public SerializeBigNumberData GetSerializeData()
+        {
+            var serializeData = new SerializeBigNumberData();
+            serializeData.SetData(GetType().FullName, GetDigitValue());
+            return serializeData;
+        }
+
+        #endregion
 
 
     }

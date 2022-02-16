@@ -2,6 +2,30 @@ namespace SEF.Entity
 {
     using Data;
 
+
+    #region ##### StorableData #####
+
+    //UnitEntity
+    //EnemyEntity °ø¿ë
+    [System.Serializable]
+    public class EnemyEntityStorableData : Utility.IO.StorableData
+    {
+        [UnityEngine.SerializeField] private string _unitKey;
+        [UnityEngine.SerializeField] private int _levelWaveValue;
+
+        public string UnitKey => _unitKey;
+        public int LevelWaveValue => _levelWaveValue;
+
+        internal void SetData(string key, int value)
+        {
+            _unitKey = key;
+            _levelWaveValue = value;
+            Children = null;
+        }
+    }
+
+    #endregion
+
     public struct EnemyEntity : IEntity
     {
         private EnemyData _enemyData;
@@ -108,5 +132,14 @@ namespace SEF.Entity
             assetData.SetAssetData(_enemyData, _levelWaveData);
             return assetData;
         }
+
+        #region ##### StorableData #####
+        public Utility.IO.StorableData GetStorableData()
+        {
+            var data = new EnemyEntityStorableData();
+            data.SetData(_enemyData.Key, _levelWaveData.Value);
+            return data;
+        }
+        #endregion
     }
 }

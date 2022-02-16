@@ -7,6 +7,21 @@ namespace SEF.Manager
     using Account;
     using Unit;
     using SEF.Data;
+    using Utility.IO;
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class GameManagerStorableData : StorableData
+    {
+        public void SetData(StorableData unitStorableData, StorableData systemStorableData, StorableData statisticsStorableData)
+        {
+            Children = new StorableData[3];
+            Children[0] = unitStorableData;
+            Children[1] = systemStorableData;
+            Children[2] = statisticsStorableData;
+        }
+    }
+    #endregion
 
     public class GameManager : MonoBehaviour
     {
@@ -127,16 +142,26 @@ namespace SEF.Manager
         {
             _gameSystem.AddAsset(assetData);
         }
+#endif
 
+        //저장
         public void SaveData()
         {
-            _gameSystem.SetStorableData();
+            var data = new GameManagerStorableData();
+            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData(), null);
+            Account.Current.SetStorableData(data);
+            Account.Current.SaveData(null, result =>
+            {
+                Debug.Log(result);
+            });
         }
 
+        //불러오기
         public void LoadData()
         {
-            _gameSystem.GetStorableData();
+            var data = Account.Current.GetStorableData();
+            _unitManager.SetStorableData(data.Children[0]);
+            _gameSystem.SetStorableData(data.Children[1]);
         }
-#endif
     }
 }

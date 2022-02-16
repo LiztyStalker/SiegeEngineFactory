@@ -34,9 +34,6 @@ namespace SEF.Manager
 
     public class GameSystem
     {
-
-        private Account _account;
-
         private WorkshopManager _workshopManager;
         private BlacksmithManager _blacksmithManager;
         private VillageManager _villageManager;
@@ -62,8 +59,6 @@ namespace SEF.Manager
 
         public void Initialize() 
         {
-            _account = Account.Current;
-
             StatusPackage.Current.Initialize();
 
             _assetEntity = AssetEntity.Create();
@@ -134,23 +129,9 @@ namespace SEF.Manager
         }
 
 
-        public void SetStorableData(Utility.IO.StorableData data)
+        public void SetStorableData(StorableData storableData)
         {
-            _account.SetStorableData(data);
-        }
-
-        public void SetStorableData()
-        {
-            _account.SetStorableData(SaveData());
-            _account.SaveData(null, null);
-        }
-
-        public void GetStorableData()
-        {
-            //Test
-            _account.LoadData(null, null);
-
-            var data = (SystemStorableData)_account.GetStorableData();
+            var data = (SystemStorableData)storableData;
 
             if (data.Dictionary != null)
             {
@@ -166,8 +147,8 @@ namespace SEF.Manager
             }
         }
 
-
-        public StorableData SaveData()
+        
+        public StorableData GetStorableData()
         {
             var _storableData = new SystemStorableData();
             List<StorableData> list = new List<StorableData>();
@@ -175,7 +156,6 @@ namespace SEF.Manager
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
         }
-
 
 
         #region ##### AssetEntity #####

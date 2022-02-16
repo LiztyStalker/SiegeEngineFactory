@@ -271,6 +271,9 @@ namespace Utility.IO
             }
             catch (Exception e)
             {
+#if UNITY_EDITOR
+                Debug.Log("저장 실패 " + e.Message);
+#endif
                 endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError);
             }
         }

@@ -10,6 +10,28 @@ namespace SEF.Unit {
     using Storage;
     using Data;
 
+
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class EnemyActorStorableData : Utility.IO.StorableData
+    {
+        [SerializeField] private SerializeVector2 _position;
+        [SerializeField] private SerializeBigNumberData _nowHealthData;
+
+        public SerializeVector2 Position => _position;
+        public SerializeBigNumberData NowHealthData => _nowHealthData;
+
+        public void SetData(Vector2 position, BigNumberData data, Utility.IO.StorableData entity)
+        {
+            _position = new SerializeVector2(position);
+            _nowHealthData = data.GetSerializeData();
+            Children = new Utility.IO.StorableData[1];
+            Children[0] = entity;
+        }
+    }
+    #endregion
+
     public class EnemyActor : PlayActor, ITarget, IPoolElement
     {
         private readonly static Vector2 ENEMY_IDLE_POSITION = new Vector2(3.5f, 2f);
@@ -287,6 +309,23 @@ namespace SEF.Unit {
             _enemyStateEvent?.Invoke(TypeUnitState);
         }
 
+        #endregion
+
+
+        #region ##### StorableData #####
+        public Utility.IO.StorableData GetStorableData()
+        {
+            var data = new EnemyActorStorableData();
+            data.SetData(transform.position, NowHealthData, _enemyEntity.GetStorableData());
+            return data;
+        }
+
+        public void SetStorableData(Utility.IO.StorableData data)
+        {
+            var storableData = (EnemyActorStorableData)data;
+            transform.position = storableData.Position;
+            NowHealthData = (HealthData)storableData.NowHealthData.GetDeserializeData();
+        }
         #endregion
 
     }
