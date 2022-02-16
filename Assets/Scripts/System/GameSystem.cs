@@ -143,13 +143,18 @@ namespace SEF.Manager
 
             var data = (SystemStorableData)_account.GetStorableData();
 
+            //UnityEngine.Debug.Log(data.Dictionary);
             if (data.Dictionary != null)
             {
-                if (data.Dictionary.ContainsKey(_workshopManager.GetType().Name))
+
+                //각각 적용하도록 필요
+                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name));
+                if (data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name))
                 {
-                    var key = _workshopManager.GetType().Name;
+                    var key = typeof(WorkshopManagerStorableData).Name;
                     var child = data.Children[data.Dictionary[key]];
                     _workshopManager.SetStorableData(child);
+                    UnityEngine.Debug.Log(key);
                 }
             }
         }

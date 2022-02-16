@@ -31,13 +31,11 @@ namespace SEF.Account
         {
             //AccountData 초기화
             _assetEntity = AssetEntity.Create();
-//            _assetEntity.AddRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
             _assetEntity.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
             _assetEntity.Initialize();
         }
         public void Dispose()
         {
-//            _assetEntity.RemoveRefreshAssetEntityListener(OnRefreshAssetEntityEvent);
             _assetEntity.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
             _assetEntity.CleanUp();
             _current = null;
@@ -45,8 +43,8 @@ namespace SEF.Account
 
         public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            UnityEngine.Debug.Log("LoadStart");
-//            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
+            //복호화 적용 필요
+            //StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
             StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
             {
                 endCallback?.Invoke(result);
@@ -63,8 +61,9 @@ namespace SEF.Account
 
         public void SaveData(System.Action saveCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
-            //StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
+            //암호화 적용 필요
+            //StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
+            StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
         }
 
 
