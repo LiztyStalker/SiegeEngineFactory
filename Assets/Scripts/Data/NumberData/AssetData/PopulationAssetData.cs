@@ -5,6 +5,7 @@ namespace SEF.Data
     using UnityEngine;
     using System.Numerics;
     using System;
+    using Utility.IO;
 
     public class PopulationAssetData : NumberData, IAssetData
     {
@@ -62,7 +63,13 @@ namespace SEF.Data
         /// <returns></returns>
         public Type AccumulateStatisticsType() => null;
 
-       
+
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().FullName, AssetValue.ToString());
+            return data;
+        }
 
 
 #endif

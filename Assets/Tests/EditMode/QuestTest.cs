@@ -39,7 +39,7 @@ namespace SEF.Test
             _package.Initialize(null);
 
             _manager = QuestManager.Create();
-            _manager.Initialize(null);
+            _manager.Initialize();
 
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();

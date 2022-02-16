@@ -6,6 +6,26 @@ namespace SEF.Manager
     using System.Collections.Generic;
     using UnityEngine;
     using Storage;
+    using Utility.IO;
+
+
+
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public class SmithyManagerStorableData : StorableData
+    {
+        public void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    #endregion
+
+
+
 
     public class BlacksmithManager
     {
@@ -17,22 +37,18 @@ namespace SEF.Manager
             return new BlacksmithManager();
         }
 
-        public void Initialize(IAccountData accountData)
+        public void Initialize()
         {
             _list = new List<BlacksmithLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
 
-            for(int i = 0; i < arr.Length; i++)
+            Debug.Log(arr.Length);
+
+            for (int i = 0; i < arr.Length; i++)
             {
                 var line = CreateLine();
                 line.SetData(arr[i]);
                 _list.Add(line);
-            }
-
-            if (accountData != null)
-            {
-                //accountData 적용
-                UnityEngine.Debug.Log("AccountData Load");
             }
         }
 
@@ -89,11 +105,33 @@ namespace SEF.Manager
 
 
         #region ##### Data #####
-        public IAccountData GetAccountData()
+        public StorableData GetStorableData()
         {
-            return null;
+            var data = new SmithyManagerStorableData();
+
+            var list = new List<StorableData>();
+            for(int i = 0; i < _list.Count; i++)
+            {
+                var storableData = _list[i].GetStorableData();
+                list.Add(storableData);
+            }
+            data.SetData(list.ToArray());
+            return data;
         }
 
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (SmithyManagerStorableData)data;
+            for (int i = 0; i < storableData.Children.Length; i++)
+            {
+                var children = storableData.Children[i];
+                var index = _list.FindIndex(data => data.Contains(children));
+                if (index >= 0)
+                {
+                    _list[index].SetStorableData(children);
+                }
+            }
+        }
         #endregion
 
 
@@ -105,7 +143,7 @@ namespace SEF.Manager
         /// 초기화 테스트
         /// </summary>
         /// <param name="accountData"></param>
-        public void Initialize_Test(IAccountData accountData)
+        public void Initialize_Test(Utility.IO.StorableData accountData)
         {
             if (accountData == null)
             {

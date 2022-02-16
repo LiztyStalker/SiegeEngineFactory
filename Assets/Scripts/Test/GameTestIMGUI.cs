@@ -19,6 +19,13 @@ namespace SEF.Manager {
             {
                 _gameManager.LoadData();
             }
+            if (GUI.Button(new Rect(0, 60, 100, 30), "Add GoldAssetData"))
+            {
+                var data = new Data.GoldAssetData();
+                data.AssetValue = 1000;
+                _gameManager.AddAsset(data);
+            }
+
         }
     }
 }

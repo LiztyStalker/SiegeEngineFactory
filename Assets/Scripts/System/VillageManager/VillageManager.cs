@@ -8,6 +8,21 @@ namespace SEF.Manager
     using UnityEngine;
     using Storage;
     using SEF.Process;
+    using Utility.IO;
+
+
+    #region ##### Serialize #####
+
+    [System.Serializable]
+    public class VillageManagerStorableData : StorableData
+    {
+        public void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    #endregion
 
     public class VillageManager : MonoBehaviour
     {
@@ -19,7 +34,7 @@ namespace SEF.Manager
             return new VillageManager();
         }
 
-        public void Initialize(IAccountData accountData)
+        public void Initialize()
         {
             _list = new List<VillageLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<VillageData>();
@@ -29,12 +44,6 @@ namespace SEF.Manager
                 var line = CreateLine();
                 line.SetData(arr[i]);
                 _list.Add(line);
-            }
-
-            if (accountData != null)
-            {
-                //accountData 적용
-                UnityEngine.Debug.Log("AccountData Load");
             }
         }
 
@@ -97,12 +106,36 @@ namespace SEF.Manager
 
 
 
+
+
         #region ##### Data #####
-        public IAccountData GetAccountData()
+        public StorableData GetStorableData()
         {
-            return null;
+            var data = new VillageManagerStorableData();
+
+            var list = new List<StorableData>();
+            for (int i = 0; i < _list.Count; i++)
+            {
+                var storableData = _list[i].GetStorableData();
+                list.Add(storableData);
+            }
+            data.SetData(list.ToArray());
+            return data;
         }
 
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (VillageManagerStorableData)data;
+            for (int i = 0; i < storableData.Children.Length; i++)
+            {
+                var children = storableData.Children[i];
+                var index = _list.FindIndex(data => data.Contains(children));
+                if (index >= 0)
+                {
+                    _list[index].SetStorableData(children);
+                }
+            }
+        }
         #endregion
 
 
@@ -114,18 +147,11 @@ namespace SEF.Manager
         /// 초기화 테스트
         /// </summary>
         /// <param name="accountData"></param>
-        public void Initialize_Test(IAccountData accountData)
+        public void Initialize_Test()
         {
-            if (accountData == null)
-            {
-                _list = new List<VillageLine>();
-                var line = CreateLine();
-                line.SetIndex(Count);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("AccountData Load Test");
-            }
+            _list = new List<VillageLine>();
+            var line = CreateLine();
+            line.SetIndex(Count);
         }
 
         //언락 테스트

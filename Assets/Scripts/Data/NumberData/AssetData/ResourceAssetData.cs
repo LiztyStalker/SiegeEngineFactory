@@ -2,6 +2,7 @@ namespace SEF.Data
 {
     using System;
     using System.Numerics;
+    using Utility.IO;
 
     public class ResourceAssetData : BigNumberData, IAssetData
     {
@@ -23,6 +24,14 @@ namespace SEF.Data
         {
             return new ResourceAssetData(this);
         }
+
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().FullName, AssetValue.ToString());
+            return data;
+        }
+
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

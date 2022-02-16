@@ -21,7 +21,7 @@ namespace SEF.Test
         public void SetUp()
         {
             _package = StatisticsPackage.Create();
-            _package.Initialize(null);
+            _package.Initialize();
         }
 
         [TearDown]

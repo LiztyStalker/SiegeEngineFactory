@@ -12,6 +12,9 @@ namespace SEF.Manager
     using Utility.IO;
     using System.Collections.Generic;
 
+
+
+    #region ##### StorableData #####
     [System.Serializable]
     public class SystemStorableData : StorableData
     {
@@ -32,6 +35,10 @@ namespace SEF.Manager
         }
     }
 
+    #endregion
+
+
+
     public class GameSystem
     {
         private WorkshopManager _workshopManager;
@@ -47,10 +54,6 @@ namespace SEF.Manager
         private QuestManager _questManager;
 
         private AssetEntity _assetEntity;
-
-
-        //StorableData
-        private SystemStorableData _storableData;
 
         public static GameSystem Create()
         {
@@ -71,23 +74,23 @@ namespace SEF.Manager
             _workshopManager.Initialize();
 
             _blacksmithManager = BlacksmithManager.Create();
-            _blacksmithManager.Initialize(null);
+            _blacksmithManager.Initialize();
 
             _villageManager = VillageManager.Create();
-            _villageManager.Initialize(null);
+            _villageManager.Initialize();
             _villageManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
 
             //ResearchManager
 
             _statistics = StatisticsPackage.Create();
-            _statistics.Initialize(null);
+            _statistics.Initialize();
 
             _process = ProcessPackage.Create();
             _process.Initialize();
             _process.AddOnCompleteProcessEvent(OnCompleteProcessEvent);
 
             _questManager = QuestManager.Create();
-            _questManager.Initialize(null);            
+            _questManager.Initialize();            
         }
 
         public void CleanUp()
@@ -142,7 +145,30 @@ namespace SEF.Manager
                     var key = typeof(WorkshopManagerStorableData).Name;
                     var child = data.Children[data.Dictionary[key]];
                     _workshopManager.SetStorableData(child);
-                    UnityEngine.Debug.Log(key);
+                }
+
+                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name));
+                if (data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name))
+                {
+                    var key = typeof(SmithyManagerStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _blacksmithManager.SetStorableData(child);
+                }
+
+                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name));
+                if (data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name))
+                {
+                    var key = typeof(VillageManagerStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _villageManager.SetStorableData(child);
+                }
+
+                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
+                if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
+                {
+                    var key = typeof(StatisticsPackageStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _statistics.SetStorableData(child);
                 }
             }
         }
@@ -152,7 +178,12 @@ namespace SEF.Manager
         {
             var _storableData = new SystemStorableData();
             List<StorableData> list = new List<StorableData>();
+
             list.Add(_workshopManager.GetStorableData());
+            list.Add(_blacksmithManager.GetStorableData());
+            list.Add(_villageManager.GetStorableData());
+            list.Add(_statistics.GetStorableData());
+            list.Add(_assetEntity.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
         }

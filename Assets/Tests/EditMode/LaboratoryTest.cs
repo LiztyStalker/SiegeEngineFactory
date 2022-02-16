@@ -24,7 +24,7 @@ namespace SEF.Test
         public void SetUp()
         {
             _package = LaboratoryPackage.Create();
-            _package.Initialize(null);
+            _package.Initialize();
         }
 
         [TearDown]

@@ -2,6 +2,7 @@ namespace SEF.Data
 {
     using System;
     using System.Numerics;
+    using Utility.IO;
 
     public class MeteoriteAssetData : NumberData, IAssetData
     {
@@ -43,5 +44,21 @@ namespace SEF.Data
 
 
 #endif
+
+
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().FullName, AssetValue.ToString());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (AssetDataStorableData)data;
+            
+        }
+        #endregion
     }
 }

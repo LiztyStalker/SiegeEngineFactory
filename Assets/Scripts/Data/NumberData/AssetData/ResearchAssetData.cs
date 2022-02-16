@@ -2,6 +2,7 @@ namespace SEF.Data
 {
     using System;
     using System.Numerics;
+    using Utility.IO;
 
     public class ResearchAssetData : BigNumberData, IAssetData
     {
@@ -21,6 +22,14 @@ namespace SEF.Data
         public override INumberData Clone()
         {
             return new ResearchAssetData(this);
+        }
+
+
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().FullName, AssetValue.ToString());
+            return data;
         }
 
 

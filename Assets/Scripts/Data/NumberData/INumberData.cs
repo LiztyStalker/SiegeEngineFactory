@@ -22,6 +22,18 @@ namespace SEF.Data
             return (INumberData)System.Activator.CreateInstance(type);
         }
 
+        public static IAssetData Create(AssetDataStorableData data)
+        {
+            var type = System.Type.GetType(data.Type);
+            if(type != null)
+            {
+                var assetData = (IAssetData)System.Activator.CreateInstance(type);
+                assetData.SetValue(data.Value);
+                return assetData;
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// <br>복리 계산식</br>

@@ -15,14 +15,9 @@ namespace SEF.Process
             return new ProcessPackage();
         }
 
-        public void Initialize(IAccountData data)
+        public void Initialize()
         {
             _dic = new Dictionary<IProcessProvider, ProcessEntity>();
-
-            if (data != null)
-            {
-                //AccountData 적용하기
-            }
         }
 
         public void CleanUp()
@@ -61,12 +56,6 @@ namespace SEF.Process
                 entity.RunProcess(deltaTime, OnCompleteProcessEvent);
                 _dic[key] = entity;
             }
-        }
-
-
-        public IAccountData GetSaveData()
-        {
-            return null;
         }
 
         #region ##### Listener #####

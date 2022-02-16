@@ -6,6 +6,20 @@ namespace SEF.Entity
     using Data;
     using Account;
     using System.Numerics;
+    using Utility.IO;
+
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class AssetPackageStorableData : StorableData
+    {
+        internal void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+    #endregion
+
 
     public struct AssetDataCase : IAssetData
     {
@@ -74,6 +88,22 @@ namespace SEF.Entity
         public void CleanUp()
         {
         }
+
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new AssetEntityStorableData();
+            data.SetData(_nowAssetData.GetStorableData());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (AssetEntityStorableData)data;
+            _nowAssetData = NumberDataUtility.Create((AssetDataStorableData)storableData.Children[0]);
+            _limitAssetData = NumberDataUtility.Create((AssetDataStorableData)storableData.Children[1]);
+        }
+        #endregion
     }
 
     public class AssetEntity
@@ -207,17 +237,31 @@ namespace SEF.Entity
         #endregion
 
 
-        #region ##### Data #####
-
-        public void GetData(out Utility.IO.StorableData data)
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
         {
-            data = null;
+            var data = new AssetPackageStorableData();
+
+            List<StorableData> list = new List<StorableData>();
+            foreach(var key in _dic.Keys)
+            {
+                list.Add(_dic[key].GetStorableData());
+            }
+            data.SetData(list.ToArray());
+            return data;
         }
 
-        public void SetData(Utility.IO.StorableData data)
+        public void SetStorableData(StorableData data)
         {
+            var storableData = (AssetPackageStorableData)data;
+            for (int i = 0; i < storableData.Children.Length; i++)
+            {
+                var child = (AssetEntityStorableData)storableData.Children[i];
+                var now = (AssetDataStorableData)child.Children[0];
+                Set(now.GetAssetData());
+            }
         }
-
         #endregion
+
     }
 }

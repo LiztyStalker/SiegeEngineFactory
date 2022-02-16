@@ -46,14 +46,14 @@ namespace SEF.Data
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static BlacksmithData Create_Test()
+        public static BlacksmithData Create_Test(string key = null)
         {
-            return new BlacksmithData();
+            return new BlacksmithData(key);
         }
 
-        private BlacksmithData()
+        private BlacksmithData(string key)
         {
-
+            _key = key;
         }
 #endif 
     }

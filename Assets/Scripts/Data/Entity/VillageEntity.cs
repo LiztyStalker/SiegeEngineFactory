@@ -5,6 +5,27 @@ namespace SEF.Entity
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Utility.IO;
+
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class VillageEntityStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private string _key;
+        [UnityEngine.SerializeField] private int _upgradeValue;
+
+        public string Key => _key;
+        public int UpgradeValue => _upgradeValue;
+
+        internal void SetData(string key, int value)
+        {
+            _key = key;
+            _upgradeValue = value;
+            Children = null;
+        }
+    }
+    #endregion
 
     public struct VillageEntity : IProcessProvider
     {
@@ -14,6 +35,7 @@ namespace SEF.Entity
 
         //번역 작업 필요 - TranslatorStorage
         public string Name => _data.Key;
+        public string Key => _data.Key;
         public string Content => _data.Key;
         public string Ability => _data.Key;
 
@@ -78,6 +100,23 @@ namespace SEF.Entity
         }
 
         #endregion
+
+
+
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new VillageEntityStorableData();
+            data.SetData(_data.Key, UpgradeValue);
+            return data;
+        }
+
+        public void SetStorableData(UpgradeData upgradeData)
+        {
+            _upgradeData = upgradeData;
+        }
+        #endregion
+
 
     }
 }

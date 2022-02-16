@@ -14,14 +14,14 @@ namespace SEF.Research
             return new LaboratoryPackage();
         }
 
-        public void Initialize(IAccountData data)
+        public void Initialize()
         {
             _list = new List<ResearchEntity>();
 
-            if (data != null)
-            {
+            //if (data != null)
+            //{
                 //AccountData 적용하기
-            }
+            //}
         }
 
         public void CleanUp()
@@ -59,9 +59,9 @@ namespace SEF.Research
         }
 
 
-        public IAccountData GetSaveData()
-        {
-            return null;
-        }
+        //public IStorableData GetSaveData()
+        //{
+        //    return null;
+        //}
     }
 }

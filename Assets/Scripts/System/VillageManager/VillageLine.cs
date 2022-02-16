@@ -4,6 +4,25 @@ namespace SEF.Manager
     using Data;
     using Entity;
     using Process;
+    using Utility.IO;
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public class VillageLineStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private int _index;
+        public int Index => _index;
+        internal void SetData(int index, StorableData children)
+        {
+            _index = index;
+            Children = new StorableData[1];
+            Children[0] = children;
+        }
+    }
+
+    #endregion
+
 
     public class VillageLine
     {
@@ -77,18 +96,38 @@ namespace SEF.Manager
         #endregion
 
 
-        #region ##### Data #####
-        public IAccountData GetData()
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
         {
-            return null;
+            var data = new VillageLineStorableData();
+            data.SetData(_index, _entity.GetStorableData());
+            return data;
         }
 
-        public void SetData(IAccountData accountData)
+        public void SetStorableData(StorableData data)
         {
-            //null이면 무시 (이미 Create할때 초기화 함)
-            //null이 아니면 accountData 적용
+            var storableData = (VillageLineStorableData)data;
+
+            _index = storableData.Index;
+
+            var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
+
+            var upgradeData = new UpgradeData();
+            upgradeData.SetValue_Test(entityStorableData.UpgradeValue);
+
+            _entity.SetStorableData(upgradeData);
+        }
+
+        public bool Contains(StorableData data)
+        {
+            var storableData = (VillageLineStorableData)data;
+            var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
+            UnityEngine.Debug.Log(_entity + " " + entityStorableData);
+            return entityStorableData.Key == _entity.Key;
+
         }
         #endregion
+
 
 
     }

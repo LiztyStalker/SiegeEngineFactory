@@ -1,15 +1,13 @@
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 namespace SEF.Test
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using NUnit.Framework;
+    using SEF.Data;
+    using SEF.Entity;
+    using SEF.Manager;
+    using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using Statistics;
-    using SEF.Entity;
-    using SEF.Data;
-    using SEF.Manager;
 
     public class SerializeTest
     {
@@ -27,6 +25,11 @@ namespace SEF.Test
         private UnitEntity _unitEntity;
         private WorkshopLine _workshopLine;
         private WorkshopManager _workshopManager;
+
+        private BlacksmithEntity _smithyEntity;
+        private BlacksmithLine _smithyLine;
+        private BlacksmithManager _smithyManager;
+
         private GameSystem _gameSystem;
 
         [SetUp]
@@ -44,6 +47,19 @@ namespace SEF.Test
             _workshopManager = WorkshopManager.Create();
             _workshopManager.Initialize();
 
+
+            _smithyEntity = new BlacksmithEntity();
+            _smithyEntity.Initialize();
+            _smithyEntity.SetData(BlacksmithData.Create_Test("Test"));
+
+            _smithyLine = BlacksmithLine.Create();
+            _smithyLine.Initialize();
+            _smithyLine.SetIndex(0);
+            _smithyLine.SetData(BlacksmithData.Create_Test("Test"));
+
+            _smithyManager = BlacksmithManager.Create();
+            _smithyManager.Initialize();
+
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
         }
@@ -56,6 +72,13 @@ namespace SEF.Test
             _workshopLine = null;
             _workshopManager.CleanUp();
             _workshopManager = null;
+
+            _smithyEntity.CleanUp();
+            _smithyLine.CleanUp();
+            _smithyLine = null;
+            _smithyManager.CleanUp();
+            _smithyManager = null;
+
             _gameSystem.CleanUp();
             _gameSystem = null;
         }
@@ -76,22 +99,25 @@ namespace SEF.Test
             Recursion(data);
             WriteBinaryFormatter(data);
 
-            var des = (UnitEntityStorableData)ReadBinaryFormatter();
+            ReadBinaryFormatter(data =>
+            {
+                var des = (UnitEntityStorableData)data;
+                Debug.Log(des.UnitKey + " " + des.UpgradeValue);
 
-            Debug.Log(des.UnitKey + " " + des.UpgradeValue);
+                var unitData = UnitData.Create_Test(des.UnitKey);
+                var upgradeData = new UpgradeData();
+                upgradeData.SetValue_Test(des.UpgradeValue);
 
-            var unitData = UnitData.Create_Test(des.UnitKey);
-            var upgradeData = new UpgradeData();
-            upgradeData.SetValue_Test(des.UpgradeValue);
+                var entity = new UnitEntity();
+                entity.SetStorableData(unitData, upgradeData);
 
-            var entity = new UnitEntity();
-            entity.SetStorableData(unitData, upgradeData);
+                Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
+                Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
 
-            Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
-            Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
+                Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
+                Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
+            });
 
-            Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
-            Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
         }
 
 
@@ -110,10 +136,13 @@ namespace SEF.Test
             Recursion(data);
             WriteBinaryFormatter(data);
 
-            var des = (WorkshopLineStorableData)ReadBinaryFormatter();
-            _workshopLine.SetStorableData(des);
+            ReadBinaryFormatter(data =>
+            {
+                var des = (WorkshopLineStorableData)data;
+                _workshopLine.SetStorableData(des);
 
-            Debug.Log(des.Index + " " + des.NowTime + " " + des.Children.Length);
+                Debug.Log(des.Index + " " + des.NowTime + " " + des.Children.Length);
+            });
         }
 
 
@@ -132,11 +161,101 @@ namespace SEF.Test
             Recursion(data);
             WriteBinaryFormatter(data);
 
-            var des = ReadBinaryFormatter();
-            _workshopManager.SetStorableData(des);
+            ReadBinaryFormatter(data =>
+            {
+                _workshopManager.SetStorableData(data);
 
-            Debug.Log(des.Children.Length);
+                Debug.Log(data.Children.Length);
+            });
         }
+
+
+
+        [Test]
+        public void SerializeTest_SmithyEntity_Serialize()
+        {            
+            var data = _smithyEntity.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+        }
+
+        [Test]
+        public void SerializeTest_SmithyEntity_Serialize_Deserialize()
+        {
+            var data = _smithyEntity.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            ReadBinaryFormatter(data =>
+            {
+                var des = (SmithyEntityStorableData)data;
+                Debug.Log(des.UpgradeValue);
+
+                var upgradeData = new UpgradeData();
+                upgradeData.SetValue_Test(des.UpgradeValue);
+
+                var entity = new BlacksmithEntity();
+                entity.SetStorableData(upgradeData);
+                entity.SetData(BlacksmithData.Create_Test("Test"));
+
+                Debug.Log(_smithyEntity.Key + " " + entity.Key);
+                Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);
+
+                Assert.AreEqual(_smithyEntity.Key, entity.Key);
+                Assert.AreEqual(_smithyEntity.UpgradeValue, entity.UpgradeValue);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_SmithyLine_Serialize()
+        {
+            var data = _smithyLine.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+        }
+
+        [Test]
+        public void SerializeTest_SmithyLine_Serialize_And_Deserialize()
+        {
+            var data = _smithyLine.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            ReadBinaryFormatter(data => 
+            {
+                var des = (SmithyLineStorableData)data;
+                _smithyLine.SetStorableData(des);
+
+                Debug.Log(des.Index + " " + des.Children.Length);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_SmithyManager_Serialize()
+        {
+            var data = _smithyManager.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+        }
+
+        [Test]
+        public void SerializeTest_SmithyManager_Serialize_Deserialize()
+        {
+            var data = _smithyManager.GetStorableData();
+            Recursion(data);
+            WriteBinaryFormatter(data);
+
+            ReadBinaryFormatter(data =>
+            {
+                _smithyManager.SetStorableData(data);
+
+                Debug.Log(data.Children.Length);
+            });
+            
+        }
+
 
 
         [Test]
@@ -154,10 +273,12 @@ namespace SEF.Test
             Recursion(data);
             WriteBinaryFormatter(data);
 
-            var des = (SystemStorableData)ReadBinaryFormatter();
-            _gameSystem.SetStorableData(des);
-
-            Debug.Log(des.Children.Length + " " + des.Dictionary.Count);
+            ReadBinaryFormatter(data =>
+            {
+                var des = (SystemStorableData)data;
+                _gameSystem.SetStorableData(des);
+                Debug.Log(des.Children.Length + " " + des.Dictionary.Count);
+            });
         }
 
         [UnityTest]
@@ -215,20 +336,27 @@ namespace SEF.Test
 
         private void WriteBinaryFormatter(Utility.IO.StorableData data)
         {
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Create);
-            formatter.Serialize(stream, data);
-            stream.Close();
+            //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Create);
+            //formatter.Serialize(stream, data);
+            //stream.Close();
+
+            Utility.IO.StorableDataIO.Current.SaveFileData(data, "test_file", result => {
+                Debug.Log(result);
+            });
         }
 
-        private Utility.IO.StorableData ReadBinaryFormatter()
+        private void ReadBinaryFormatter(System.Action<Utility.IO.StorableData> callback)
         {
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Open);
-            var data = (Utility.IO.StorableData)formatter.Deserialize(stream);
-            stream.Close();
-            return data;
-
+            //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            //System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Open);
+            //var data = (Utility.IO.StorableData)formatter.Deserialize(stream);
+            //stream.Close();
+            Utility.IO.StorableDataIO.Current.LoadFileData("test_file", null, (result, obj) =>
+            {
+                Debug.Log(result);
+                callback?.Invoke((Utility.IO.StorableData)obj);
+            });
         }
 
         private void Recursion(Utility.IO.StorableData data)

@@ -13,12 +13,11 @@ namespace SEF.Manager
     [System.Serializable]
     public class GameManagerStorableData : StorableData
     {
-        public void SetData(StorableData unitStorableData, StorableData systemStorableData, StorableData statisticsStorableData)
+        public void SetData(StorableData unitStorableData, StorableData systemStorableData)
         {
-            Children = new StorableData[3];
+            Children = new StorableData[2];
             Children[0] = unitStorableData;
             Children[1] = systemStorableData;
-            Children[2] = statisticsStorableData;
         }
     }
     #endregion
@@ -148,20 +147,34 @@ namespace SEF.Manager
         public void SaveData()
         {
             var data = new GameManagerStorableData();
-            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData(), null);
+            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData());
             Account.Current.SetStorableData(data);
             Account.Current.SaveData(null, result =>
             {
-                Debug.Log(result);
+                Debug.Log("Save " + result);
             });
         }
 
         //불러오기
         public void LoadData()
         {
-            var data = Account.Current.GetStorableData();
-            _unitManager.SetStorableData(data.Children[0]);
-            _gameSystem.SetStorableData(data.Children[1]);
+            Account.Current.LoadData(null, result =>
+            {
+                Debug.Log("Load " + result);
+
+                if (result == TYPE_IO_RESULT.Success)
+                {
+                    var data = Account.Current.GetStorableData();
+                    _unitManager.SetStorableData(data.Children[0]);
+                    _gameSystem.SetStorableData(data.Children[1]);
+                }
+            });
+
+        }
+
+        public void AddAsset(IAssetData data)
+        {
+            _gameSystem.AddAsset(data);
         }
     }
 }

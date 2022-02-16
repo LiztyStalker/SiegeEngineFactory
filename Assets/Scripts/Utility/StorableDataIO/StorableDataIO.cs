@@ -255,7 +255,7 @@ namespace Utility.IO
                     mem.Flush();
                     mem.Close();
                 }
-
+                endCallback?.Invoke(TYPE_IO_RESULT.Success);
 
                 //using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Create, FileAccess.Write))
                 //{
@@ -316,6 +316,7 @@ namespace Utility.IO
                     object data = null;
                     using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", FilePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
                     {
+                    
                         using (CryptoStream cryptoStream = new CryptoStream(file, _decryptor, CryptoStreamMode.Read))
                         {
                             byte[] arr = new byte[file.Length];
@@ -327,6 +328,7 @@ namespace Utility.IO
 
                                 IFormatter bf = new BinaryFormatter();
                                 data = bf.Deserialize(mem);
+                                Debug.Log(data);
 
                                 mem.Flush();
                                 mem.Close();
@@ -337,8 +339,6 @@ namespace Utility.IO
                         file.Close();
                     }
                     endCallback?.Invoke(TYPE_IO_RESULT.Success, data);
-
-
                     //using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
                     //{
                     //    using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateDecryptor(key, salt), CryptoStreamMode.Read))
@@ -354,9 +354,13 @@ namespace Utility.IO
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.LogWarning("파일 입출력 불러오기 오류 : " + e.Message + " " + GetType());
+                    UnityEngine.Debug.LogWarning("파일 입출력 불러오기 오류 : " + e.Message +  " " + e.HelpLink);
                     endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
                 }
+            }
+            else
+            {
+                Debug.LogWarning("파일을 찾을 수 없습니다");
             }
         }
 

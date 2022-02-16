@@ -1,6 +1,7 @@
 namespace SEF.Data
 {
     using System.Numerics;
+    using Utility.IO;
 
     [System.Serializable]
     public class GoldAssetData : BigNumberData, IAssetData
@@ -71,6 +72,13 @@ namespace SEF.Data
         public System.Type GetStatisticsType() => typeof(Statistics.GoldGetAssetStatisticsData);
 
         public System.Type AccumulateStatisticsType() => typeof(Statistics.GoldAccumulateAssetStatisticsData);
+
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().FullName, AssetValue.ToString());
+            return data;
+        }
 #endif
 
     }

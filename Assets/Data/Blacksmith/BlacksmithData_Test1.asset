@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlacksmithData_Test1
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
-  _key: 
+  _key: Test1
   _serializedStatusData:
     _classTypeName: SEF.Data.DamageValueStatusData
     _typeStatusData: 0

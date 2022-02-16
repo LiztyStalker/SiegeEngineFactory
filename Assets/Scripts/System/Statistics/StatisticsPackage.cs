@@ -4,7 +4,19 @@ namespace SEF.Statistics
     using System.Collections.Generic;
     using System.Numerics;
     using System.Linq;
-   
+    using Utility.IO;
+
+    #region ##### StorableData #####
+    [System.Serializable]
+    public class StatisticsPackageStorableData : StorableData
+    {
+        internal void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+    #endregion
+
 
     public class StatisticsPackage
     {
@@ -15,14 +27,9 @@ namespace SEF.Statistics
             return new StatisticsPackage();
         }
 
-        public void Initialize(IAccountData data)
+        public void Initialize()
         {
             _list = new List<StatisticsEntity>();
-
-            if(data != null)
-            {
-                //AccountData 적용하기
-            }
         }
 
         public void CleanUp()
@@ -89,6 +96,14 @@ namespace SEF.Statistics
                 }
             }
         }
+
+        private void SetStatisticsData(StatisticsEntityStorableData data)
+        {
+            var entity = new StatisticsEntity();
+            entity.SetStorableData(data);
+            _list.Add(entity);
+        }
+
         private int GetIndex(System.Type type) => _list.FindIndex(entity => entity.GetStatisticsType() == type);
         public BigInteger? GetStatisticsValue<T>() where T : IStatisticsData
         {
@@ -116,10 +131,35 @@ namespace SEF.Statistics
         }
         public static System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");
 
-        public IAccountData GetSaveData()
+        public void GetData(out Utility.IO.StorableData data)
         {
-            return null;
+            data = null;
         }
+
+        #region ##### StorableData #####
+        public StorableData GetStorableData()
+        {
+            var data = new StatisticsPackageStorableData();
+
+            List<StorableData> list = new List<StorableData>();
+            for (int i = 0; i < _list.Count; i++)
+            {
+                list.Add(_list[i].GetStorableData());
+            }
+            data.SetData(list.ToArray());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (StatisticsPackageStorableData)data;
+            for(int i = 0; i < storableData.Children.Length; i++)
+            {
+                var child = (StatisticsEntityStorableData)storableData.Children[i];
+                SetStatisticsData(child);
+            }
+        }
+        #endregion
 
     }
 

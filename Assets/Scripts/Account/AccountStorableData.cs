@@ -7,9 +7,6 @@ namespace SEF.Account
     {
         [UnityEngine.SerializeField] private StorableData _storableData;
         public StorableData LoadData() => _storableData;
-        public void SaveData(StorableData data)
-        {
-            _storableData = data;
-        }
+        public void SaveData(StorableData data) => _storableData = data;
     }
 }

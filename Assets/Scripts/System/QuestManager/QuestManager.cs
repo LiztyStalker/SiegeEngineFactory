@@ -19,7 +19,7 @@ namespace SEF.Quest
             return new QuestManager();
         }
 
-        public void Initialize(IAccountData data)
+        public void Initialize()
         {
             _dic = new Dictionary<QuestData.TYPE_QUEST_GROUP, List<QuestEntity>>();
 
@@ -32,13 +32,6 @@ namespace SEF.Quest
             SetDictionary(arr, QuestData.TYPE_QUEST_GROUP.Challenge);
             //목표
             SetDictionary(arr, QuestData.TYPE_QUEST_GROUP.Goal);
-
-            if (data != null)
-            {
-                //저장된 데이터 적용
-                //하루 이상 지났으면 일일 데이터 미적용
-                //일주일 이상 지났으면 주간 데이터 미적용
-            }
 
             RefreshAllQuests();
         }
