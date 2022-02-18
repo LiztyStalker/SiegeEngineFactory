@@ -108,7 +108,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIPlayTest_NextBossAppear()
         {
-            _levelWaveData.SetValue_Test(10);
+            _levelWaveData.SetValue(10);
             _uitest.Instance.RefreshNextEnemyUnit(_enemyActor, _levelWaveData);
             yield return new WaitForSeconds(1f);
         }
@@ -117,7 +117,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIPlayTest_NextThemeBossAppear()
         {
-            _levelWaveData.SetValue_Test(100);
+            _levelWaveData.SetValue(100);
             _uitest.Instance.RefreshNextEnemyUnit(_enemyActor, _levelWaveData);
             yield return new WaitForSeconds(1f);
         }

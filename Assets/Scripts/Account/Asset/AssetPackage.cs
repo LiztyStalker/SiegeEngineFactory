@@ -21,7 +21,7 @@ namespace SEF.Entity
     #endregion
 
 
-    public struct AssetDataCase : IAssetData
+    public struct AssetEntity : IAssetData
     {
         private IAssetData _limitAssetData;
         private IAssetData _nowAssetData;
@@ -29,7 +29,7 @@ namespace SEF.Entity
         public IAssetData LimitAssetData => _limitAssetData;
         public IAssetData NowAssetData => _nowAssetData;        
 
-        public AssetDataCase(IAssetData nowAssetData)
+        public AssetEntity(IAssetData nowAssetData)
         {
             _limitAssetData = null;
             _nowAssetData = nowAssetData;
@@ -79,7 +79,7 @@ namespace SEF.Entity
 
         public INumberData Clone()
         {
-            var assetCase = new AssetDataCase();
+            var assetCase = new AssetEntity();
             assetCase._limitAssetData = (IAssetData)_limitAssetData.Clone();
             assetCase._nowAssetData = (IAssetData)_nowAssetData.Clone();
             return assetCase;
@@ -95,24 +95,17 @@ namespace SEF.Entity
             var data = new AssetEntityStorableData();
             data.SetData(_nowAssetData.GetStorableData());
             return data;
-        }
-
-        public void SetStorableData(StorableData data)
-        {
-            var storableData = (AssetEntityStorableData)data;
-            _nowAssetData = NumberDataUtility.Create((AssetDataStorableData)storableData.Children[0]);
-            _limitAssetData = NumberDataUtility.Create((AssetDataStorableData)storableData.Children[1]);
-        }
+        }       
         #endregion
     }
 
-    public class AssetEntity
+    public class AssetPackage
     {
         private Dictionary<string, IAssetData> _dic = new Dictionary<string, IAssetData>();
 
-        public static AssetEntity Create()
+        public static AssetPackage Create()
         {
-            return new AssetEntity();
+            return new AssetPackage();
         }
 
         public void Initialize()
@@ -124,9 +117,9 @@ namespace SEF.Entity
             _dic.Add(typeof(PopulationAssetData).Name, CreateAssetDataCase<PopulationAssetData>(new PopulationAssetData(5)));
         }
 
-        private AssetDataCase CreateAssetDataCase<T>(IAssetData limitData = null) where T : IAssetData
+        private AssetEntity CreateAssetDataCase<T>(IAssetData limitData = null) where T : IAssetData
         {
-            var dataCase = new AssetDataCase(NumberDataUtility.Create<T>());
+            var dataCase = new AssetEntity(NumberDataUtility.Create<T>());
             dataCase.SetLimitAssetData(limitData);
             return dataCase;
         }
@@ -173,9 +166,9 @@ namespace SEF.Entity
         {
             var assetData = FindAssetData(data);
             if (assetData == null) return true;
-            if(assetData is AssetDataCase)
+            if(assetData is AssetEntity)
             {
-                return ((AssetDataCase)assetData).IsOverflow(data);
+                return ((AssetEntity)assetData).IsOverflow(data);
             }
             return false;
         }
@@ -184,9 +177,9 @@ namespace SEF.Entity
         {
             var assetData = FindAssetData(data);
             if (assetData == null) return true;
-            if (assetData is AssetDataCase)
+            if (assetData is AssetEntity)
             {
-                return ((AssetDataCase)assetData).IsUnderflow(data);
+                return ((AssetEntity)assetData).IsUnderflow(data);
             }
             return false;
         }
@@ -219,10 +212,10 @@ namespace SEF.Entity
 
         #region ##### Listener #####
 
-        private System.Action<AssetEntity> _refreshAssetEntityEvent;
-        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent += act;
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _refreshAssetEntityEvent -= act;
-        public void OnRefreshAssetEntityEvent(AssetEntity assetEntity)
+        private System.Action<AssetPackage> _refreshAssetEntityEvent;
+        public void AddRefreshAssetEntityListener(System.Action<AssetPackage> act) => _refreshAssetEntityEvent += act;
+        public void RemoveRefreshAssetEntityListener(System.Action<AssetPackage> act) => _refreshAssetEntityEvent -= act;
+        public void OnRefreshAssetEntityEvent(AssetPackage assetEntity)
         {
             _refreshAssetEntityEvent?.Invoke(assetEntity);
         }

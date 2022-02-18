@@ -14,7 +14,7 @@ namespace SEF.UI.Toolkit
         void CleanUp();
         void Show();
         void Hide();
-        void RefreshAssetEntity(AssetEntity assetEntity);
+        void RefreshAssetEntity(AssetPackage assetEntity);
     }
 
     public class UISystem : VisualElement 
@@ -162,7 +162,7 @@ namespace SEF.UI.Toolkit
             ui.RefreshVillage(index, entity);
         }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetPackage assetEntity)
         {
 
             for (int i = 0; i < _list.Count; i++)

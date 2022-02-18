@@ -8,6 +8,9 @@ namespace SEF.Test
     using System.Collections;
     using UnityEngine;
     using UnityEngine.TestTools;
+    using Statistics;
+    using System.Numerics;
+    using System;
 
     public class SerializeTest
     {
@@ -19,6 +22,10 @@ namespace SEF.Test
             [SerializeField] public float _float = 1234.567f;
         }
 
+        [System.Serializable]
+        public class Statistics_Test : IStatisticsData
+        {
+        }
 
 
 
@@ -29,6 +36,12 @@ namespace SEF.Test
         private BlacksmithEntity _smithyEntity;
         private BlacksmithLine _smithyLine;
         private BlacksmithManager _smithyManager;
+
+        private StatisticsEntity _statisticsEntity;
+        private StatisticsPackage _statisticsPackage;
+
+        private AssetEntity _assetEntity;
+        private AssetPackage _assetPackage;
 
         private GameSystem _gameSystem;
 
@@ -61,6 +74,15 @@ namespace SEF.Test
 
             _smithyManager = BlacksmithManager.Create();
             _smithyManager.Initialize();
+
+            _statisticsEntity = StatisticsEntity.Create(typeof(Statistics_Test));
+            _statisticsPackage = StatisticsPackage.Create();
+            _statisticsPackage.Initialize();
+
+            _assetEntity = new AssetEntity(NumberDataUtility.Create<GoldAssetData>());
+
+            _assetPackage = AssetPackage.Create();
+            _assetPackage.Initialize();
 
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
@@ -359,6 +381,133 @@ namespace SEF.Test
             
         }
 
+
+
+
+        [Test]
+        public void SerializeTest_StatisticsEntity_Serialize()
+        {
+            var data = _statisticsEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_StatisticsEntity_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (StatisticsEntityStorableData)data;
+                Debug.Log(des.Value);
+
+                var entity = new StatisticsEntity();
+                entity.SetStorableData(des);
+
+                Debug.Log(_statisticsEntity.GetStatisticsType() + " " + entity.GetStatisticsType());
+                Debug.Log(_statisticsEntity.GetStatisticsValue() + " " + entity.GetStatisticsValue());
+                Assert.AreEqual(_statisticsEntity.GetStatisticsType(), entity.GetStatisticsType());
+                Assert.AreEqual(_statisticsEntity.GetStatisticsValue(), entity.GetStatisticsValue());
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_StatisticsEntity_Serialize_Deserialize()
+        {
+            var data = _statisticsEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (StatisticsEntityStorableData)data;
+                Debug.Log(des.Value);
+
+                var entity = new StatisticsEntity();
+                entity.SetStorableData(des);
+
+                Assert.AreEqual(_statisticsEntity.GetStatisticsType(), entity.GetStatisticsType());
+                Assert.AreEqual(_statisticsEntity.GetStatisticsValue(), entity.GetStatisticsValue());
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_StatisticsPackage_Serialize()
+        {
+            var data = _smithyLine.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+        [Test]
+        public void SerializeTest_StatisticsPackage_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (SmithyLineStorableData)data;
+                _smithyLine.SetStorableData(des);
+
+                Debug.Log(des.Index + " " + des.Children.Length);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_StatisticsPackage_Serialize_Deserialize()
+        {
+            var data = _smithyLine.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (SmithyLineStorableData)data;
+                _smithyLine.SetStorableData(des);
+
+                Debug.Log(des.Index + " " + des.Children.Length);
+            });
+        }
+
+
+
+        [Test]
+        public void SerializeTest_AssetPackage_Serialize()
+        {
+            var data = _assetEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+        [Test]
+        public void SerializeTest_AssetPackage_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (AssetEntityStorableData)data;
+                var ddes = (AssetDataStorableData)data.Children[0];
+                _assetEntity.SetValue(ddes.Value);
+
+                Debug.Log(_assetEntity.AssetValue);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_AssetPackage_Serialize_Deserialize()
+        {
+            var data = _assetEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (AssetEntityStorableData)data;
+                var ddes = (AssetDataStorableData)data.Children[0];
+                _assetEntity.SetValue(ddes.Value);
+
+                Debug.Log(_assetEntity.AssetValue);
+            });
+        }
 
 
         [Test]

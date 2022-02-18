@@ -77,7 +77,7 @@ namespace SEF.UI.Toolkit
             ChangeExpendWorkshopLine();
         }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetPackage assetEntity)
         {
             foreach(var value in _dic.Values)
             {

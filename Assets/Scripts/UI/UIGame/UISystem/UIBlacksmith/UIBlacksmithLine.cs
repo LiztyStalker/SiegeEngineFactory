@@ -110,7 +110,7 @@ namespace SEF.UI.Toolkit {
             _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
         }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetPackage assetEntity)
         {
             var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
             _upgradeButton.SetEnabled(isEnough);

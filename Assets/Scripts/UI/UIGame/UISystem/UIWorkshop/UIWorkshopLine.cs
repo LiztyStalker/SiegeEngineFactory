@@ -232,7 +232,7 @@ namespace SEF.UI.Toolkit
             _upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
         }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetPackage assetEntity)
         {
             //Debug.Log("Refresh " + assetEntity);
             var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);

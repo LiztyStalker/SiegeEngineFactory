@@ -53,7 +53,7 @@ namespace SEF.Manager
 
         private QuestManager _questManager;
 
-        private AssetEntity _assetEntity;
+        private AssetPackage _assetPackage;
 
         public static GameSystem Create()
         {
@@ -64,9 +64,9 @@ namespace SEF.Manager
         {
             StatusPackage.Current.Initialize();
 
-            _assetEntity = AssetEntity.Create();
-            _assetEntity.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
-            _assetEntity.Initialize();
+            _assetPackage = AssetPackage.Create();
+            _assetPackage.AddRefreshAssetDataListener(OnRefreshAssetDataEvent);
+            _assetPackage.Initialize();
 
             _workshopManager = WorkshopManager.Create();
 
@@ -109,8 +109,8 @@ namespace SEF.Manager
             _villageManager.CleanUp();
             //ResearchManager
 
-            _assetEntity.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
-            _assetEntity.CleanUp();
+            _assetPackage.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
+            _assetPackage.CleanUp();
         }
 
         public void RunProcess(float deltaTime)
@@ -170,6 +170,15 @@ namespace SEF.Manager
                     var child = data.Children[data.Dictionary[key]];
                     _statistics.SetStorableData(child);
                 }
+
+
+                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
+                if (data.Dictionary.ContainsKey(typeof(AssetPackageStorableData).Name))
+                {
+                    var key = typeof(AssetPackageStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _assetPackage.SetStorableData(child);
+                }
             }
         }
 
@@ -183,7 +192,7 @@ namespace SEF.Manager
             list.Add(_blacksmithManager.GetStorableData());
             list.Add(_villageManager.GetStorableData());
             list.Add(_statistics.GetStorableData());
-//            list.Add(_assetEntity.GetStorableData());
+            list.Add(_assetPackage.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
         }
@@ -195,40 +204,40 @@ namespace SEF.Manager
 
         public void AddAsset(IAssetData assetData)
         {
-            _assetEntity.Add(assetData);
+            _assetPackage.Add(assetData);
         }
 
         public void SubjectAsset(IAssetData assetData)
         {
-            _assetEntity.Subject(assetData);
+            _assetPackage.Subject(assetData);
             AddStatisticsData(assetData.UsedStatisticsType(), assetData.AssetValue);
             AddStatisticsData(assetData.AccumulateStatisticsType(), assetData.AssetValue);
         }
 
         public void SetAsset(IAssetData assetData)
         {
-            _assetEntity.Set(assetData);
+            _assetPackage.Set(assetData);
             SetStatisticsData(assetData.GetStatisticsType(), assetData.AssetValue);
         }
 
         public bool IsEnoughAsset(IAssetData assetData)
         {
-            return _assetEntity.IsEnough(assetData);
+            return _assetPackage.IsEnough(assetData);
         }
 
         public bool IsOverflow(IAssetData assetData)
         {
-            return _assetEntity.IsOverflow(assetData);
+            return _assetPackage.IsOverflow(assetData);
         }
 
         public bool IsUnderflow(IAssetData assetData)
         {
-            return _assetEntity.IsUnderflow(assetData);
+            return _assetPackage.IsUnderflow(assetData);
         }
 
         public void RefreshAssetEntity()
         {
-            _assetEntity.RefreshAssets();
+            _assetPackage.RefreshAssets();
         }
 
         #endregion
@@ -518,8 +527,8 @@ namespace SEF.Manager
 
 
 
-        public void AddRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.AddRefreshAssetEntityListener(act);
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetEntity> act) => _assetEntity.RemoveRefreshAssetEntityListener(act);
+        public void AddRefreshAssetEntityListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
+        public void RemoveRefreshAssetEntityListener(System.Action<AssetPackage> act) => _assetPackage.RemoveRefreshAssetEntityListener(act);
 
         private System.Action<IAssetData> _refreshAsseData;
         public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;

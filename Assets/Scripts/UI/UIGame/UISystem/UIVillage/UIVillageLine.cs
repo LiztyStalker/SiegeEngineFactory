@@ -111,7 +111,7 @@ namespace SEF.UI.Toolkit
 
         }
 
-        public void RefreshAssetEntity(AssetEntity assetEntity)
+        public void RefreshAssetEntity(AssetPackage assetEntity)
         {
             var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
             _upgradeButton.SetEnabled(isEnough);

@@ -113,7 +113,7 @@ namespace SEF.UI.Test
             entity.Initialize();
             entity.SetData(BlacksmithData.Create_Test());
 
-            AssetEntity assetEntity = AssetEntity.Create();
+            AssetPackage assetEntity = AssetPackage.Create();
             assetEntity.Initialize();
 
 
@@ -143,7 +143,7 @@ namespace SEF.UI.Test
 
             IAssetData assetData = GoldAssetData.Create_Test(500);
 
-            AssetEntity assetEntity = AssetEntity.Create();
+            AssetPackage assetEntity = AssetPackage.Create();
             assetEntity.Initialize();
             assetEntity.Add(assetData);
 

@@ -67,7 +67,7 @@ namespace SEF.Data
         public StorableData GetStorableData()
         {
             var data = new AssetDataStorableData();
-            data.SetData(GetType().FullName, AssetValue.ToString());
+            data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
             return data;
         }
 

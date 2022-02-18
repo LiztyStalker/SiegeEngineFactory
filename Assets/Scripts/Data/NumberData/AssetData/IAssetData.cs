@@ -16,12 +16,6 @@ namespace SEF.Data
             Children = new StorableData[1];
             Children[0] = child;
         }
-        internal void SetData(StorableData child1, StorableData child2)
-        {
-            Children = new StorableData[2];
-            Children[0] = child1;
-            Children[1] = child2;
-        }
     }
 
     [System.Serializable]

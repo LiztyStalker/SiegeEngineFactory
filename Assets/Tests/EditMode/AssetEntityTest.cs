@@ -13,12 +13,12 @@ namespace SEF.Test
     public class AssetEntityTest
     {
 
-        private AssetEntity _entity;
+        private AssetPackage _entity;
 
         [SetUp]
         public void SetUp()
         {
-            _entity = AssetEntity.Create();
+            _entity = AssetPackage.Create();
             _entity.Initialize();
             _entity.AddRefreshAssetDataListener(data =>
             {
