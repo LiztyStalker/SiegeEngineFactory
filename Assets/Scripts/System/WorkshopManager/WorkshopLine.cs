@@ -130,11 +130,11 @@ namespace SEF.Manager
 
                 var children = (UnitEntityStorableData)storableData.Children[0];
 
-                UnityEngine.Debug.Log(children.UnitKey);
+                //UnityEngine.Debug.Log(children.UnitKey);
 
                 var unitData = Storage.DataStorage.Instance.GetDataOrNull<UnitData>(children.UnitKey);
                 var upgradeData = new UpgradeData();
-                upgradeData.SetValue_Test(children.UpgradeValue);
+                upgradeData.SetValue(children.UpgradeValue);
 
                 _unitEntity.SetStorableData(unitData, upgradeData);
             }

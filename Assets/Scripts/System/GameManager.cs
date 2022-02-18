@@ -37,6 +37,11 @@ namespace SEF.Manager
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             //Initialize
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
@@ -73,19 +78,28 @@ namespace SEF.Manager
 
             _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
 
-            
+
             _uiGame.AddOnRewardQuestListener(_gameSystem.GetRewardAssetData);
         }
 
         private void Start()
         {
+            Refresh();
+        }
+
+        private void Refresh()
+        {
             //Refresh
             _gameSystem.Refresh();
             _unitManager.Refresh();
-
         }
 
         private void OnDestroy()
+        {
+            CleanUp();
+        }
+
+        private void CleanUp()
         {
             //Event 해제
             _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
@@ -116,10 +130,14 @@ namespace SEF.Manager
             _unitManager.CleanUp();
             _uiGame.CleanUp();
         }
-
         private void Update()
         {
             var deltaTime = Time.deltaTime;
+            RunProcess(deltaTime);
+        }
+
+        private void RunProcess(float deltaTime)
+        {
             _gameSystem.RunProcess(deltaTime);
             _unitManager.RunProcess(deltaTime);
             _uiGame.RunProcess(deltaTime);
@@ -137,9 +155,38 @@ namespace SEF.Manager
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public void AddAssetData(Data.IAssetData assetData)
+        public void AddAssetData_Test(IAssetData data)
         {
-            _gameSystem.AddAsset(assetData);
+            _gameSystem.AddAsset(data);
+        }
+
+        public StorableData GetStorableData()
+        {
+            var data = new GameManagerStorableData();
+            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            Account.Current.SetStorableData(data);
+            _unitManager.SetStorableData(data.Children[0]);
+            _gameSystem.SetStorableData(data.Children[1]);
+        }
+
+        public void Initialize_Test()
+        {
+            _gameSystem = GameSystem.Create();
+            _gameSystem.Initialize();
+
+            _unitManager = UnitManager.Create();
+            _unitManager.Initialize();
+        }
+
+        public void CleanUp_Test()
+        {
+            _gameSystem.CleanUp();
+            _unitManager.CleanUp();
         }
 #endif
 
@@ -158,6 +205,7 @@ namespace SEF.Manager
         //불러오기
         public void LoadData()
         {
+
             Account.Current.LoadData(null, result =>
             {
                 Debug.Log("Load " + result);
@@ -165,16 +213,12 @@ namespace SEF.Manager
                 if (result == TYPE_IO_RESULT.Success)
                 {
                     var data = Account.Current.GetStorableData();
+                    //Debug.Log("Children " + data.Children);
                     _unitManager.SetStorableData(data.Children[0]);
                     _gameSystem.SetStorableData(data.Children[1]);
                 }
             });
-
         }
 
-        public void AddAsset(IAssetData data)
-        {
-            _gameSystem.AddAsset(data);
-        }
     }
 }

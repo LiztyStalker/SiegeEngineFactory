@@ -45,7 +45,7 @@ namespace SEF.Status
 
         public void Dispose()
         {
-            Dictionary.Clear();
+            //_dic.Clear();
             _current = null;
         }
 

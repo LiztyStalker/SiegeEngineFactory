@@ -41,15 +41,14 @@ namespace SEF.Manager
         {
             _list = new List<BlacksmithLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
-
-            Debug.Log(arr.Length);
+            //Debug.Log(arr.Length);
 
             for (int i = 0; i < arr.Length; i++)
             {
                 var line = CreateLine();
                 line.SetData(arr[i]);
-                _list.Add(line);
             }
+            //Debug.Log(_list.Count);
         }
 
         public void CleanUp()
@@ -109,6 +108,8 @@ namespace SEF.Manager
         {
             var data = new SmithyManagerStorableData();
 
+            Debug.Log(_list.Count);
+
             var list = new List<StorableData>();
             for(int i = 0; i < _list.Count; i++)
             {
@@ -122,6 +123,8 @@ namespace SEF.Manager
         public void SetStorableData(StorableData data)
         {
             var storableData = (SmithyManagerStorableData)data;
+            Debug.Log(storableData.Children.Length);
+
             for (int i = 0; i < storableData.Children.Length; i++)
             {
                 var children = storableData.Children[i];

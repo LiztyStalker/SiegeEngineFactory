@@ -256,18 +256,6 @@ namespace Utility.IO
                     mem.Close();
                 }
                 endCallback?.Invoke(TYPE_IO_RESULT.Success);
-
-                //using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Create, FileAccess.Write))
-                //{
-                //    using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateEncryptor(key, salt), CryptoStreamMode.Write))
-                //    {
-                //        IFormatter bf = new BinaryFormatter();
-                //        bf.Serialize(cryptoStream, data);
-                //        file.Close();
-                //        cryptoStream.Close();
-                //        endCallback?.Invoke(TYPE_IO_RESULT.Success);
-                //    }
-                //}
             }
             catch (Exception e)
             {
@@ -339,18 +327,6 @@ namespace Utility.IO
                         file.Close();
                     }
                     endCallback?.Invoke(TYPE_IO_RESULT.Success, data);
-                    //using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", filePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
-                    //{
-                    //    using (CryptoStream cryptoStream = new CryptoStream(file, tdes.CreateDecryptor(key, salt), CryptoStreamMode.Read))
-                    //    {
-                    //        IFormatter bf = new BinaryFormatter();
-                    //        var data = bf.Deserialize(cryptoStream);
-                    //        cryptoStream.FlushFinalBlock();
-                    //        cryptoStream.Close();
-                    //        file.Close();
-                    //        endCallback?.Invoke(TYPE_IO_RESULT.Success, data);
-                    //    }
-                    //}
                 }
                 catch (Exception e)
                 {

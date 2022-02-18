@@ -23,7 +23,7 @@ namespace SEF.Manager {
             {
                 var data = new Data.GoldAssetData();
                 data.AssetValue = 1000;
-                _gameManager.AddAsset(data);
+                _gameManager.AddAssetData_Test(data);
             }
 
         }

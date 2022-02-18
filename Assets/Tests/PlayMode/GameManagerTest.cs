@@ -76,7 +76,7 @@ namespace SEF.Test
 
                 if (secondTime > 1f)
                 {
-                    _gameManager.AddAssetData(assetData);
+                    _gameManager.AddAssetData_Test(assetData);
                     secondTime -= 1f;
                 }
 

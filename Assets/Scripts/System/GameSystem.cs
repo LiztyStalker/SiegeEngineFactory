@@ -139,7 +139,7 @@ namespace SEF.Manager
             if (data.Dictionary != null)
             {
                 //각각 적용하도록 필요
-                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name));
+                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name))
                 {
                     var key = typeof(WorkshopManagerStorableData).Name;
@@ -147,7 +147,7 @@ namespace SEF.Manager
                     _workshopManager.SetStorableData(child);
                 }
 
-                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name));
+                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name))
                 {
                     var key = typeof(SmithyManagerStorableData).Name;
@@ -155,21 +155,21 @@ namespace SEF.Manager
                     _blacksmithManager.SetStorableData(child);
                 }
 
-                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name));
-                if (data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name))
-                {
-                    var key = typeof(VillageManagerStorableData).Name;
-                    var child = data.Children[data.Dictionary[key]];
-                    _villageManager.SetStorableData(child);
-                }
+                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name));
+                //if (data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name))
+                //{
+                //    var key = typeof(VillageManagerStorableData).Name;
+                //    var child = data.Children[data.Dictionary[key]];
+                //    _villageManager.SetStorableData(child);
+                //}
 
-                UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
-                if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
-                {
-                    var key = typeof(StatisticsPackageStorableData).Name;
-                    var child = data.Children[data.Dictionary[key]];
-                    _statistics.SetStorableData(child);
-                }
+                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
+                //if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
+                //{
+                //    var key = typeof(StatisticsPackageStorableData).Name;
+                //    var child = data.Children[data.Dictionary[key]];
+                //    _statistics.SetStorableData(child);
+                //}
             }
         }
 
@@ -181,9 +181,9 @@ namespace SEF.Manager
 
             list.Add(_workshopManager.GetStorableData());
             list.Add(_blacksmithManager.GetStorableData());
-            list.Add(_villageManager.GetStorableData());
-            list.Add(_statistics.GetStorableData());
-            list.Add(_assetEntity.GetStorableData());
+//            list.Add(_villageManager.GetStorableData());
+//            list.Add(_statistics.GetStorableData());
+//            list.Add(_assetEntity.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
         }

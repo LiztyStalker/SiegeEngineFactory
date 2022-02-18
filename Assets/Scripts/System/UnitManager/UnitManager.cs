@@ -164,7 +164,7 @@ namespace SEF.Unit
 
                 var enemyData = DataStorage.Instance.GetDataOrNull<EnemyData>(entityStorableData.UnitKey);
                 var levelwaveData = new LevelWaveData();
-                levelwaveData.SetValue_Test(entityStorableData.LevelWaveValue);
+                levelwaveData.SetValue(entityStorableData.LevelWaveValue);
 
                 EnemyEntity enemyEntity = new EnemyEntity();
                 enemyEntity.SetData(enemyData, levelwaveData);
@@ -392,7 +392,7 @@ namespace SEF.Unit
 
             var unitData = DataStorage.Instance.GetDataOrNull<UnitData>(entityStorableData.UnitKey);
             var upgradeData = new UpgradeData();
-            upgradeData.SetValue_Test(entityStorableData.UpgradeValue);
+            upgradeData.SetValue(entityStorableData.UpgradeValue);
 
             var entity = new UnitEntity();
             entity.SetStorableData(unitData, upgradeData);

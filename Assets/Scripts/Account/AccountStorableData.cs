@@ -6,7 +6,15 @@ namespace SEF.Account
     public struct AccountStorableData
     {
         [UnityEngine.SerializeField] private StorableData _storableData;
-        public StorableData LoadData() => _storableData;
-        public void SaveData(StorableData data) => _storableData = data;
+        public StorableData LoadData()
+        {
+            //UnityEngine.Debug.Log("LoadData " + _storableData);
+            return _storableData;
+        }
+        public void SaveData(StorableData data)
+        {
+            //UnityEngine.Debug.Log("SaveData " + data);
+            _storableData = data;
+        }
     }
 }

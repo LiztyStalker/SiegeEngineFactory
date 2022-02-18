@@ -19,6 +19,11 @@ namespace SEF.Data
             return Value.ToString();
         }
 
+        public void SetValue(int value)
+        {
+            Value = value;
+        }
+
         public void IncreaseNumber()
         {
             _value++;
@@ -33,16 +38,5 @@ namespace SEF.Data
 
         public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { }
 
-
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        /// <summary>
-        /// Test¿ë
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetValue_Test(int value)
-        {
-            Value = value;
-        }
-#endif
     }
 }

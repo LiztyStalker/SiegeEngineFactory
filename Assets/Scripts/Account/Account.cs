@@ -27,22 +27,22 @@ namespace SEF.Account
 
         public void LoadData(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
-            //StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
+            //StorableDataIO.Current.LoadFileData_NotCrypto("test", loadCallback, (result, obj) =>
+            StorableDataIO.Current.LoadFileData("test", loadCallback, (result, obj) =>
             {
-                endCallback?.Invoke(result);
                 if (obj != null)
                 {
                     _storableData = (AccountStorableData)obj;
-                    UnityEngine.Debug.Log(_storableData);
+                    //UnityEngine.Debug.Log(_storableData);
                 }
+                endCallback?.Invoke(result);
             });
         }
 
         public void SaveData(System.Action saveCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
-            //StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
-            StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
+            StorableDataIO.Current.SaveFileData(_storableData, "test", endCallback);
+            //StorableDataIO.Current.SaveFileData_NotCrypto(_storableData, "test", endCallback);
         }
 
 

@@ -32,6 +32,8 @@ namespace SEF.Test
 
         private GameSystem _gameSystem;
 
+        private GameManager _gameManager;
+
         [SetUp]
         public void SetUp()
         {
@@ -62,6 +64,9 @@ namespace SEF.Test
 
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
+
+            _gameManager = GameManager.Create();
+            _gameManager.Initialize_Test();
         }
 
         [TearDown]
@@ -81,6 +86,9 @@ namespace SEF.Test
 
             _gameSystem.CleanUp();
             _gameSystem = null;
+
+            _gameManager.CleanUp_Test();
+            _gameManager = null;
         }
 
 
@@ -89,24 +97,21 @@ namespace SEF.Test
         {
             var data = _unitEntity.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
         }
 
-        [Test]
-        public void SerializeTest_UnitEntity_Serialize_Deserialize()
-        {
-            var data = _unitEntity.GetStorableData();
-            Recursion(data);
-            WriteBinaryFormatter(data);
 
-            ReadBinaryFormatter(data =>
+        [Test]
+        public void SerializeTest_UnitEntity_Deserialize()
+        {
+            LoadFileData(data =>
             {
                 var des = (UnitEntityStorableData)data;
                 Debug.Log(des.UnitKey + " " + des.UpgradeValue);
 
                 var unitData = UnitData.Create_Test(des.UnitKey);
                 var upgradeData = new UpgradeData();
-                upgradeData.SetValue_Test(des.UpgradeValue);
+                upgradeData.SetValue(des.UpgradeValue);
 
                 var entity = new UnitEntity();
                 entity.SetStorableData(unitData, upgradeData);
@@ -117,7 +122,33 @@ namespace SEF.Test
                 Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
                 Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
             });
+        }
 
+        [Test]
+        public void SerializeTest_UnitEntity_Serialize_Deserialize()
+        {            
+            var data = _unitEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (UnitEntityStorableData)data;
+                Debug.Log(des.UnitKey + " " + des.UpgradeValue);
+
+                var unitData = UnitData.Create_Test(des.UnitKey);
+                var upgradeData = new UpgradeData();
+                upgradeData.SetValue(des.UpgradeValue);
+
+                var entity = new UnitEntity();
+                entity.SetStorableData(unitData, upgradeData);
+
+                Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
+                Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
+
+                Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
+                Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
+            });
         }
 
 
@@ -126,7 +157,18 @@ namespace SEF.Test
         {
             var data = _workshopLine.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
+        }
+
+        [Test]
+        public void SerializeTest_WorkshopLine_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (WorkshopLineStorableData)data;
+                _workshopLine.SetStorableData(des);
+                Debug.Log(des.Index + " " + des.NowTime + " " + des.Children.Length);
+            });
         }
 
         [Test]
@@ -134,9 +176,9 @@ namespace SEF.Test
         {
             var data = _workshopLine.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data =>
+            LoadFileData(data =>
             {
                 var des = (WorkshopLineStorableData)data;
                 _workshopLine.SetStorableData(des);
@@ -151,17 +193,28 @@ namespace SEF.Test
         {
             var data = _workshopManager.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
         }
+
+        [Test]
+        public void SerializeTest_WorkshopManager_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                _workshopManager.SetStorableData(data);
+                Debug.Log(data.Children.Length);
+            });
+        }
+
 
         [Test]
         public void SerializeTest_WorkshopManager_Serialize_Deserialize()
         {
             var data = _workshopManager.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data =>
+            LoadFileData(data =>
             {
                 _workshopManager.SetStorableData(data);
 
@@ -176,23 +229,48 @@ namespace SEF.Test
         {            
             var data = _smithyEntity.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
         }
+
+
+        [Test]
+        public void SerializeTest_SmithyEntity_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (SmithyEntityStorableData)data;
+                Debug.Log(des.UpgradeValue);
+
+                var upgradeData = new UpgradeData();
+                upgradeData.SetValue(des.UpgradeValue);
+
+                var entity = new BlacksmithEntity();
+                entity.SetStorableData(upgradeData);
+                entity.SetData(BlacksmithData.Create_Test("Test"));
+
+                Debug.Log(_smithyEntity.Key + " " + entity.Key);
+                Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);
+
+                Assert.AreEqual(_smithyEntity.Key, entity.Key);
+                Assert.AreEqual(_smithyEntity.UpgradeValue, entity.UpgradeValue);
+            });
+        }
+
 
         [Test]
         public void SerializeTest_SmithyEntity_Serialize_Deserialize()
         {
             var data = _smithyEntity.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data =>
+            LoadFileData(data =>
             {
                 var des = (SmithyEntityStorableData)data;
                 Debug.Log(des.UpgradeValue);
 
                 var upgradeData = new UpgradeData();
-                upgradeData.SetValue_Test(des.UpgradeValue);
+                upgradeData.SetValue(des.UpgradeValue);
 
                 var entity = new BlacksmithEntity();
                 entity.SetStorableData(upgradeData);
@@ -212,17 +290,29 @@ namespace SEF.Test
         {
             var data = _smithyLine.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
         }
 
         [Test]
-        public void SerializeTest_SmithyLine_Serialize_And_Deserialize()
+        public void SerializeTest_SmithyLine_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (SmithyLineStorableData)data;
+                _smithyLine.SetStorableData(des);
+
+                Debug.Log(des.Index + " " + des.Children.Length);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_SmithyLine_Serialize_Deserialize()
         {
             var data = _smithyLine.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data => 
+            LoadFileData(data => 
             {
                 var des = (SmithyLineStorableData)data;
                 _smithyLine.SetStorableData(des);
@@ -237,7 +327,20 @@ namespace SEF.Test
         {
             var data = _smithyManager.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_SmithyManager_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                _smithyManager.SetStorableData(data);
+
+                Debug.Log(data.Children.Length);
+            });
+
         }
 
         [Test]
@@ -245,9 +348,9 @@ namespace SEF.Test
         {
             var data = _smithyManager.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data =>
+            LoadFileData(data =>
             {
                 _smithyManager.SetStorableData(data);
 
@@ -263,7 +366,19 @@ namespace SEF.Test
         {
             var data = _gameSystem.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_GameSystem_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (SystemStorableData)data;
+                _gameSystem.SetStorableData(des);
+                Debug.Log(des.Children.Length + " " + des.Dictionary.Count);
+            });
         }
 
         [Test]
@@ -271,13 +386,47 @@ namespace SEF.Test
         {
             var data = _gameSystem.GetStorableData();
             Recursion(data);
-            WriteBinaryFormatter(data);
+            SaveFileData(data);
 
-            ReadBinaryFormatter(data =>
+            LoadFileData(data =>
             {
                 var des = (SystemStorableData)data;
                 _gameSystem.SetStorableData(des);
                 Debug.Log(des.Children.Length + " " + des.Dictionary.Count);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_GameManager_Serialize()
+        {
+            var data = _gameManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_GameManager_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (GameManagerStorableData)data;
+                _gameManager.SetStorableData(des);
+                Debug.Log(des.Children.Length);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_GameManager_Serialize_Deserialize()
+        {
+            var data = _gameManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (GameManagerStorableData)data;
+                _gameManager.SetStorableData(des);
             });
         }
 
@@ -334,25 +483,25 @@ namespace SEF.Test
             Assert.AreEqual(dData.GetValue(), data.GetValue());
         }
 
-        private void WriteBinaryFormatter(Utility.IO.StorableData data)
+        private void SaveFileData(Utility.IO.StorableData data)
         {
             //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             //System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Create);
             //formatter.Serialize(stream, data);
             //stream.Close();
 
-            Utility.IO.StorableDataIO.Current.SaveFileData(data, "test_file", result => {
+            Utility.IO.StorableDataIO.Current.SaveFileData_NotCrypto(data, "test_file", result => {
                 Debug.Log(result);
             });
         }
 
-        private void ReadBinaryFormatter(System.Action<Utility.IO.StorableData> callback)
+        private void LoadFileData(System.Action<Utility.IO.StorableData> callback)
         {
             //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
             //System.IO.FileStream stream = new System.IO.FileStream(Application.dataPath + "TestFormatter.txt", System.IO.FileMode.Open);
             //var data = (Utility.IO.StorableData)formatter.Deserialize(stream);
             //stream.Close();
-            Utility.IO.StorableDataIO.Current.LoadFileData("test_file", null, (result, obj) =>
+            Utility.IO.StorableDataIO.Current.LoadFileData_NotCrypto("test_file", null, (result, obj) =>
             {
                 Debug.Log(result);
                 callback?.Invoke((Utility.IO.StorableData)obj);
