@@ -82,22 +82,23 @@ namespace SEF.Unit
                 return Count == 0;
             }
 
-            public void Initialize(/* LevelWaveData */Transform parent)
+            public void Initialize()
             {
                 InitializePoolSystem();
 
+            }
+
+            public void CreateDefaultEnemyActors(Transform parent)
+            {
                 while (true)
                 {
-                    var enemyActor = CreateEnemyActor(parent);//SetPosition
+                    var enemyActor = CreateEnemyActor(parent);
                     ChangeEnemyActor(enemyActor, null);
                     if (IsFull())
                     {
                         break;
                     }
-                    //LevelWave++;
                 }
-
-
             }
 
             public void InitializePoolSystem()
@@ -119,6 +120,20 @@ namespace SEF.Unit
                 _poolEnemyActor.Initialize(EnemyActor.Create_Test);
 
                 _levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            }
+
+
+
+            public EnemyActor CreateEnemyActor_Test(EnemyEntity enemyEntity, Transform parent)
+            {
+                var enemyActor = _poolEnemyActor.GiveElement();
+                enemyActor.SetData(enemyEntity);
+                enemyActor.SetParent(parent);
+                enemyActor.Activate();
+
+                _list.Add(enemyActor);
+
+                return enemyActor;
             }
 #endif
 
@@ -144,19 +159,7 @@ namespace SEF.Unit
 
 
 
-            public EnemyActor CreateEnemyActor_Test(EnemyEntity enemyEntity, Transform parent)
-            {
-                var enemyActor = _poolEnemyActor.GiveElement();
-                enemyActor.SetData(enemyEntity); // EnemyData, LevelWaveData
-                enemyActor.SetParent(parent);
-                enemyActor.Activate();
-
-                _list.Add(enemyActor);
-
-                return enemyActor;
-            }
-
-            public void CreateEnemyActor(Transform parent, StorableData data)
+            public EnemyActor CreateEnemyActor(Transform parent, StorableData data)
             {
                 var storableData = (EnemyActorStorableData)data;
 
@@ -174,7 +177,7 @@ namespace SEF.Unit
                 enemyActor.SetParent(parent);
                 enemyActor.SetStorableData(storableData);
                 enemyActor.Activate();
-
+                return enemyActor;
             }
             public EnemyActor CreateEnemyActor(Transform parent)
             {
@@ -225,6 +228,14 @@ namespace SEF.Unit
                 _list.Clear();
             }
 
+            public void Clear()
+            {
+                for(int i = _list.Count - 1; i >= _list.Count; i--)
+                {
+                    RetrieveEnemyActor(_list[i]);
+                }
+            }
+
 
             public StorableData GetStorableData()
             {
@@ -259,13 +270,13 @@ namespace SEF.Unit
             return new UnitManager();
         }
 
-        public void Initialize(/*AccountData*/)
+        public void Initialize()
         {
             InitializeUnitManager();
 
-            InitializeUnitActor(/*AccountData*/);
+            InitializeUnitActor();
 
-            InitializeEnemyActor(/*AccountData*/);
+            InitializeEnemyActor();
 
         }
 
@@ -332,17 +343,15 @@ namespace SEF.Unit
 #endif
 
 
-        //UnitActor 생산 - new or load
-
-        private void InitializeUnitActor(/*AccountData*/)
+        private void InitializeUnitActor()
         {
             _unitDic = new Dictionary<int, UnitActor>();
         }
 
-        //EnemyActor 생산 - new or load
-        private void InitializeEnemyActor(/*AccountData*/)
+        private void InitializeEnemyActor()
         {
-            _enemyQueueData.Initialize(/*AccountData*/_gameObject.transform);
+            _enemyQueueData.Initialize();
+            _enemyQueueData.CreateDefaultEnemyActors(_gameObject.transform);
             SetNowEnemyListener();
             OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
         }
@@ -451,7 +460,8 @@ namespace SEF.Unit
 
         private void CreateEnemyActor(StorableData data)
         {
-            _enemyQueueData.CreateEnemyActor(_gameObject.transform, data);
+            var enemyActor = _enemyQueueData.CreateEnemyActor(_gameObject.transform, data);
+            ChangeNowEnemy(enemyActor);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -655,14 +665,18 @@ namespace SEF.Unit
             }
 
 
+            while (_enemyQueueData.NowEnemy != null) {
+                RetrieveEnemyActor(_enemyQueueData.NowEnemy);
+            }
+
             var enemies = (EnemyActorsStorableData)data.Children[1];
-            CreateEnemyActor();
             for (int i = 0; i < enemies.Children.Length; i++)
             {
                 var child = (EnemyActorStorableData)enemies.Children[i];
                 CreateEnemyActor(child);
             }
-
+            SetNowEnemyListener();
+            OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
         }
 
         private StorableData GetUnitStorableData()

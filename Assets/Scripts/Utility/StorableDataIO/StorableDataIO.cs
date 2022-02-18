@@ -1,6 +1,6 @@
 namespace Utility.IO
 {
-
+    //https://ubuntuanakramli.blogspot.com/2015/04/c-encrypt-decrypt-serialized-object.html?m=1
     using UnityEngine;
     using System;
     using System.Runtime.Serialization.Formatters.Binary;
