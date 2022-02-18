@@ -57,6 +57,5 @@ namespace SEF.Data
         System.Type AccumulateStatisticsType();
         void SetCompoundInterest(float nowValue, float rate, int length = 1);
         StorableData GetStorableData();
-        //void SetStorableData(StorableData data);
     }
 }

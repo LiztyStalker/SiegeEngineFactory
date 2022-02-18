@@ -179,6 +179,14 @@ namespace SEF.Manager
                     var child = data.Children[data.Dictionary[key]];
                     _assetPackage.SetStorableData(child);
                 }
+
+                if (data.Dictionary.ContainsKey(typeof(QuestManagerStorableData).Name))
+                {
+                    var key = typeof(QuestManagerStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _questManager.SetStorableData(child);
+                }
+
             }
         }
 
@@ -193,9 +201,12 @@ namespace SEF.Manager
             list.Add(_villageManager.GetStorableData());
             list.Add(_statistics.GetStorableData());
             list.Add(_assetPackage.GetStorableData());
+            list.Add(_questManager.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
         }
+
+
 
 
         #region ##### AssetEntity #####
@@ -393,7 +404,7 @@ namespace SEF.Manager
 
 
 
-        #region ##### Blacksmith #####
+        #region ##### Smithy #####
         public void UpgradeBlacksmith(int index)
         {
             var assetData = _blacksmithManager.Upgrade(index);

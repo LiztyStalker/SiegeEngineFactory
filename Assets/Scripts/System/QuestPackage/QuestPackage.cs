@@ -12,7 +12,7 @@ namespace SEF.Quest
             return new QuestPackage();
         }
 
-        public void Initialize(IAccountData data)
+        public void Initialize(Utility.IO.StorableData data)
         {
             _list = new List<RewardedQuestEntity>();
 
@@ -57,10 +57,14 @@ namespace SEF.Quest
             return entity.GetQuestValue() >= value;
         }
 
-        public IAccountData GetSaveData()
+
+
+        #region ##### Data #####
+        public void GetData(out Utility.IO.StorableData data)
         {
-            return null;
+            data = null;
         }
+        #endregion
 
     }
 }

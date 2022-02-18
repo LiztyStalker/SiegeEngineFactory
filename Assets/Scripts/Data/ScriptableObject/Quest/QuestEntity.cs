@@ -1,9 +1,34 @@
 namespace SEF.Entity
 {
-    using System.Collections.Generic;
     using Quest;
     using Data;
-    using Account;
+    using Utility.IO;
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public class QuestEntityStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private string _key;
+        [UnityEngine.SerializeField] private int _value;
+        [UnityEngine.SerializeField] private int _index;
+        [UnityEngine.SerializeField] private bool _rewarded;
+
+        public string Key => _key;
+        public int Value => _value;
+        public int Index => _index;
+        public bool Rewarded => _rewarded;
+
+        public void SetData(string key, int value, int index, bool rewarded)
+        {
+            _key = key;
+            _value = value;
+            _index = index;
+            _rewarded = rewarded;
+        }
+    }
+
+    #endregion
 
     public struct QuestEntity
     {
@@ -19,14 +44,9 @@ namespace SEF.Entity
         public bool HasRewarded => _hasRewarded;
         public string AddressKey => _data.GetAddressKey(_nowIndex);
 
-        public void Initialize(IAccountData data)
+        public void Initialize()
         {
             Clear();
-
-            if(data != null)
-            {
-                //저장된 데이터 적용하기
-            }
         }
         public void SetData(QuestData data)
         {
@@ -90,5 +110,26 @@ namespace SEF.Entity
             return new QuestEntity();
         }
 #endif
+
+        #region ##### StorableData #####
+
+
+        public StorableData GetStorableData()
+        {
+            var data = new QuestEntityStorableData();
+            data.SetData(_data.Key, _nowValue, _nowIndex, _hasRewarded);
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var storableData = (QuestEntityStorableData)data;
+            _nowValue = storableData.Value;
+            _nowIndex = storableData.Index;
+            _hasRewarded = storableData.Rewarded;
+        }
+
+
+        #endregion
     }
 }

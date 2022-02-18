@@ -6,6 +6,34 @@ namespace SEF.Quest
     using Entity;
     using Storage;
     using System.Linq;
+    using Utility.IO;
+
+
+    #region ##### StorableData #####
+
+    [System.Serializable]
+    public class QuestDictionaryStorableData : StorableData
+    {
+        [UnityEngine.SerializeField] private string _group;
+
+        public string Group => _group;
+        public void SetData(string group, StorableData[] children)
+        {
+            _group = group;
+            Children = children;
+        }
+    }
+
+    [System.Serializable]
+    public class QuestManagerStorableData : StorableData
+    {
+        public void SetData(StorableData[] children)
+        {
+            Children = children;
+        }
+    }
+
+    #endregion
 
     public class QuestManager
     {
@@ -271,6 +299,68 @@ namespace SEF.Quest
         private void OnRefreshEvent(QuestEntity entity)
         {
             _refreshEvent?.Invoke(entity);
+        }
+
+        #endregion
+
+
+
+
+        #region ##### StorableData #####
+
+        public StorableData GetStorableData()
+        {
+            var data = new QuestManagerStorableData();
+
+            List<StorableData> list = new List<StorableData>();
+            foreach(var key in _dic.Keys)
+            {
+                var strData = new QuestDictionaryStorableData();
+                strData.SetData(key.ToString(), GetChildren(_dic[key].ToArray()));
+                list.Add(strData);
+            }
+            data.SetData(list.ToArray());
+            return data;
+        }
+
+        private StorableData[] GetChildren(QuestEntity[] entities)
+        {
+            var arr = new StorableData[entities.Length];
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = entities[i].GetStorableData();
+            }
+            return arr;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
+            var children = data.Children;
+            for (int i = 0; i < children.Length; i++)
+            {
+                var child = (QuestDictionaryStorableData)children[i];
+                var typeGroup = (QuestData.TYPE_QUEST_GROUP)System.Enum.Parse(typeof(QuestData.TYPE_QUEST_GROUP), child.Group);
+                SetChildren(typeGroup, child.Children);
+            }
+        }
+
+        private void SetChildren(QuestData.TYPE_QUEST_GROUP typeGroup, StorableData[] children)
+        {
+            if (_dic.ContainsKey(typeGroup))
+            {
+                var list = _dic[typeGroup];
+                for(int i = 0; i < children.Length; i++)
+                {
+                    var child = ((QuestEntityStorableData)children[i]);
+                    var index = list.FindIndex(c => c.Key == child.Key);
+
+                    var ch = list[index];
+                    ch.SetStorableData(child);
+                    list[index] = ch;
+                    RefreshQuest(list[index]);
+                }
+                _dic[typeGroup] = list;
+            }
         }
 
         #endregion

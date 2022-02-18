@@ -11,6 +11,7 @@ namespace SEF.Test
     using Statistics;
     using System.Numerics;
     using System;
+    using SEF.Quest;
 
     public class SerializeTest
     {
@@ -27,7 +28,11 @@ namespace SEF.Test
         {
         }
 
-
+        [System.Serializable]
+        public class ConditionQuest_Test : IConditionQuestData
+        {
+            public string AddressKey => "Test";
+        }
 
         private UnitEntity _unitEntity;
         private WorkshopLine _workshopLine;
@@ -42,6 +47,9 @@ namespace SEF.Test
 
         private AssetEntity _assetEntity;
         private AssetPackage _assetPackage;
+
+        private QuestEntity _questEntity;
+        private QuestManager _questManager;
 
         private GameSystem _gameSystem;
 
@@ -84,6 +92,13 @@ namespace SEF.Test
             _assetPackage = AssetPackage.Create();
             _assetPackage.Initialize();
 
+            _questEntity = new QuestEntity();
+            _questEntity.Initialize();
+            _questEntity.SetData(QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ConditionQuest_Test), 1, typeof(GoldAssetData), 100));
+
+            _questManager = QuestManager.Create();
+            _questManager.Initialize();
+
             _gameSystem = GameSystem.Create();
             _gameSystem.Initialize();
 
@@ -105,6 +120,15 @@ namespace SEF.Test
             _smithyLine = null;
             _smithyManager.CleanUp();
             _smithyManager = null;
+
+            _statisticsPackage.CleanUp();
+
+            _assetEntity.CleanUp();
+            _assetPackage.CleanUp();
+
+            _questEntity.CleanUp();
+            _questManager.CleanUp();
+
 
             _gameSystem.CleanUp();
             _gameSystem = null;
@@ -508,6 +532,100 @@ namespace SEF.Test
                 Debug.Log(_assetEntity.AssetValue);
             });
         }
+
+
+
+
+        [Test]
+        public void SerializeTest_QuestEntity_Serialize()
+        {
+            var data = _questEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_QuestEntity_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (QuestEntityStorableData)data;
+                Debug.Log(des.Value);
+
+                var entity = new QuestEntity();
+                entity.SetData(QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ConditionQuest_Test), 1, typeof(GoldAssetData), 100));
+                entity.SetStorableData(des);
+
+                Debug.Log(_questEntity.Key + " " + entity.Key);
+                Debug.Log(_questEntity.NowValue + " " + entity.NowValue);
+                Assert.AreEqual(_questEntity.Key, entity.Key);
+                Assert.AreEqual(_questEntity.NowValue, entity.NowValue);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_QuestEntity_Serialize_Deserialize()
+        {
+            var data = _questEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (QuestEntityStorableData)data;
+                Debug.Log(des.Value);
+
+                var entity = new QuestEntity();
+                entity.SetData(QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ConditionQuest_Test), 1, typeof(GoldAssetData), 100));
+                entity.SetStorableData(des);
+
+                Debug.Log(_questEntity.Key + " " + entity.Key);
+                Debug.Log(_questEntity.NowValue + " " + entity.NowValue);
+                Assert.AreEqual(_questEntity.Key, entity.Key);
+                Assert.AreEqual(_questEntity.NowValue, entity.NowValue);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_QuestManager_Serialize()
+        {
+            var data = _questManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+        [Test]
+        public void SerializeTest_QuestManager_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (QuestManagerStorableData)data;
+                _questManager.SetStorableData(des);
+
+                Debug.Log(des.Children.Length);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_QuestManager_Serialize_Deserialize()
+        {
+            var data = _questManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (QuestManagerStorableData)data;
+                _questManager.SetStorableData(des);
+
+                Debug.Log(des.Children.Length);
+            });
+        }
+
+
 
 
         [Test]
