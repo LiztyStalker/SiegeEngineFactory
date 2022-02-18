@@ -188,6 +188,8 @@ namespace SEF.Manager
             _gameSystem.CleanUp();
             _unitManager.CleanUp();
         }
+
+        public void SetOnRefreshStatisticsListener(System.Action<Statistics.StatisticsEntity> act) => _gameSystem.SetOnRefreshStatisticsListener(act);
 #endif
 
         //¿˙¿Â

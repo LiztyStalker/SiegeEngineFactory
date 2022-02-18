@@ -37,6 +37,15 @@ namespace SEF.Statistics
             _list.Clear();
         }
 
+        public void Refresh()
+        {
+            for(int i = 0; i < _list.Count; i++)
+            {
+                var entity = _list[i];
+                OnRefreshStatisticsEvent(entity);
+            }
+        }
+
         public void AddStatisticsData<T>(int value = 1) where T : IStatisticsData
         {
             AddStatisticsData<T>(new BigInteger(value));
@@ -61,6 +70,8 @@ namespace SEF.Statistics
                     var entity = _list[index];
                     entity.AddStatisticsData(value);
                     _list[index] = entity;
+
+                    OnRefreshStatisticsEvent(entity);
                 }
             }
         }
@@ -93,6 +104,8 @@ namespace SEF.Statistics
                     var entity = _list[index];
                     entity.SetStatisticsData(value);
                     _list[index] = entity;
+
+                    OnRefreshStatisticsEvent(entity);
                 }
             }
         }
@@ -131,6 +144,16 @@ namespace SEF.Statistics
         }
         public static System.Type FindType(string key, System.Type classType) => System.Type.GetType($"SEF.Statistics.{key}{classType.Name}");
 
+        #region ##### Listener #####
+        private System.Action<StatisticsEntity> _refreshEvent;
+        public void SetOnRefreshStatisticsListener(System.Action<StatisticsEntity> act) => _refreshEvent = act;
+
+        private void OnRefreshStatisticsEvent(StatisticsEntity entity)
+        {
+            _refreshEvent?.Invoke(entity);
+        }
+        #endregion
+
         public void GetData(out Utility.IO.StorableData data)
         {
             data = null;
@@ -163,6 +186,8 @@ namespace SEF.Statistics
 
     }
 
+
+    #region ##### Utility #####
     public class StatisticsUtility
     {
         private Dictionary<System.Type, string> _dic;
@@ -236,4 +261,5 @@ namespace SEF.Statistics
             _dic.Add(typeof(SuccessResearchStatisticsData), "연구 진행 수");
         }
     }
+    #endregion
 }

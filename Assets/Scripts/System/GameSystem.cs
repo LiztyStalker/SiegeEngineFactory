@@ -164,12 +164,12 @@ namespace SEF.Manager
                 }
 
                 //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
-                //if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
-                //{
-                //    var key = typeof(StatisticsPackageStorableData).Name;
-                //    var child = data.Children[data.Dictionary[key]];
-                //    _statistics.SetStorableData(child);
-                //}
+                if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
+                {
+                    var key = typeof(StatisticsPackageStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _statistics.SetStorableData(child);
+                }
             }
         }
 
@@ -182,7 +182,7 @@ namespace SEF.Manager
             list.Add(_workshopManager.GetStorableData());
             list.Add(_blacksmithManager.GetStorableData());
             list.Add(_villageManager.GetStorableData());
-//            list.Add(_statistics.GetStorableData());
+            list.Add(_statistics.GetStorableData());
 //            list.Add(_assetEntity.GetStorableData());
             _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
             return _storableData;
@@ -248,6 +248,8 @@ namespace SEF.Manager
         public System.Numerics.BigInteger? GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
         public System.Numerics.BigInteger? GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
         private System.Type FindType(string key, System.Type classType) => StatisticsPackage.FindType(key, classType);
+
+        public void SetOnRefreshStatisticsListener(System.Action<StatisticsEntity> act) => _statistics.SetOnRefreshStatisticsListener(act);
 
         #endregion
 

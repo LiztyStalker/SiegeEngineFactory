@@ -27,7 +27,7 @@ namespace SEF.Statistics
 
 
 
-    internal struct StatisticsEntity
+    public struct StatisticsEntity
     {
         private System.Type _type;
         private BigInteger _value;
@@ -52,15 +52,15 @@ namespace SEF.Statistics
 //            UnityEngine.Debug.Log(_type.Name + " " + _value);
 //#endif
         }
-        internal BigInteger GetStatisticsValue() => _value;
-        internal System.Type GetStatisticsType() => _type;
+        public BigInteger GetStatisticsValue() => _value;
+        public System.Type GetStatisticsType() => _type;
 
         internal static StatisticsEntity Create<T>() where T : IStatisticsData
         {
             return new StatisticsEntity(typeof(T));
         }
         
-        internal static StatisticsEntity Create(System.Type type)
+        public static StatisticsEntity Create(System.Type type)
         {
             return new StatisticsEntity(type);
         }
@@ -69,24 +69,24 @@ namespace SEF.Statistics
         public StorableData GetStorableData()
         {
             var data = new StatisticsEntityStorableData();
-            data.SetData(_type.FullName, _value.ToString());
+            data.SetData(_type.AssemblyQualifiedName, _value.ToString());
             return data;
         }
 
         public void SetStorableData(StorableData data)
         {
             var storableData = (StatisticsEntityStorableData)data;
-            _type = System.Type.GetType(storableData.Type);
+            
+            var type = System.Type.GetType(storableData.Type);
+            _type = type;
+
             var bigInt = new BigInteger();
             var str = storableData.Value;
+
             int index = 0;
             while (true)
             {
-                if(index > str.Length)
-                {
-                    break;
-                }
-                var sub = ((index + int.MaxValue.ToString().Length - 1) < str.Length) ?
+                var sub = (str.Length > (index + int.MaxValue.ToString().Length - 1)) ?
                     (str.Substring(index, int.MaxValue.ToString().Length - 1)) :
                     (str.Substring(index)) ;
 
@@ -95,6 +95,11 @@ namespace SEF.Statistics
                 bigInt *= BigInteger.Pow(10, sub.Length);
                 bigInt += val;
                 index += sub.Length;
+
+                if (index >= str.Length)
+                {
+                    break;
+                }
             }
             _value = bigInt;
         }
