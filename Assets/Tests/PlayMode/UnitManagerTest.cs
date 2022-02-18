@@ -512,7 +512,7 @@ namespace SEF.Test
 
             for (int i = 1; i < 11; i++)
             {
-                levelWaveData.SetValue_Test(10 * i);
+                levelWaveData.SetValue(10 * i);
                 _enemyEntity_Dummy.SetData(enemyData, levelWaveData);
 
                 Debug.Log(levelWaveData.IsBoss());
@@ -544,7 +544,7 @@ namespace SEF.Test
 
             for(int i = 1; i < 11; i++)
             {
-                levelWaveData.SetValue_Test(100 * i);
+                levelWaveData.SetValue(100 * i);
                 _enemyEntity_Dummy.SetData(enemyData, levelWaveData);
 
                 Debug.Log(levelWaveData.IsThemeBoss());

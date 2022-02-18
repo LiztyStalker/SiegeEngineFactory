@@ -316,7 +316,7 @@ namespace Utility.IO
 
                                 IFormatter bf = new BinaryFormatter();
                                 data = bf.Deserialize(mem);
-                                Debug.Log(data);
+                                //Debug.Log(data);
 
                                 mem.Flush();
                                 mem.Close();

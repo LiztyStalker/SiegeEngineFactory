@@ -43,7 +43,6 @@ namespace SEF.Manager
             {
                 var line = CreateLine();
                 line.SetData(arr[i]);
-                _list.Add(line);
             }
         }
 

@@ -113,16 +113,17 @@ namespace SEF.Manager
             var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
 
             var upgradeData = new UpgradeData();
-            upgradeData.SetValue_Test(entityStorableData.UpgradeValue);
+            upgradeData.SetValue(entityStorableData.UpgradeValue);
 
             _entity.SetStorableData(upgradeData);
+            Refresh();
         }
 
         public bool Contains(StorableData data)
         {
             var storableData = (VillageLineStorableData)data;
             var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
-            UnityEngine.Debug.Log(_entity + " " + entityStorableData);
+            //UnityEngine.Debug.Log(_entity + " " + entityStorableData);
             return entityStorableData.Key == _entity.Key;
 
         }

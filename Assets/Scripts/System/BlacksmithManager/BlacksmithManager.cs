@@ -108,7 +108,7 @@ namespace SEF.Manager
         {
             var data = new SmithyManagerStorableData();
 
-            Debug.Log(_list.Count);
+            //Debug.Log(_list.Count);
 
             var list = new List<StorableData>();
             for(int i = 0; i < _list.Count; i++)
@@ -123,7 +123,7 @@ namespace SEF.Manager
         public void SetStorableData(StorableData data)
         {
             var storableData = (SmithyManagerStorableData)data;
-            Debug.Log(storableData.Children.Length);
+            //Debug.Log(storableData.Children.Length);
 
             for (int i = 0; i < storableData.Children.Length; i++)
             {
