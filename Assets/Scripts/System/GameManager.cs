@@ -24,6 +24,10 @@ namespace SEF.Manager
 
     public class GameManager : MonoBehaviour
     {
+
+        [SerializeField]
+        private bool _isAutoLoad = true;
+
         private UIGame _uiGame;
         private GameSystem _gameSystem;
         private UnitManager _unitManager;
@@ -37,7 +41,9 @@ namespace SEF.Manager
 
         private void Awake()
         {
+            Application.wantsToQuit += ApplicationQuit;
             Initialize();
+            if (_isAutoLoad) LoadDataInMemory();
         }
 
         private void Initialize()
@@ -97,6 +103,7 @@ namespace SEF.Manager
         private void OnDestroy()
         {
             CleanUp();
+            Application.wantsToQuit -= ApplicationQuit;
         }
 
         private void CleanUp()
@@ -160,20 +167,7 @@ namespace SEF.Manager
             _gameSystem.AddAsset(data);
         }
 
-        public StorableData GetStorableData()
-        {
-            var data = new GameManagerStorableData();
-            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData());
-            return data;
-        }
-
-        public void SetStorableData(StorableData data)
-        {
-            Account.Current.SetStorableData(data);
-            _unitManager.SetStorableData(data.Children[0]);
-            _gameSystem.SetStorableData(data.Children[1]);
-        }
-
+      
         public void Initialize_Test()
         {
             _gameSystem = GameSystem.Create();
@@ -192,34 +186,74 @@ namespace SEF.Manager
         public void SetOnRefreshStatisticsListener(System.Action<Statistics.StatisticsEntity> act) => _gameSystem.SetOnRefreshStatisticsListener(act);
 #endif
 
-        //저장
-        public void SaveData()
+
+        public StorableData GetStorableData()
         {
             var data = new GameManagerStorableData();
             data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData());
+            return data;
+        }
+
+        public void SetStorableData(StorableData data)
+        {
             Account.Current.SetStorableData(data);
+            _unitManager.SetStorableData(data.Children[0]);
+            _gameSystem.SetStorableData(data.Children[1]);
+        }
+
+
+        //메모리 저장
+        public void SaveDataInMemory()
+        {
+            var data = GetStorableData();
+            Account.Current.SetStorableData(data);
+        }
+
+        //저장
+        public void SaveData(System.Action endCallback = null)
+        {
+            SaveDataInMemory();
             Account.Current.SaveData(null, result =>
             {
                 Debug.Log("Save " + result);
+                endCallback?.Invoke();
             });
         }
 
-        //불러오기
-        public void LoadData()
+        //불러오기 
+        public void LoadDataInMemory()
         {
+            var data = Account.Current.GetStorableData();
+            _unitManager.SetStorableData(data.Children[0]);
+            _gameSystem.SetStorableData(data.Children[1]);
+        }
 
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        //불러오기
+        public void LoadData_Test()
+        {
             Account.Current.LoadData(null, result =>
             {
                 Debug.Log("Load " + result);
 
                 if (result == TYPE_IO_RESULT.Success)
                 {
-                    var data = Account.Current.GetStorableData();
-                    //Debug.Log("Children " + data.Children);
-                    _unitManager.SetStorableData(data.Children[0]);
-                    _gameSystem.SetStorableData(data.Children[1]);
+                    LoadDataInMemory();
                 }
             });
+        }
+
+#endif
+
+
+        private bool ApplicationQuit()
+        {
+            SaveData(() =>
+            {
+                Application.Quit();
+            });
+            return false;
         }
 
     }

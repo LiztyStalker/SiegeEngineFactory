@@ -28,7 +28,7 @@ namespace SEF.Manager {
             }
             if (GUI.Button(new Rect(0, 30, 100, 30), "Load"))
             {
-                _gameManager.LoadData();
+                _gameManager.LoadData_Test();
             }
             if (GUI.Button(new Rect(0, 60, 100, 30), "Add GoldAssetData"))
             {
