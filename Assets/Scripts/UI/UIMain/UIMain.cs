@@ -111,7 +111,19 @@ namespace SEF.UI.Toolkit
      
         private void GameStart()
         {
-            Debug.Log("GameStart");
+            StartCoroutine(LoadAsyncCoroutine());
+        }
+
+        private IEnumerator LoadAsyncCoroutine()
+        {
+            var async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Game_Scene");
+            _uiStart.Hide();
+
+            while (!async.isDone)
+            {
+                _uiLoad.ShowLoad(async.progress);
+                yield return null;
+            }
         }
 
         private void Quit()

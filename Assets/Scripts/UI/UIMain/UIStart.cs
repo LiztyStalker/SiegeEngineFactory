@@ -70,7 +70,6 @@ namespace SEF.UI.Toolkit
         private void OnStartEvent()
         {
             _startEvent?.Invoke();
-            Debug.Log("Load 이후 Scene_Game으로 넘어감");
         }
     }
 }
