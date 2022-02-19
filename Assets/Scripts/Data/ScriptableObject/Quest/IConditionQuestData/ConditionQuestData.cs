@@ -22,13 +22,13 @@ namespace SEF.Quest
     {
         public string AddressKey => typeof(UIWorkshop).Name;
     }
-    public class UpgradeBlacksmithConditionQuestData : IConditionQuestData 
+    public class UpgradeSmithyConditionQuestData : IConditionQuestData 
     {
-        public string AddressKey => typeof(UIBlacksmith).Name;
+        public string AddressKey => typeof(UISmithy).Name;
     }
-    public class TechBlacksmithConditionQuestData : IConditionQuestData 
+    public class TechSmithyConditionQuestData : IConditionQuestData 
     {
-        public string AddressKey => typeof(UIBlacksmith).Name;
+        public string AddressKey => typeof(UISmithy).Name;
     }
     public class UpgradeVillageConditionQuestData : IConditionQuestData
     {
@@ -104,8 +104,8 @@ namespace SEF.Quest
 
             _dic.Add(typeof(UpgradeUnitConditionQuestData), "유닛업그레이드");
             _dic.Add(typeof(TechUnitConditionQuestData), "유닛테크");
-            _dic.Add(typeof(UpgradeBlacksmithConditionQuestData), "대장간업그레이드");
-            _dic.Add(typeof(TechBlacksmithConditionQuestData), "대장간테크");
+            _dic.Add(typeof(UpgradeSmithyConditionQuestData), "대장간업그레이드");
+            _dic.Add(typeof(TechSmithyConditionQuestData), "대장간테크");
 
             _dic.Add(typeof(UpgradeVillageConditionQuestData), "마을업그레이드");
             _dic.Add(typeof(TechVillageConditionQuestData), "마을테크");

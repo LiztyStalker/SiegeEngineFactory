@@ -9,8 +9,6 @@ namespace SEF.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using Statistics;
-    using System.Numerics;
-    using System;
     using SEF.Quest;
     using SEF.Unit;
 
@@ -49,9 +47,9 @@ namespace SEF.Test
         private WorkshopLine _workshopLine;
         private WorkshopManager _workshopManager;
 
-        private BlacksmithEntity _smithyEntity;
-        private BlacksmithLine _smithyLine;
-        private BlacksmithManager _smithyManager;
+        private SmithyEntity _smithyEntity;
+        private SmithyLine _smithyLine;
+        private SmithyManager _smithyManager;
 
         private StatisticsEntity _statisticsEntity;
         private StatisticsPackage _statisticsPackage;
@@ -99,16 +97,16 @@ namespace SEF.Test
             _workshopManager.Initialize();
 
 
-            _smithyEntity = new BlacksmithEntity();
+            _smithyEntity = new SmithyEntity();
             _smithyEntity.Initialize();
-            _smithyEntity.SetData(BlacksmithData.Create_Test("Test"));
+            _smithyEntity.SetData(SmithyData.Create_Test("Test"));
 
-            _smithyLine = BlacksmithLine.Create();
+            _smithyLine = SmithyLine.Create();
             _smithyLine.Initialize();
             _smithyLine.SetIndex(0);
-            _smithyLine.SetData(BlacksmithData.Create_Test("Test"));
+            _smithyLine.SetData(SmithyData.Create_Test("Test"));
 
-            _smithyManager = BlacksmithManager.Create();
+            _smithyManager = SmithyManager.Create();
             _smithyManager.Initialize();
 
             _statisticsEntity = StatisticsEntity.Create(typeof(Statistics_Test));
@@ -323,9 +321,9 @@ namespace SEF.Test
                 var upgradeData = new UpgradeData();
                 upgradeData.SetValue(des.UpgradeValue);
 
-                var entity = new BlacksmithEntity();
+                var entity = new SmithyEntity();
                 entity.SetStorableData(upgradeData);
-                entity.SetData(BlacksmithData.Create_Test("Test"));
+                entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);
                 Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);
@@ -351,9 +349,9 @@ namespace SEF.Test
                 var upgradeData = new UpgradeData();
                 upgradeData.SetValue(des.UpgradeValue);
 
-                var entity = new BlacksmithEntity();
+                var entity = new SmithyEntity();
                 entity.SetStorableData(upgradeData);
-                entity.SetData(BlacksmithData.Create_Test("Test"));
+                entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);
                 Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);

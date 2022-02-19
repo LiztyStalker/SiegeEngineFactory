@@ -26,16 +26,16 @@ namespace SEF.Manager
 
 
 
-    public class BlacksmithLine
+    public class SmithyLine
     {
-        private BlacksmithEntity _entity;
+        private SmithyEntity _entity;
 
         private int _index;
 
 
-        public static BlacksmithLine Create()
+        public static SmithyLine Create()
         {
-            return new BlacksmithLine();
+            return new SmithyLine();
         }
         
         public void Initialize()
@@ -53,7 +53,7 @@ namespace SEF.Manager
             _index = index;
         }
 
-        public void SetData(BlacksmithData data)
+        public void SetData(SmithyData data)
         {
             _entity.SetData(data);
         }
@@ -75,8 +75,8 @@ namespace SEF.Manager
 
         #region ##### Listener #####
 
-        private System.Action<int, BlacksmithEntity> _refreshEvent;
-        public void SetOnRefreshListener(System.Action<int, BlacksmithEntity> act) => _refreshEvent = act;
+        private System.Action<int, SmithyEntity> _refreshEvent;
+        public void SetOnRefreshListener(System.Action<int, SmithyEntity> act) => _refreshEvent = act;
         private void OnRefreshEvent()
         {
             _refreshEvent?.Invoke(_index, _entity);

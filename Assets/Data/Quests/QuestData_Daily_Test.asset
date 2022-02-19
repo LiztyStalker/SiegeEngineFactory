@@ -18,7 +18,7 @@ MonoBehaviour:
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeVillageConditionQuestData
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 4
     _serializedAssetData:
       _assetData: 0

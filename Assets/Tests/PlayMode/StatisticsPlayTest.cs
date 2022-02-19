@@ -456,19 +456,19 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_UpgradeBlacksmithStatisticsData()
         {
-            _gameSystem.UpgradeBlacksmith(0);
+            _gameSystem.UpgradeSmithy(0);
             yield return null;
-            Debug.Log(_gameSystem.GetStatisticsValue<UpgradeBlacksmithStatisticsData>());
-            Assert.IsTrue(_gameSystem.GetStatisticsValue<UpgradeBlacksmithStatisticsData>() == 1);
+            Debug.Log(_gameSystem.GetStatisticsValue<UpgradeSmithyStatisticsData>());
+            Assert.IsTrue(_gameSystem.GetStatisticsValue<UpgradeSmithyStatisticsData>() == 1);
 
         }
         [UnityTest]
         public IEnumerator StatisticsPlayTest_TechBlacksmithStatisticsData()
         {
-            _gameSystem.UpTechBlacksmith(0);
+            _gameSystem.UpTechSmithy(0);
             yield return null;
-            Debug.Log(_gameSystem.GetStatisticsValue<TechBlacksmithStatisticsData>());
-            Assert.IsTrue(_gameSystem.GetStatisticsValue<TechBlacksmithStatisticsData>() == 1);
+            Debug.Log(_gameSystem.GetStatisticsValue<TechSmithyStatisticsData>());
+            Assert.IsTrue(_gameSystem.GetStatisticsValue<TechSmithyStatisticsData>() == 1);
 
         }
         #endregion

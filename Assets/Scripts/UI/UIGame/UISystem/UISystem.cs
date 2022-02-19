@@ -27,7 +27,7 @@ namespace SEF.UI.Toolkit
 
 
         private Button _uiWorkshopButton;
-        private Button _uiBlacksmithButton;
+        private Button _uiSmithyButton;
         private Button _uiVillageButton;
         private Button _uiResearchButton;
 
@@ -38,7 +38,7 @@ namespace SEF.UI.Toolkit
 
 
             _uiWorkshopButton = this.Q<Button>("workshop-button");
-            _uiBlacksmithButton = this.Q<Button>("blacksmith-button");
+            _uiSmithyButton = this.Q<Button>("blacksmith-button");
             _uiVillageButton = this.Q<Button>("village-button");
             _uiResearchButton = this.Q<Button>("research-button");
 
@@ -53,12 +53,12 @@ namespace SEF.UI.Toolkit
 
 
 
-            UIBlacksmith uiBlacksmith = this.Q<UIBlacksmith>();
+            UISmithy uiSmithy = this.Q<UISmithy>();
 
             //UISystem에 등록되어있지 않으면 자동 생성 필요
-            Debug.Assert(uiBlacksmith != null, "uiBlacksmith 이 등록되지 않았습니다");
+            Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
 
-            _uiBlacksmithButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
+            _uiSmithyButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiSmithy); });
 
             UIVillage uiVillage = this.Q<UIVillage>();
 
@@ -77,7 +77,7 @@ namespace SEF.UI.Toolkit
 
 
             _list.Add(uiWorkshop);
-            _list.Add(uiBlacksmith);
+            _list.Add(uiSmithy);
             _list.Add(uiVillage);
             _list.Add(uiResearch);
 
@@ -93,7 +93,7 @@ namespace SEF.UI.Toolkit
         {
             List<KeyValuePair<string, System.Action>> list = new List<KeyValuePair<string, System.Action>>();
             list.Add(new KeyValuePair<string, System.Action>(typeof(UIWorkshop).Name, () => OnShowPanelEvent(GetSystemPanel<UIWorkshop>())));
-            list.Add(new KeyValuePair<string, System.Action>(typeof(UIBlacksmith).Name, () => OnShowPanelEvent(GetSystemPanel<UIBlacksmith>())));
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UISmithy).Name, () => OnShowPanelEvent(GetSystemPanel<UISmithy>())));
             list.Add(new KeyValuePair<string, System.Action>(typeof(UIResearch).Name, () => OnShowPanelEvent(GetSystemPanel<UIResearch>())));
             list.Add(new KeyValuePair<string, System.Action>(typeof(UIVillage).Name, () => OnShowPanelEvent(GetSystemPanel<UIVillage>())));
             return list.ToArray();
@@ -111,8 +111,8 @@ namespace SEF.UI.Toolkit
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             _uiWorkshopButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiWorkshop); });
 
-            var uiBlacksmith = GetSystemPanel<UIBlacksmith>();
-            _uiBlacksmithButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
+            var uiBlacksmith = GetSystemPanel<UISmithy>();
+            _uiSmithyButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
 
             var uiVillage = GetSystemPanel<UIVillage>();
             _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
@@ -150,10 +150,10 @@ namespace SEF.UI.Toolkit
         }     
 
 
-        public void RefreshBlacksmith(int index, BlacksmithEntity entity)
+        public void RefreshBlacksmith(int index, SmithyEntity entity)
         {
-            var ui = GetSystemPanel<UIBlacksmith>();
-            ui.RefreshBlacksmith(index, entity);
+            var ui = GetSystemPanel<UISmithy>();
+            ui.RefreshSmithy(index, entity);
         }
 
         public void RefreshVillage(int index, VillageEntity entity)
@@ -216,12 +216,12 @@ namespace SEF.UI.Toolkit
 
         public void AddOnBlacksmithUpgradeListener(System.Action<int> act)
         {
-            var ui = GetSystemPanel<UIBlacksmith>();
+            var ui = GetSystemPanel<UISmithy>();
             ui.AddUpgradeListener(act);
         }
         public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act)
         {
-            var ui = GetSystemPanel<UIBlacksmith>();
+            var ui = GetSystemPanel<UISmithy>();
             ui.RemoveUpgradeListener(act);
         }
 

@@ -102,7 +102,7 @@ namespace SEF.UI.Toolkit
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
 
-        public void RefreshBlacksmith(int index, BlacksmithEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
+        public void RefreshBlacksmith(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
 
         public void RefreshAssetEntity(AssetPackage assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);

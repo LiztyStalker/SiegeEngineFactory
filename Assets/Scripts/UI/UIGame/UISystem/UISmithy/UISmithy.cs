@@ -9,20 +9,21 @@ namespace SEF.UI.Toolkit
     using Entity;
     using Utility.Address;
 
-    public class UIBlacksmith : VisualElement, ISystemPanel
+    public class UISmithy : VisualElement, ISystemPanel
     {
-        public new class UxmlFactory : UxmlFactory<UIBlacksmith, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<UISmithy, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
-        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIBlacksmith/UIBlacksmith.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UISmithy/UISmithy.uxml";
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UISystem/UISmithy/UISmithy.uss";
 
-        private Dictionary<int, UIBlacksmithLine> _dic = new Dictionary<int, UIBlacksmithLine>();
+        private Dictionary<int, UISmithyLine> _dic = new Dictionary<int, UISmithyLine>();
 
         private ScrollView _scrollView;
 
-        public static UIBlacksmith Create()
+        public static UISmithy Create()
         {
-            return UIUXML.GetVisualElement<UIBlacksmith>(PATH_UI_UXML);
+            return UIUXML.GetVisualElement<UISmithy>(PATH_UI_UXML);
         }
 
         public void Initialize()
@@ -53,19 +54,19 @@ namespace SEF.UI.Toolkit
 
         //private bool IsView() => this.style.display == DisplayStyle.Flex;
 
-        public void RefreshBlacksmith(int index, BlacksmithEntity entity)
+        public void RefreshSmithy(int index, SmithyEntity entity)
         {
             if (!_dic.ContainsKey(index))
             {
-                //Debug.Log("Create");
-                var line = UIBlacksmithLine.Create();
+                var line = UISmithyLine.Create();
+                Debug.Log("Create " + line);
                 line.Initialize();
                 line.SetIndex(index);
                 line.AddUpgradeListener(OnUpgradeEvent);
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
-            _dic[index].RefreshBlacksmithLine(entity);
+            _dic[index].RefreshSmithyLine(entity);
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -97,22 +98,22 @@ namespace SEF.UI.Toolkit
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
     [RequireComponent(typeof(UIDocument))]
-    public class UIBlacksmith_Test : MonoBehaviour
+    public class UISmithy_Test : MonoBehaviour
     {
-        private UIBlacksmith _instance;
-        public UIBlacksmith Instance => _instance;
+        private UISmithy _instance;
+        public UISmithy Instance => _instance;
 
-        public static UIBlacksmith_Test Create()
+        public static UISmithy_Test Create()
         {
             var obj = new GameObject();
-            obj.name = "UIBlacksmith_Test";
-            return obj.AddComponent<UIBlacksmith_Test>();
+            obj.name = "UISmithy_Test";
+            return obj.AddComponent<UISmithy_Test>();
         }
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UIBlacksmith.PATH_UI_UXML);
-            _instance = root.Q<UIBlacksmith>();
+            var root = UIUXML.GetVisualElement(gameObject, UISmithy.PATH_UI_UXML);
+            _instance = root.Q<UISmithy>();
             _instance.Initialize();
         }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeBlacksmithConditionQuestData
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 1
     _serializedAssetData:
       _assetData: 0

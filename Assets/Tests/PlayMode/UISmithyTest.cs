@@ -12,7 +12,7 @@ namespace SEF.UI.Test
     using Data;
     using Entity;
 
-    public class UIBlacksmithTest
+    public class UISmithyTest
     {
 
         private Camera _camera;
@@ -35,65 +35,65 @@ namespace SEF.UI.Test
 
 
         [UnityTest]
-        public IEnumerator UIBlacksmithLineTest_Initialize()
+        public IEnumerator UISmithyLineTest_Initialize()
         {
-            var line = UIBlacksmithLine_Test.Create();
+            var line = UISmithyLine_Test.Create();
             line.Initialize();
             yield return new WaitForSeconds(1f);
             line.Dispose();
         }
 
         [UnityTest]
-        public IEnumerator UIBlacksmithTest_Initialize()
+        public IEnumerator UISmithyTest_Initialize()
         {
-            var system = UIBlacksmith_Test.Create();
+            var system = UISmithy_Test.Create();
             system.Initialize();
             yield return new WaitForSeconds(1f);
             system.Dispose();
         }
 
         /// <summary>
-        /// UIBlackSmith
-        /// UIBlacksmithLine 1개 생성
+        /// UISmithy
+        /// UISmithyLine 1개 생성
         /// </summary>
         /// <returns></returns>
         [UnityTest]
-        public IEnumerator UIBlacksmithTest_Create_UIBlacksmithLine()
+        public IEnumerator UISmithyTest_Create_UISmithyLine()
         {
-            BlacksmithEntity entity;
+            SmithyEntity entity;
             entity.Initialize();
-            entity.SetData(BlacksmithData.Create_Test());
-            var system = UIBlacksmith_Test.Create();
+            entity.SetData(SmithyData.Create_Test());
+            var system = UISmithy_Test.Create();
             system.Initialize();
-            system.Instance.RefreshBlacksmith(0, entity);
+            system.Instance.RefreshSmithy(0, entity);
             yield return new WaitForSeconds(1f);
             system.Dispose();
         }
 
 
         /// <summary>
-        /// UIBlackSmith
-        /// UIBlacksmithLine 5개 생성
+        /// UISmithy
+        /// UISmithyLine 5개 생성
         /// </summary>
         /// <returns></returns>
         [UnityTest]
-        public IEnumerator UIBlacksmithTest_Create_UIBlacksmithLine_x5()
+        public IEnumerator UISmithyTest_Create_UISmithyLine_x5()
         {
-            BlacksmithEntity entity;
+            SmithyEntity entity;
             entity.Initialize();
-            entity.SetData(BlacksmithData.Create_Test());
+            entity.SetData(SmithyData.Create_Test());
 
-            var system = UIBlacksmith_Test.Create();
+            var system = UISmithy_Test.Create();
             system.Initialize();
-            system.Instance.RefreshBlacksmith(0, entity);
+            system.Instance.RefreshSmithy(0, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshBlacksmith(1, entity);
+            system.Instance.RefreshSmithy(1, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshBlacksmith(2, entity);
+            system.Instance.RefreshSmithy(2, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshBlacksmith(3, entity);
+            system.Instance.RefreshSmithy(3, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshBlacksmith(4, entity);
+            system.Instance.RefreshSmithy(4, entity);
             yield return new WaitForSeconds(0.5f);
             system.Dispose();
         }
@@ -102,24 +102,24 @@ namespace SEF.UI.Test
 
 
         /// <summary>
-        /// UIBlacksmithLine UpgradeButton 비활성화
+        /// UISmithyLine UpgradeButton 비활성화
         /// </summary>
         /// <returns></returns>
         [UnityTest]
-        public IEnumerator UIBlacksmithLineTest_UpgradeButton_Disable()
+        public IEnumerator UISmithyLineTest_UpgradeButton_Disable()
         {
 
-            BlacksmithEntity entity;
+            SmithyEntity entity;
             entity.Initialize();
-            entity.SetData(BlacksmithData.Create_Test());
+            entity.SetData(SmithyData.Create_Test());
 
             AssetPackage assetEntity = AssetPackage.Create();
             assetEntity.Initialize();
 
 
-            var line = UIBlacksmithLine_Test.Create();
+            var line = UISmithyLine_Test.Create();
             line.Initialize();
-            line.Instance.RefreshBlacksmithLine(entity);
+            line.Instance.RefreshSmithyLine(entity);
             line.Instance.RefreshAssetEntity(assetEntity);
 
             yield return new WaitForSeconds(1f);
@@ -130,16 +130,16 @@ namespace SEF.UI.Test
 
 
         /// <summary>
-        /// UIBlacksmithLine UpgradeButton 활성화
+        /// UISmithyLine UpgradeButton 활성화
         /// </summary>
         /// <returns></returns>
         [UnityTest]
-        public IEnumerator UIBlacksmithLineTest_UpgradeButton_Enable()
+        public IEnumerator UISmithyLineTest_UpgradeButton_Enable()
         {
 
-            BlacksmithEntity entity;
+            SmithyEntity entity;
             entity.Initialize();
-            entity.SetData(BlacksmithData.Create_Test());
+            entity.SetData(SmithyData.Create_Test());
 
             IAssetData assetData = GoldAssetData.Create_Test(500);
 
@@ -148,9 +148,9 @@ namespace SEF.UI.Test
             assetEntity.Add(assetData);
 
 
-            var line = UIBlacksmithLine_Test.Create();
+            var line = UISmithyLine_Test.Create();
             line.Initialize();
-            line.Instance.RefreshBlacksmithLine(entity);
+            line.Instance.RefreshSmithyLine(entity);
             line.Instance.RefreshAssetEntity(assetEntity);
 
             yield return new WaitForSeconds(1f);

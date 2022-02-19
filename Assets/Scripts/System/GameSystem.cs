@@ -2,14 +2,13 @@ namespace SEF.Manager
 {
     using Data;
     using Entity;
-    using Unit;
-    using Statistics;
-    using Research;
-    using Quest;
-    using Status;
     using Process;
-    using Utility.IO;
+    using Quest;
+    using Statistics;
+    using Status;
     using System.Collections.Generic;
+    using Unit;
+    using Utility.IO;
 
 
 
@@ -40,7 +39,7 @@ namespace SEF.Manager
     {
         //SaveLoad
         private WorkshopManager _workshopManager;
-        private BlacksmithManager _blacksmithManager;
+        private SmithyManager _smithyManager;
         private VillageManager _villageManager;
         //ResearchManager
 
@@ -73,8 +72,8 @@ namespace SEF.Manager
             _workshopManager.SetOnConditionProductUnitListener(IsConditionProductUnitEvent);
             _workshopManager.Initialize();
 
-            _blacksmithManager = BlacksmithManager.Create();
-            _blacksmithManager.Initialize();
+            _smithyManager = SmithyManager.Create();
+            _smithyManager.Initialize();
 
             _villageManager = VillageManager.Create();
             _villageManager.Initialize();
@@ -105,7 +104,7 @@ namespace SEF.Manager
             _process.CleanUp();
 
             _workshopManager.CleanUp();
-            _blacksmithManager.CleanUp();
+            _smithyManager.CleanUp();
             _villageManager.CleanUp();
             //ResearchManager
 
@@ -122,7 +121,7 @@ namespace SEF.Manager
         public void Refresh()
         {
             _workshopManager.Refresh();
-            _blacksmithManager.Refresh();
+            _smithyManager.Refresh();
             _villageManager.Refresh();
 
             _questManager.RefreshAllQuests();
@@ -148,7 +147,7 @@ namespace SEF.Manager
                 {
                     var key = typeof(SmithyManagerStorableData).Name;
                     var child = data.Children[data.Dictionary[key]];
-                    _blacksmithManager.SetStorableData(child);
+                    _smithyManager.SetStorableData(child);
                 }
 
                 if (data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name))
@@ -188,7 +187,7 @@ namespace SEF.Manager
             List<StorableData> list = new List<StorableData>();
 
             list.Add(_workshopManager.GetStorableData());
-            list.Add(_blacksmithManager.GetStorableData());
+            list.Add(_smithyManager.GetStorableData());
             list.Add(_villageManager.GetStorableData());
             list.Add(_statistics.GetStorableData());
             list.Add(_assetPackage.GetStorableData());
@@ -395,18 +394,18 @@ namespace SEF.Manager
 
 
         #region ##### Smithy #####
-        public void UpgradeBlacksmith(int index)
+        public void UpgradeSmithy(int index)
         {
-            var assetData = _blacksmithManager.Upgrade(index);
+            var assetData = _smithyManager.Upgrade(index);
             SubjectAsset(assetData);
-            AddStatisticsData<UpgradeBlacksmithStatisticsData>();
-            AddQuestValue<UpgradeBlacksmithConditionQuestData>();
+            AddStatisticsData<UpgradeSmithyStatisticsData>();
+            AddQuestValue<UpgradeSmithyConditionQuestData>();
         }
-        public void UpTechBlacksmith(int index)
+        public void UpTechSmithy(int index)
         {
-            _blacksmithManager.UpTech(index);
-            AddStatisticsData<TechBlacksmithStatisticsData>();
-            AddQuestValue<TechBlacksmithConditionQuestData>();
+            _smithyManager.UpTech(index);
+            AddStatisticsData<TechSmithyStatisticsData>();
+            AddQuestValue<TechSmithyConditionQuestData>();
         }
         #endregion
 
@@ -477,8 +476,8 @@ namespace SEF.Manager
         #region ##### Listener #####
         public void AddRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.AddRefreshListener(act);
         public void RemoveRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.RemoveRefreshListener(act);
-        public void AddOnRefreshBlacksmithListener(System.Action<int, BlacksmithEntity> act) => _blacksmithManager.AddOnRefreshListener(act);
-        public void RemoveOnRefreshBlacksmithListener(System.Action<int, BlacksmithEntity> act) => _blacksmithManager.RemoveOnRefreshListener(act);
+        public void AddOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.AddOnRefreshListener(act);
+        public void RemoveOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.RemoveOnRefreshListener(act);
         public void AddOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.AddOnRefreshListener(act);
         public void RemoveOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.RemoveOnRefreshListener(act);
 

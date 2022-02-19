@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="UIBlacksmithLine.uss" />
-    <SEF.UI.Toolkit.UIBlacksmithLine style="height: 200px;">
+    <Style src="UISmithyLine.uss" />
+    <SEF.UI.Toolkit.UISmithyLine style="height: 200px;">
         <ui:VisualElement name="activate-panel" class="blacksmith-activate-panel" style="display: flex;">
             <ui:VisualElement name="line-panel" class="blacksmith-line-panel">
                 <ui:VisualElement name="line-icon" class="blacksmith-icon" style="background-color: rgb(255, 255, 255);" />
@@ -35,5 +35,5 @@
         <ui:VisualElement name="inactivate-panel" class="blacksmith-inactivate-panel">
             <ui:Label text="---" display-tooltip-when-elided="true" style="font-size: 60px;" />
         </ui:VisualElement>
-    </SEF.UI.Toolkit.UIBlacksmithLine>
+    </SEF.UI.Toolkit.UISmithyLine>
 </ui:UXML>

@@ -325,50 +325,50 @@ namespace SEF.Test
         [Test]
         public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeBlacksmithConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeSmithyConditionQuestData), 1, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
 
-            _gameSystem.UpgradeBlacksmith(0);
+            _gameSystem.UpgradeSmithy(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData_x3()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeBlacksmithConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
 
-            _gameSystem.UpgradeBlacksmith(0);
-            _gameSystem.UpgradeBlacksmith(0);
-            _gameSystem.UpgradeBlacksmith(0);
+            _gameSystem.UpgradeSmithy(0);
+            _gameSystem.UpgradeSmithy(0);
+            _gameSystem.UpgradeSmithy(0);
         }
         [Test]
         public void QuestIntegrationTest_TechBlacksmithConditionQuestData()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechBlacksmithConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechSmithyConditionQuestData), 1, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
 
-            _gameSystem.UpTechBlacksmith(0);
+            _gameSystem.UpTechSmithy(0);
         }
         [Test]
         public void QuestIntegrationTest_TechBlacksmithConditionQuestData_x3()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechBlacksmithConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
 
-            _gameSystem.UpTechBlacksmith(0);
-            _gameSystem.UpTechBlacksmith(0);
-            _gameSystem.UpTechBlacksmith(0);
+            _gameSystem.UpTechSmithy(0);
+            _gameSystem.UpTechSmithy(0);
+            _gameSystem.UpTechSmithy(0);
         }
         [Test]
         public void QuestIntegrationTest_UpgradeVillageConditionQuestData()

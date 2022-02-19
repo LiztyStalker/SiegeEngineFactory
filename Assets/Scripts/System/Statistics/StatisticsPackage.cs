@@ -256,8 +256,8 @@ namespace SEF.Statistics
             _dic.Add(typeof(UpgradeVillageStatisticsData), "마을 업글 진행 수");
             _dic.Add(typeof(TechVillageStatisticsData), "마을 테크 진행 수");
 
-            _dic.Add(typeof(UpgradeBlacksmithStatisticsData), "대장간 업글 진행 수");
-            _dic.Add(typeof(TechBlacksmithStatisticsData), "대장간 테크 진행 수");
+            _dic.Add(typeof(UpgradeSmithyStatisticsData), "대장간 업글 진행 수");
+            _dic.Add(typeof(TechSmithyStatisticsData), "대장간 테크 진행 수");
 
             _dic.Add(typeof(SuccessResearchStatisticsData), "연구 진행 수");
         }

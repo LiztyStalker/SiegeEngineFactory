@@ -6,12 +6,13 @@ namespace SEF.UI.Toolkit {
     using Entity;
     using SEF.Data;
 
-    public class UIBlacksmithLine : VisualElement
+    public class UISmithyLine : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<UIBlacksmithLine, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<UISmithyLine, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
-        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIBlacksmith/UIBlacksmithLine.uxml";
+        internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UISmithy/UISmithyLine.uxml";
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UISystem/UISmithy/UISmithyLine.uss";
 
 
         private int _index;
@@ -35,11 +36,11 @@ namespace SEF.UI.Toolkit {
 
         public void SetIndex(int index) => _index = index;
 
-        private BlacksmithEntity _entity;
+        private SmithyEntity _entity;
 
-        public static UIBlacksmithLine Create()
+        public static UISmithyLine Create()
         {
-            return UIUXML.GetVisualElement<UIBlacksmithLine>(PATH_UI_UXML);
+            return UIUXML.GetVisualElement<UISmithyLine>(PATH_UI_UXML);
         }
 
         public void Initialize()
@@ -90,7 +91,7 @@ namespace SEF.UI.Toolkit {
         }
 
 
-        public void RefreshBlacksmithLine(BlacksmithEntity entity)
+        public void RefreshSmithyLine(SmithyEntity entity)
         {
             if (_activatePanel.style.display == DisplayStyle.None)
             {
@@ -140,22 +141,22 @@ namespace SEF.UI.Toolkit {
 
     #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
     [RequireComponent(typeof(UIDocument))]
-    public class UIBlacksmithLine_Test : MonoBehaviour
+    public class UISmithyLine_Test : MonoBehaviour
     {
-        private UIBlacksmithLine _instance;
-        public UIBlacksmithLine Instance => _instance;
+        private UISmithyLine _instance;
+        public UISmithyLine Instance => _instance;
 
-        public static UIBlacksmithLine_Test Create()
+        public static UISmithyLine_Test Create()
         {
             var obj = new GameObject();
-            obj.name = "UIBlacksmithLine_Test";
-            return obj.AddComponent<UIBlacksmithLine_Test>();
+            obj.name = "UISmithyLine_Test";
+            return obj.AddComponent<UISmithyLine_Test>();
         }
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UIBlacksmithLine.PATH_UI_UXML);
-            _instance = root.Q<UIBlacksmithLine>();
+            var root = UIUXML.GetVisualElement(gameObject, UISmithyLine.PATH_UI_UXML);
+            _instance = root.Q<UISmithyLine>();
             _instance.Initialize();
         }
 

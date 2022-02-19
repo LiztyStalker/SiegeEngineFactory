@@ -25,20 +25,20 @@ namespace SEF.Manager
 
 
 
-    public class BlacksmithManager
+    public class SmithyManager
     {
 
-        private List<BlacksmithLine> _list;
+        private List<SmithyLine> _list;
 
-        public static BlacksmithManager Create()
+        public static SmithyManager Create()
         {
-            return new BlacksmithManager();
+            return new SmithyManager();
         }
 
         public void Initialize()
         {
-            _list = new List<BlacksmithLine>();
-            var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
+            _list = new List<SmithyLine>();
+            var arr = DataStorage.Instance.GetAllDataArrayOrZero<SmithyData>();
 
             for (int i = 0; i < arr.Length; i++)
             {
@@ -73,9 +73,9 @@ namespace SEF.Manager
         {
         }
 
-        private BlacksmithLine CreateLine()
+        private SmithyLine CreateLine()
         {
-            var line = BlacksmithLine.Create();
+            var line = SmithyLine.Create();
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
@@ -87,10 +87,10 @@ namespace SEF.Manager
         #region ##### Listener #####
 
 
-        private System.Action<int, BlacksmithEntity> _refreshEvent;
-        public void AddOnRefreshListener(System.Action<int, BlacksmithEntity> act) => _refreshEvent += act;
-        public void RemoveOnRefreshListener(System.Action<int, BlacksmithEntity> act) => _refreshEvent -= act;
-        private void OnRefreshEvent(int index, BlacksmithEntity unitEntity)
+        private System.Action<int, SmithyEntity> _refreshEvent;
+        public void AddOnRefreshListener(System.Action<int, SmithyEntity> act) => _refreshEvent += act;
+        public void RemoveOnRefreshListener(System.Action<int, SmithyEntity> act) => _refreshEvent -= act;
+        private void OnRefreshEvent(int index, SmithyEntity unitEntity)
         {
             _refreshEvent?.Invoke(index, unitEntity);
         }
@@ -143,7 +143,7 @@ namespace SEF.Manager
         {
             if (accountData == null)
             {
-                _list = new List<BlacksmithLine>();
+                _list = new List<SmithyLine>();
                 var line = CreateLine();
                 line.SetIndex(Count);
             }

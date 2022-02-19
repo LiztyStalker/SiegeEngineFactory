@@ -6,7 +6,7 @@ namespace SEF.Data
 
     [CreateAssetMenu(fileName = "BlacksmithData", menuName = "ScriptableObjects/BlacksmithData")]
 
-    public class BlacksmithData : ScriptableObject
+    public class SmithyData : ScriptableObject
     {
 
         [SerializeField]
@@ -46,12 +46,12 @@ namespace SEF.Data
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static BlacksmithData Create_Test(string key = null)
+        public static SmithyData Create_Test(string key = null)
         {
-            return new BlacksmithData(key);
+            return new SmithyData(key);
         }
 
-        private BlacksmithData(string key)
+        private SmithyData(string key)
         {
             _key = key;
         }

@@ -26,10 +26,10 @@ namespace SEF.Entity
     #endregion
 
 
-    public struct BlacksmithEntity : IStatusProvider
+    public struct SmithyEntity : IStatusProvider
     {
         //Member
-        private BlacksmithData _data;
+        private SmithyData _data;
 
         //Lazy Member
         private UpgradeData _upgradeData;
@@ -64,7 +64,7 @@ namespace SEF.Entity
             _upgradeData = null;
         }
 
-        public void SetData(BlacksmithData data)
+        public void SetData(SmithyData data)
         {
             _data = data;            
         }

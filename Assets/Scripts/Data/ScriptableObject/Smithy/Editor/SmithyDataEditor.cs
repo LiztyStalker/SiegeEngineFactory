@@ -5,8 +5,8 @@ namespace SEF.Data.Editor
     using UnityEngine.UIElements;
     using UnityEditor.UIElements;
 
-    [CustomEditor(typeof(BlacksmithData))]
-    public class BlacksmithDataEditor : Editor
+    [CustomEditor(typeof(SmithyData))]
+    public class SmithyDataEditor : Editor
     {
         private VisualElement _root;
 
@@ -23,10 +23,10 @@ namespace SEF.Data.Editor
         {
             _root = new VisualElement();
 
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Data/ScriptableObject/Blacksmith/Editor/BlacksmithDataEditor.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Data/ScriptableObject/Smithy/Editor/SmithyDataEditor.uxml");
             visualTree.CloneTree(_root);
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Data/ScriptableObject/Blacksmith/Editor/BlacksmithDataEditor.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Data/ScriptableObject/Smithy/Editor/SmithyDataEditor.uss");
             _root.styleSheets.Add(styleSheet);
 
         }

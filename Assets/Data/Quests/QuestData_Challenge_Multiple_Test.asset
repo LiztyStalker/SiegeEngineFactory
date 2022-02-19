@@ -25,19 +25,19 @@ MonoBehaviour:
       _assetValue: 
   _questConditionDataArray:
   - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeUnitConditionQuestData
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 1
     _serializedAssetData:
       _assetData: 0
       _assetValue: 100
   - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeUnitConditionQuestData
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 2
     _serializedAssetData:
       _assetData: 0
       _assetValue: 100
   - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeUnitConditionQuestData
+      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
     _conditionValue: 3
     _serializedAssetData:
       _assetData: 0
