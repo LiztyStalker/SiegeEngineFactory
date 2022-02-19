@@ -100,7 +100,6 @@ namespace SEF.Unit
         public void CleanUp()
         {
             CleanUpAttackActor();
-            DestroyImmediate(gameObject);
         }
 
         private void CleanUpAttackActor()

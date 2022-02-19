@@ -12,6 +12,7 @@ namespace SEF.Test
     using System.Numerics;
     using System;
     using SEF.Quest;
+    using SEF.Unit;
 
     public class SerializeTest
     {
@@ -34,6 +35,16 @@ namespace SEF.Test
             public string AddressKey => "Test";
         }
 
+        public class UnitActor_Test : UnitActor, IMonoBehaviourTest
+        {
+            public bool IsTestFinished => true;
+        }
+
+        private UnitActor _unitActor;
+        private EnemyActor _enemyActor;
+        private UnitManager _unitManager;
+
+        private EnemyEntity _enemyEntity;
         private UnitEntity _unitEntity;
         private WorkshopLine _workshopLine;
         private WorkshopManager _workshopManager;
@@ -58,9 +69,26 @@ namespace SEF.Test
         [SetUp]
         public void SetUp()
         {
+
             _unitEntity = new UnitEntity();
             _unitEntity.Initialize();
             _unitEntity.UpTech(UnitData.Create_Test());
+
+            _unitActor = new UnitActor();
+            _unitActor.SetData_Test(_unitEntity);
+
+            _enemyEntity = new EnemyEntity();
+            _enemyEntity.Initialize();
+            _enemyEntity.SetData(EnemyData.Create_Test(), NumberDataUtility.Create<LevelWaveData>());
+
+            _enemyActor = new EnemyActor();
+            _enemyActor.SetData_Test(_enemyEntity);
+            Debug.Log(_enemyActor);
+
+            _unitManager = UnitManager.Create();
+            _unitManager.Initialize();
+
+            _unitManager.ProductUnitActor(_unitEntity);
 
             _workshopLine = WorkshopLine.Create();
             _workshopLine.Initialize();
@@ -109,7 +137,12 @@ namespace SEF.Test
         [TearDown]
         public void TearDown()
         {
+            _enemyActor.CleanUp();
+            _enemyEntity.CleanUp();
             _unitEntity.CleanUp();
+            _unitActor.CleanUp();
+            _unitManager.CleanUp();
+
             _workshopLine.CleanUp();
             _workshopLine = null;
             _workshopManager.CleanUp();
@@ -626,6 +659,198 @@ namespace SEF.Test
         }
 
 
+
+
+        [UnityTest]
+        public IEnumerator SerializeTest_UnitActor_Serialize()
+        {
+            var data = _unitActor.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+            yield return null;
+        }
+
+
+        [UnityTest]
+        public IEnumerator SerializeTest_UnitActor_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (UnitActorStorableData)data;
+
+                var unitActor = new UnitActor();
+                unitActor.SetStorableData(des);
+                
+ 
+                Debug.Log(_unitActor.Key + " " + unitActor.Key);
+                Assert.AreEqual(_unitActor.Key, unitActor.Key);
+            });
+            yield return null;
+        }
+
+
+        [UnityTest]
+        public IEnumerator SerializeTest_UnitActor_Serialize_Deserialize()
+        {
+            var data = _unitActor.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            yield return null;
+
+            LoadFileData(data =>
+            {
+                var des = (UnitActorStorableData)data;
+
+                var unitActor = new UnitActor();
+                unitActor.SetStorableData(des);
+
+
+                Debug.Log(_unitActor.Key + " " + unitActor.Key);
+                Assert.AreEqual(_unitActor.Key, unitActor.Key);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_EnemyEntity_Serialize()
+        {
+            var data = _enemyEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_EnemyEntity_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (EnemyEntityStorableData)data;
+                Debug.Log(des.UnitKey);
+
+                var enemyData = Storage.DataStorage.Instance.GetDataOrNull<EnemyData>(des.UnitKey);
+                var levelwaveData = new LevelWaveData();
+                levelwaveData.SetValue(des.LevelWaveValue);
+
+                EnemyEntity entity = new EnemyEntity();
+                entity.Initialize();
+                entity.SetData(enemyData, levelwaveData);
+
+                Debug.Log(_enemyEntity.EnemyData + " " + entity.EnemyData);
+                Debug.Log(_enemyEntity.GetLevelWaveData() + " " + entity.GetLevelWaveData());
+                Assert.AreEqual(_enemyEntity.EnemyData, entity.EnemyData);
+                Assert.AreEqual(_enemyEntity.GetLevelWaveData(), entity.GetLevelWaveData());
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_EnemyEntity_Serialize_Deserialize()
+        {
+            var data = _enemyEntity.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (EnemyEntityStorableData)data;
+                Debug.Log(des.UnitKey);
+
+                var enemyData = Storage.DataStorage.Instance.GetDataOrNull<EnemyData>(des.UnitKey);
+                var levelwaveData = new LevelWaveData();
+                levelwaveData.SetValue(des.LevelWaveValue);
+
+                EnemyEntity entity = new EnemyEntity();
+                entity.Initialize();
+                entity.SetData(enemyData, levelwaveData);
+
+                Debug.Log(_enemyEntity.EnemyData + " " + entity.EnemyData);
+                Debug.Log(_enemyEntity.GetLevelWaveData() + " " + entity.GetLevelWaveData());
+                Assert.AreEqual(_enemyEntity.EnemyData, entity.EnemyData);
+                Assert.AreEqual(_enemyEntity.GetLevelWaveData(), entity.GetLevelWaveData());
+            });
+        }
+
+        [Test]
+        public void SerializeTest_EnemyActor_Serialize()
+        {
+            var data = _enemyActor.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+
+        [Test]
+        public void SerializeTest_EnemyActor_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (EnemyActorStorableData)data;
+
+                var actor = new EnemyActor();
+                actor.SetStorableData(data);
+
+                Debug.Log(_enemyActor + " " + actor);
+                Assert.AreEqual(_enemyActor.Key, actor.Key);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_EnemyActor_Serialize_Deserialize()
+        {
+            var data = _enemyActor.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (EnemyActorStorableData)data;
+
+                var actor = new EnemyActor();
+                actor.SetStorableData(data);
+
+                Debug.Log(_enemyActor.Key + " " + actor.Key);
+                Assert.AreEqual(_enemyActor.Key, actor.Key);
+            });
+        }
+
+
+        [Test]
+        public void SerializeTest_UnitManager_Serialize()
+        {
+            var data = _unitManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+        }
+
+        [Test]
+        public void SerializeTest_UnitManager_Deserialize()
+        {
+            LoadFileData(data =>
+            {
+                var des = (UnitManagerStorableData)data;
+                _unitManager.SetStorableData(des);
+
+                Debug.Log(des.Children.Length);
+            });
+        }
+
+        [Test]
+        public void SerializeTest_UnitManager_Serialize_Deserialize()
+        {
+            var data = _unitManager.GetStorableData();
+            Recursion(data);
+            SaveFileData(data);
+
+            LoadFileData(data =>
+            {
+                var des = (UnitManagerStorableData)data;
+                _unitManager.SetStorableData(des);
+
+                Debug.Log(des.Children.Length);
+            });
+        }
 
 
         [Test]

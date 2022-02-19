@@ -33,7 +33,7 @@ namespace SEF.Unit
     }
 
     [System.Serializable]
-    internal class UnitActorStorableData : StorableData
+    public class UnitActorStorableData : StorableData
     {
         [SerializeField] private SerializeVector2 _position;
         [SerializeField] private SerializeBigNumberData _nowHealthData;
@@ -184,6 +184,18 @@ namespace SEF.Unit
 
             transform.localScale = Vector3.one * unitEntity.UnitData.Scale;
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+
+        public void SetData_Test(UnitEntity unitEntity)
+        {
+            _unitEntity = unitEntity;
+
+            SetHealthData(unitEntity.HealthData);
+
+            SetAttackerData(unitEntity.UnitData.AttackerDataArray, unitEntity.UpgradeData);
+        }
+#endif
 
 
         //UnitActor, EnemyActor, AttackActor에서 사용

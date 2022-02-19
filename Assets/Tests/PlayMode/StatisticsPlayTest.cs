@@ -313,7 +313,7 @@ namespace SEF.Test
             for(int i = 0; i < create; i++)
             {
                 var entity = new EnemyEntity();
-                entity.SetData(EnemyData.Create_Test());
+                entity.SetData_Test(EnemyData.Create_Test());
                 entity.Initialize();
 
                 var actor = EnemyActor.Create();
@@ -344,7 +344,7 @@ namespace SEF.Test
             for (int i = 0; i < create; i++)
             {
                 var entity = new EnemyEntity();
-                entity.SetData(EnemyData.Create_Test());
+                entity.SetData_Test(EnemyData.Create_Test());
                 entity.Initialize();
 
                 var actor = EnemyActor.Create();

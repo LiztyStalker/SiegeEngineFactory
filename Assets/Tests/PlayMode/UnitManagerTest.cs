@@ -592,7 +592,7 @@ namespace SEF.Test
             var enemyData = EnemyData.Create_Test();
             enemyData.AddAttackerData(attackerData);
 
-            _enemyEntity_Dummy.SetData(enemyData);
+            _enemyEntity_Dummy.SetData_Test(enemyData);
 
             var enemyActor = EnemyActor.Create_Test();
             enemyActor.SetData(_enemyEntity_Dummy);
@@ -629,7 +629,7 @@ namespace SEF.Test
             enemyData.AddAttackerData(attackerData4);
             enemyData.AddAttackerData(attackerData5);
 
-            _enemyEntity_Dummy.SetData(enemyData);
+            _enemyEntity_Dummy.SetData_Test(enemyData);
 
             var enemyActor = EnemyActor.Create_Test();
             enemyActor.SetData(_enemyEntity_Dummy);
@@ -704,7 +704,7 @@ namespace SEF.Test
             enemyData.AddAttackerData(attackerData4);
             enemyData.AddAttackerData(attackerData5);
 
-            _enemyEntity_Dummy.SetData(enemyData);
+            _enemyEntity_Dummy.SetData_Test(enemyData);
 
             var enemyActor = EnemyActor.Create_Test();
             enemyActor.SetData(_enemyEntity_Dummy);
@@ -848,7 +848,7 @@ namespace SEF.Test
             enemyData.AddAttackerData(attackerData4);
             enemyData.AddAttackerData(attackerData5);
 
-            _enemyEntity_Dummy.SetData(enemyData);
+            _enemyEntity_Dummy.SetData_Test(enemyData);
 
             var enemyActor = EnemyActor.Create_Test();
 
@@ -951,7 +951,7 @@ namespace SEF.Test
             enemyData.AddAttackerData(attackerData2);
             enemyData.AddAttackerData(attackerData3);
 
-            _enemyEntity_Dummy.SetData(enemyData);
+            _enemyEntity_Dummy.SetData_Test(enemyData);
 
             var enemyActor = EnemyActor.Create_Test();
             enemyActor.SetData(_enemyEntity_Dummy);

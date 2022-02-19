@@ -33,7 +33,7 @@ namespace SEF.Status
         {
             get
             {
-                Debug.Assert(_dic != null, "Initialize를 진행하지 않았습니다");
+                //Debug.Assert(_dic != null, "Initialize를 진행하지 않았습니다");
                 return _dic;
             }
         }
@@ -69,43 +69,48 @@ namespace SEF.Status
         public U GetStatusDataToBigNumberData<T, U>(U data) where T : IStatusData where U : BigNumberData
         {
             U calData = (U)data.Clone();
-            var values = Dictionary.Values.Where(sData => sData.StatusData is T).ToArray();
 
-            U absoluteData = NumberDataUtility.Create<U>();
-            U valueData = NumberDataUtility.Create<U>();
-            float rate = 0;
-
-            for (int i = 0; i < values.Length; i++)
+            if (Dictionary != null)
             {
-                var statusData = values[i];
-                switch (statusData.TypeStatusData)
+                var values = Dictionary.Values.Where(sData => sData.StatusData is T).ToArray();
+
+                U absoluteData = NumberDataUtility.Create<U>();
+                U valueData = NumberDataUtility.Create<U>();
+                float rate = 0;
+
+                for (int i = 0; i < values.Length; i++)
                 {
-                    case IStatusData.TYPE_STATUS_DATA.Value:
-                        valueData.Value += statusData.GetValue().Value;
-                        break;
-                    case IStatusData.TYPE_STATUS_DATA.Rate:
-                        rate += (float)statusData.GetValue().Value;
-                        //Debug.Log(rate);
-                        break;
-                    case IStatusData.TYPE_STATUS_DATA.Absolute:
-                        absoluteData.Value += statusData.GetValue().Value;
-                        break;
-                    default:
-                        Debug.Assert(false, $"{statusData.TypeStatusData} TypeStatusData 가 범위에서 벗어났습니다");
-                        break;
+                    var statusData = values[i];
+                    switch (statusData.TypeStatusData)
+                    {
+                        case IStatusData.TYPE_STATUS_DATA.Value:
+                            valueData.Value += statusData.GetValue().Value;
+                            break;
+                        case IStatusData.TYPE_STATUS_DATA.Rate:
+                            rate += (float)statusData.GetValue().Value;
+                            //Debug.Log(rate);
+                            break;
+                        case IStatusData.TYPE_STATUS_DATA.Absolute:
+                            absoluteData.Value += statusData.GetValue().Value;
+                            break;
+                        default:
+                            Debug.Assert(false, $"{statusData.TypeStatusData} TypeStatusData 가 범위에서 벗어났습니다");
+                            break;
+                    }
+                }
+
+                //data + absolute
+                if (!absoluteData.Value.IsZero)
+                {
+                    calData.Value = absoluteData.Value;
+                }
+                //data + data * rate + value
+                else
+                {
+                    calData.Value += (data.Value * rate) + valueData.Value;
                 }
             }
 
-            //data + absolute
-            if (!absoluteData.Value.IsZero)
-            {                
-                calData.Value = absoluteData.Value;
-            }
-            //data + data * rate + value
-            else
-            {
-                calData.Value += (data.Value * rate) + valueData.Value;
-            }
             return calData;
         }
 

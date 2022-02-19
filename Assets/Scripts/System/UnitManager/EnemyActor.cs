@@ -45,6 +45,9 @@ namespace SEF.Unit {
 #endif
 
         private EnemyEntity _enemyEntity;
+
+        private Vector2 _position;
+
         public string Key => _enemyEntity.EnemyData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
@@ -142,6 +145,7 @@ namespace SEF.Unit {
             SetTypeUnitState(TYPE_UNIT_STATE.Idle);
             PlayAnimation("Idle", true);
             isDead = false;
+            transform.position = _position;
         }
 
         public override void InActivate()
@@ -149,6 +153,7 @@ namespace SEF.Unit {
             base.InActivate();
             SetPosition(ENEMY_IDLE_POSITION);
             SetTypeUnitState(TYPE_UNIT_STATE.Idle);
+            _position = ENEMY_IDLE_POSITION;
         }
 
         public override void SetTypeUnitState(TYPE_UNIT_STATE typeUnitState)
@@ -179,6 +184,7 @@ namespace SEF.Unit {
                     //Destroy
                     break;
             }
+            _position = transform.position;
         }
 
 
@@ -211,6 +217,18 @@ namespace SEF.Unit {
                     SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
             }
         }
+
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public void SetData_Test(EnemyEntity enemyEntity)
+        {
+            _enemyEntity = enemyEntity;
+
+            SetHealthData(_enemyEntity.HealthData);
+
+            SetAttackerData(enemyEntity.EnemyData.AttackerDataArray, GetLevelWaveData());
+        }
+
+#endif
 
         private void ReadyRunProcess(float deltaTime)
         {
@@ -316,14 +334,14 @@ namespace SEF.Unit {
         public Utility.IO.StorableData GetStorableData()
         {
             var data = new EnemyActorStorableData();
-            data.SetData(transform.position, NowHealthData, _enemyEntity.GetStorableData());
+            data.SetData(_position, NowHealthData, _enemyEntity.GetStorableData());
             return data;
         }
 
         public void SetStorableData(Utility.IO.StorableData data)
         {
             var storableData = (EnemyActorStorableData)data;
-            transform.position = storableData.Position;
+            _position = storableData.Position;
             NowHealthData = (HealthData)storableData.NowHealthData.GetDeserializeData();
         }
         #endregion

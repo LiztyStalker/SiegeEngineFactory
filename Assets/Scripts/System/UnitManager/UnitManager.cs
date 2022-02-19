@@ -24,8 +24,11 @@ namespace SEF.Unit
     [System.Serializable]
     public class EnemyActorsStorableData : StorableData
     {
-        public void SetData(StorableData[] children)
+        [SerializeField] private int _value;
+        public int Value => _value;
+        public void SetData(LevelWaveData data, StorableData[] children)
         {
+            _value = data.Value;
             Children = children;
         }
     }
@@ -86,6 +89,11 @@ namespace SEF.Unit
             {
                 InitializePoolSystem();
 
+            }
+
+            public void SetLevelWaveData(int value)
+            {
+                _levelWaveData.SetValue(value);
             }
 
             public void CreateDefaultEnemyActors(Transform parent)
@@ -149,6 +157,15 @@ namespace SEF.Unit
                     _list[1].SetTypeUnitState(TYPE_UNIT_STATE.Ready);
             }
 
+            public void OrderEnemyActor(System.Action eventCallback)
+            {
+                if (_list.Count > 0)
+                    _list[0].SetTypeUnitState(TYPE_UNIT_STATE.Appear);
+                if (_list.Count > 1)
+                    _list[1].SetTypeUnitState(TYPE_UNIT_STATE.Ready);
+                eventCallback?.Invoke();
+            }
+
             public void RunProcess(float deltaTime)
             {
                 for (int i = 0; i < _list.Count; i++)
@@ -177,6 +194,9 @@ namespace SEF.Unit
                 enemyActor.SetParent(parent);
                 enemyActor.SetStorableData(storableData);
                 enemyActor.Activate();
+
+                _list.Add(enemyActor);
+
                 return enemyActor;
             }
             public EnemyActor CreateEnemyActor(Transform parent)
@@ -246,7 +266,7 @@ namespace SEF.Unit
                 }
 
                 var data = new EnemyActorsStorableData();
-                data.SetData(list.ToArray());
+                data.SetData(_levelWaveData, list.ToArray());
                 return data;
             }
 
@@ -460,8 +480,7 @@ namespace SEF.Unit
 
         private void CreateEnemyActor(StorableData data)
         {
-            var enemyActor = _enemyQueueData.CreateEnemyActor(_gameObject.transform, data);
-            ChangeNowEnemy(enemyActor);
+            _enemyQueueData.CreateEnemyActor(_gameObject.transform, data);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -670,12 +689,13 @@ namespace SEF.Unit
             }
 
             var enemies = (EnemyActorsStorableData)data.Children[1];
+            _enemyQueueData.SetLevelWaveData(enemies.Value);
             for (int i = 0; i < enemies.Children.Length; i++)
             {
                 var child = (EnemyActorStorableData)enemies.Children[i];
                 CreateEnemyActor(child);
             }
-            SetNowEnemyListener();
+            _enemyQueueData.OrderEnemyActor(SetNowEnemyListener);
             OnNextEnemyEvent(_enemyQueueData.NowEnemy, _enemyQueueData.NowLevelWaveData);
         }
 
