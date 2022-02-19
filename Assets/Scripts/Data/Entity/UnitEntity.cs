@@ -4,6 +4,8 @@ namespace SEF.Entity
     using Data;
     using Utility.IO;
 
+
+
     #region ##### StorableData #####
 
     [System.Serializable]
@@ -27,7 +29,6 @@ namespace SEF.Entity
 
 
 
-
     [System.Serializable]
     public struct UnitEntity : IEntity
     {
@@ -40,9 +41,6 @@ namespace SEF.Entity
         private IAssetData _upgradeAssetData;
         private HealthData _healthData;
         private DamageData _damageData;
-
-        //StorableData
-        //private UnitEntityStorableData _storableData;
 
         public UnitData UnitData => _unitData;
         public UpgradeData UpgradeData => _upgradeData;

@@ -29,7 +29,10 @@ namespace SEF.Entity
 
     public struct VillageEntity : IProcessProvider
     {
+        //Member
         private VillageData _data;
+
+        //Lazy Member
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
 

@@ -1,7 +1,5 @@
 namespace SEF.Manager
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using SEF.UI.Toolkit;
     using Account;
@@ -13,9 +11,13 @@ namespace SEF.Manager
     [System.Serializable]
     public class GameManagerStorableData : StorableData
     {
+        [SerializeField] private string _version;
         [SerializeField] private System.DateTime _lastTime;
-        public void SetData(System.DateTime saveTime, StorableData unitStorableData, StorableData systemStorableData)
+        public string Version => _version;
+        public System.DateTime UTCLastTime => _lastTime;
+        public void SetData(string version, System.DateTime saveTime, StorableData unitStorableData, StorableData systemStorableData)
         {
+            _version = version;
             _lastTime = saveTime;
 
             Children = new StorableData[2];
@@ -193,7 +195,7 @@ namespace SEF.Manager
         public StorableData GetStorableData()
         {
             var data = new GameManagerStorableData();
-            data.SetData(System.DateTime.UtcNow, _unitManager.GetStorableData(), _gameSystem.GetStorableData());
+            data.SetData(Application.version, System.DateTime.UtcNow, _unitManager.GetStorableData(), _gameSystem.GetStorableData());
             return data;
         }
 

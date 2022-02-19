@@ -1,10 +1,8 @@
 namespace SEF.Manager
 {
-    using SEF.Account;
-    using SEF.Data;
-    using SEF.Entity;
+    using Data;
+    using Entity;
     using System.Collections.Generic;
-    using UnityEngine;
     using Storage;
     using Utility.IO;
 
@@ -41,14 +39,12 @@ namespace SEF.Manager
         {
             _list = new List<BlacksmithLine>();
             var arr = DataStorage.Instance.GetAllDataArrayOrZero<BlacksmithData>();
-            //Debug.Log(arr.Length);
 
             for (int i = 0; i < arr.Length; i++)
             {
                 var line = CreateLine();
                 line.SetData(arr[i]);
             }
-            //Debug.Log(_list.Count);
         }
 
         public void CleanUp()
@@ -103,12 +99,10 @@ namespace SEF.Manager
 
 
 
-        #region ##### Data #####
+        #region ##### StorableData #####
         public StorableData GetStorableData()
         {
             var data = new SmithyManagerStorableData();
-
-            //Debug.Log(_list.Count);
 
             var list = new List<StorableData>();
             for(int i = 0; i < _list.Count; i++)
@@ -123,7 +117,6 @@ namespace SEF.Manager
         public void SetStorableData(StorableData data)
         {
             var storableData = (SmithyManagerStorableData)data;
-            //Debug.Log(storableData.Children.Length);
 
             for (int i = 0; i < storableData.Children.Length; i++)
             {
@@ -146,7 +139,7 @@ namespace SEF.Manager
         /// 초기화 테스트
         /// </summary>
         /// <param name="accountData"></param>
-        public void Initialize_Test(Utility.IO.StorableData accountData)
+        public void Initialize_Test(StorableData accountData)
         {
             if (accountData == null)
             {

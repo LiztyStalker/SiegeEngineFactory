@@ -28,8 +28,10 @@ namespace SEF.Manager
 
     public class BlacksmithLine
     {
-        private int _index;
         private BlacksmithEntity _entity;
+
+        private int _index;
+
 
         public static BlacksmithLine Create()
         {
@@ -70,6 +72,7 @@ namespace SEF.Manager
             return assetData;
         }
 
+
         #region ##### Listener #####
 
         private System.Action<int, BlacksmithEntity> _refreshEvent;
@@ -102,8 +105,6 @@ namespace SEF.Manager
             var upgradeData = new UpgradeData();
             upgradeData.SetValue(entityStorableData.UpgradeValue);
 
-            //UnityEngine.Debug.Log(upgradeData.Value);
-
             _entity.SetStorableData(upgradeData);
             Refresh();
         }
@@ -112,7 +113,6 @@ namespace SEF.Manager
         {
             var storableData = (SmithyLineStorableData)data;
             var entityStorableData = (SmithyEntityStorableData)storableData.Children[0];
-            //UnityEngine.Debug.Log(_entity.Key + " " + entityStorableData.Key);
             return entityStorableData.Key == _entity.Key;
         }
         #endregion

@@ -22,6 +22,8 @@ namespace SEF.Statistics
     {
         private List<StatisticsEntity> _list;
 
+
+
         public static StatisticsPackage Create()
         {
             return new StatisticsPackage();
@@ -88,7 +90,6 @@ namespace SEF.Statistics
 
         public void SetStatisticsData(System.Type type, BigInteger value)
         {
-            //UnityEngine.Debug.Log(type);
             if (type != null)
             {
                 var iType = type.GetInterface(typeof(IStatisticsData).Name);

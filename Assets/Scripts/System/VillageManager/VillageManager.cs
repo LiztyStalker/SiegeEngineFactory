@@ -107,7 +107,7 @@ namespace SEF.Manager
 
 
 
-        #region ##### Data #####
+        #region ##### StorableData #####
         public StorableData GetStorableData()
         {
             var data = new VillageManagerStorableData();

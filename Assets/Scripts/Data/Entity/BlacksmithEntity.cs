@@ -1,7 +1,7 @@
 namespace SEF.Entity
 {
-    using SEF.Data;
-    using SEF.Status;
+    using Data;
+    using Status;
     using Utility.IO;
 
 
@@ -28,7 +28,10 @@ namespace SEF.Entity
 
     public struct BlacksmithEntity : IStatusProvider
     {
+        //Member
         private BlacksmithData _data;
+
+        //Lazy Member
         private UpgradeData _upgradeData;
         private IAssetData _upgradeAssetData;
 

@@ -1,13 +1,12 @@
 namespace SEF.Manager
 {
     using System.Collections.Generic;
-    using Account;
     using Entity;
     using Data;
     using System.Linq;
     using Utility.IO;
 
-    #region ##### Serialize #####
+    #region ##### StorableData #####
 
     [System.Serializable]
     public class WorkshopManagerStorableData : StorableData

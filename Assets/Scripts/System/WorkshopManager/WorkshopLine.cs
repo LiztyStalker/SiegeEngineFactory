@@ -1,12 +1,12 @@
 namespace SEF.Manager
 {
     using Entity;
-    using Account;
     using Data;
     using Utility.IO;
 
 
-    #region ##### Serialize #####
+    #region ##### StorableData #####
+
     [System.Serializable]
     public class WorkshopLineStorableData : StorableData
     {
@@ -25,13 +25,15 @@ namespace SEF.Manager
     }
     #endregion
 
+
+
+
     public class WorkshopLine
     {
-        private int _index;
         private UnitEntity _unitEntity;
-        private float _nowTime;
 
-        //private WorkshopLineStorableData _storableData;
+        private int _index;
+        private float _nowTime;
 
         public static WorkshopLine Create()
         {
@@ -109,14 +111,11 @@ namespace SEF.Manager
         {
             _refreshEvent?.Invoke(_index, _unitEntity, _nowTime);
         }
-
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
         #endregion
 
 
-        #region ##### Data #####
+
+        #region ##### StorableData #####
 
 
         public void SetStorableData(StorableData data)
@@ -129,8 +128,6 @@ namespace SEF.Manager
             if (storableData.Children != null && storableData.Children.Length > 0) {
 
                 var children = (UnitEntityStorableData)storableData.Children[0];
-
-                //UnityEngine.Debug.Log(children.UnitKey);
 
                 var unitData = Storage.DataStorage.Instance.GetDataOrNull<UnitData>(children.UnitKey);
                 var upgradeData = new UpgradeData();

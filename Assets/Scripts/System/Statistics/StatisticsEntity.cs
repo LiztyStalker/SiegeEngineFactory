@@ -41,16 +41,10 @@ namespace SEF.Statistics
         internal void AddStatisticsData(BigInteger value)
         {
             _value += value;
-//#if UNITY_EDITOR
-//            UnityEngine.Debug.Log(_type.Name + " " + _value);
-//#endif
         }
         internal void SetStatisticsData(BigInteger value)
         {
             _value = value;
-//#if UNITY_EDITOR
-//            UnityEngine.Debug.Log(_type.Name + " " + _value);
-//#endif
         }
         public BigInteger GetStatisticsValue() => _value;
         public System.Type GetStatisticsType() => _type;

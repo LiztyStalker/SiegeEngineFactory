@@ -24,10 +24,13 @@ namespace SEF.Manager
     #endregion
 
 
+
+
     public class VillageLine
     {
-        private int _index;
         private VillageEntity _entity;
+        private int _index;
+
 
         public static VillageLine Create()
         {
@@ -73,15 +76,9 @@ namespace SEF.Manager
             return assetData;
         }
 
+
+
         #region ##### Listener #####
-
-
-        //private System.Func<UnitEntity, bool> _conditionProductEvent;
-        //public void SetOnConditionProductUnitListener(System.Func<UnitEntity, bool> act) => _conditionProductEvent = act;
-        //private bool OnConditionProductUnitEvent(UnitEntity unitEntity)
-        //{
-        //    return _conditionProductEvent(unitEntity);
-        //}
 
         private System.Action<int, VillageEntity> _refreshEvent;
         public void SetOnRefreshListener(System.Action<int, VillageEntity> act) => _refreshEvent = act;
@@ -94,6 +91,8 @@ namespace SEF.Manager
         public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _processEntityEvent = act;
         private void OnProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _processEntityEvent?.Invoke(provider, entity);
         #endregion
+
+
 
 
         #region ##### StorableData #####
@@ -123,7 +122,6 @@ namespace SEF.Manager
         {
             var storableData = (VillageLineStorableData)data;
             var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
-            //UnityEngine.Debug.Log(_entity + " " + entityStorableData);
             return entityStorableData.Key == _entity.Key;
 
         }

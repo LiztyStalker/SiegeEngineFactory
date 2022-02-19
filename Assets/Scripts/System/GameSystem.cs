@@ -2,7 +2,6 @@ namespace SEF.Manager
 {
     using Data;
     using Entity;
-    using Account;
     using Unit;
     using Statistics;
     using Research;
@@ -18,14 +17,12 @@ namespace SEF.Manager
     [System.Serializable]
     public class SystemStorableData : StorableData
     {
-        [UnityEngine.SerializeField] private string _version;
         [UnityEngine.SerializeField] private Dictionary<string, int> _dic;
 
         public Dictionary<string, int> Dictionary => _dic;
 
-        public void SaveData(string version, StorableData[] children)
+        public void SaveData(StorableData[] children)
         {
-            _version = version;
             Children = children;
             _dic = new Dictionary<string, int>();
             for(int i = 0; i < children.Length; i++)
@@ -41,19 +38,22 @@ namespace SEF.Manager
 
     public class GameSystem
     {
+        //SaveLoad
         private WorkshopManager _workshopManager;
         private BlacksmithManager _blacksmithManager;
         private VillageManager _villageManager;
         //ResearchManager
 
 
+        //SaveLoad
+        private AssetPackage _assetPackage;
+
         private StatisticsPackage _statistics;
-
-        private ProcessPackage _process;
-
         private QuestManager _questManager;
 
-        private AssetPackage _assetPackage;
+        //None SaveLoad
+        private ProcessPackage _process;
+
 
         public static GameSystem Create()
         {
@@ -127,7 +127,6 @@ namespace SEF.Manager
 
             _questManager.RefreshAllQuests();
 
-            //UI는 나중에 갱신 필요 - Data -> UI
             RefreshAssetEntity();
         }
 
@@ -138,8 +137,6 @@ namespace SEF.Manager
 
             if (data.Dictionary != null)
             {
-                //각각 적용하도록 필요
-                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(WorkshopManagerStorableData).Name))
                 {
                     var key = typeof(WorkshopManagerStorableData).Name;
@@ -147,7 +144,6 @@ namespace SEF.Manager
                     _workshopManager.SetStorableData(child);
                 }
 
-                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(SmithyManagerStorableData).Name))
                 {
                     var key = typeof(SmithyManagerStorableData).Name;
@@ -155,7 +151,6 @@ namespace SEF.Manager
                     _blacksmithManager.SetStorableData(child);
                 }
 
-                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(VillageManagerStorableData).Name))
                 {
                     var key = typeof(VillageManagerStorableData).Name;
@@ -163,7 +158,6 @@ namespace SEF.Manager
                     _villageManager.SetStorableData(child);
                 }
 
-                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
                 {
                     var key = typeof(StatisticsPackageStorableData).Name;
@@ -171,8 +165,6 @@ namespace SEF.Manager
                     _statistics.SetStorableData(child);
                 }
 
-
-                //UnityEngine.Debug.Log(data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name));
                 if (data.Dictionary.ContainsKey(typeof(AssetPackageStorableData).Name))
                 {
                     var key = typeof(AssetPackageStorableData).Name;
@@ -189,8 +181,7 @@ namespace SEF.Manager
 
             }
         }
-
-        
+      
         public StorableData GetStorableData()
         {
             var _storableData = new SystemStorableData();
@@ -202,7 +193,7 @@ namespace SEF.Manager
             list.Add(_statistics.GetStorableData());
             list.Add(_assetPackage.GetStorableData());
             list.Add(_questManager.GetStorableData());
-            _storableData.SaveData(UnityEngine.Application.version, list.ToArray());
+            _storableData.SaveData(list.ToArray());
             return _storableData;
         }
 
@@ -268,7 +259,6 @@ namespace SEF.Manager
         public System.Numerics.BigInteger? GetStatisticsValue<T>() where T : IStatisticsData => _statistics.GetStatisticsValue<T>();
         public System.Numerics.BigInteger? GetStatisticsValue(System.Type type) => _statistics.GetStatisticsValue(type);
         private System.Type FindType(string key, System.Type classType) => StatisticsPackage.FindType(key, classType);
-
         public void SetOnRefreshStatisticsListener(System.Action<StatisticsEntity> act) => _statistics.SetOnRefreshStatisticsListener(act);
 
         #endregion
