@@ -13,8 +13,11 @@ namespace SEF.Manager
     [System.Serializable]
     public class GameManagerStorableData : StorableData
     {
-        public void SetData(StorableData unitStorableData, StorableData systemStorableData)
+        [SerializeField] private System.DateTime _lastTime;
+        public void SetData(System.DateTime saveTime, StorableData unitStorableData, StorableData systemStorableData)
         {
+            _lastTime = saveTime;
+
             Children = new StorableData[2];
             Children[0] = unitStorableData;
             Children[1] = systemStorableData;
@@ -190,7 +193,7 @@ namespace SEF.Manager
         public StorableData GetStorableData()
         {
             var data = new GameManagerStorableData();
-            data.SetData(_unitManager.GetStorableData(), _gameSystem.GetStorableData());
+            data.SetData(System.DateTime.UtcNow, _unitManager.GetStorableData(), _gameSystem.GetStorableData());
             return data;
         }
 
@@ -224,8 +227,9 @@ namespace SEF.Manager
         public void LoadDataInMemory()
         {
             var data = Account.Current.GetStorableData();
+            //오프라인 보상 적용            
             _unitManager.SetStorableData(data.Children[0]);
-            _gameSystem.SetStorableData(data.Children[1]);
+            _gameSystem.SetStorableData(data.Children[1]);            
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
