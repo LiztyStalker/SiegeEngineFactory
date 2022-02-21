@@ -229,7 +229,14 @@ namespace SEF.Data
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;
             //_techTreeAsset = GoldAssetData.Create_Test();
-            //_techTreeKeys = new string[0];
+            //_techTreeKeys = new string[0]
+        }
+
+        public void SetAssetBundle(string bundleName)
+        {
+            var path = UnityEditor.AssetDatabase.GetAssetPath(this);
+            UnityEditor.AssetImporter importer = UnityEditor.AssetImporter.GetAtPath(path);
+            importer.SetAssetBundleNameAndVariant(bundleName, "");
         }
 #endif
     }

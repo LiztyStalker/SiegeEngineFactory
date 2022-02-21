@@ -1,8 +1,6 @@
 #if UNITY_EDITOR
 namespace SEF.Data
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEditor;
     using GoogleSheetsToUnity;
@@ -10,16 +8,33 @@ namespace SEF.Data
 
     public class GoogleSheetToScriptableObject
     {
-        [MenuItem("Data/Unit All Update")]
-        private static void Update()
+
+
+        private readonly static GSTU_Search gstuSearcher = new GSTU_Search("16Ps885lj_8ZSY6Gv_WQgehpCxusaz2l9J50JBXKq2DY", "Unit_Data");
+
+
+
+        [MenuItem("Data/Create And Update All Units")]
+        private static void CreateAndUpdateAllUnits()
         {
-            UpdateData();
+            CreateAndUpdate();
         }
 
-        private static void UpdateData()
+        private static void CreateAndUpdate()
         {
-            GSTU_Search search = new GSTU_Search("16Ps885lj_8ZSY6Gv_WQgehpCxusaz2l9J50JBXKq2DY", "Unit_Data");
-            SpreadsheetManager.Read(search, Callback);
+            SpreadsheetManager.Read(gstuSearcher, OnCreateAndUpdateEvent);
+        }
+
+
+        [MenuItem("Data/Upload All Units")]
+        private static void UploadAllUnits()
+        {
+            Upload();
+        }
+
+        private static void Upload()
+        {
+            SpreadsheetManager.Write(gstuSearcher, "", OnUploadEvent);
         }
 
         public enum TYPE_UNIT_SHEET_COLUMNS { 
@@ -49,7 +64,7 @@ namespace SEF.Data
             TechTreeKeys
         }
 
-        private static void Callback(GstuSpreadSheet sheet)
+        private static void OnCreateAndUpdateEvent(GstuSpreadSheet sheet)
         {
             //1 = Title
             for (int c = 2; c < sheet.RowCount + 1; c++)
@@ -64,6 +79,7 @@ namespace SEF.Data
                     {
                         data = ScriptableObject.CreateInstance<UnitData>();
                         data.SetData(row.Select(cell => cell.value).ToArray());
+                        data.SetAssetBundle("data/units");
                         EditorUtility.SetDirty(data);
                         AssetDatabase.CreateAsset(data, $"Assets/Data/Units/{typeof(UnitData).Name}_{key}.asset");
                         AssetDatabase.SaveAssets();
@@ -71,16 +87,21 @@ namespace SEF.Data
                     else
                     {
                         data.SetData(row.Select(cell => cell.value).ToArray());
+                        data.SetAssetBundle("data/units");
                         EditorUtility.SetDirty(data);
-                        AssetDatabase.SaveAssets();
                     }
                 }
                 catch(System.Exception e)
                 {
-                    Debug.Log(e.Message);
+                    Debug.LogWarning(e.Message);
                     AssetDatabase.DeleteAsset($"Assets/Data/Units/{typeof(UnitData).Name}_{key}.asset");
                 }
             }
+        }
+
+        private static void OnUploadEvent()
+        {
+            Debug.Log("Uploaded Success");
         }
     }
 }
