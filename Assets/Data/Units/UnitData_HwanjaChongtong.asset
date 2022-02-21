@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _key: HwanjaChongtong
+  _index: 24
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: HwanjaChongtong_SkeletonData
   _spineSkinKey: 
   _scale: 1
   _group: 4
   _startHealthValue:
-    _valueText: 100
-  _increaseHealthValue: 10
+    _valueText: 300
+  _increaseHealthValue: 30
   _increaseHealthRate: 1
   _productTime: 1
   _isAttack: 0
   _attackValue:
-    _valueText: 30
+    _valueText: SEF.Data.DamageData
   _increaseAttackValue: 1
   _increaseAttackRate: 1
   _typeAttackRange: 0
@@ -38,7 +39,7 @@ MonoBehaviour:
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _startUpgradeAsset:
-    _valueText: 100
+    _valueText: SEF.Data.GoldAssetData
   _increaseUpgradeAssetValue: 100
   _increaseUpgradeAssetRate: 1
   _maximumUpgradeValue: 0

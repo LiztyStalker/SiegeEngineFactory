@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _key: SoWangu
+  _index: 28
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: SoWangu_SkeletonData
   _spineSkinKey: 
@@ -26,7 +27,7 @@ MonoBehaviour:
   _productTime: 1
   _isAttack: 0
   _attackValue:
-    _valueText: 30
+    _valueText: SEF.Data.DamageData
   _increaseAttackValue: 1
   _increaseAttackRate: 1
   _typeAttackRange: 2
@@ -38,7 +39,7 @@ MonoBehaviour:
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _startUpgradeAsset:
-    _valueText: 100
+    _valueText: SEF.Data.GoldAssetData
   _increaseUpgradeAssetValue: 100
   _increaseUpgradeAssetRate: 1
   _maximumUpgradeValue: 0

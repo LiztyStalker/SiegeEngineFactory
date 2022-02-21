@@ -14,31 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _key: BatteringRam
+  _index: 5
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: BatteringRam_SkeletonData
   _spineSkinKey: 
   _scale: 1
-  _group: 1
+  _group: 4
   _startHealthValue:
-    _valueText: 150
-  _increaseHealthValue: 15
+    _valueText: 200
+  _increaseHealthValue: 20
   _increaseHealthRate: 1
   _productTime: 1
   _isAttack: 0
   _attackValue:
-    _valueText: 30
+    _valueText: SEF.Data.DamageData
   _increaseAttackValue: 1
   _increaseAttackRate: 1
-  _typeAttackRange: 3
+  _typeAttackRange: 0
   _attackPopulation: 1
   _attackCount: 1
   _attackDelay: 1
-  _attackBulletKey: 
+  _attackBulletKey: CannonStone
   _attackerDataList: []
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _startUpgradeAsset:
-    _valueText: 100
+    _valueText: SEF.Data.GoldAssetData
   _increaseUpgradeAssetValue: 100
   _increaseUpgradeAssetRate: 1
   _maximumUpgradeValue: 0

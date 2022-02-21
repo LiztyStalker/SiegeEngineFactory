@@ -14,22 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _key: ShieldRam
+  _index: 4
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: ShieldRam_SkeletonData
   _spineSkinKey: 
   _scale: 1
-  _group: 1
+  _group: 5
   _startHealthValue:
-    _valueText: 100
-  _increaseHealthValue: 10
+    _valueText: 200
+  _increaseHealthValue: 20
   _increaseHealthRate: 1
   _productTime: 1
   _isAttack: 0
   _attackValue:
-    _valueText: 30
+    _valueText: SEF.Data.DamageData
   _increaseAttackValue: 1
   _increaseAttackRate: 1
-  _typeAttackRange: 3
+  _typeAttackRange: 2
   _attackPopulation: 1
   _attackCount: 1
   _attackDelay: 1
@@ -38,7 +39,7 @@ MonoBehaviour:
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _startUpgradeAsset:
-    _valueText: 100
+    _valueText: SEF.Data.GoldAssetData
   _increaseUpgradeAssetValue: 100
   _increaseUpgradeAssetRate: 1
   _maximumUpgradeValue: 0

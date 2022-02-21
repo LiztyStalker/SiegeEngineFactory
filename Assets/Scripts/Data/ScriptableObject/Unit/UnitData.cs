@@ -19,6 +19,11 @@ namespace SEF.Data
         public string Key { get => _key; set => _key = value; }
 
         [SerializeField]
+        private int _index;
+
+        public int Index => _index;
+
+        [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
         public SkeletonDataAsset SkeletonDataAsset
         {
@@ -200,8 +205,42 @@ namespace SEF.Data
         }
 
 
-        public void SetData(string[] arr)
+        public string[] GetData()
         {
+            string[] arr = new string[System.Enum.GetValues(typeof(GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS)).Length];
+
+            //_key = arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.Key];
+
+            //name = $"{typeof(UnitData).Name}_{_key}";
+
+            //_spineModelKey = $"{_key}_SkeletonData";
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.Group] = _group.ToString();
+            //_scale = 1f; //Scale
+
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.BulletDataKey] = _attackBulletKey;
+
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartHealthValue] = _startHealthValue.GetValue();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseHealthValue] = _increaseHealthValue.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseHealthRate] = _increaseHealthRate.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.ProductTime] = _productTime.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartDamageValue] = _attackValue.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseDamageValue] = _increaseAttackValue.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseDamageRate] = _increaseAttackRate.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.TypeAttackRange] = _typeAttackRange.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackPopulation] = _attackPopulation.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackCount] = _attackCount.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackDelay] = _attackDelay.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartUpgradeAsset] = _startUpgradeAsset.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseUpgradeAssetValue] = _increaseUpgradeAssetValue.ToString();
+            arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseUpgradeAssetRate] = _increaseUpgradeAssetRate.ToString();
+
+            return arr;
+        }
+
+        public void SetData(int index, string[] arr)
+        {
+            _index = index;
+
             _key = arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.Key];
 
             name = $"{typeof(UnitData).Name}_{_key}";

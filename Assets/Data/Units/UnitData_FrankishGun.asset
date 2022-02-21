@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   _key: FrankishGun
+  _index: 38
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: FrankishGun_SkeletonData
   _spineSkinKey: 
