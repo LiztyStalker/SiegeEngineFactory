@@ -14,6 +14,7 @@ namespace SEF.Data
             return new HealthData(this);
         }
 
+
         public void Add(BigNumberData addNumberData, BigNumberData maxNumberData)
         {
             if (Value + addNumberData.Value > maxNumberData.Value)
@@ -49,6 +50,13 @@ namespace SEF.Data
                 value *= 3;
             }
             Value = value;
+        }
+
+        public static HealthData Create(string value)
+        {
+            var data = new HealthData();
+            data.ValueText = value;
+            return data;
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

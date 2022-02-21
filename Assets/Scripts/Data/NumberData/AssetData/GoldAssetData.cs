@@ -51,6 +51,12 @@ namespace SEF.Data
 
         }
 
+        public static GoldAssetData Create(string value)
+        {
+            var data = new GoldAssetData();
+            data.ValueText = value;
+            return data;
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static GoldAssetData Create_Test() 

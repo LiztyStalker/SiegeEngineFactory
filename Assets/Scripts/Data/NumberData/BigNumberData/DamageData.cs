@@ -65,6 +65,12 @@ namespace SEF.Data
             Value = 0;
         }
 
+        public static DamageData Create(string value)
+        {
+            var data = new DamageData();
+            data.ValueText = value;
+            return data;
+        }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static DamageData Create_Test()

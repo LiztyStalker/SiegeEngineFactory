@@ -7,7 +7,7 @@ namespace SEF.Data
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/UnitData")]    
     public class UnitData : ScriptableObject
     {
-        public enum TYPE_UNIT_GROUP { Thrower, Ram, Ballista, Catapult, MuzzleLoading, BreechLoading, RunOutCylinder, Missile}
+        public enum TYPE_UNIT_GROUP { Thrower, Ram, Ballista, Catapult, MuzzleLoading, Mortar, BreechLoading, RunOutCylinder, Missile}
         public enum TYPE_ATTACK_RANGE { Gun, Howitzer, Mortar, Melee}
 
         [SerializeField]
@@ -159,8 +159,6 @@ namespace SEF.Data
         private string[] _techTreeKeys;
         public string[] TechTreeKeys { get => _techTreeKeys; set => _techTreeKeys = value; }
 
-
-
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
         public static UnitData Create_Test(string name = null)
@@ -201,6 +199,38 @@ namespace SEF.Data
 
         }
 
+
+        public void SetData(string[] arr)
+        {
+            _key = arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.Key];
+
+            name = $"{typeof(UnitData).Name}_{_key}";
+
+            _spineModelKey = $"{_key}_SkeletonData";
+            _group = (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.Group]);
+            _scale = 1f; //Scale
+
+            _attackBulletKey = arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.BulletDataKey];
+
+            _startHealthValue = HealthData.Create(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartHealthValue]);
+            _increaseHealthValue = int.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseHealthValue]);
+            _increaseHealthRate = float.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseHealthRate]);
+            _productTime = float.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.ProductTime]);
+            _attackValue = DamageData.Create(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartDamageValue]);
+            _increaseAttackValue = int.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseDamageValue]);
+            _increaseAttackRate = float.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseDamageRate]);
+            _typeAttackRange = (TYPE_ATTACK_RANGE)System.Enum.Parse(typeof(TYPE_ATTACK_RANGE), arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.TypeAttackRange]);
+            _attackPopulation = int.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackPopulation]);
+            _attackCount = int.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackCount]);
+            _attackDelay = float.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.AttackDelay]);
+            _startUpgradeAsset = GoldAssetData.Create(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.StartUpgradeAsset]);
+            _increaseUpgradeAssetValue = int.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
+            _increaseUpgradeAssetRate = float.Parse(arr[(int)GoogleSheetToScriptableObject.TYPE_UNIT_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
+            //private string[] _conditionTechTree;
+            //private AssetData[] _conditionTechTreeValue;
+            //_techTreeAsset = GoldAssetData.Create_Test();
+            //_techTreeKeys = new string[0];
+        }
 #endif
     }
 }

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace SEF.Data
 {
     using System.Collections;
@@ -5,6 +6,7 @@ namespace SEF.Data
     using UnityEngine;
     using UnityEditor;
     using GoogleSheetsToUnity;
+    using System.Linq;
 
     public class GoogleSheetToScriptableObject
     {
@@ -20,16 +22,16 @@ namespace SEF.Data
             SpreadsheetManager.Read(search, Callback);
         }
 
-        private enum TYPE_UNIT_SHEET_COLUMNS { 
+        public enum TYPE_UNIT_SHEET_COLUMNS { 
             Key, 
             Group, 
-            HealthValue, 
+            StartHealthValue, 
             IncreaseHealthValue,
             IncreaseHealthRate,
             ProductTime,
-            AttackValue,
-            IncreaseAttackValue,
-            IncreaseAttackRate,
+            StartDamageValue,
+            IncreaseDamageValue,
+            IncreaseDamageRate,
             TypeAttackRange,
             TypeAttackAction,
             AttackPopulation,
@@ -49,13 +51,37 @@ namespace SEF.Data
 
         private static void Callback(GstuSpreadSheet sheet)
         {
-            for (int c = 1; c < sheet.RowCount + 1; c++)
+            //1 = Title
+            for (int c = 2; c < sheet.RowCount + 1; c++)
             {
                 var row = sheet.rows[c];
-                for (int r = 0; r < row.Count; r++) {
-                    Debug.Log(sheet.rows[c][r].value);
+                var key = row[0].value;
+                try
+                {
+                    var data = AssetDatabase.LoadAssetAtPath<UnitData>($"Assets/Data/Units/{typeof(UnitData).Name}_{key}.asset");
+
+                    if (data == null)
+                    {
+                        data = ScriptableObject.CreateInstance<UnitData>();
+                        data.SetData(row.Select(cell => cell.value).ToArray());
+                        EditorUtility.SetDirty(data);
+                        AssetDatabase.CreateAsset(data, $"Assets/Data/Units/{typeof(UnitData).Name}_{key}.asset");
+                        AssetDatabase.SaveAssets();
+                    }
+                    else
+                    {
+                        data.SetData(row.Select(cell => cell.value).ToArray());
+                        EditorUtility.SetDirty(data);
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+                catch(System.Exception e)
+                {
+                    Debug.Log(e.Message);
+                    AssetDatabase.DeleteAsset($"Assets/Data/Units/{typeof(UnitData).Name}_{key}.asset");
                 }
             }
         }
     }
 }
+#endif

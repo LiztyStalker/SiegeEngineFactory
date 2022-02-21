@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a85091110bfe28419cca6fbd044e2d9, type: 3}
+  m_Name: UnitData_DeaWangu
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _key: DeaWangu
+  _skeletonDataAsset: {fileID: 0}
+  _spineModelKey: DeaWangu_SkeletonData
+  _spineSkinKey: 
+  _scale: 1
+  _group: 5
+  _startHealthValue:
+    _valueText: 150
+  _increaseHealthValue: 15
+  _increaseHealthRate: 1
+  _productTime: 1
+  _isAttack: 0
+  _attackValue:
+    _valueText: 30
+  _increaseAttackValue: 1
+  _increaseAttackRate: 1
+  _typeAttackRange: 2
+  _attackPopulation: 1
+  _attackCount: 1
+  _attackDelay: 1
+  _attackBulletKey: 
+  _attackerDataList: []
+  _attackBulletData: {fileID: 0}
+  _bulletScale: 0
+  _startUpgradeAsset:
+    _valueText: 100
+  _increaseUpgradeAssetValue: 100
+  _increaseUpgradeAssetRate: 1
+  _maximumUpgradeValue: 0
+  _techTreeAsset:
+    _valueText: 
+  _techTreeKeys: []
