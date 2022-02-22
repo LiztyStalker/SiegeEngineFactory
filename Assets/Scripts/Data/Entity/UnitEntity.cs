@@ -52,7 +52,7 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<DamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.AttackDelay));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.AttackDelay));
                 return (float)data.Value;
             }
         }
@@ -61,7 +61,7 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<ProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.ProductTime));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.ProductTime));
                 return (float)data.Value;
             }
         }
@@ -74,7 +74,7 @@ namespace SEF.Entity
                 {
                     _healthData = CalculateHealthData();
                 }
-                return StatusPackage.Current.GetStatusDataToBigNumberData<HealthDataStatusData, HealthData>(_healthData);
+                return StatusPackage.Current.GetStatusDataToBigNumberData<UnitHealthDataStatusData, HealthData>(_healthData);
             }
         }
 
@@ -87,7 +87,7 @@ namespace SEF.Entity
                 {
                     _damageData = CalculateAttackData();
                 }
-                return StatusPackage.Current.GetStatusDataToBigNumberData<DamageValueStatusData, DamageData>(_damageData);
+                return StatusPackage.Current.GetStatusDataToBigNumberData<UnitDamageValueStatusData, DamageData>(_damageData);
             }
         }
 

@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7311407be61c63b479298e8f0cddc8c7, type: 3}
-  m_Name: SmithyData_Test1
+  m_Name: SmithyData_AttackerDamageDelay
   m_EditorClassIdentifier: 
+  _sortIndex: 5
   _icon: {fileID: 0}
-  _key: Test1
+  _key: AttackerDamageDelay
   _serializedStatusData:
-    _classTypeName: SEF.Data.DamageValueStatusData
+    _classTypeName: SEF.Data.AttackerDamageDelay
     _typeStatusData: 0
     _startValue: 1
     _increaseValue: 1
   _serializedAssetData:
+    _typeAssetData: Gold
     _assetData: 0
     _assetValue: 100
   _increaseUpgradeValue: 1
   _increaseUpgradeRate: 0.125
+  _maxUpgradeValue: 100

@@ -80,12 +80,12 @@ namespace SEF.Data
             _dic = new Dictionary<System.Type, string>();
 
 
-            _dic.Add(typeof(DamageValueStatusData), "공격력");
-            _dic.Add(typeof(DamageDelayStatusData), "공격딜레이");
+            _dic.Add(typeof(UnitDamageValueStatusData), "공격력");
+            _dic.Add(typeof(UnitDamageDelayStatusData), "공격딜레이");
             _dic.Add(typeof(AttackerDamageValueStatusData), "포탑공격력");
             _dic.Add(typeof(AttackerDamageDelayStatusData), "포탑공격딜레이");
-            _dic.Add(typeof(ProductTimeStatusData), "생산시간");
-            _dic.Add(typeof(HealthDataStatusData), "체력");
+            _dic.Add(typeof(UnitProductTimeStatusData), "생산시간");
+            _dic.Add(typeof(UnitHealthDataStatusData), "체력");
         }
 
 

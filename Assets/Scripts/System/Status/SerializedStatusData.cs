@@ -36,5 +36,24 @@ namespace SEF.Status
         {
             return (IStatusData)System.Activator.CreateInstance(type);
         }
+
+#if UNITY_EDITOR
+
+        public void SetData(string classTypeName, string startValue, string increaseValue)
+        {
+            _classTypeName = $"SEF.Data.{classTypeName}";
+            _startValue = float.Parse(startValue);
+            _increaseValue = float.Parse(increaseValue);
+        }
+
+        public void GetData(out string classTypeName, out string startValue, out string increaseValue)
+        {
+            var split = _classTypeName.Split('.');
+            classTypeName = split[split.Length - 1];
+            startValue = _startValue.ToString();
+            increaseValue = _increaseValue.ToString();
+        }
+
+#endif
     }
 }

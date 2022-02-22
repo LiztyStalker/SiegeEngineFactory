@@ -402,7 +402,7 @@ namespace SEF.Test
 
             var statusProvider1 = new StatusProvider_Test();
 
-            var statusData1 = StatusDataUtility.Create<DamageValueStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData1 = StatusDataUtility.Create<UnitDamageValueStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity1 = new StatusEntity(statusData1, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
 
@@ -414,7 +414,7 @@ namespace SEF.Test
 
 
             var entity2 = CreateEntity();
-            var statusData2 = StatusDataUtility.Create<DamageValueStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData2 = StatusDataUtility.Create<UnitDamageValueStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity2 = new StatusEntity(statusData2, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
 
@@ -431,9 +431,9 @@ namespace SEF.Test
             var statusProvider2 = new StatusProvider_Test();
 
 
-            var statusData3 = StatusDataUtility.Create<DamageValueStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData3 = StatusDataUtility.Create<UnitDamageValueStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity3 = new StatusEntity(statusData3, NumberDataUtility.Create<UpgradeData>());
-            var statusData4 = StatusDataUtility.Create<DamageValueStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData4 = StatusDataUtility.Create<UnitDamageValueStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity4 = new StatusEntity(statusData4, NumberDataUtility.Create<UpgradeData>());
 
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
@@ -450,7 +450,7 @@ namespace SEF.Test
 
             var entity4 = CreateEntity();
 
-            var statusData5 = StatusDataUtility.Create<DamageValueStatusData>(20, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusData5 = StatusDataUtility.Create<UnitDamageValueStatusData>(20, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
             var statusEntity5 = new StatusEntity(statusData5, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
 
@@ -471,7 +471,7 @@ namespace SEF.Test
             var statusProvider1 = new StatusProvider_Test();
 
 
-            var statusData1 = StatusDataUtility.Create<DamageDelayStatusData>(0.1f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData1 = StatusDataUtility.Create<UnitDamageDelayStatusData>(0.1f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity1 = new StatusEntity(statusData1, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
 
@@ -484,7 +484,7 @@ namespace SEF.Test
 
             var entity2 = CreateEntity();
 
-            var statusData2 = StatusDataUtility.Create<DamageDelayStatusData>(0.5f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData2 = StatusDataUtility.Create<UnitDamageDelayStatusData>(0.5f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity2 = new StatusEntity(statusData2, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
 
@@ -501,11 +501,11 @@ namespace SEF.Test
 
             var statusProvider2 = new StatusProvider_Test();
 
-            var statusData3 = StatusDataUtility.Create<DamageDelayStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData3 = StatusDataUtility.Create<UnitDamageDelayStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity3 = new StatusEntity(statusData3, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
 
-            var statusData4 = StatusDataUtility.Create<DamageDelayStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData4 = StatusDataUtility.Create<UnitDamageDelayStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity4 = new StatusEntity(statusData4, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
 
@@ -520,7 +520,7 @@ namespace SEF.Test
 
             var entity4 = CreateEntity();
 
-            var statusData5 = StatusDataUtility.Create<DamageDelayStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusData5 = StatusDataUtility.Create<UnitDamageDelayStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
             var statusEntity5 = new StatusEntity(statusData5, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
 
@@ -542,7 +542,7 @@ namespace SEF.Test
             var statusProvider1 = new StatusProvider_Test();
 
 
-            var statusData1 = StatusDataUtility.Create<ProductTimeStatusData>(0.1f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData1 = StatusDataUtility.Create<UnitProductTimeStatusData>(0.1f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity1 = new StatusEntity(statusData1, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
 
@@ -556,7 +556,7 @@ namespace SEF.Test
 
             var entity2 = CreateEntity();
 
-            var statusData2 = StatusDataUtility.Create<ProductTimeStatusData>(0.5f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData2 = StatusDataUtility.Create<UnitProductTimeStatusData>(0.5f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity2 = new StatusEntity(statusData2, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
 
@@ -573,11 +573,11 @@ namespace SEF.Test
 
 
 
-            var statusData3 = StatusDataUtility.Create<ProductTimeStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData3 = StatusDataUtility.Create<UnitProductTimeStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity3 = new StatusEntity(statusData3, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
 
-            var statusData4 = StatusDataUtility.Create<ProductTimeStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData4 = StatusDataUtility.Create<UnitProductTimeStatusData>(0.3f, 0.1f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity4 = new StatusEntity(statusData4, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
 
@@ -591,7 +591,7 @@ namespace SEF.Test
 
             var entity4 = CreateEntity();
 
-            var statusData5 = StatusDataUtility.Create<ProductTimeStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusData5 = StatusDataUtility.Create<UnitProductTimeStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
             var statusEntity5 = new StatusEntity(statusData5, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
 
@@ -613,7 +613,7 @@ namespace SEF.Test
 
 
 
-            var statusData1 = StatusDataUtility.Create<HealthDataStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData1 = StatusDataUtility.Create<UnitHealthDataStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity1 = new StatusEntity(statusData1, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
 
@@ -628,7 +628,7 @@ namespace SEF.Test
             var entity2 = CreateEntity();
 
 
-            var statusData2 = StatusDataUtility.Create<HealthDataStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData2 = StatusDataUtility.Create<UnitHealthDataStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity2 = new StatusEntity(statusData2, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
 
@@ -645,11 +645,11 @@ namespace SEF.Test
             var statusProvider2 = new StatusProvider_Test();
 
 
-            var statusData3 = StatusDataUtility.Create<HealthDataStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData3 = StatusDataUtility.Create<UnitHealthDataStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity3 = new StatusEntity(statusData3, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
 
-            var statusData4 = StatusDataUtility.Create<HealthDataStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData4 = StatusDataUtility.Create<UnitHealthDataStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity4 = new StatusEntity(statusData4, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
 
@@ -665,7 +665,7 @@ namespace SEF.Test
 
             var entity4 = CreateEntity();
 
-            var statusData5 = StatusDataUtility.Create<HealthDataStatusData>(200, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusData5 = StatusDataUtility.Create<UnitHealthDataStatusData>(200, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
             var statusEntity5 = new StatusEntity(statusData5, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
 

@@ -2,11 +2,11 @@ namespace SEF.Data
 {
     using UnityEngine;
     using SEF.Status;
-
+    using Utility.Data;
 
     [CreateAssetMenu(fileName = "BlacksmithData", menuName = "ScriptableObjects/BlacksmithData")]
 
-    public class SmithyData : ScriptableObject
+    public class SmithyData : ScriptableObjectData
     {
 
         [SerializeField]
@@ -36,6 +36,10 @@ namespace SEF.Data
         private float _increaseUpgradeRate;
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
+        [SerializeField]
+        private int _maxUpgradeValue;
+        public float MaxUpgradeValue => _maxUpgradeValue;
+
 
         public IAssetData GetUpgradeAssetData(UpgradeData data)
         {
@@ -50,11 +54,58 @@ namespace SEF.Data
         {
             return new SmithyData(key);
         }
-
         private SmithyData(string key)
         {
             _key = key;
         }
+
+        public override void SetData(string[] arr)
+        {
+            _key = arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.Key];
+
+            name = $"{typeof(UnitData).Name}_{_key}";
+
+            _serializedStatusData.SetData(
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData], 
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue], 
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue]
+                );
+
+            _serializedAssetData.SetData(
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset],
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue]
+                );
+
+            _increaseUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue]);
+            _increaseUpgradeRate = float.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate]);
+            _maxUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.MaxUpgardeValue]);
+
+        }
+
+        public override string[] GetData()
+        {           
+
+            string[] arr = new string[System.Enum.GetValues(typeof(SmithyDataGenerator.TYPE_SHEET_COLUMNS)).Length];
+
+            _serializedStatusData.GetData(out string typeStatusData, out string startStatusValue, out string increaseStatusValue);
+
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData] = typeStatusData;
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue] = startStatusValue;
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue] = increaseStatusValue;
+
+            _serializedAssetData.GetData(out string typeUpgradeAsset, out string startUpgradeValue);
+
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset] = typeUpgradeAsset;
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue] = startUpgradeValue;
+
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue] = _increaseUpgradeValue.ToString();
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate] = _increaseUpgradeRate.ToString();
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.MaxUpgardeValue] = _maxUpgradeValue.ToString();
+
+            return arr;
+        }
+
+
 #endif 
     }
 }
