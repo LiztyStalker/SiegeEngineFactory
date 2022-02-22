@@ -10,10 +10,6 @@ namespace SEF.Data
     public class VillageData : ScriptableObjectData
     {
         [SerializeField]
-        private string _key;
-        public string Key => _key;
-
-        [SerializeField]
         private Sprite _icon;
         public Sprite Icon => _icon;
 
@@ -57,9 +53,9 @@ namespace SEF.Data
 
         public override void SetData(string[] arr)
         {
-            _key = arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.Key];
+            Key = arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.Key];
 
-            name = $"{typeof(UnitData).Name}_{_key}";
+            name = $"{typeof(UnitData).Name}_{Key}";
 
             _serializedProcessData.SetData(
                 arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeProcess],
@@ -74,6 +70,10 @@ namespace SEF.Data
             _increaseUpgradeValue = int.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue]);
             _increaseUpgradeRate = float.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeRate]);
            
+        }
+
+        public override void AddData(string[] arr)
+        {
         }
 
         public override string[] GetData()
@@ -108,6 +108,16 @@ namespace SEF.Data
             return arr;
         }
 
-#endif 
+        public override bool HasDataArray()
+        {
+            return false;
+        }
+
+        public override string[][] GetDataArray()
+        {
+            return null;
+        }
+
+#endif
     }
 }

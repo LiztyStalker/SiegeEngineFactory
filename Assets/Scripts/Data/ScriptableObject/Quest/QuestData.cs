@@ -12,11 +12,6 @@ namespace SEF.Data
     {
         public enum TYPE_QUEST_GROUP { Daily, Weekly, Challenge, Goal}
 
-
-        [SerializeField]
-        private string _key;
-        public string Key => _key;
-
         [SerializeField]
         private TYPE_QUEST_GROUP _typeQuestGroup;
         public TYPE_QUEST_GROUP TypeQuestGroup => _typeQuestGroup;
@@ -98,7 +93,7 @@ namespace SEF.Data
 
         private QuestData(string key, TYPE_QUEST_GROUP typeQuestGroup, System.Type conditionType, int conditionValue, System.Type assetType, int assetValue)
         {
-            _key = key;
+            Key = key;
             _typeQuestGroup = typeQuestGroup;
             _questConditionData = QuestConditionData.Create_Test(conditionType, conditionValue, assetType, assetValue);           
         }
@@ -110,9 +105,9 @@ namespace SEF.Data
 
         public override void SetData(string[] arr)
         {
-            _key = arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Key];
+            Key = arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Key];
 
-            name = $"{typeof(QuestData).Name}_{_key}";
+            name = $"{typeof(QuestData).Name}_{Key}";
 
             _typeQuestGroup = (TYPE_QUEST_GROUP)System.Enum.Parse(typeof(TYPE_QUEST_GROUP), arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Group]);
 
@@ -123,7 +118,40 @@ namespace SEF.Data
                 arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue]
                 );
 
+            _questConditionDataArray = null;
+
             _isMultipleQuest = false;
+        }
+
+        public override void AddData(string[] arr)
+        {
+            _isMultipleQuest = true;
+
+            var list = new List<QuestConditionData>();
+
+            //첫 연계
+            if (_questConditionDataArray == null)
+            {
+                list.Add(_questConditionData);
+                _questConditionData = default;
+            }
+            //두번째 이상 연계
+            else
+            {
+                list.AddRange(_questConditionDataArray);
+            }
+
+            var questConditionData = new QuestConditionData();
+            questConditionData.SetData(
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeConditionData],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.ConditionValue],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeRewardAsset],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue]
+                );
+
+            list.Add(questConditionData);
+
+            _questConditionDataArray = list.ToArray();
         }
 
         public override string[] GetData()
@@ -140,6 +168,32 @@ namespace SEF.Data
             arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue] = assetValue;
 
             return arr;
+        }
+
+        public override string[][] GetDataArray()
+        {
+            var list = new List<string[]>();
+            for(int i = 0; i < _questConditionDataArray.Length; i++)
+            {
+                string[] arr = new string[System.Enum.GetValues(typeof(VillageDataGenerator.TYPE_SHEET_COLUMNS)).Length];
+
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Group] = _typeQuestGroup.ToString();
+
+                _questConditionDataArray[i].GetData(out string classTypeName, out string conditionValue, out string typeAssetData, out string assetValue);
+
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeConditionData] = classTypeName;
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.ConditionValue] = conditionValue;
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeRewardAsset] = typeAssetData;
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue] = assetValue;
+
+                list.Add(arr);
+            }
+            return list.ToArray();
+        }
+
+        public override bool HasDataArray()
+        {
+            return _isMultipleQuest;
         }
 #endif
     }
@@ -249,7 +303,9 @@ namespace SEF.Data
         }
         public void GetData(out string classTypeName)
         {
-            classTypeName = _classTypeName;
+            var split = _classTypeName.Split('.');
+            var typeName = split[split.Length - 1].Replace("ConditionQuestData", "");
+            classTypeName = typeName;
         }
     }
 

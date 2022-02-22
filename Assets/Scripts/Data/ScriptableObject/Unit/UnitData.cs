@@ -16,10 +16,6 @@ namespace SEF.Data
         public Sprite icon { get => _icon; set => _icon = value; }
 
         [SerializeField]
-        private string _key;
-        public string Key { get => _key; set => _key = value; }
-
-        [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
         public SkeletonDataAsset SkeletonDataAsset
         {
@@ -170,7 +166,7 @@ namespace SEF.Data
         private UnitData(string name = null)
         {
 
-            _key = (string.IsNullOrEmpty(name)) ? "Test" : name;
+            Key = (string.IsNullOrEmpty(name)) ? "Test" : name;
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_UNIT_GROUP.Thrower;
             _scale = 1f;
@@ -200,6 +196,45 @@ namespace SEF.Data
 
         }
 
+
+
+
+        public override void SetData(string[] arr)
+        {
+
+            Key = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Key];
+
+            name = $"{typeof(UnitData).Name}_{Key}";
+
+            _spineModelKey = $"{Key}_SkeletonData";
+            _group = (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Group]);
+            _scale = 1f; //Scale
+
+            _attackBulletKey = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.BulletDataKey];
+
+            _startHealthValue = HealthData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartHealthValue]);
+            _increaseHealthValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseHealthValue]);
+            _increaseHealthRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseHealthRate]);
+            _productTime = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.ProductTime]);
+            _attackValue = DamageData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartDamageValue]);
+            _increaseAttackValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageValue]);
+            _increaseAttackRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageRate]);
+            _typeAttackRange = (TYPE_ATTACK_RANGE)System.Enum.Parse(typeof(TYPE_ATTACK_RANGE), arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeAttackRange]);
+            _attackPopulation = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation]);
+            _attackCount = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackCount]);
+            _attackDelay = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay]);
+            _startUpgradeAsset = GoldAssetData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset]);
+            _increaseUpgradeAssetValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
+            _increaseUpgradeAssetRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
+            //private string[] _conditionTechTree;
+            //private AssetData[] _conditionTechTreeValue;
+            //_techTreeAsset = GoldAssetData.Create_Test();
+            //_techTreeKeys = new string[0]
+        }
+
+        public override void AddData(string[] arr)
+        {
+        }
 
         public override string[] GetData()
         {
@@ -242,37 +277,14 @@ namespace SEF.Data
             return arr;
         }
 
-        public override void SetData(string[] arr)
+        public override bool HasDataArray()
         {
+            return false;
+        }
 
-            _key = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Key];
-
-            name = $"{typeof(UnitData).Name}_{_key}";
-
-            _spineModelKey = $"{_key}_SkeletonData";
-            _group = (TYPE_UNIT_GROUP)System.Enum.Parse(typeof(TYPE_UNIT_GROUP), arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Group]);
-            _scale = 1f; //Scale
-
-            _attackBulletKey = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.BulletDataKey];
-
-            _startHealthValue = HealthData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartHealthValue]);
-            _increaseHealthValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseHealthValue]);
-            _increaseHealthRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseHealthRate]);
-            _productTime = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.ProductTime]);
-            _attackValue = DamageData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartDamageValue]);
-            _increaseAttackValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageValue]);
-            _increaseAttackRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageRate]);
-            _typeAttackRange = (TYPE_ATTACK_RANGE)System.Enum.Parse(typeof(TYPE_ATTACK_RANGE), arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeAttackRange]);
-            _attackPopulation = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation]);
-            _attackCount = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackCount]);
-            _attackDelay = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay]);
-            _startUpgradeAsset = GoldAssetData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset]);
-            _increaseUpgradeAssetValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
-            _increaseUpgradeAssetRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
-            //private string[] _conditionTechTree;
-            //private AssetData[] _conditionTechTreeValue;
-            //_techTreeAsset = GoldAssetData.Create_Test();
-            //_techTreeKeys = new string[0]
+        public override string[][] GetDataArray()
+        {
+            return null;
         }
 
 #endif

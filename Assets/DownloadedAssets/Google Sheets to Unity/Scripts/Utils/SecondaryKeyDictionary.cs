@@ -32,8 +32,7 @@ namespace GreenerGames
         {
             get
             {
-                if (primaryDictionary.Count == secondaryKeyLink.Count) return primaryDictionary.Count;
-                throw new InvalidOperationException();
+                return primaryDictionary.Count;
             }
         }
 

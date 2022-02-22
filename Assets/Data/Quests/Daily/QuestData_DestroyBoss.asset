@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
   m_Name: QuestData_DestroyBoss
   m_EditorClassIdentifier: 
-  _sortIndex: 2
   _key: DestroyBoss
+  _sortIndex: 2
   _typeQuestGroup: 0
   _icon: {fileID: 0}
   _isMultipleQuest: 0

@@ -13,12 +13,6 @@ namespace SEF.Data
         private Sprite _icon;
         public Sprite Icon => _icon;
 
-
-        [SerializeField]
-        private string _key;
-        public string Key => _key;
-
-
         [SerializeField]
         private SerializedStatusData _serializedStatusData;
         public IStatusData StatusData => _serializedStatusData.GetSerializeData();
@@ -56,14 +50,14 @@ namespace SEF.Data
         }
         private SmithyData(string key)
         {
-            _key = key;
+            Key = key;
         }
 
         public override void SetData(string[] arr)
         {
-            _key = arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.Key];
+            Key = arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.Key];
 
-            name = $"{typeof(UnitData).Name}_{_key}";
+            name = $"{typeof(UnitData).Name}_{Key}";
 
             _serializedStatusData.SetData(
                 arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData], 
@@ -81,6 +75,11 @@ namespace SEF.Data
             _maxUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.MaxUpgardeValue]);
 
         }
+
+        public override void AddData(string[] arr)
+        {
+        }
+
 
         public override string[] GetData()
         {           
@@ -105,7 +104,18 @@ namespace SEF.Data
             return arr;
         }
 
+        public override bool HasDataArray()
+        {
+            return false;
+        }
 
-#endif 
+        public override string[][] GetDataArray()
+        {
+            return null;
+        }
+
+
+
+#endif
     }
 }

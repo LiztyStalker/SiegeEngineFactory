@@ -14,10 +14,6 @@ namespace SEF.Data
     public class EnemyData : ScriptableObjectData
     {
         [SerializeField]
-        private string _key;
-        public string Key => _key;
-
-        [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
 
         public SkeletonDataAsset SkeletonDataAsset { 
@@ -176,7 +172,7 @@ namespace SEF.Data
         private EnemyData(string name = null)
         {
 
-            _key = "Test";
+            Key = "Test";
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_ENEMY_GROUP.Normal;
             _typeLevelTheme = TYPE_THEME_GROUP.Grass;
@@ -210,11 +206,11 @@ namespace SEF.Data
         public override void SetData(string[] arr)
         {
 
-            _key = arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.Key];
+            Key = arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.Key];
 
-            name = $"{typeof(UnitData).Name}_{_key}";
+            name = $"{typeof(UnitData).Name}_{Key}";
 
-            _spineModelKey = $"{_key}_SkeletonData";
+            _spineModelKey = $"{Key}_SkeletonData";
             _group = (TYPE_ENEMY_GROUP)System.Enum.Parse(typeof(TYPE_ENEMY_GROUP), arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeEnemyGroup]);
             _typeLevelTheme = (TYPE_THEME_GROUP)System.Enum.Parse(typeof(TYPE_THEME_GROUP), arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeThemeGroup]);
             _scale = 1f;
@@ -269,6 +265,20 @@ namespace SEF.Data
             arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetRate] = _increaseWaveRewardAssetRate.ToString();
 
             return arr;
+        }
+
+        public override void AddData(string[] arr)
+        {
+        }
+
+        public override string[][] GetDataArray()
+        {
+            return null;
+        }
+
+        public override bool HasDataArray()
+        {
+            return false;
         }
 
 #endif

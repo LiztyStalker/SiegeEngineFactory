@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
   m_Name: QuestData_DestroyEnemy
   m_EditorClassIdentifier: 
-  _sortIndex: 1
   _key: DestroyEnemy
+  _sortIndex: 1
   _typeQuestGroup: 0
   _icon: {fileID: 0}
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.ArrivedLevelConditionQuestData
+      _classTypeName: SEF.Quest.DestroyEnemyConditionQuestData
     _conditionValue: 10
     _serializedAssetData:
       _typeAssetData: Meteorite

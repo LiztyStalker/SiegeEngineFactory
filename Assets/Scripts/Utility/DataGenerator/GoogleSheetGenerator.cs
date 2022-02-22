@@ -32,33 +32,50 @@ namespace Utility.Generator
 
         private static void OnCreateAndUpdateEvent<T>(GstuSpreadSheet sheet, string dataPath, string bundleName, int startRow) where T : ScriptableObjectData
         {
+            T tmpData = null;
             int index = 0;
             for (int c = startRow; c < sheet.RowCount + startRow; c++, index++)
             {
+
                 var row = sheet.rows[c];
                 var key = row[0].value; //0 = Key
+
+
+
                 if (!string.IsNullOrEmpty(key))
                 {
-                    //try
-                    //{
-                    var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
-
-                    if (data == null)
+                    //연계 퀘스트 - 키가 같음
+                    if (tmpData != null && tmpData.Key == key)
                     {
-                        data = ScriptableObject.CreateInstance<T>();
-                        data.SetSortIndex(index);
-                        data.SetData(row.Select(cell => cell.value).ToArray());
-                        AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
-                        data.SetAssetBundle(bundleName);
-                        EditorUtility.SetDirty(data);
-                        AssetDatabase.SaveAssets();
+                        tmpData.AddData(row.Select(cell => cell.value).ToArray());
+                        EditorUtility.SetDirty(tmpData);
                     }
-                    else
+                    else 
                     {
-                        data.SetSortIndex(index);
-                        data.SetData(row.Select(cell => cell.value).ToArray());
-                        data.SetAssetBundle(bundleName);
-                        EditorUtility.SetDirty(data);
+                        tmpData = null;
+                        //try
+                        //{
+                        var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
+
+                        if (data == null)
+                        {
+                            data = ScriptableObject.CreateInstance<T>();
+                            data.SetSortIndex(index);
+                            data.SetData(row.Select(cell => cell.value).ToArray());
+                            AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
+                            data.SetAssetBundle(bundleName);
+                            EditorUtility.SetDirty(data);
+                            AssetDatabase.SaveAssets();
+                        }
+                        else
+                        {
+                            data.SetSortIndex(index);
+                            data.SetData(row.Select(cell => cell.value).ToArray());
+                            data.SetAssetBundle(bundleName);
+                            EditorUtility.SetDirty(data);
+                        }
+
+                        tmpData = data;
                     }
                     //}
                     //catch (System.Exception e)
@@ -100,9 +117,22 @@ namespace Utility.Generator
             list.Sort((d1, d2) => d1.SortIndex - d2.SortIndex);
 
             var saveList = new List<List<string>>();
+
             for (int i = 0; i < list.Count; i++)
             {
-                saveList.Add(new List<string>(list[i].GetData()));
+                if (list[i].HasDataArray())
+                {
+                    var arr = list[i].GetDataArray();
+
+                    for(int j = 0; j < arr.Length; j++)
+                    {
+                        saveList.Add(new List<string>(arr[j]));
+                    }
+                }
+                else
+                {
+                    saveList.Add(new List<string>(list[i].GetData()));
+                }
             }
             GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet, "A2");
             SpreadsheetManager.Write(gstuSearcher, new ValueRange(saveList), endCallback);
