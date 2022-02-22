@@ -4,10 +4,11 @@ namespace SEF.Data
     using System;
     using UnityEngine;
     using Quest;
+    using Utility.Data;
 
     [CreateAssetMenu(fileName = "QuestData", menuName = "ScriptableObjects/QuestData")]
 
-    public class QuestData : ScriptableObject
+    public class QuestData : ScriptableObjectData
     {
         public enum TYPE_QUEST_GROUP { Daily, Weekly, Challenge, Goal}
 
@@ -106,6 +107,40 @@ namespace SEF.Data
             _isMultipleQuest = true;
             _questConditionDataArray = arr;
         }
+
+        public override void SetData(string[] arr)
+        {
+            _key = arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Key];
+
+            name = $"{typeof(QuestData).Name}_{_key}";
+
+            _typeQuestGroup = (TYPE_QUEST_GROUP)System.Enum.Parse(typeof(TYPE_QUEST_GROUP), arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Group]);
+
+            _questConditionData.SetData(
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeConditionData],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.ConditionValue],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeRewardAsset],
+                arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue]
+                );
+
+            _isMultipleQuest = false;
+        }
+
+        public override string[] GetData()
+        {
+            string[] arr = new string[System.Enum.GetValues(typeof(VillageDataGenerator.TYPE_SHEET_COLUMNS)).Length];
+
+            arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.Group] = _typeQuestGroup.ToString();
+
+            _questConditionData.GetData(out string classTypeName, out string conditionValue, out string typeAssetData, out string assetValue);
+
+            arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeConditionData] = classTypeName;
+            arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.ConditionValue] = conditionValue;
+            arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.TypeRewardAsset] = typeAssetData;
+            arr[(int)QuestDataGenerator.TYPE_SHEET_COLUMNS.RewardAssetValue] = assetValue;
+
+            return arr;
+        }
 #endif
     }
 
@@ -171,6 +206,20 @@ namespace SEF.Data
             Debug.Assert(_conditionQuestData != null, "_conditionQuestData 가 null입니다");
             Debug.Assert(_rewardAssetData != null, "_rewardAssetData 가 null입니다");
         }
+
+        public void SetData(string classTypeName, string conditionValue, string typeAssetData, string assetValue)
+        {
+            _serializedConditionQuestData.SetData(classTypeName);
+            _conditionValue = int.Parse(conditionValue);
+            _serializedAssetData.SetData(typeAssetData, assetValue);
+        }
+
+        public void GetData(out string classTypeName, out string conditionValue, out string typeAssetData, out string assetValue)
+        {
+            _serializedConditionQuestData.GetData(out classTypeName);
+            conditionValue = _conditionValue.ToString();
+            _serializedAssetData.GetData(out typeAssetData, out assetValue);
+        }
 #endif
 
     }
@@ -192,6 +241,15 @@ namespace SEF.Data
         public static IConditionQuestData GetData(System.Type type)
         {
             return (IConditionQuestData)Activator.CreateInstance(type);
+        }
+
+        public void SetData(string classTypeName)
+        {            
+            _classTypeName = $"SEF.Quest.{classTypeName}ConditionQuestData";
+        }
+        public void GetData(out string classTypeName)
+        {
+            classTypeName = _classTypeName;
         }
     }
 
