@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
-  m_Name: VillageData_Test1
+  m_Name: VillageData_Hut
   m_EditorClassIdentifier: 
-  _key: 
+  _sortIndex: 0
+  _key: Hut
   _icon: {fileID: 0}
   _serializedProcessData:
     _classTypeName: SEF.Process.AssetProcessData
     _processAssetData:
+      _typeAssetData: Gold
       _assetData: 0
-      _assetValue: 100
+      _assetValue: 1
     _increaseValue: 1
     _increaseRate: 0.125
     _processTime: 1
   _serializedStartUpgradeAssetData:
+    _typeAssetData: Gold
     _assetData: 0
     _assetValue: 100
   _increaseUpgradeValue: 1

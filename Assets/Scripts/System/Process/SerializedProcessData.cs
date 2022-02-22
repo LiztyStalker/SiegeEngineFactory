@@ -41,6 +41,27 @@ namespace SEF.Process
             _increaseRate = 0.125f;
             _processTime = 1f;
         }
+
+        public void SetData(string classTypeName, string typeAssetData, string assetValue, string increaseValue, string increaseRate, string processTime)
+        {
+            _classTypeName = $"SEF.Data.{classTypeName}ProcessData";
+            _processAssetData.SetData(typeAssetData, assetValue);
+            _increaseValue = int.Parse(increaseValue);
+            _increaseRate = float.Parse(increaseRate);
+            _processTime = float.Parse(processTime);
+        }
+
+        public void GetData(out string classTypeName, out string typeAssetData, out string assetValue, out string increaseValue, out string increaseRate, out string processTime)
+        {
+            var split = _classTypeName.Split('.');
+            var typeName = split[split.Length - 1].Replace("ProcessData", "");
+
+            classTypeName = typeName;
+            _processAssetData.GetData(out typeAssetData, out assetValue);
+            increaseValue = _increaseValue.ToString();
+            increaseRate = _increaseRate.ToString();
+            processTime = _processTime.ToString();
+        }
 #endif
     }
 }

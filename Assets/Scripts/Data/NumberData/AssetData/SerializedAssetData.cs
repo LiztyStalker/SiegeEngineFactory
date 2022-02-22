@@ -53,7 +53,7 @@ namespace SEF.Data
 
         public void SetData(string typeAssetData, string assetValue)
         {
-            _typeAssetData = typeAssetData;
+            _typeAssetData = typeAssetData; //"SEF.Data.{Name}AssetData"
             _assetData = (TYPE_ASSET_DATA_ATTRIBUTE)System.Enum.Parse(typeof(TYPE_ASSET_DATA_ATTRIBUTE), typeAssetData);
             _assetValue = assetValue;
         }

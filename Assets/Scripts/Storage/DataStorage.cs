@@ -56,7 +56,7 @@ namespace Storage
             InitializeDatasFromAssetDatabase<EnemyData>("Data/Enemies");
             InitializeDatasFromAssetDatabase<UnitData>("Data/Units");
             InitializeDatasFromAssetDatabase<SmithyData>("Data/Smithy");
-            InitializeDatasFromAssetDatabase<VillageData>("Data/Village");
+            InitializeDatasFromAssetDatabase<VillageData>("Data/Villages");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests");
             //            InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
 
