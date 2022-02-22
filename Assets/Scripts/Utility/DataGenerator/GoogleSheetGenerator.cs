@@ -10,7 +10,7 @@ namespace Utility.Generator
 
     public class GoogleSheetGenerator
     {
-        private readonly static GSTU_Search gstuSearcher = new GSTU_Search("16Ps885lj_8ZSY6Gv_WQgehpCxusaz2l9J50JBXKq2DY", "Unit_Data", "A2", 2);
+        //private readonly static GSTU_Search gstuSearcher = new GSTU_Search("16Ps885lj_8ZSY6Gv_WQgehpCxusaz2l9J50JBXKq2DY", "Unit_Data", "A2", 2);
 
 
 
@@ -82,14 +82,14 @@ namespace Utility.Generator
             GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet, "A2", 2);
             SpreadsheetManager.Read(gstuSearcher, sheet =>
             { 
-                OnCreateAndUpdateEvent<T>(sheet, dataPath, bundleName); 
+                OnCreateAndUpdateEvent<T>(sheet, dataPath, bundleName, gstuSearcher.titleRow); 
             });
         }
 
-        private static void OnCreateAndUpdateEvent<T>(GstuSpreadSheet sheet, string dataPath, string bundleName) where T : ScriptableObjectData
+        private static void OnCreateAndUpdateEvent<T>(GstuSpreadSheet sheet, string dataPath, string bundleName, int startRow) where T : ScriptableObjectData
         {
             int index = 0;
-            for (int c = gstuSearcher.titleRow; c < sheet.RowCount + gstuSearcher.titleRow; c++, index++)
+            for (int c = startRow; c < sheet.RowCount + startRow; c++, index++)
             {
                 var row = sheet.rows[c];
                 var key = row[0].value; //0 = Key
@@ -137,12 +137,10 @@ namespace Utility.Generator
         /// <param name="dataPath"></param>
         public static void UploadAllUnits<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
         {
-            GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet);
-            Upload<T>(dataPath, endCallback);
+            Upload<T>(sheetkey, worksheet, dataPath, endCallback);
         }
 
-
-        private static void Upload<T>(string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
+        private static void Upload<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
         {
             var list = new List<T>();
             var files = System.IO.Directory.GetFiles(dataPath);
@@ -158,6 +156,7 @@ namespace Utility.Generator
             {
                 saveList.Add(new List<string>(list[i].GetData()));
             }
+            GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet, "A2");
             SpreadsheetManager.Write(gstuSearcher, new ValueRange(saveList), endCallback);
         }
 
