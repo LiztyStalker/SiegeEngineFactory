@@ -37,8 +37,10 @@ namespace Utility.Generator
             {
                 var row = sheet.rows[c];
                 var key = row[0].value; //0 = Key
-                //try
-                //{
+                if (!string.IsNullOrEmpty(key))
+                {
+                    //try
+                    //{
                     var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
 
                     if (data == null)
@@ -58,12 +60,13 @@ namespace Utility.Generator
                         data.SetAssetBundle(bundleName);
                         EditorUtility.SetDirty(data);
                     }
-                //}
-                //catch (System.Exception e)
-                //{
-                //    Debug.LogWarning(e.Message);
-                //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
-                //}
+                    //}
+                    //catch (System.Exception e)
+                    //{
+                    //    Debug.LogWarning(e.Message);
+                    //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
+                    //}
+                }
             }
             Debug.Log("Create And Update End");
         }

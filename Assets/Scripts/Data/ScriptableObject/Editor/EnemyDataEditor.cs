@@ -480,11 +480,14 @@ namespace SEF.Data.Editor
         private void UpdateAttackerData(VisualElement layout, AttackerData[] datas)
         {
             layout.Clear();
-            for(int i = 0; i < datas.Length; i++)
+            if (datas != null)
             {
-                var attackerDataEditor = new AttackerDataEditor(datas[i]);
-                attackerDataEditor.SetOnRemoveListener(RemoveAttackerData);
-                layout.Add(attackerDataEditor);
+                for (int i = 0; i < datas.Length; i++)
+                {
+                    var attackerDataEditor = new AttackerDataEditor(datas[i]);
+                    attackerDataEditor.SetOnRemoveListener(RemoveAttackerData);
+                    layout.Add(attackerDataEditor);
+                }
             }
         }
 

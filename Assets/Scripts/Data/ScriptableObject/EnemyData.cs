@@ -3,14 +3,15 @@ namespace SEF.Data
     using System.Collections.Generic;
     using UnityEngine;
     using Spine.Unity;
+    using Utility.Data;
 
-    public enum TYPE_LEVEL_THEME { Grass}
+    public enum TYPE_THEME_GROUP { Grass, Forest}
 
-    public enum TYPE_ENEMY_GROUP { Normal, Boss, ThemeBoss}
+    public enum TYPE_ENEMY_GROUP { Normal, Resource, Boss, ThemeBoss}
 
     
     [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]    
-    public class EnemyData : ScriptableObject
+    public class EnemyData : ScriptableObjectData
     {
         [SerializeField]
         private string _key;
@@ -45,8 +46,8 @@ namespace SEF.Data
         public TYPE_ENEMY_GROUP Group { get => _group; set => _group = value; }
 
         [SerializeField]
-        private TYPE_LEVEL_THEME _typeLevelTheme;
-        public TYPE_LEVEL_THEME TypeLevelTheme { get => _typeLevelTheme; set => _typeLevelTheme = value; }
+        private TYPE_THEME_GROUP _typeLevelTheme;
+        public TYPE_THEME_GROUP TypeLevelTheme { get => _typeLevelTheme; set => _typeLevelTheme = value; }
 
         [SerializeField]
         private float _scale = 1f;
@@ -73,16 +74,16 @@ namespace SEF.Data
         public float IncreaseWaveHealthRate { get => _increaseWaveHealthRate; set => _increaseWaveHealthRate = value; }
 
         [SerializeField]
-        private DamageData _startAttackValue = NumberDataUtility.Create<DamageData>();
-        public DamageData StartAttackValue => _startAttackValue;
+        private DamageData _startDamageValue = NumberDataUtility.Create<DamageData>();
+        public DamageData StartAttackValue => _startDamageValue;
 
         [SerializeField]
-        private int _increaseAttackValue;// = NumberDataUtility.Create<AttackData>();
-        public int IncreaseAttackValue { get => _increaseAttackValue; set => _increaseAttackValue = value; }
+        private int _increaseDamageValue;// = NumberDataUtility.Create<AttackData>();
+        public int IncreaseAttackValue { get => _increaseDamageValue; set => _increaseDamageValue = value; }
 
         [SerializeField]
-        private float _increaseAttackRate;
-        public float IncreaseAttackRate { get => _increaseAttackRate; set => _increaseAttackRate = value; }
+        private float _increaseDamageRate;
+        public float IncreaseAttackRate { get => _increaseDamageRate; set => _increaseDamageRate = value; }
 
 
         [SerializeField]
@@ -178,7 +179,7 @@ namespace SEF.Data
             _key = "Test";
             _spineModelKey = "BowSoldier_SkeletonData";
             _group = TYPE_ENEMY_GROUP.Normal;
-            _typeLevelTheme = TYPE_LEVEL_THEME.Grass;
+            _typeLevelTheme = TYPE_THEME_GROUP.Grass;
 
             _attackBulletKey = "Arrow";
 
@@ -187,9 +188,9 @@ namespace SEF.Data
             _increaseLevelHealthRate = 0.125f;
             _increaseWaveHealthValue = 0;// HealthData.Create_Test();
             _increaseWaveHealthRate = 0.01f;
-            _startAttackValue = DamageData.Create_Test(30);
-            _increaseAttackValue = 1;// AttackData.Create_Test();
-            _increaseAttackRate = 0.2f;
+            _startDamageValue = DamageData.Create_Test(30);
+            _increaseDamageValue = 1;// AttackData.Create_Test();
+            _increaseDamageRate = 0.2f;
             _attackCount = 1;
             //_attackDelay = new float[1];
             //_attackDelay[0] = 1f;
@@ -203,6 +204,71 @@ namespace SEF.Data
 
             UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");
 
+        }
+
+
+        public override void SetData(string[] arr)
+        {
+
+            _key = arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.Key];
+
+            name = $"{typeof(UnitData).Name}_{_key}";
+
+            _spineModelKey = $"{_key}_SkeletonData";
+            _group = (TYPE_ENEMY_GROUP)System.Enum.Parse(typeof(TYPE_ENEMY_GROUP), arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeEnemyGroup]);
+            _typeLevelTheme = (TYPE_THEME_GROUP)System.Enum.Parse(typeof(TYPE_THEME_GROUP), arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeThemeGroup]);
+            _scale = 1f;
+
+            _attackBulletKey = arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackBulletKey];
+
+            _startHealthValue = HealthData.Create(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartHealthValue]);
+            _increaseLevelHealthValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelHealthValue]);
+            _increaseLevelHealthRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelHealthRate]);
+            _increaseWaveHealthValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseWaveHealthValue]);
+            _increaseWaveHealthRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseWaveHealthRate]);
+            _startDamageValue = DamageData.Create(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartDamageValue]);
+            _increaseDamageValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelDamageValue]);
+            _increaseDamageRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelDamageRate]);
+            _attackCount = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackCount]);
+            _attackDelay = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay]);
+
+            _startRewardAssetValue = GoldAssetData.Create(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartRewardAssetValue]);
+            _increaseLevelRewardAssetValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetValue]);
+            _increaseLevelRewardAssetRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetRate]);
+            _increaseWaveRewardAssetValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetValue]);
+            _increaseWaveRewardAssetRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetRate]);
+        }
+
+        public override string[] GetData()
+        {
+
+            string[] arr = new string[System.Enum.GetValues(typeof(EnemyDataGenerator.TYPE_SHEET_COLUMNS)).Length];
+
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeEnemyGroup] = _group.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeThemeGroup] = _typeLevelTheme.ToString();
+            _scale = 1f;
+
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackBulletKey] = _attackBulletKey;
+
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartHealthValue] = _startHealthValue.GetValue();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelHealthValue] = _increaseLevelHealthValue.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelHealthRate] = _increaseLevelHealthRate.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseWaveHealthValue] = _increaseWaveHealthValue.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseWaveHealthRate] = _increaseWaveHealthRate.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartDamageValue] = _startDamageValue.GetValue();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelDamageValue] = _increaseDamageValue.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseLevelDamageRate] = _increaseDamageRate.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackCount] = _attackCount.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay] = _attackDelay.ToString();
+
+            //arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.TypeRewardAsset;
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.StartRewardAssetValue] = _startRewardAssetValue.GetValue();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetValue] = _increaseLevelRewardAssetValue.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetRate] = _increaseLevelRewardAssetRate.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetValue] = _increaseWaveRewardAssetValue.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetRate] = _increaseWaveRewardAssetRate.ToString();
+
+            return arr;
         }
 
 #endif

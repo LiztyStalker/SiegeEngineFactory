@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
+  m_Name: UnitData_Plaza
+  m_EditorClassIdentifier: 
+  _sortIndex: 4
+  _key: Plaza
+  _skeletonDataAsset: {fileID: 0}
+  _spineModelKey: Plaza_SkeletonData
+  _spineSkinKey: 
+  _group: 0
+  _typeLevelTheme: 0
+  _scale: 1
+  _startHealthValue:
+    _valueText: 100
+  _increaseLevelHealthValue: 20
+  _increaseLevelHealthRate: 10
+  _increaseWaveHealthValue: 10
+  _increaseWaveHealthRate: 5
+  _startDamageValue:
+    _valueText: 10
+  _increaseDamageValue: 1
+  _increaseDamageRate: 1
+  _attackCount: 1
+  _attackDelay: 1
+  _attackBulletKey: Arrow
+  _attackBulletData: {fileID: 0}
+  _bulletScale: 0
+  _attackerDataList: []
+  _startRewardAssetValue:
+    _valueText: 10
+  _increaseLevelRewardAssetValue: 1
+  _increaseLevelRewardAssetRate: 1
+  _increaseWaveRewardAssetValue: 1
+  _increaseWaveRewardAssetRate: 1
