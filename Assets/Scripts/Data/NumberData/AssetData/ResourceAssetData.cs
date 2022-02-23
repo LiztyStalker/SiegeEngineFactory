@@ -31,7 +31,8 @@ namespace SEF.Data
             data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
             return data;
         }
-
+        public Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyResourceUsedAssetStatisticsData);
+        public Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyResourceGetAssetStatisticsData);
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -49,11 +50,7 @@ namespace SEF.Data
             return data;
         }
 
-        public Type UsedStatisticsType() => typeof(Statistics.ResourceUsedAssetStatisticsData);
 
-        public Type GetStatisticsType() => typeof(Statistics.ResourceGetAssetStatisticsData);
-
-        public Type AccumulateStatisticsType() => typeof(Statistics.ResourceAccumulateAssetStatisticsData);
 #endif
     }
 }

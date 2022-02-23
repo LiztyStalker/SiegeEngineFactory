@@ -38,9 +38,8 @@ namespace SEF.Data
             return data;
         }
 
-        public Type UsedStatisticsType() => typeof(Statistics.MeteoriteUsedAssetStatisticsData);
-        public Type GetStatisticsType() => typeof(Statistics.MeteoriteGetAssetStatisticsData);
-        public Type AccumulateStatisticsType() => typeof(Statistics.MeteoriteAccumulateAssetStatisticsData);
+        public Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteUsedAssetStatisticsData);
+        public Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteGetAssetStatisticsData);
 
 
 #endif

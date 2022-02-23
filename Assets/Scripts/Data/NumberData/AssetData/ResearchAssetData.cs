@@ -17,6 +17,10 @@ namespace SEF.Data
             }
         }
 
+        public Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyResearchUsedAssetStatisticsData);
+
+        public Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyResearchGetAssetStatisticsData);
+
         public ResearchAssetData() { }
         private ResearchAssetData(ResearchAssetData researchAssetData) : base(researchAssetData) {  }
         public override INumberData Clone()
@@ -47,12 +51,7 @@ namespace SEF.Data
             data.ValueText = value.ToString();
             return data;
         }
-
-        public Type UsedStatisticsType() => typeof(Statistics.ResearchUsedAssetStatisticsData);
-
-        public Type GetStatisticsType() => typeof(Statistics.ResearchGetAssetStatisticsData);
-
-        public Type AccumulateStatisticsType() => typeof(Statistics.ResearchAccumulateAssetStatisticsData);
 #endif
+
     }
 }

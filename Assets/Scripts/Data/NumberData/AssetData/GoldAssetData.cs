@@ -73,11 +73,10 @@ namespace SEF.Data
             return data;
         }
 
-        public System.Type UsedStatisticsType() => typeof(Statistics.GoldUsedAssetStatisticsData);
-
-        public System.Type GetStatisticsType() => typeof(Statistics.GoldGetAssetStatisticsData);
-
-        public System.Type AccumulateStatisticsType() => typeof(Statistics.GoldAccumulateAssetStatisticsData);
+        public System.Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyGoldUsedAssetStatisticsData);
+        public System.Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyGoldGetAssetStatisticsData);
+        //public System.Type ConditionQuestDataType() => typeof(Quest.GetGoldAssetDataConditionQuestData);
+        //public System.Type AccumulativelyConditionQuestDataType() => typeof(Quest.AccumulativelyGetGoldAssetDataConditionQuestData); 
 
         public StorableData GetStorableData()
         {

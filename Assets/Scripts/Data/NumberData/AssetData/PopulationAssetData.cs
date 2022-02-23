@@ -49,13 +49,13 @@ namespace SEF.Data
         /// null 반환
         /// </summary>
         /// <returns></returns>
-        public Type UsedStatisticsType() => null;
+        public Type AccumulativelyUsedStatisticsType() => null;
 
         /// <summary>
         /// null 반환
         /// </summary>
         /// <returns></returns>
-        public Type GetStatisticsType() => null;
+        public Type AccumulativelyGetStatisticsType() => null;
 
         /// <summary>
         /// null 반환

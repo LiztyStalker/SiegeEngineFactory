@@ -52,9 +52,8 @@ namespace SEF.Data
         BigInteger AssetValue { get; set; }
         void SetValue(string value);
         System.Type GetType();
-        System.Type UsedStatisticsType();
-        System.Type GetStatisticsType();
-        System.Type AccumulateStatisticsType();
+        System.Type AccumulativelyUsedStatisticsType();
+        System.Type AccumulativelyGetStatisticsType();
         void SetCompoundInterest(float nowValue, float rate, int length = 1);
         StorableData GetStorableData();
     }
