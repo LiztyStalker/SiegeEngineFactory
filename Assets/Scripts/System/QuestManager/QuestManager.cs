@@ -168,7 +168,7 @@ namespace SEF.Quest
             for (int i = 0; i < entities.Length; i++)
             {
                 var entity = entities[i];
-                entity.AddQuestValue(value);
+                entity.SetQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
             }
@@ -179,7 +179,7 @@ namespace SEF.Quest
             for (int i = 0; i < entities.Length; i++)
             {
                 var entity = entities[i];
-                entity.AddQuestValue(value);
+                entity.SetQuestValue(value);
                 SetQuestEntity(entity);
                 RefreshQuest(entity);
             }
