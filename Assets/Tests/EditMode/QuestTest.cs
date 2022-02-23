@@ -184,6 +184,7 @@ namespace SEF.Test
             }
         }
 
+        
 
         #region ##### 즉석웨이브달성 누적웨이브달성 #####
         [Test]
@@ -372,226 +373,387 @@ namespace SEF.Test
 
 
 
+        #region ##### 즉석유닛생산 누적유닛생산 #####
         [Test]
-        public void QuestIntegrationTest_UpgradeUnitConditionQuestData()
+        public void QuestIntegrationTest_CreateUnit_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(CreateUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyCreateUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            _gameSystem.AddProductUnitListener(entity => { Debug.Log("Product"); });
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.RunProcess(1f);
+            _gameSystem.RunProcess(1f);
+            _gameSystem.RunProcess(1f);
+
+            _gameSystem.RemoveProductUnitListener(entity => { Debug.Log("Product"); });
+
+        }
+
+        #endregion
+
+        #region ##### 유닛업글 누적유닛업글 #####
+
+        [Test]
+        public void QuestIntegrationTest_UpgradeUnit_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyUpgradeUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.UpgradeWorkshop(0);
+            _gameSystem.UpgradeWorkshop(0);
             _gameSystem.UpgradeWorkshop(0);
         }
 
-        [Test]
-        public void QuestIntegrationTest_UpgradeUnitConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+        #endregion
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
 
-            _gameSystem.UpgradeWorkshop(0);
-            _gameSystem.UpgradeWorkshop(0);
-            _gameSystem.UpgradeWorkshop(0);
-        }
+
+        #region ##### 유닛테크 누적유닛테크 #####
 
         [Test]
-        public void QuestIntegrationTest_TechUnitConditionQuestData()
+        public void QuestIntegrationTest_TechUnit_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechUnitConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyTechUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-        }
-        [Test]
-        public void QuestIntegrationTest_TechUnitConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechUnitConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
             _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
             _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
             _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            //결과가 3/1이 나옴
         }
 
-        [Test]
-        public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeSmithyConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+        #endregion
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+
+        #region ##### 즉석유닛확장 누적유닛확장 #####
+        [Test]
+        public void QuestIntegrationTest_ExpendWorkshopLine_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ExpendWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyExpendWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.ExpendWorkshop();
+            _gameSystem.ExpendWorkshop();
+            _gameSystem.ExpendWorkshop();
+        }
+
+        #endregion
+
+
+
+
+        #region ##### 대장간업글 누적대장간업글 #####
+        [Test]
+        public void QuestIntegrationTest_UpgradeSmithy_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyUpgradeSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
             _gameSystem.UpgradeSmithy(0);
-        }
-        [Test]
-        public void QuestIntegrationTest_UpgradeBlacksmithConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
-
-            _gameSystem.UpgradeSmithy(0);
             _gameSystem.UpgradeSmithy(0);
             _gameSystem.UpgradeSmithy(0);
         }
+        #endregion
+
+
+        #region ##### 대장간테크 누적대장간테크 #####
         [Test]
-        public void QuestIntegrationTest_TechBlacksmithConditionQuestData()
+        public void QuestIntegrationTest_TechSmithy_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechSmithyConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyTechSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.UpTechSmithy(0);
-        }
-        [Test]
-        public void QuestIntegrationTest_TechBlacksmithConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechSmithyConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
             _gameSystem.UpTechSmithy(0);
             _gameSystem.UpTechSmithy(0);
             _gameSystem.UpTechSmithy(0);
         }
+        #endregion
+
+
+
+        #region ##### 마을업글 누적마을업글 #####
+
         [Test]
-        public void QuestIntegrationTest_UpgradeVillageConditionQuestData()
+        public void QuestIntegrationTest_UpgradeVillage_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeVillageConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyUpgradeVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.UpgradeVillage(0);
+            _gameSystem.UpgradeVillage(0);
             _gameSystem.UpgradeVillage(0);
         }
+        #endregion
+
+
+        #region ##### 마을테크 누적마을테크 #####
         [Test]
-        public void QuestIntegrationTest_UpgradeVillageConditionQuestData_x3()
+        public void QuestIntegrationTest_TechVillage_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(UpgradeVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyTechVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.UpgradeVillage(0);
-            _gameSystem.UpgradeVillage(0);
-            _gameSystem.UpgradeVillage(0);
-        }
-        [Test]
-        public void QuestIntegrationTest_TechVillageConditionQuestData()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechVillageConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
-
-            _gameSystem.UpTechVillage(0);
-        }
-        [Test]
-        public void QuestIntegrationTest_TechVillageConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(TechVillageConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
             _gameSystem.UpTechVillage(0);
             _gameSystem.UpTechVillage(0);
             _gameSystem.UpTechVillage(0);
         }
+        #endregion
+
+
+        #region ##### 지휘관업글 누적지휘관업글 #####
         [Test]
-        public void QuestIntegrationTest_UpgradeCommanderConditionQuestData()
+        public void QuestIntegrationTest_UpgradeCommander_And_Accumulatively()
         {
             Assert.Fail("개발되지 않음");
         }
+        #endregion
+
+
+
+        #region ##### 연구진행 누적연구진행 #####
         [Test]
-        public void QuestIntegrationTest_UpgradeCommanderConditionQuestData_x3()
+        public void QuestIntegrationTest_SuccessResearch_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelySuccessResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.SuccessResearchData();
+            _gameSystem.SuccessResearchData();
+            _gameSystem.SuccessResearchData();
+        }
+        #endregion
+
+
+        #region ##### 일일진행 누적일일진행 #####
+        [Test]
+        public void QuestIntegrationTest_AchievedDaily_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AchievedDailyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyAchievedDailyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Daily, "InstantTest");
+        }
+        #endregion
+
+
+
+        #region ##### 주간진행 누적주간진행 #####
+        [Test]
+        public void QuestIntegrationTest_AchievedWeekly_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Weekly, typeof(AchievedWeeklyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Weekly, typeof(AccumulativelyAchievedWeeklyConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Weekly, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Weekly, entity2);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Weekly, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Weekly, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Weekly, "InstantTest");
+        }
+        #endregion
+
+
+
+        #region ##### 도전진행 누적도전진행 #####
+        [Test]
+        public void QuestIntegrationTest_AchievedChallenge_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Challenge, typeof(AchievedChallengeConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Challenge, typeof(AccumulativelyAchievedChallengeConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Challenge, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Challenge, entity2);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Challenge, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Challenge, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Challenge, "InstantTest");
+        }
+        #endregion
+
+        #region ##### 목표진행 누적목표진행 #####
+        [Test]
+        public void QuestIntegrationTest_AchievedGoal_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(AchievedGoalConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(AccumulativelyAchievedGoalConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity2);
+
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Goal, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Goal, "InstantTest");
+            _gameSystem.GetRewardAssetData(QuestData.TYPE_QUEST_GROUP.Goal, "InstantTest");
+        }
+        #endregion
+
+
+        #region ##### 원정진행 누적원정진행 #####
+
+        [Test]
+        public void QuestIntegrationTest_SuccesseExpedition_And_Accumulatively()
         {
             Assert.Fail("개발되지 않음");
+
         }
+        #endregion
+
+
+
+        #region ##### 골드획득 누적골드획득 #####
         [Test]
-        public void QuestIntegrationTest_SuccessedResearchConditionQuestData()
+        public void QuestIntegrationTest_GetGoldAssetData_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessResearchConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(GetGoldAssetDataConditionQuestData), 300, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(AccumulativelyGetGoldAssetDataConditionQuestData), 300, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.SuccessedResearchData();
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity2);
+
+
+            var asset = new GoldAssetData();
+            asset.ValueText = "100";
+            asset.SetValue();
+
+            _gameSystem.AddAsset(asset);
+            _gameSystem.AddAsset(asset);
+            _gameSystem.AddAsset(asset);
         }
+        #endregion
+
+
+        #region ##### 골드획득 누적골드획득 #####
         [Test]
-        public void QuestIntegrationTest_SuccessedResearchConditionQuestData_x3()
+        public void QuestIntegrationTest_UsedGoldAssetData_And_Accumulatively()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(UsedGoldAssetDataConditionQuestData), 300, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Goal, typeof(AccumulativelyUsedGoldAssetDataConditionQuestData), 300, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
 
-            _gameSystem.SuccessedResearchData();
-            _gameSystem.SuccessedResearchData();
-            _gameSystem.SuccessedResearchData();
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Goal, entity2);
 
-            
+
+            var asset = new GoldAssetData();
+            asset.ValueText = "500";
+            asset.SetValue();
+
+            _gameSystem.AddAsset(asset);
+
+            asset.ValueText = "100";
+            asset.SetValue();
+
+            _gameSystem.SubjectAsset(asset);
+            _gameSystem.SubjectAsset(asset);
+            _gameSystem.SubjectAsset(asset);
         }
+        #endregion
 
-        [Test]
-        public void QuestIntegrationTest_SuccessedDailyConditionQuestData()
-        {
-            Assert.Fail("개발되지 않음");
-
-        }
-        [Test]
-        public void QuestIntegrationTest_SuccessedDailyConditionQuestData_x3()
-        {
-            Assert.Fail("개발되지 않음");
-
-        }
-        [Test]
-        public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData()
-        {
-            Assert.Fail("개발되지 않음");
-
-        }
-        [Test]
-        public void QuestIntegrationTest_SuccessedWeeklyConditionQuestData_x3()
-        {
-            Assert.Fail("개발되지 않음");
-
-        }
-        [Test]
-        public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData()
-        {
-            Assert.Fail("개발되지 않음");
-
-        }
-        [Test]
-        public void QuestIntegrationTest_SuccessedExpeditionConditionQuestData_x3()
-        {
-            Assert.Fail("개발되지 않음");
-        }
 
         [Test]
         public void QuestTest_GetRewardAssetData()

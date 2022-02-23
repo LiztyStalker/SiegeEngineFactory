@@ -212,9 +212,6 @@ namespace SEF.Manager
 
             if (assetData is GoldAssetData)
             {
-
-                UnityEngine.Debug.Log(assetData.AssetValue);
-
                 //즉석 퀘스트
                 //BigInteger -> int
                 //BigInteger 그대로 적용하도록 수정 필요
@@ -231,7 +228,8 @@ namespace SEF.Manager
                 var accValue = (accStr.Length >= int.MaxValue.ToString().Length - 1) ?
                     int.Parse(GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value.ToString().Substring(0, int.MaxValue.ToString().Length - 1)) :
                     int.Parse(GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value.ToString());
-                SetQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>(accValue);
+
+                AddQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>(accValue);
             }
         }
 
@@ -333,36 +331,35 @@ namespace SEF.Manager
         public void GetRewardAssetData(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string key)
         {
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
-            if(assetData != null) AddAsset(assetData);
-
-
-
-            //일일 주간 도전 목표 퀘스트 및 통계 적용 
-            switch (typeQuestGroup)
+            if (assetData != null)
             {
-                case QuestData.TYPE_QUEST_GROUP.Daily:
-                    AddStatisticsData<AchievedDailyStatisticsData>();
-                    AddQuestValue<AchievedDailyConditionQuestData>();
-                    AddQuestValue<AccumulativelyAchievedDailyConditionQuestData>((int)GetStatisticsValue<AchievedDailyStatisticsData>().Value);
-                    break;
-                case QuestData.TYPE_QUEST_GROUP.Weekly:
-                    AddStatisticsData<AchievedWeeklyStatisticsData>();
-                    AddQuestValue<AchievedWeeklyConditionQuestData>();
-                    AddQuestValue<AccumulativelyAchievedWeeklyConditionQuestData>((int)GetStatisticsValue<AchievedWeeklyStatisticsData>().Value);
-                    break;
-                case QuestData.TYPE_QUEST_GROUP.Challenge:
-                    AddStatisticsData<AchievedChallengeStatisticsData>();
-                    AddQuestValue<AchievedChallengeConditionQuestData>();
-                    AddQuestValue<AccumulativelyAchievedChallengeConditionQuestData>((int)GetStatisticsValue<AchievedChallengeStatisticsData>().Value);
-                    break;
-                case QuestData.TYPE_QUEST_GROUP.Goal:
-                    AddStatisticsData<AchievedGoalStatisticsData>();
-                    AddQuestValue<AchievedGoalConditionQuestData>();
-                    AddQuestValue<AccumulativelyAchievedGoalConditionQuestData>((int)GetStatisticsValue<AchievedGoalStatisticsData>().Value);
-                    break;
+                AddAsset(assetData);
+
+                //일일 주간 도전 목표 퀘스트 및 통계 적용 
+                switch (typeQuestGroup)
+                {
+                    case QuestData.TYPE_QUEST_GROUP.Daily:
+                        AddStatisticsData<AchievedDailyStatisticsData>();
+                        AddQuestValue<AchievedDailyConditionQuestData>();
+                        SetQuestValue<AccumulativelyAchievedDailyConditionQuestData>((int)GetStatisticsValue<AchievedDailyStatisticsData>().Value);
+                        break;
+                    case QuestData.TYPE_QUEST_GROUP.Weekly:
+                        AddStatisticsData<AchievedWeeklyStatisticsData>();
+                        AddQuestValue<AchievedWeeklyConditionQuestData>();
+                        SetQuestValue<AccumulativelyAchievedWeeklyConditionQuestData>((int)GetStatisticsValue<AchievedWeeklyStatisticsData>().Value);
+                        break;
+                    case QuestData.TYPE_QUEST_GROUP.Challenge:
+                        AddStatisticsData<AchievedChallengeStatisticsData>();
+                        AddQuestValue<AchievedChallengeConditionQuestData>();
+                        SetQuestValue<AccumulativelyAchievedChallengeConditionQuestData>((int)GetStatisticsValue<AchievedChallengeStatisticsData>().Value);
+                        break;
+                    case QuestData.TYPE_QUEST_GROUP.Goal:
+                        AddStatisticsData<AchievedGoalStatisticsData>();
+                        AddQuestValue<AchievedGoalConditionQuestData>();
+                        SetQuestValue<AccumulativelyAchievedGoalConditionQuestData>((int)GetStatisticsValue<AchievedGoalStatisticsData>().Value);
+                        break;
+                }
             }
-
-
         }
         public void RefreshQuest(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
         {
@@ -583,7 +580,7 @@ namespace SEF.Manager
 
 
         #region ##### Research #####
-        public void SuccessedResearchData()
+        public void SuccessResearchData()
         {
             //통계적용
             AddStatisticsData<SuccessResearchStatisticsData>();

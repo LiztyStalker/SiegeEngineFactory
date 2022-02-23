@@ -480,7 +480,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_SuccessResearchStatisticsData()
         {
-            _gameSystem.SuccessedResearchData();
+            _gameSystem.SuccessResearchData();
             yield return null;
             Debug.Log(_gameSystem.GetStatisticsValue<SuccessResearchStatisticsData>());
             Assert.IsTrue(_gameSystem.GetStatisticsValue<SuccessResearchStatisticsData>() == 1);
