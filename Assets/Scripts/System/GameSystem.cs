@@ -206,19 +206,52 @@ namespace SEF.Manager
         public void AddAsset(IAssetData assetData)
         {
             _assetPackage.Add(assetData);
+
+            //통계 적용
+            SetStatisticsData(assetData.AccumulativelyGetStatisticsType(), assetData.AssetValue);
+
+            if (assetData is GoldAssetData)
+            {
+                //즉석 퀘스트
+                AddQuestValue<GetGoldAssetDataConditionQuestData>((int)assetData.AssetValue);
+
+                //누적 퀘스트
+                SetQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>((int)GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value);
+            }
         }
 
         public void SubjectAsset(IAssetData assetData)
         {
             _assetPackage.Subject(assetData);
-            AddStatisticsData(assetData.UsedStatisticsType(), assetData.AssetValue);
-            AddStatisticsData(assetData.AccumulateStatisticsType(), assetData.AssetValue);
+
+            //통계 적용
+            AddStatisticsData(assetData.AccumulativelyUsedStatisticsType(), assetData.AssetValue);
+
+            if (assetData is GoldAssetData)
+            {
+                //즉석 퀘스트
+                AddQuestValue<UsedGoldAssetDataConditionQuestData>((int)assetData.AssetValue);
+
+                //누적 퀘스트
+                SetQuestValue<AccumulativelyUsedGoldAssetDataConditionQuestData>((int)GetStatisticsValue<AccumulativelyGoldUsedAssetStatisticsData>().Value);
+            }
         }
 
         public void SetAsset(IAssetData assetData)
         {
             _assetPackage.Set(assetData);
-            SetStatisticsData(assetData.GetStatisticsType(), assetData.AssetValue);
+
+            //통계 적용
+            SetStatisticsData(assetData.AccumulativelyGetStatisticsType(), assetData.AssetValue);
+
+            if (assetData is GoldAssetData)
+            {
+                //즉석 퀘스트
+                AddQuestValue<GetGoldAssetDataConditionQuestData>((int)assetData.AssetValue);
+
+                //누적 퀘스트
+                SetQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>((int)GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value);
+            }
         }
 
         public bool IsEnoughAsset(IAssetData assetData)
@@ -286,6 +319,35 @@ namespace SEF.Manager
         {
             var assetData = _questManager.GetRewardAssetData(typeQuestGroup, key);
             if(assetData != null) AddAsset(assetData);
+
+
+
+            //일일 주간 도전 목표 퀘스트 및 통계 적용 
+            switch (typeQuestGroup)
+            {
+                case QuestData.TYPE_QUEST_GROUP.Daily:
+                    AddStatisticsData<AchievedDailyStatisticsData>();
+                    AddQuestValue<AchievedDailyConditionQuestData>();
+                    AddQuestValue<AccumulativelyAchievedDailyConditionQuestData>((int)GetStatisticsValue<AchievedDailyStatisticsData>().Value);
+                    break;
+                case QuestData.TYPE_QUEST_GROUP.Weekly:
+                    AddStatisticsData<AchievedWeeklyStatisticsData>();
+                    AddQuestValue<AchievedWeeklyConditionQuestData>();
+                    AddQuestValue<AccumulativelyAchievedWeeklyConditionQuestData>((int)GetStatisticsValue<AchievedWeeklyStatisticsData>().Value);
+                    break;
+                case QuestData.TYPE_QUEST_GROUP.Challenge:
+                    AddStatisticsData<AchievedChallengeStatisticsData>();
+                    AddQuestValue<AchievedChallengeConditionQuestData>();
+                    AddQuestValue<AccumulativelyAchievedChallengeConditionQuestData>((int)GetStatisticsValue<AchievedChallengeStatisticsData>().Value);
+                    break;
+                case QuestData.TYPE_QUEST_GROUP.Goal:
+                    AddStatisticsData<AchievedGoalStatisticsData>();
+                    AddQuestValue<AchievedGoalConditionQuestData>();
+                    AddQuestValue<AccumulativelyAchievedGoalConditionQuestData>((int)GetStatisticsValue<AchievedGoalStatisticsData>().Value);
+                    break;
+            }
+
+
         }
         public void RefreshQuest(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
         {
@@ -314,14 +376,20 @@ namespace SEF.Manager
             var assetData = _workshopManager.Upgrade(index, out string key);
             SubjectAsset(assetData);
 
+            //통계 적용
             AddStatisticsData<UpgradeUnitStatisticsData>();
+
+            //특정 통계 적용
             var type = FindType(key, typeof(UpgradeUnitStatisticsData));
             if (type != null)
             {
                 _statistics.AddStatisticsData(type, 1);
             }
 
+            //퀘스트 적용
             AddQuestValue<UpgradeUnitConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyUpgradeUnitConditionQuestData>((int)GetStatisticsValue<UpgradeUnitStatisticsData>());
         }
 
 
@@ -329,8 +397,17 @@ namespace SEF.Manager
         {
             var assetData = _workshopManager.ExpendAssetData;
             int count = _workshopManager.ExpendWorkshop();
-            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
+                       
             SubjectAsset(assetData);
+
+            //통계 적용
+            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
+
+            //퀘스트 적용
+            SetQuestValue<ExpendWorkshopLineConditionQuestData>(count);
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
+
         }
         public void UpTechWorkshop(int index, UnitData unitData)
         {
@@ -344,7 +421,12 @@ namespace SEF.Manager
             {
                 _statistics.AddStatisticsData(type, 1);
             }
+
+            //퀘스트 적용
             AddQuestValue<TechUnitConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyTechUnitConditionQuestData>((int)GetStatisticsValue<TechUnitStatisticsData>());
+
         }
 
         private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
@@ -374,15 +456,45 @@ namespace SEF.Manager
                     //[System.Obsolete("StatusPackage 적용 보상")]
                     AddAsset(enemyActor.GetRewardAssetData());
 
+                    //통계 적용
                     AddStatisticsData<DestroyEnemyStatisticsData>();
+
+                    //특정 통계 적용
                     var enemyType = FindType(enemyActor.Key, typeof(DestroyEnemyStatisticsData));
                     if (enemyType != null)
                     {
                         _statistics.AddStatisticsData(enemyType, 1);
                     }
 
-                    AddQuestValue<DestroyEnemyConditionQuestData>(1);
+                    //퀘스트 적용
+                    AddQuestValue<DestroyEnemyConditionQuestData>();
+                    //누적 퀘스트 적용
+                    SetQuestValue<AccumulativelyDestroyEnemyConditionQuestData>((int)GetStatisticsValue<DestroyEnemyStatisticsData>().Value);
 
+
+                    var levelWaveData = enemyActor.GetLevelWaveData();
+                    if (levelWaveData.IsBoss())
+                    {
+                        //보스
+                        //통계 적용
+                        AddStatisticsData<DestroyBossStatisticsData>();
+
+                        //퀘스트 적용
+                        AddQuestValue<DestroyBossConditionQuestData>();
+                        //누적 퀘스트 적용
+                        SetQuestValue<AccumulativelyDestroyBossConditionQuestData>((int)GetStatisticsValue<DestroyBossStatisticsData>().Value);
+                    }
+                    else if (levelWaveData.IsThemeBoss())
+                    {
+                        //테마보스
+                        //통계 적용
+                        AddStatisticsData<DestroyThemeBossStatisticsData>();
+
+                        //퀘스트 적용
+                        AddQuestValue<DestroyThemeBossConditionQuestData>();
+                        //누적 퀘스트 적용
+                        SetQuestValue<AccumulativelyDestroyThemeBossConditionQuestData>((int)GetStatisticsValue<DestroyThemeBossStatisticsData>().Value);
+                    }
                     break;
             }
         }
@@ -397,15 +509,26 @@ namespace SEF.Manager
         public void UpgradeSmithy(int index)
         {
             var assetData = _smithyManager.Upgrade(index);
+            
             SubjectAsset(assetData);
+
+            //통계적용
             AddStatisticsData<UpgradeSmithyStatisticsData>();
+            //퀘스트 적용
             AddQuestValue<UpgradeSmithyConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyUpgradeSmithyConditionQuestData>((int)GetStatisticsValue<UpgradeSmithyStatisticsData>());
         }
+
         public void UpTechSmithy(int index)
         {
             _smithyManager.UpTech(index);
+            //통계적용
             AddStatisticsData<TechSmithyStatisticsData>();
+            //퀘스트 적용
             AddQuestValue<TechSmithyConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyTechSmithyConditionQuestData>((int)GetStatisticsValue<TechSmithyStatisticsData>());
         }
         #endregion
 
@@ -417,15 +540,23 @@ namespace SEF.Manager
         {
             var assetData = _villageManager.Upgrade(index);
             SubjectAsset(assetData);
+            //통계적용
             AddStatisticsData<UpgradeVillageStatisticsData>();
+            //퀘스트 적용
             AddQuestValue<UpgradeVillageConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyUpgradeVillageConditionQuestData>((int)GetStatisticsValue<UpgradeVillageStatisticsData>());
         }
 
         public void UpTechVillage(int index)
         {
             _villageManager.UpTech(index);
+            //통계적용
             AddStatisticsData<TechVillageStatisticsData>();
+            //퀘스트 적용
             AddQuestValue<TechVillageConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyTechVillageConditionQuestData>((int)GetStatisticsValue<TechVillageStatisticsData>());
         }
         #endregion
 
@@ -435,8 +566,12 @@ namespace SEF.Manager
         #region ##### Research #####
         public void SuccessedResearchData()
         {
+            //통계적용
             AddStatisticsData<SuccessResearchStatisticsData>();
-            AddQuestValue<SuccessedResearchConditionQuestData>();
+            //퀘스트 적용
+            AddQuestValue<SuccessResearchConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelySuccessResearchConditionQuestData>((int)GetStatisticsValue<SuccessResearchStatisticsData>());
         }
         #endregion
 
@@ -448,15 +583,27 @@ namespace SEF.Manager
         private LevelWaveData _nowLevelWaveData;
         public void ArrivedLevelWave(LevelWaveData levelWaveData)
         {
-            SetStatisticsData<ArrivedLevelStatisticsData>(levelWaveData.GetLevel());
+            //웨이브
+            //웨이브 통계
+            AddStatisticsData<ArrivedWaveStatisticsData>();
 
-            var type = FindType($"Lv{levelWaveData.GetLevel()}", typeof(ArrivedLevelStatisticsData));
-            if (type != null)
-            {
-                if (levelWaveData.GetWave() == 0)
-                    _statistics.SetStatisticsData(type, 1);
-            }
 
+            //특정 웨이브 도달
+            //
+
+            //퀘스트 달성
+            AddQuestValue<ArrivedWaveConditionQuestData>();
+
+            //누적 퀘스트 달성
+            SetQuestValue<AccumulativelyArrivedWaveConditionQuestData>((int)GetStatisticsValue<ArrivedWaveStatisticsData>().Value);
+
+
+            ////////////////////////////////////////////////////////////////////
+
+
+            //레벨
+
+            //현재 레벨
             if (_nowLevelWaveData == null)
             {
                 _nowLevelWaveData = levelWaveData;
@@ -464,8 +611,35 @@ namespace SEF.Manager
             else
             {
                 var length = levelWaveData.GetLevel() - _nowLevelWaveData.GetLevel();
+                
                 if (length > 0)
+                {
+                    //누적 레벨 통계
+                    AddStatisticsData<ArrivedLevelStatisticsData>(length);
+
+                    //최대 레벨 달성 통계
+                    var maxLevel = GetStatisticsValue<MaxArrivedLevelStatisticsData>();
+                    if (maxLevel != null)
+                    {
+                        if(levelWaveData.GetLevel() > maxLevel.Value)
+                        {
+                            SetStatisticsData<MaxArrivedLevelStatisticsData>(levelWaveData.GetLevel());
+                        }
+                    }
+
+                    //특정 레벨 도달
+                    var type = FindType($"Lv{levelWaveData.GetLevel()}", typeof(ArrivedLevelStatisticsData));
+                    if (type != null)
+                    {
+                        if (levelWaveData.GetWave() == 0)
+                            SetStatisticsData(type, 1);
+                    }
+
+                    //퀘스트 달성
                     AddQuestValue<ArrivedLevelConditionQuestData>(length);
+                    //누적 퀘스트 달성
+                    SetQuestValue<AccumulativelyArrivedLevelConditionQuestData>((int)GetStatisticsValue<ArrivedLevelStatisticsData>().Value);
+                }
             }
         }
         #endregion
@@ -481,21 +655,27 @@ namespace SEF.Manager
         public void AddOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.AddOnRefreshListener(act);
         public void RemoveOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.RemoveOnRefreshListener(act);
 
-        public void AddProductUnitListener(System.Action<UnitEntity> act) 
+        public void AddProductUnitListener(System.Action<UnitEntity> act)
         {
             _workshopManager.AddProductUnitListener(entity =>
             {
                 act?.Invoke(entity);
 
                 //유닛 생성
-                AddStatisticsData<CreateUnitStatisticsData>(1);
+                AddStatisticsData<CreateUnitStatisticsData>();
 
                 //특정 유닛 생성
                 var type = System.Type.GetType($"SEF.Statistics.{entity.UnitData.Key}CreateUnitStatisticsData");
                 if(type != null)
                 {
-                    _statistics.AddStatisticsData(type, 1);
+                    AddStatisticsData(type, 1);
                 }
+
+                //퀘스트 달성
+                AddQuestValue<CreateUnitConditionQuestData>();
+                //누적 퀘스트 달성
+                SetQuestValue<AccumulativelyCreateUnitConditionQuestData>((int)GetStatisticsValue<CreateUnitStatisticsData>().Value);
+
             });            
         }
         public void RemoveProductUnitListener(System.Action<UnitEntity> act)
@@ -511,10 +691,16 @@ namespace SEF.Manager
                 var type = System.Type.GetType($"SEF.Statistics.{entity.UnitData.Key}CreateUnitStatisticsData");
                 if (type != null)
                 {
-                    _statistics.AddStatisticsData(type, 1);
+                    AddStatisticsData(type, 1);
                 }
+                //퀘스트 달성
+                AddQuestValue<CreateUnitConditionQuestData>();
+                //누적 퀘스트 달성
+                SetQuestValue<AccumulativelyCreateUnitConditionQuestData>((int)GetStatisticsValue<CreateUnitStatisticsData>().Value);
             });
         }
+
+
 
         private System.Action<IAssetData, bool> _refreshExpendEvent;
         public void AddRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent += act;
@@ -527,8 +713,8 @@ namespace SEF.Manager
 
 
 
-        public void AddRefreshAssetEntityListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
-        public void RemoveRefreshAssetEntityListener(System.Action<AssetPackage> act) => _assetPackage.RemoveRefreshAssetEntityListener(act);
+        public void AddRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
+        public void RemoveRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.RemoveRefreshAssetEntityListener(act);
 
         private System.Action<IAssetData> _refreshAsseData;
         public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;

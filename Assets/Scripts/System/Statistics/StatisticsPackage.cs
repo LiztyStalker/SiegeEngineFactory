@@ -228,28 +228,26 @@ namespace SEF.Statistics
             
             _dic.Add(typeof(DestroyUnitStatisticsData), "유닛 파괴된 수");
 
-            _dic.Add(typeof(GoldUsedAssetStatisticsData), "골드 소비");
-            _dic.Add(typeof(ResourceUsedAssetStatisticsData), "자원 소비");
-            _dic.Add(typeof(MeteoriteUsedAssetStatisticsData), "운철 소비");
-            _dic.Add(typeof(ResearchUsedAssetStatisticsData), "연구 소비");
+            _dic.Add(typeof(AccumulativelyGoldUsedAssetStatisticsData), "누적 골드 소비");
+            _dic.Add(typeof(AccumulativelyResourceUsedAssetStatisticsData), "누적 자원 소비");
+            _dic.Add(typeof(AccumulativelyMeteoriteUsedAssetStatisticsData), "누적 운철 소비");
+            _dic.Add(typeof(AccumulativelyResearchUsedAssetStatisticsData), "누적 연구 소비");
 
-            _dic.Add(typeof(GoldGetAssetStatisticsData), "골드 획득");
-            _dic.Add(typeof(ResourceGetAssetStatisticsData), "자원 획득");
-            _dic.Add(typeof(MeteoriteGetAssetStatisticsData), "운철 획득");
-            _dic.Add(typeof(ResearchGetAssetStatisticsData), "연구 획득");
-
-            _dic.Add(typeof(GoldAccumulateAssetStatisticsData), "골드 누적");
-            _dic.Add(typeof(ResourceAccumulateAssetStatisticsData), "자원 누적");
-            _dic.Add(typeof(MeteoriteAccumulateAssetStatisticsData), "운철 누적");
-            _dic.Add(typeof(ResearchAccumulateAssetStatisticsData), "연구 누적");
+            _dic.Add(typeof(AccumulativelyGoldGetAssetStatisticsData), "누적 골드 획득");
+            _dic.Add(typeof(AccumulativelyResourceGetAssetStatisticsData), "누적 자원 획득");
+            _dic.Add(typeof(AccumulativelyMeteoriteGetAssetStatisticsData), "누적 운철 획득");
+            _dic.Add(typeof(AccumulativelyResearchGetAssetStatisticsData), "누적 연구 획득");
 
             _dic.Add(typeof(TechUnitStatisticsData), "유닛 테크 진행 수");
 
             _dic.Add(typeof(UpgradeUnitStatisticsData), "유닛 업글 진행 수");
 
             _dic.Add(typeof(DestroyEnemyStatisticsData), "적 파괴 수");
+            _dic.Add(typeof(DestroyBossStatisticsData), "보스 파괴 수");
+            _dic.Add(typeof(DestroyThemeBossStatisticsData), "테마 보스 파괴 수");
 
-            _dic.Add(typeof(ArrivedLevelStatisticsData), "레벨 도달");
+            _dic.Add(typeof(ArrivedLevelStatisticsData), "누적 레벨 도달");
+            _dic.Add(typeof(MaxArrivedLevelStatisticsData), "최대 레벨 도달");
 
             _dic.Add(typeof(ExpendWorkshopLineStatisticsData), "제작소 라인 증축 수");
 
@@ -259,7 +257,18 @@ namespace SEF.Statistics
             _dic.Add(typeof(UpgradeSmithyStatisticsData), "대장간 업글 진행 수");
             _dic.Add(typeof(TechSmithyStatisticsData), "대장간 테크 진행 수");
 
-            _dic.Add(typeof(SuccessResearchStatisticsData), "연구 진행 수");
+            _dic.Add(typeof(SuccessResearchStatisticsData), "연구 진행 수 (미개발)");
+            //_dic.Add(typeof(UpgradeCommanderStatisticsData), "지휘관 업글 진행 수");
+
+            _dic.Add(typeof(AchievedDailyStatisticsData), "누적 일일 퀘스트 진행 수");
+            _dic.Add(typeof(AchievedWeeklyStatisticsData), "누적 주간 퀘스트 진행 수");
+            _dic.Add(typeof(AchievedChallengeStatisticsData), "누적 도전 퀘스트 진행 수");
+            _dic.Add(typeof(AchievedGoalStatisticsData), "누적 목표 퀘스트 진행 수");
+
+            //_dic.Add(typeof(SuccessExpeditionStatisticsData), "누적 원정 진행 수 (미개발)");
+
+
+
         }
     }
     #endregion

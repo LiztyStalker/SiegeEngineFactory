@@ -70,7 +70,7 @@ namespace SEF.Manager
             _gameSystem.AddOnRefreshBlacksmithListener(_uiGame.RefreshBlacksmith);
             _gameSystem.AddOnRefreshVillageListener(_uiGame.RefreshVillage);
 
-            _gameSystem.AddRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.AddRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
@@ -119,7 +119,7 @@ namespace SEF.Manager
             _gameSystem.RemoveOnRefreshVillageListener(_uiGame.RefreshVillage);
 
 
-            _gameSystem.RemoveRefreshAssetEntityListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.RemoveRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.RemoveOnRefreshQuestEntityListener(_uiGame.RefreshQuest);

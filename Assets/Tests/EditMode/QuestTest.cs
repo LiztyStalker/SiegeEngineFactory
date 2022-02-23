@@ -184,6 +184,32 @@ namespace SEF.Test
             }
         }
 
+
+        #region ##### 즉석웨이브달성 누적웨이브달성 #####
+        [Test]
+        public void QuestIntegrationTest_ArrivedWaveConditionQuestData_AccumulativelyArrivedWaveConditionQuestData()
+        {
+            var data1 = QuestData.Create_Test("WaveTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedWaveConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyArrivedWaveConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+            levelWaveData.IncreaseNumber();
+            _gameSystem.ArrivedLevelWave(levelWaveData);
+        }
+
+        #endregion
+
         [Test]
         public void QuestIntegrationTest_ArrivedLevelConditionQuestData()
         {
@@ -431,7 +457,7 @@ namespace SEF.Test
         [Test]
         public void QuestIntegrationTest_SuccessedResearchConditionQuestData()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessedResearchConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessResearchConditionQuestData), 1, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
@@ -442,7 +468,7 @@ namespace SEF.Test
         [Test]
         public void QuestIntegrationTest_SuccessedResearchConditionQuestData_x3()
         {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessedResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(SuccessResearchConditionQuestData), 3, typeof(GoldAssetData), 100);
             var entity = QuestEntity.Create();
             entity.SetData(data);
 
