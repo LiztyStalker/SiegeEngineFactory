@@ -606,14 +606,15 @@ namespace SEF.Manager
             //현재 레벨
             if (_nowLevelWaveData == null)
             {
-                _nowLevelWaveData = levelWaveData;
+                _nowLevelWaveData = (LevelWaveData)levelWaveData.Clone();
             }
             else
             {
                 var length = levelWaveData.GetLevel() - _nowLevelWaveData.GetLevel();
-                
+
                 if (length > 0)
                 {
+
                     //누적 레벨 통계
                     AddStatisticsData<ArrivedLevelStatisticsData>(length);
 
@@ -639,6 +640,8 @@ namespace SEF.Manager
                     AddQuestValue<ArrivedLevelConditionQuestData>(length);
                     //누적 퀘스트 달성
                     SetQuestValue<AccumulativelyArrivedLevelConditionQuestData>((int)GetStatisticsValue<ArrivedLevelStatisticsData>().Value);
+
+                    _nowLevelWaveData = (LevelWaveData)levelWaveData.Clone();
                 }
             }
         }

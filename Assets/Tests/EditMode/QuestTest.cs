@@ -187,9 +187,9 @@ namespace SEF.Test
 
         #region ##### 즉석웨이브달성 누적웨이브달성 #####
         [Test]
-        public void QuestIntegrationTest_ArrivedWaveConditionQuestData_AccumulativelyArrivedWaveConditionQuestData()
+        public void QuestIntegrationTest_ArrivedWave_And_Accumulatively()
         {
-            var data1 = QuestData.Create_Test("WaveTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedWaveConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedWaveConditionQuestData), 1, typeof(GoldAssetData), 100);
             var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyArrivedWaveConditionQuestData), 1, typeof(GoldAssetData), 100);
             var entity1 = QuestEntity.Create();
             entity1.SetData(data1);
@@ -210,41 +210,33 @@ namespace SEF.Test
 
         #endregion
 
-        [Test]
-        public void QuestIntegrationTest_ArrivedLevelConditionQuestData()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedLevelConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+
+        #region ##### 즉석레벨달성 누적레벨달성 #####
+
+        [Test]
+        public void QuestIntegrationTest_ArrivedLevel_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedLevelConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyArrivedLevelConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
 
             var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
-            levelWaveData.IncreaseNumber();
-            _gameSystem.ArrivedLevelWave(levelWaveData);
-
+            for(int i = 0; i <= 30; i++)
+            {
+                levelWaveData.IncreaseNumber();
+                _gameSystem.ArrivedLevelWave(levelWaveData);
+            }
         }
-
-        [Test]
-        public void QuestIntegrationTest_ArrivedLevelConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ArrivedLevelConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
-
-
-            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
-            levelWaveData.IncreaseNumber();
-            _gameSystem.ArrivedLevelWave(levelWaveData);
-            levelWaveData.IncreaseNumber();
-            _gameSystem.ArrivedLevelWave(levelWaveData);
-            levelWaveData.IncreaseNumber();
-            _gameSystem.ArrivedLevelWave(levelWaveData);
-        }
-
+        #endregion
 
         [Test]
         public void QuestIntegrationTest_DestroyEnemyConditionQuestData()

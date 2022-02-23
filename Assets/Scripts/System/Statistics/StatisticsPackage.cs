@@ -132,13 +132,18 @@ namespace SEF.Statistics
                 if (iType != null)
                 {
                     var index = GetIndex(type);
-                    if (index != -1)
+                    if (index == -1)
                     {
-                        return _list[index].GetStatisticsValue();
+                        _list.Add(StatisticsEntity.Create(type));
+                        index = _list.Count - 1;
                     }
+                    return _list[index].GetStatisticsValue();
                 }
-            }
 #if UNITY_EDITOR
+                UnityEngine.Debug.LogWarning($"GetStatisticsValue {type} 을 불러오지 못했습니다");
+#endif
+            }
+#if UNITY_EDITOR            
             UnityEngine.Debug.LogWarning("GetStatisticsValue type을 지정하지 않았습니다");
 #endif
             return null;
