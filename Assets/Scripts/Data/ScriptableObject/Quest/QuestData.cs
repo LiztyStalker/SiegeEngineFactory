@@ -49,7 +49,7 @@ namespace SEF.Data
                 return _questConditionDataArray[index].ConditionQuestData.AddressKey;
             return _questConditionData.ConditionQuestData.AddressKey;
         }
-        public bool HasQuestGoal(int index, int value)
+        public bool HasQuestGoal(int index, System.Numerics.BigInteger value)
         {
             if (IsMultipleQuest)
             {

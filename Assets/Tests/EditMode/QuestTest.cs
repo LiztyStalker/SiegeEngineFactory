@@ -238,14 +238,24 @@ namespace SEF.Test
         }
         #endregion
 
-        [Test]
-        public void QuestIntegrationTest_DestroyEnemyConditionQuestData()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyEnemyConditionQuestData), 1, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
 
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
+        #region ##### 즉석적파괴 누적적파괴 #####
+
+
+        [Test]
+        public void QuestIntegrationTest_DestroyEnemy_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyEnemyConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyDestroyEnemyConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
             var enemyData = EnemyData.Create_Test();
             var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
@@ -255,38 +265,112 @@ namespace SEF.Test
             enemyEntity.SetData(enemyData, levelWaveData);
             enemyActor.SetData(enemyEntity);
 
-            _gameSystem.DestroyedActor(enemyActor);
-        }
-
-        [Test]
-        public void QuestIntegrationTest_DestroyEnemyConditionQuestData_x3()
-        {
-            var data = QuestData.Create_Test("Test", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyEnemyConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var entity = QuestEntity.Create();
-            entity.SetData(data);
-
-            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity);
-
-
-            var enemyData = EnemyData.Create_Test();
-            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
-
-            var enemyEntity = new EnemyEntity();
-            enemyEntity.SetData(enemyData, levelWaveData);
-
-
-
-            var enemyActor1 = SEF.Unit.EnemyActor.Create_Test();
+            var enemyActor1 = Unit.EnemyActor.Create_Test();
             enemyActor1.SetData(enemyEntity);
             _gameSystem.DestroyedActor(enemyActor1);
-            var enemyActor2 = SEF.Unit.EnemyActor.Create_Test();
+            var enemyActor2 = Unit.EnemyActor.Create_Test();
             enemyActor2.SetData(enemyEntity);
             _gameSystem.DestroyedActor(enemyActor2);
-            var enemyActor3 = SEF.Unit.EnemyActor.Create_Test();
+            var enemyActor3 = Unit.EnemyActor.Create_Test();
             enemyActor3.SetData(enemyEntity);
             _gameSystem.DestroyedActor(enemyActor3);
 
         }
+        #endregion
+
+
+
+        #region ##### 즉석보스파괴 누적보스파괴 #####
+
+
+        [Test]
+        public void QuestIntegrationTest_DestroyBoss_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyBossConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyDestroyBossConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            levelWaveData.SetValue(8);
+
+            var enemyEntity = new EnemyEntity();
+
+            var enemyActor1 = Unit.EnemyActor.Create_Test();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor1.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor1);
+
+            var enemyActor2 = Unit.EnemyActor.Create_Test();
+            levelWaveData.IncreaseNumber();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor2.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor2);
+
+            var enemyActor3 = Unit.EnemyActor.Create_Test();
+            levelWaveData.IncreaseNumber();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor3.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor3);
+
+        }
+        #endregion
+
+
+
+        #region ##### 즉석테마보스파괴 누적테마보스파괴 #####
+
+        [Test]
+        public void QuestIntegrationTest_DestroyThemeBoss_And_Accumulatively()
+        {
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(DestroyThemeBossConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity1 = QuestEntity.Create();
+            entity1.SetData(data1);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
+
+            var data2 = QuestData.Create_Test("AccumulativelyTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyDestroyThemeBossConditionQuestData), 1, typeof(GoldAssetData), 100);
+            var entity2 = QuestEntity.Create();
+            entity2.SetData(data2);
+
+            _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
+
+            var enemyData = EnemyData.Create_Test();
+            var levelWaveData = NumberDataUtility.Create<LevelWaveData>();
+            levelWaveData.SetValue(98);
+
+            var enemyEntity = new EnemyEntity();
+
+            var enemyActor1 = Unit.EnemyActor.Create_Test();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor1.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor1);
+
+            var enemyActor2 = Unit.EnemyActor.Create_Test();
+            levelWaveData.IncreaseNumber();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor2.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor2);
+
+            var enemyActor3 = Unit.EnemyActor.Create_Test();
+            levelWaveData.IncreaseNumber();
+            enemyEntity.SetData(enemyData, levelWaveData);
+            enemyActor3.SetData(enemyEntity);
+            _gameSystem.DestroyedActor(enemyActor3);
+
+        }
+        #endregion
+
+
+
 
         [Test]
         public void QuestIntegrationTest_UpgradeUnitConditionQuestData()

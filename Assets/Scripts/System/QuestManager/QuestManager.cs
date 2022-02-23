@@ -207,6 +207,18 @@ namespace SEF.Quest
             }
         }
 
+        //public void AddQuestValue<T>(System.Numerics.BigInteger value) where T : IConditionQuestData
+        //{
+        //    var entities = FindQuestEntities<T>();
+        //    for (int i = 0; i < entities.Length; i++)
+        //    {
+        //        var entity = entities[i];
+        //        entity.AddQuestValue(value);
+        //        SetQuestEntity(entity);
+        //        RefreshQuest(entity);
+        //    }
+        //}
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public void SetQuestEntity_Test(QuestData.TYPE_QUEST_GROUP typeQuestGroup, QuestEntity entity)
         {

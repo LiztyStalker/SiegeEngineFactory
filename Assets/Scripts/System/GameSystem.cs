@@ -212,11 +212,26 @@ namespace SEF.Manager
 
             if (assetData is GoldAssetData)
             {
+
+                UnityEngine.Debug.Log(assetData.AssetValue);
+
                 //즉석 퀘스트
-                AddQuestValue<GetGoldAssetDataConditionQuestData>((int)assetData.AssetValue);
+                //BigInteger -> int
+                //BigInteger 그대로 적용하도록 수정 필요
+
+                var str = assetData.AssetValue.ToString();
+                var value = (str.Length >= int.MaxValue.ToString().Length - 1) ?
+                    int.Parse(assetData.AssetValue.ToString().Substring(0, int.MaxValue.ToString().Length - 1)) :
+                    int.Parse(assetData.AssetValue.ToString());
+
+                AddQuestValue<GetGoldAssetDataConditionQuestData>(value);
 
                 //누적 퀘스트
-                SetQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>((int)GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value);
+                var accStr = GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value.ToString();
+                var accValue = (accStr.Length >= int.MaxValue.ToString().Length - 1) ?
+                    int.Parse(GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value.ToString().Substring(0, int.MaxValue.ToString().Length - 1)) :
+                    int.Parse(GetStatisticsValue<AccumulativelyGoldGetAssetStatisticsData>().Value.ToString());
+                SetQuestValue<AccumulativelyGetGoldAssetDataConditionQuestData>(accValue);
             }
         }
 
@@ -357,6 +372,7 @@ namespace SEF.Manager
         public void SetQuestValue<T>(int value) where T : IConditionQuestData => _questManager.SetQuestValue<T>(value);
         public void AddQuestValue(System.Type type, int value = 1) => _questManager.AddQuestValue(type, value);
         public void AddQuestValue<T>(int value = 1) where T : IConditionQuestData => _questManager.AddQuestValue<T>(value);
+//        public void AddQuestValue<T>(System.Numerics.BigInteger value) where T : IConditionQuestData => _questManager.AddQuestValue<T>(value);
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public void AddQuestEntity(QuestData.TYPE_QUEST_GROUP typeQuestGroup, QuestEntity entity)
@@ -473,6 +489,9 @@ namespace SEF.Manager
 
 
                     var levelWaveData = enemyActor.GetLevelWaveData();
+
+                    UnityEngine.Debug.Log(levelWaveData.IsBoss());
+
                     if (levelWaveData.IsBoss())
                     {
                         //보스

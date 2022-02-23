@@ -3,6 +3,7 @@ namespace SEF.Entity
     using Quest;
     using Data;
     using Utility.IO;
+    using System.Numerics;
 
     #region ##### StorableData #####
 
@@ -10,18 +11,22 @@ namespace SEF.Entity
     public class QuestEntityStorableData : StorableData
     {
         [UnityEngine.SerializeField] private string _key;
+        //[UnityEngine.SerializeField] private string _value;
         [UnityEngine.SerializeField] private int _value;
         [UnityEngine.SerializeField] private int _index;
         [UnityEngine.SerializeField] private bool _rewarded;
 
         public string Key => _key;
+        //public string Value => _value;
         public int Value => _value;
         public int Index => _index;
         public bool Rewarded => _rewarded;
 
+//        public void SetData(string key, BigInteger value, int index, bool rewarded)
         public void SetData(string key, int value, int index, bool rewarded)
         {
             _key = key;
+//            _value = value.ToString();
             _value = value;
             _index = index;
             _rewarded = rewarded;
@@ -39,7 +44,7 @@ namespace SEF.Entity
 
         public string Key => _data.Key;
         public QuestData.TYPE_QUEST_GROUP TypeQuestGroup => _data.TypeQuestGroup;
-        public int NowValue => _nowValue;
+        public BigInteger NowValue => _nowValue;
         public int GoalValue => _data.GetGoalValue(_nowIndex);
         public bool HasRewarded => _hasRewarded;
         public string AddressKey => _data.GetAddressKey(_nowIndex);
@@ -62,7 +67,10 @@ namespace SEF.Entity
         {
             _nowValue += value;
         }
-
+        //public void AddQuestValue(BigInteger value)
+        //{
+        //    _nowValue += value;
+        //}
         public bool HasNextIndex()
         {
             if (_data.IsMultipleQuest)
@@ -124,7 +132,7 @@ namespace SEF.Entity
         public void SetStorableData(StorableData data)
         {
             var storableData = (QuestEntityStorableData)data;
-            _nowValue = storableData.Value;
+            _nowValue = storableData.Value;// BigInteger.Parse(storableData.Value);
             _nowIndex = storableData.Index;
             _hasRewarded = storableData.Rewarded;
         }
