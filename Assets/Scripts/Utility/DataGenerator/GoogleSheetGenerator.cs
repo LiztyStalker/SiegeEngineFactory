@@ -112,7 +112,7 @@ namespace Utility.Generator
             for (int i = 0; i < files.Length; i++)
             {
                 var data = AssetDatabase.LoadAssetAtPath<T>(files[i]);
-                if (data != null) list.Add(data);
+                if (data != null && !data.IsTest) list.Add(data);
             }
             list.Sort((d1, d2) => d1.SortIndex - d2.SortIndex);
 

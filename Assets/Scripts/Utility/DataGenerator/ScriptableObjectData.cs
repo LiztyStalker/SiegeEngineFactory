@@ -25,5 +25,13 @@ namespace Utility.Data
             UnityEditor.AssetImporter importer = UnityEditor.AssetImporter.GetAtPath(path);
             importer.SetAssetBundleNameAndVariant(bundleName, "");
         }
+
+#if UNITY_EDITOR
+        [SerializeField]
+        private bool _isTest = false;
+        public bool IsTest => _isTest;
+
+#endif
+
     }
 }
