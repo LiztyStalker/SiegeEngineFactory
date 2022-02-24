@@ -29,6 +29,7 @@ namespace SEF.UI.Toolkit
         private Button _uiWorkshopButton;
         private Button _uiSmithyButton;
         private Button _uiVillageButton;
+        private Button _uiMineButton;
         private Button _uiResearchButton;
 
         private List<ISystemPanel> _list = new List<ISystemPanel>();
@@ -40,6 +41,7 @@ namespace SEF.UI.Toolkit
             _uiWorkshopButton = this.Q<Button>("workshop-button");
             _uiSmithyButton = this.Q<Button>("blacksmith-button");
             _uiVillageButton = this.Q<Button>("village-button");
+            _uiMineButton = this.Q<Button>("mine-button");
             _uiResearchButton = this.Q<Button>("research-button");
 
 
@@ -68,6 +70,14 @@ namespace SEF.UI.Toolkit
             _uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
 
 
+            UIMine uiMine = this.Q<UIMine>();
+
+            //UISystem에 등록되어있지 않으면 자동 생성 필요
+            Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
+
+            _uiMineButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiMine); });
+
+
             UIResearch uiResearch = this.Q<UIResearch>();
 
             //UISystem에 등록되어있지 않으면 자동 생성 필요
@@ -79,6 +89,7 @@ namespace SEF.UI.Toolkit
             _list.Add(uiWorkshop);
             _list.Add(uiSmithy);
             _list.Add(uiVillage);
+            _list.Add(uiMine);
             _list.Add(uiResearch);
 
             for (int i = 0; i < _list.Count; i++)
@@ -96,6 +107,7 @@ namespace SEF.UI.Toolkit
             list.Add(new KeyValuePair<string, System.Action>(typeof(UISmithy).Name, () => OnShowPanelEvent(GetSystemPanel<UISmithy>())));
             list.Add(new KeyValuePair<string, System.Action>(typeof(UIResearch).Name, () => OnShowPanelEvent(GetSystemPanel<UIResearch>())));
             list.Add(new KeyValuePair<string, System.Action>(typeof(UIVillage).Name, () => OnShowPanelEvent(GetSystemPanel<UIVillage>())));
+            list.Add(new KeyValuePair<string, System.Action>(typeof(UIMine).Name, () => OnShowPanelEvent(GetSystemPanel<UIMine>())));
             return list.ToArray();
         }
 
@@ -117,7 +129,10 @@ namespace SEF.UI.Toolkit
             var uiVillage = GetSystemPanel<UIVillage>();
             _uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
 
-            var uiResearch = GetSystemPanel<UIVillage>();
+            var uiMine = GetSystemPanel<UIMine>();
+            _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiMine); });
+
+            var uiResearch = GetSystemPanel<UIResearch>();
             _uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });
 
             for (int i = 0; i < _list.Count; i++)
@@ -160,6 +175,12 @@ namespace SEF.UI.Toolkit
         {
             var ui = GetSystemPanel<UIVillage>();
             ui.RefreshVillage(index, entity);
+        }
+
+        public void RefreshVillage(int index, MineEntity entity)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.RefreshMine(index, entity);
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -214,16 +235,18 @@ namespace SEF.UI.Toolkit
 
 
 
-        public void AddOnBlacksmithUpgradeListener(System.Action<int> act)
+        public void AddOnSmithyUpgradeListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
             ui.AddUpgradeListener(act);
         }
-        public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act)
+        public void RemoveOnSmithyUpgradeListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
             ui.RemoveUpgradeListener(act);
         }
+
+
 
         public void AddOnVillageUpgradeListener(System.Action<int> act)
         {
@@ -233,6 +256,18 @@ namespace SEF.UI.Toolkit
         public void RemoveOnVillageUpgradeListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIVillage>();
+            ui.RemoveUpgradeListener(act);
+        }
+
+
+        public void AddOnMineUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.AddUpgradeListener(act);
+        }
+        public void RemoveOnMineUpgradeListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIMine>();
             ui.RemoveUpgradeListener(act);
         }
 
