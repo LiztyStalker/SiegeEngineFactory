@@ -41,7 +41,9 @@ namespace SEF.Manager
         private WorkshopManager _workshopManager;
         private SmithyManager _smithyManager;
         private VillageManager _villageManager;
+        private MineManager _mineManager;
         //ResearchManager
+        
 
 
         //SaveLoad
@@ -75,9 +77,14 @@ namespace SEF.Manager
             _smithyManager = SmithyManager.Create();
             _smithyManager.Initialize();
 
+            //수정 예정 //Smithy와 비슷하게
             _villageManager = VillageManager.Create();
             _villageManager.Initialize();
             _villageManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
+
+            _mineManager = MineManager.Create();
+            _mineManager.Initialize();
+            _mineManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
 
             //ResearchManager
 
@@ -106,6 +113,7 @@ namespace SEF.Manager
             _workshopManager.CleanUp();
             _smithyManager.CleanUp();
             _villageManager.CleanUp();
+            _mineManager.CleanUp();
             //ResearchManager
 
             _assetPackage.RemoveRefreshAssetDataListener(OnRefreshAssetDataEvent);
@@ -123,7 +131,7 @@ namespace SEF.Manager
             _workshopManager.Refresh();
             _smithyManager.Refresh();
             _villageManager.Refresh();
-
+            _mineManager.Refresh();
             _questManager.RefreshAllQuests();
 
             RefreshAssetEntity();
@@ -155,6 +163,13 @@ namespace SEF.Manager
                     var key = typeof(VillageManagerStorableData).Name;
                     var child = data.Children[data.Dictionary[key]];
                     _villageManager.SetStorableData(child);
+                }
+
+                if (data.Dictionary.ContainsKey(typeof(MineManagerStorableData).Name))
+                {
+                    var key = typeof(MineManagerStorableData).Name;
+                    var child = data.Children[data.Dictionary[key]];
+                    _mineManager.SetStorableData(child);
                 }
 
                 if (data.Dictionary.ContainsKey(typeof(StatisticsPackageStorableData).Name))
@@ -189,6 +204,7 @@ namespace SEF.Manager
             list.Add(_workshopManager.GetStorableData());
             list.Add(_smithyManager.GetStorableData());
             list.Add(_villageManager.GetStorableData());
+            list.Add(_mineManager.GetStorableData());
             list.Add(_statistics.GetStorableData());
             list.Add(_assetPackage.GetStorableData());
             list.Add(_questManager.GetStorableData());
