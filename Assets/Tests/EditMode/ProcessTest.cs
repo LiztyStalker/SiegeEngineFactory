@@ -20,20 +20,20 @@ namespace SEF.Test
         {
             public float ProcessTime => 1f;
 
-            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
             }
         }
         private class Test2 : IProcessData {
             public float ProcessTime => 1.5f;
-            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
             }
 
         }
         private class Test3 : IProcessData {
             public float ProcessTime => 3f;
-            public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+            public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
             }
         }

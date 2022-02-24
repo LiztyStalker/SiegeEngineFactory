@@ -69,9 +69,21 @@ namespace SEF.Data
             var nv = nowValue;
             var rt = rate;
             var value = startValue * BigDecimal.Pow(nv + rt, exponent);
-            //Debug.Log(value.GetDecimalValue());
             return value;
         }
 
+        /// <summary>
+        /// 단리 계산식
+        /// </summary>
+        /// <param name="startValue"></param>
+        /// <param name="nowValue"></param>
+        /// <param name="rate"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static BigDecimal GetIsolationInterest(BigDecimal startValue, float nowValue = 1, int length = 1)
+        {
+            var value = startValue + nowValue * length;
+            return value;
+        }
     }
 }

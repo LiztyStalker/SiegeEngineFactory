@@ -62,16 +62,17 @@ namespace SEF.Data
 
             _serializedProcessData.SetData(
                 arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeProcess],
-                arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeAsset],
+                arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeProcessAsset],
                 arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.StartProcessAssetValue],
                 arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetValue],
-                arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetRate],
                 arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.ProcessTime]
                 );
             _serializedStartUpgradeAssetData.SetData(arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset], arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue]);
 
             _increaseUpgradeValue = int.Parse(arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue]);
             _increaseUpgradeRate = float.Parse(arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeRate]);
+
+            _defaultMaxUpgradeValue = int.Parse(arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue]);
            
         }
 
@@ -89,15 +90,13 @@ namespace SEF.Data
                 out string typeAssetData,
                 out string assetValue,
                 out string increaseValue,
-                out string increaseRate,
                 out string processTime
                 );
 
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeProcess] = classTypeName;
-            arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeAsset] = typeAssetData;
+            arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeProcessAsset] = typeAssetData;
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.StartProcessAssetValue] = assetValue;
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetValue] = increaseValue;
-            arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetRate] = increaseRate;
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.ProcessTime] = processTime;
 
             _serializedStartUpgradeAssetData.GetData(out string upgradeTypeAssetData, out string upgradeAssetValue);

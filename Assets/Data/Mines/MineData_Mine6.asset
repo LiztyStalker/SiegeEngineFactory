@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40da76afa05f37740b1b30a8234ff7ab, type: 3}
+  m_Name: MineData_Mine6
+  m_EditorClassIdentifier: 
+  _key: Mine6
+  _sortIndex: 5
+  _isTest: 0
+  _icon: {fileID: 0}
+  _serializedProcessData:
+    _classTypeName: SEF.Data.AssetProcessData
+    _processAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 960
+    _increaseValue: 216
+    _processTime: 1200
+  _serializedStartUpgradeAssetData:
+    _typeAssetData: Gold
+    _assetData: 0
+    _assetValue: 100
+  _increaseUpgradeValue: 1
+  _increaseUpgradeRate: 0.125
+  _defaultMaxUpgradeValue: 10

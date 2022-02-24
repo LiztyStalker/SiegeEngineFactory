@@ -8,6 +8,6 @@ namespace SEF.Process
     public interface IProcessData
     {
         float ProcessTime { get; }
-        public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime);
+        public void SetValue(IAssetData data, float increaseValue, float processTime);
     }
 }

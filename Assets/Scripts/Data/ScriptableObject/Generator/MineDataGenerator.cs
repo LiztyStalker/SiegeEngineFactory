@@ -10,16 +10,15 @@ namespace SEF.Data
         {
             Key,
             TypeProcess,
-            TypeAsset,
+            TypeProcessAsset,
             StartProcessAssetValue,
             IncreaseProcessAssetValue,
-            IncreaseProcessAssetRate,
             ProcessTime,
             TypeUpgradeAsset,
             StartUpgradeValue,
             IncreaseUpgradeValue,
             IncreaseUpgradeRate,
-            MaxUpgardeValue,
+            DefaultMaxUpgardeValue,
             ConditionUnlockData,
             ConditionUnlockValue
         }
@@ -36,7 +35,7 @@ namespace SEF.Data
         }
 
 
-        [MenuItem("Data/Villages/Upload All Mines")]
+        [MenuItem("Data/Mines/Upload All Mines")]
         private static void UploadAllData()
         {
             GoogleSheetGenerator.UploadAllUnits<MineData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));

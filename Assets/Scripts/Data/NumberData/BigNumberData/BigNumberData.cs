@@ -334,6 +334,11 @@ namespace SEF.Data
             _value = NumberDataUtility.GetCompoundInterest(_value.Value, nowValue, rate, length);
         }
 
+        public void SetIsolationInterest(float nowValue, int length = 1)
+        {
+            _value = NumberDataUtility.GetIsolationInterest(_value.Value, nowValue, length);
+        }
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         protected void Clear()
         {

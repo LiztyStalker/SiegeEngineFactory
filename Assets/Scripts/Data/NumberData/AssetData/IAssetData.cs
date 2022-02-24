@@ -55,6 +55,7 @@ namespace SEF.Data
         System.Type AccumulativelyUsedStatisticsType();
         System.Type AccumulativelyGetStatisticsType();
         void SetCompoundInterest(float nowValue, float rate, int length = 1);
+        void SetIsolationInterest(float nowValue, int length = 1);
         StorableData GetStorableData();
     }
 }

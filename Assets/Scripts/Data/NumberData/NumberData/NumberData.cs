@@ -36,7 +36,8 @@ namespace SEF.Data
             _value = 0;
         }
 
-        public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { }
+        public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { Debug.LogWarning("계산되지 않음"); }
+        public void SetIsolationInterest(float nowValue = 1, int length = 1) { Debug.LogWarning("계산되지 않음"); }
 
     }
 }

@@ -10,23 +10,21 @@ namespace SEF.Process
 
         private IAssetData _assetData;
         private float _increaseValue;
-        private float _increaseRate;
         private float _processTime;
 
         public float ProcessTime => _processTime;
 
-        public void SetValue(IAssetData data, float increaseValue, float increaseRate, float processTime)
+        public void SetValue(IAssetData data, float increaseValue, float processTime)
         {
             _assetData = data;
             _increaseValue = increaseValue;
-            _increaseRate = increaseRate;
             _processTime = processTime;
         }
 
         public IAssetData GetAssetData(UpgradeData upgradeData)
         {
             var data = (IAssetData)_assetData.Clone();
-            data.SetCompoundInterest(_increaseValue, _increaseRate, upgradeData.Value);
+            data.SetIsolationInterest(_increaseValue, upgradeData.Value);
             return data;
         }
 
