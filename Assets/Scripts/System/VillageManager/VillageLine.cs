@@ -40,11 +40,9 @@ namespace SEF.Manager
         public void Initialize()
         {
             _entity.Initialize();
-            _entity.SetOnProcessEntityListener(OnProcessEntityEvent);
         }
         public void CleanUp()
         {
-            _entity.SetOnProcessEntityListener(null);
             _entity.CleanUp();
             _refreshEvent = null;
         }
@@ -86,10 +84,6 @@ namespace SEF.Manager
         {
             _refreshEvent?.Invoke(_index, _entity);
         }
-
-        private System.Action<IProcessProvider, ProcessEntity> _processEntityEvent;
-        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _processEntityEvent = act;
-        private void OnProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _processEntityEvent?.Invoke(provider, entity);
         #endregion
 
 

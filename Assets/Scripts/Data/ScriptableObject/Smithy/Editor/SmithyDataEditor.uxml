@@ -1,21 +1,21 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="BlacksmithDataEditor.uss" />
-    <uie:ObjectField label="Object Field" name="blacksmith-icon-field" />
-    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="blacksmith-key-field" />
-    <ui:Toggle label="Toggle" name="blacksmith-multiple-toggle" style="display: none;" />
-    <ui:VisualElement class="blacksmith-property-layout">
-        <uie:PropertyField name="blacksmith-asset-data-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="blacksmith-increase-upgrade-value-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="blacksmith-increase-upgrade-rate-field" />
+    <Style src="SmithyDataEditor.uss" />
+    <uie:ObjectField label="Object Field" name="smithy-icon-field" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="smithy-key-field" />
+    <ui:Toggle label="Toggle" name="smithy-multiple-toggle" style="display: none;" />
+    <ui:VisualElement class="smithy-property-layout">
+        <uie:PropertyField name="smithy-asset-data-field" />
+        <uie:FloatField label="Float Field" value="42.2" name="smithy-increase-upgrade-value-field" />
+        <uie:FloatField label="Float Field" value="42.2" name="smithy-increase-upgrade-rate-field" />
     </ui:VisualElement>
-    <ui:VisualElement name="blacksmith-multiple-condition-panel" style="display: none;">
+    <ui:VisualElement name="smithy-multiple-condition-panel" style="display: none;">
         <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
-            <ui:Button text="Add" display-tooltip-when-elided="true" name="blacksmith-multiple-add-button" />
-            <ui:Button text="Remove" display-tooltip-when-elided="true" name="blacksmith-multiple-remove-button" />
+            <ui:Button text="Add" display-tooltip-when-elided="true" name="smithy-multiple-add-button" />
+            <ui:Button text="Remove" display-tooltip-when-elided="true" name="smithy-multiple-remove-button" />
         </ui:VisualElement>
-        <ui:VisualElement name="blacksmith-multiple-condition-layout" class="blacksmith-condition-layout" />
+        <ui:VisualElement name="smithy-multiple-condition-layout" class="smithy-condition-layout" />
     </ui:VisualElement>
-    <ui:VisualElement class="blacksmith-property-layout">
-        <uie:PropertyField name="blacksmith-status-data-field" />
+    <ui:VisualElement class="smithy-property-layout">
+        <uie:PropertyField name="smithy-status-data-field" />
     </ui:VisualElement>
 </ui:UXML>

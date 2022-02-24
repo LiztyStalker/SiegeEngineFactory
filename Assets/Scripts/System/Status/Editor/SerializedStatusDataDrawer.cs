@@ -24,7 +24,7 @@ namespace SEF.Status.Editor
 
             position.y += position.height + 2f;
 
-            var typeStatusDataField = property.FindPropertyRelative("_typeStatusData");
+            var typeStatusDataField = property.FindPropertyRelative("_typeStatusValue");
             EditorGUI.PropertyField(position, typeStatusDataField, new GUIContent("상태값타입"), true);
 
             position.y += position.height + 2f;

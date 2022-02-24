@@ -14,8 +14,7 @@ namespace SEF.Data.Editor
 
         private ObjectField _iconField;
         private TextField _keyField;
-
-        private PropertyField _processDataField;
+        private PropertyField _statusDataField;
         private PropertyField _assetDataField;
         private FloatField _increaseValueField;
         private FloatField _increaseRateField;
@@ -43,11 +42,11 @@ namespace SEF.Data.Editor
             _keyField.label = "키";
             _keyField.BindProperty(serializedObject.FindProperty("_key"));
 
-            _processDataField = _root.Query<PropertyField>("village-process-data-field").First();
-            _processDataField.BindProperty(serializedObject.FindProperty("_serializedProcessData"));
+            _statusDataField = _root.Query<PropertyField>("village-status-data-field").First();
+            _statusDataField.BindProperty(serializedObject.FindProperty("_serializedStatusData"));
 
             _assetDataField = _root.Query<PropertyField>("village-asset-data-field").First();
-            _assetDataField.BindProperty(serializedObject.FindProperty("_serializedStartUpgradeAssetData"));
+            _assetDataField.BindProperty(serializedObject.FindProperty("_serializedAssetData"));
 
             _increaseValueField = _root.Query<FloatField>("village-increase-upgrade-value-field").First();
             _increaseValueField.label = "업글증가량";

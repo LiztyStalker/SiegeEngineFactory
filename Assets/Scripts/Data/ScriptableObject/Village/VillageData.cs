@@ -1,10 +1,9 @@
 namespace SEF.Data
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
-    using Process;
     using Utility.Data;
+    using Status;
+
 
     [CreateAssetMenu(fileName = "VillageData", menuName = "ScriptableObjects/VillageData")]
     public class VillageData : ScriptableObjectData
@@ -13,43 +12,45 @@ namespace SEF.Data
         private Sprite _icon;
         public Sprite Icon => _icon;
 
+        [SerializeField]
+        private SerializedStatusData _serializedStatusData;
+        public IStatusData StatusData => _serializedStatusData.GetSerializeData();
+
 
         [SerializeField]
-        private SerializedProcessData _serializedProcessData;
-        public IProcessData ProcessData => _serializedProcessData.GetData();
-
-
-        [SerializeField]
-        private SerializedAssetData _serializedStartUpgradeAssetData;
-        public IAssetData StartUpgradeAssetData => _serializedStartUpgradeAssetData.GetData();
+        private SerializedAssetData _serializedAssetData;
+        public IAssetData StartUpgradeAssetData => _serializedAssetData.GetData();
 
         [SerializeField]
-        private float _increaseUpgradeValue;
-        public float IncreaseUpgradeValue => _increaseUpgradeValue;
+        private int _increaseUpgradeValue;
+        public int IncreaseUpgradeValue => _increaseUpgradeValue;
 
         [SerializeField]
         private float _increaseUpgradeRate;
-
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
-        //ConditionUnlockData
-        //ConditionUnlockValue
-        //MaxUpgardeValue
- 
+        [SerializeField]
+        private int _defaultMaxUpgradeValue;
+        public float DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
+
+
+        public IAssetData GetUpgradeAssetData(UpgradeData data)
+        {
+            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
+            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            return assetData;
+
+        }
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static VillageData Create_Test()
+        public static VillageData Create_Test(string key = null)
         {
-            return new VillageData();
+            return new VillageData(key);
         }
-
-        private VillageData()
+        private VillageData(string key)
         {
-            _serializedProcessData = SerializedProcessData.Create_Test(typeof(AssetProcessData));
-            _serializedStartUpgradeAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
-            _increaseUpgradeValue = 1;
-            _increaseUpgradeRate = 0.125f;
+            Key = key;
         }
-
 
         public override void SetData(string[] arr)
         {
@@ -57,53 +58,50 @@ namespace SEF.Data
 
             name = $"{typeof(UnitData).Name}_{Key}";
 
-            _serializedProcessData.SetData(
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeProcess],
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeAsset],
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartProcessAssetValue],
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetValue],
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetRate],
-                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.ProcessTime]
+            _serializedStatusData.SetData(
+                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData],
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusValue],
+                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue],
+                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue]
                 );
-            _serializedStartUpgradeAssetData.SetData(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset], arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue]);
+
+            _serializedAssetData.SetData(
+                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset],
+                arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue]
+                );
 
             _increaseUpgradeValue = int.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue]);
-            _increaseUpgradeRate = float.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeRate]);
-           
+            _increaseUpgradeRate = float.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate]);
+
+            _defaultMaxUpgradeValue = int.Parse(arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue]);
+
         }
 
         public override void AddData(string[] arr)
         {
         }
 
+
         public override string[] GetData()
         {
 
             string[] arr = new string[System.Enum.GetValues(typeof(VillageDataGenerator.TYPE_SHEET_COLUMNS)).Length];
 
-            _serializedProcessData.GetData(
-                out string classTypeName,
-                out string typeAssetData,
-                out string assetValue,
-                out string increaseValue,
-                out string increaseRate,
-                out string processTime
-                );
+            _serializedStatusData.GetData(out string typeStatusData, out string typeStatusValue, out string startStatusValue, out string increaseStatusValue);
 
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeProcess] = classTypeName;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeAsset] = typeAssetData;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartProcessAssetValue] = assetValue;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetValue] = increaseValue;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetRate] = increaseRate;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.ProcessTime] = processTime;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData] = typeStatusData;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusValue] = typeStatusValue;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue] = startStatusValue;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue] = increaseStatusValue;
 
-            _serializedStartUpgradeAssetData.GetData(out string upgradeTypeAssetData, out string upgradeAssetValue);
+            _serializedAssetData.GetData(out string typeUpgradeAsset, out string startUpgradeValue);
 
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset] = upgradeTypeAssetData;
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue] = upgradeAssetValue;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset] = typeUpgradeAsset;
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue] = startUpgradeValue;
 
             arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue] = _increaseUpgradeValue.ToString();
-            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeRate] = _increaseUpgradeRate.ToString();
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate] = _increaseUpgradeRate.ToString();
+            arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue] = _defaultMaxUpgradeValue.ToString();
 
             return arr;
         }
@@ -117,6 +115,8 @@ namespace SEF.Data
         {
             return null;
         }
+
+
 
 #endif
     }

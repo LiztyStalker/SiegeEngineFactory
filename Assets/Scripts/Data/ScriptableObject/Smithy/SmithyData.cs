@@ -31,8 +31,8 @@ namespace SEF.Data
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
         [SerializeField]
-        private int _maxUpgradeValue;
-        public float MaxUpgradeValue => _maxUpgradeValue;
+        private int _defaultMaxUpgradeValue;
+        public float DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
 
 
         public IAssetData GetUpgradeAssetData(UpgradeData data)
@@ -60,7 +60,8 @@ namespace SEF.Data
             name = $"{typeof(UnitData).Name}_{Key}";
 
             _serializedStatusData.SetData(
-                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData], 
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData],
+                arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusValue],
                 arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue], 
                 arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue]
                 );
@@ -72,7 +73,7 @@ namespace SEF.Data
 
             _increaseUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue]);
             _increaseUpgradeRate = float.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate]);
-            _maxUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.MaxUpgardeValue]);
+            _defaultMaxUpgradeValue = int.Parse(arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue]);
 
         }
 
@@ -86,9 +87,10 @@ namespace SEF.Data
 
             string[] arr = new string[System.Enum.GetValues(typeof(SmithyDataGenerator.TYPE_SHEET_COLUMNS)).Length];
 
-            _serializedStatusData.GetData(out string typeStatusData, out string startStatusValue, out string increaseStatusValue);
+            _serializedStatusData.GetData(out string typeStatusData, out string typeStatusValue, out string startStatusValue, out string increaseStatusValue);
 
             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData] = typeStatusData;
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusValue] = typeStatusValue;
             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.StartStatusValue] = startStatusValue;
             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseStatusValue] = increaseStatusValue;
 
@@ -99,7 +101,7 @@ namespace SEF.Data
 
             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue] = _increaseUpgradeValue.ToString();
             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgrateRate] = _increaseUpgradeRate.ToString();
-            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.MaxUpgardeValue] = _maxUpgradeValue.ToString();
+            arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue] = _defaultMaxUpgradeValue.ToString();
 
             return arr;
         }

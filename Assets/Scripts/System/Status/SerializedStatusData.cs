@@ -11,7 +11,7 @@ namespace SEF.Status
         private string _classTypeName;
 
         [SerializeField]
-        private IStatusData.TYPE_STATUS_DATA _typeStatusData;
+        private IStatusData.TYPE_STATUS_DATA _typeStatusValue;
 
         [SerializeField]
         private float _startValue;
@@ -26,7 +26,7 @@ namespace SEF.Status
             if (type != null)
             {
                 var data = GetData(type);
-                data.SetValue(_startValue, _increaseValue, _typeStatusData);
+                data.SetValue(_startValue, _increaseValue, _typeStatusValue);
                 return data;
             }
             return null;
@@ -39,17 +39,20 @@ namespace SEF.Status
 
 #if UNITY_EDITOR
 
-        public void SetData(string classTypeName, string startValue, string increaseValue)
+        public void SetData(string classTypeName, string typeStatusValue, string startValue, string increaseValue)
         {
-            _classTypeName = $"SEF.Data.{classTypeName}";
+            _classTypeName = $"SEF.Data.{classTypeName}StatusData";
+            _typeStatusValue = (IStatusData.TYPE_STATUS_DATA)System.Enum.Parse(typeof(IStatusData.TYPE_STATUS_DATA), typeStatusValue);
             _startValue = float.Parse(startValue);
             _increaseValue = float.Parse(increaseValue);
         }
 
-        public void GetData(out string classTypeName, out string startValue, out string increaseValue)
+        public void GetData(out string classTypeName, out string typeStatusValue, out string startValue, out string increaseValue)
         {
             var split = _classTypeName.Split('.');
-            classTypeName = split[split.Length - 1];
+            var str = split[split.Length - 1].Replace("StatusData", "");
+            classTypeName = str;
+            typeStatusValue = _typeStatusValue.ToString();
             startValue = _startValue.ToString();
             increaseValue = _increaseValue.ToString();
         }

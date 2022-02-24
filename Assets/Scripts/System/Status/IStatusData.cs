@@ -86,6 +86,14 @@ namespace SEF.Data
             _dic.Add(typeof(AttackerDamageDelayStatusData), "포탑공격딜레이");
             _dic.Add(typeof(UnitProductTimeStatusData), "생산시간");
             _dic.Add(typeof(UnitHealthDataStatusData), "체력");
+
+
+            _dic.Add(typeof(IncreaseMaxPopulationStatusData), "생산인구");
+            _dic.Add(typeof(IncreaseMaxUpgradeMineStatusData), "광산 업글 최대치");
+            _dic.Add(typeof(IncreaseMaxUpgradeSmithyStatusData), "대장간 업글 최대치");
+            _dic.Add(typeof(IncreaseMaxUpgradeUnitStatusData), "유닛 업글 최대치");
+            _dic.Add(typeof(IncreaseMaxUpgradeVillageStatusData), "마을 업글 최대치");
+
         }
 
 

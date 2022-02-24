@@ -1,5 +1,8 @@
 namespace SEF.Data
 {
+
+    #region ##### Smithy #####
+
     public class UnitDamageDelayStatusData : StatusData, IStatusData
     {
         public UnitDamageDelayStatusData() { }
@@ -79,4 +82,37 @@ namespace SEF.Data
         }
     }
 
+    #endregion
+
+
+
+
+    #region #### Village #####
+
+    public class IncreaseMaxPopulationStatusData : StatusData, IStatusData
+    {
+        public IncreaseMaxPopulationStatusData() { }       
+    }
+
+    public class IncreaseMaxUpgradeUnitStatusData : StatusData, IStatusData
+    {
+        public IncreaseMaxUpgradeUnitStatusData() { }
+    }
+
+    public class IncreaseMaxUpgradeSmithyStatusData : StatusData, IStatusData
+    {
+        public IncreaseMaxUpgradeSmithyStatusData() { }
+    }
+
+    public class IncreaseMaxUpgradeVillageStatusData : StatusData, IStatusData
+    {
+        public IncreaseMaxUpgradeVillageStatusData() { }
+    }
+
+    public class IncreaseMaxUpgradeMineStatusData : StatusData, IStatusData
+    {
+        public IncreaseMaxUpgradeMineStatusData() { }
+    }
+
+    #endregion
 }

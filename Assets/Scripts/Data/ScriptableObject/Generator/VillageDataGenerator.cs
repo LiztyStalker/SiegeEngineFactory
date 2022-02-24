@@ -9,19 +9,17 @@ namespace SEF.Data
         public enum TYPE_SHEET_COLUMNS
         {
             Key,
-            TypeProcess,
-            TypeAsset,
-            StartProcessAssetValue,
-            IncreaseProcessAssetValue,
-            IncreaseProcessAssetRate,
-            ProcessTime,
+            TypeStatusData,
+            TypeStatusValue,
+            StartStatusValue,
+            IncreaseStatusValue,
+            DefaultMaxUpgardeValue,
             TypeUpgradeAsset,
             StartUpgradeValue,
             IncreaseUpgradeValue,
-            IncreaseUpgradeRate,
-            MaxUpgardeValue,
+            IncreaseUpgrateRate,
             ConditionUnlockData,
-            ConditionUnlockValue
+            ConditionUnlockValue,
         }
 
         private readonly static string _dataPath = "Assets/Data/Villages";

@@ -13,7 +13,7 @@ namespace SEF.Data
             TypeStatusValue,
             StartStatusValue,
             IncreaseStatusValue,
-            MaxUpgardeValue,
+            DefaultMaxUpgardeValue,
             TypeUpgradeAsset,
             StartUpgradeValue,
             IncreaseUpgradeValue,

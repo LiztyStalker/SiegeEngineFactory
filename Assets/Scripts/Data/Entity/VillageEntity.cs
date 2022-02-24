@@ -1,10 +1,7 @@
 namespace SEF.Entity
 {
-    using SEF.Data;
-    using SEF.Process;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using Data;
+    using Status;
     using Utility.IO;
 
 
@@ -27,7 +24,7 @@ namespace SEF.Entity
     }
     #endregion
 
-    public struct VillageEntity : IProcessProvider
+    public struct VillageEntity : IStatusProvider
     {
         //Member
         private VillageData _data;
@@ -81,31 +78,17 @@ namespace SEF.Entity
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
-            OnProcessEntityEvent(this);
+            SetStatusEntity();
         }
 
-        private IAssetData CalculateUpgradeData()
+        private void SetStatusEntity()
         {
-            var assetData = (IAssetData)_data.StartUpgradeAssetData.Clone();
-            assetData.SetCompoundInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
-            return assetData;
+            var entity = new StatusEntity(_data.StatusData, _upgradeData);
+            StatusPackage.Current.SetStatusEntity(this, entity);
         }
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_upgradeData);
 
-        #region ##### Listener #####
-
-        private System.Action<IProcessProvider, ProcessEntity> _processEntityEvent;
-        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _processEntityEvent = act;
-
-        private void OnProcessEntityEvent(IProcessProvider provider)
-        {
-            var entity = new ProcessEntity(_data.ProcessData, _upgradeData);
-            _processEntityEvent?.Invoke(provider, entity);
-        }
-
-        #endregion
-
-
-
+      
         #region ##### StorableData #####
         public StorableData GetStorableData()
         {

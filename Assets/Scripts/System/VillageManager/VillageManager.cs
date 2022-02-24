@@ -79,7 +79,6 @@ namespace SEF.Manager
             line.Initialize();
             line.SetIndex(_list.Count);
             line.SetOnRefreshListener(OnRefreshEvent);
-            line.SetOnProcessEntityListener(OnProcessEntityEvent);
             _list.Add(line);
             return line;
         }

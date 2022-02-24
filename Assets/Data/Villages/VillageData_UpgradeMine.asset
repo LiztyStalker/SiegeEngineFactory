@@ -10,23 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
-  m_Name: VillageData_Stall
+  m_Name: VillageData_UpgradeMine
   m_EditorClassIdentifier: 
-  _sortIndex: 3
-  _key: Stall
+  _key: UpgradeMine
+  _sortIndex: 4
+  _isTest: 0
   _icon: {fileID: 0}
-  _serializedProcessData:
-    _classTypeName: SEF.Process.AssetProcessData
-    _processAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 15
-    _increaseValue: 1
-    _increaseRate: 0.125
-    _processTime: 1
-  _serializedStartUpgradeAssetData:
+  _serializedStatusData:
+    _classTypeName: SEF.Data.IncreaseMaxUpgradeMineStatusData
+    _typeStatusData: 0
+    _startValue: 10
+    _increaseValue: 10
+  _serializedAssetData:
     _typeAssetData: Gold
     _assetData: 0
     _assetValue: 100
   _increaseUpgradeValue: 1
   _increaseUpgradeRate: 0.125
+  _defaultMaxUpgradeValue: 10
