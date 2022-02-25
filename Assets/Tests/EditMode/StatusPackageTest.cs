@@ -822,6 +822,74 @@ namespace SEF.Test
         }
 
 
+
+
+
+        [Test]
+        public void StatusPackageTest_AssetPackage_IncreaseMaxPopulationStatusData()
+        {
+            var assetEntity = new AssetEntity(new PopulationAssetData());
+            assetEntity.SetLimitAssetData(new PopulationAssetData(5));
+
+            var statusProvider1 = new StatusProvider_Test();
+
+            var statusData1 = StatusDataUtility.Create<IncreaseMaxPopulationStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var upgradeData = NumberDataUtility.Create<UpgradeData>();
+            upgradeData.IncreaseNumber();
+            var statusEntity1 = new StatusEntity(statusData1, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
+
+            Debug.Log(assetEntity.LimitAssetData.AssetValue);
+            Assert.AreEqual(assetEntity.LimitAssetData.AssetValue.ToString(), "6");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+            var statusData2 = StatusDataUtility.Create<IncreaseMaxPopulationStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusEntity2 = new StatusEntity(statusData2, upgradeData);
+
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
+
+            Debug.Log(assetEntity.LimitAssetData.AssetValue);
+            Assert.AreEqual(assetEntity.LimitAssetData.AssetValue.ToString(), "10");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = StatusDataUtility.Create<IncreaseMaxPopulationStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusEntity3 = new StatusEntity(statusData3, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
+
+
+            var statusData4 = StatusDataUtility.Create<IncreaseMaxPopulationStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusEntity4 = new StatusEntity(statusData4, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
+
+
+            Debug.Log(assetEntity.LimitAssetData.AssetValue);
+            Assert.AreEqual(assetEntity.LimitAssetData.AssetValue.ToString(), "11");
+
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+
+            var statusData5 = StatusDataUtility.Create<IncreaseMaxPopulationStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusEntity5 = new StatusEntity(statusData5, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
+
+            Debug.Log(assetEntity.LimitAssetData.AssetValue);
+            Assert.AreEqual(assetEntity.LimitAssetData.AssetValue.ToString(), "2");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
+
     }
 }
 #endif

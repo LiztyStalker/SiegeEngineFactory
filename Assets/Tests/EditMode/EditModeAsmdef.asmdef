@@ -5,9 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.Mathematics",
-        "ScriptAsmdef",
         "spine-unity",
-        "LitjsonAsmdef"
+        "LitjsonAsmdef",
+        "ScriptAsmdef"
     ],
     "includePlatforms": [
         "Editor"

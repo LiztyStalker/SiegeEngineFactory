@@ -5,7 +5,7 @@ namespace SEF.Data
     public abstract class NumberData : INumberData
     {
         private int _value;
-        public int Value { get => _value; protected set => _value = value; }
+        public int Value { get => _value; set => _value = value; }
 
         protected NumberData()
         {

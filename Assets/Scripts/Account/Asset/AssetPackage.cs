@@ -1,13 +1,11 @@
 namespace SEF.Entity
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using Data;
-    using Account;
     using System.Numerics;
     using Utility.IO;
-
+    using Status;
 
     #region ##### StorableData #####
     [System.Serializable]
@@ -26,7 +24,18 @@ namespace SEF.Entity
         private IAssetData _limitAssetData;
         private IAssetData _nowAssetData;
 
-        public IAssetData LimitAssetData => _limitAssetData;
+        public IAssetData LimitAssetData
+        {
+            get
+            {
+                if (_limitAssetData == null)
+                    return null;
+
+                if(_limitAssetData is PopulationAssetData)
+                    return new UniversalAssetData(StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxPopulationStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_limitAssetData.AssetValue)));
+                return _limitAssetData;
+            }
+        }
         public IAssetData NowAssetData => _nowAssetData;        
 
         public AssetEntity(IAssetData nowAssetData)
@@ -46,36 +55,36 @@ namespace SEF.Entity
         }
         public bool IsOverflow(IAssetData data)
         {
-            if (_limitAssetData == null) return false;
-            return (_nowAssetData.AssetValue + data.AssetValue > _limitAssetData.AssetValue);
+            if (LimitAssetData == null) return false;
+            return (NowAssetData.AssetValue + data.AssetValue > LimitAssetData.AssetValue);
         }
 
         public bool IsUnderflow(IAssetData data)
         {
-            if (_limitAssetData == null) return false;
-            return (_nowAssetData.AssetValue - data.AssetValue < 0);
+            if (LimitAssetData == null) return false;
+            return (NowAssetData.AssetValue - data.AssetValue < 0);
         }
 
         public string GetValue()
         {
-            if(_limitAssetData == null)
+            if(LimitAssetData == null)
             {
-                return _nowAssetData.GetValue();
+                return NowAssetData.GetValue();
             }
             else
             {
-                return $"{_nowAssetData.GetValue()} / {_limitAssetData.GetValue()}";
+                return $"{NowAssetData.GetValue()} / {LimitAssetData.GetValue()}";
             }
         }
 
-        public new System.Type GetType() => _nowAssetData.GetType();
-        public System.Type AccumulativelyUsedStatisticsType() => _nowAssetData.AccumulativelyUsedStatisticsType();
-        public System.Type AccumulativelyGetStatisticsType() => _nowAssetData.AccumulativelyGetStatisticsType();
+        public new System.Type GetType() => NowAssetData.GetType();
+        public System.Type AccumulativelyUsedStatisticsType() => NowAssetData.AccumulativelyUsedStatisticsType();
+        public System.Type AccumulativelyGetStatisticsType() => NowAssetData.AccumulativelyGetStatisticsType();
 
-        public void SetValue(string value) => _nowAssetData.SetValue(value);
+        public void SetValue(string value) => NowAssetData.SetValue(value);
 
-        public void SetCompoundInterest(float nowValue, float rate, int length = 1) => _nowAssetData.SetCompoundInterest(nowValue, rate, length);
-        public void SetIsolationInterest(float nowValue, int length) => _nowAssetData.SetIsolationInterest(nowValue, length);
+        public void SetCompoundInterest(float nowValue, float rate, int length = 1) => NowAssetData.SetCompoundInterest(nowValue, rate, length);
+        public void SetIsolationInterest(float nowValue, int length) => NowAssetData.SetIsolationInterest(nowValue, length);
 
         public INumberData Clone()
         {
@@ -93,7 +102,7 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var data = new AssetEntityStorableData();
-            data.SetData(_nowAssetData.GetStorableData());
+            data.SetData(NowAssetData.GetStorableData());
             return data;
         }       
         #endregion
