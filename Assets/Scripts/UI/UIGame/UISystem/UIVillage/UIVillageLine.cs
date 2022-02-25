@@ -101,7 +101,7 @@ namespace SEF.UI.Toolkit
             _entity = entity;
 
             _nameLabel.text = entity.Name;
-            _levelValueLabel.text = entity.UpgradeValue.ToString();
+            _levelValueLabel.text = entity.NowUpgradeValue.ToString();
             _contentLabel.text = entity.Content;
             _contentLabel.text = entity.Ability;
 

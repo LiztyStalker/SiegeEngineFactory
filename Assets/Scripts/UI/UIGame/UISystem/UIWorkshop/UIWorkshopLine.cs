@@ -225,7 +225,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            _levelValueLabel.text = unitEntity.UpgradeValue.ToString();
+            _levelValueLabel.text = unitEntity.NowUpgradeValue.ToString();
 
             _uiFillable.FillAmount = nowTime / unitData.ProductTime;
 

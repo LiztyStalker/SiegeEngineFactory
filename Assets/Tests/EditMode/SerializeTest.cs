@@ -194,10 +194,10 @@ namespace SEF.Test
                 entity.SetStorableData(unitData, upgradeData);
 
                 Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
-                Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
+                Debug.Log(_unitEntity.NowUpgradeValue + " " + entity.NowUpgradeValue);
 
                 Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
-                Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
+                Assert.AreEqual(_unitEntity.NowUpgradeValue, entity.NowUpgradeValue);
             });
         }
 
@@ -221,10 +221,10 @@ namespace SEF.Test
                 entity.SetStorableData(unitData, upgradeData);
 
                 Debug.Log(_unitEntity.UnitData.Key + " " + entity.UnitData.Key);
-                Debug.Log(_unitEntity.UpgradeValue + " " + entity.UpgradeValue);
+                Debug.Log(_unitEntity.NowUpgradeValue + " " + entity.NowUpgradeValue);
 
                 Assert.AreEqual(_unitEntity.UnitData.Key, entity.UnitData.Key);
-                Assert.AreEqual(_unitEntity.UpgradeValue, entity.UpgradeValue);
+                Assert.AreEqual(_unitEntity.NowUpgradeValue, entity.NowUpgradeValue);
             });
         }
 
@@ -326,10 +326,10 @@ namespace SEF.Test
                 entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);
-                Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);
+                Debug.Log(_smithyEntity.NowUpgradeValue + " " + entity.NowUpgradeValue);
 
                 Assert.AreEqual(_smithyEntity.Key, entity.Key);
-                Assert.AreEqual(_smithyEntity.UpgradeValue, entity.UpgradeValue);
+                Assert.AreEqual(_smithyEntity.NowUpgradeValue, entity.NowUpgradeValue);
             });
         }
 
@@ -354,10 +354,10 @@ namespace SEF.Test
                 entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);
-                Debug.Log(_smithyEntity.UpgradeValue + " " + entity.UpgradeValue);
+                Debug.Log(_smithyEntity.NowUpgradeValue + " " + entity.NowUpgradeValue);
 
                 Assert.AreEqual(_smithyEntity.Key, entity.Key);
-                Assert.AreEqual(_smithyEntity.UpgradeValue, entity.UpgradeValue);
+                Assert.AreEqual(_smithyEntity.NowUpgradeValue, entity.NowUpgradeValue);
             });
         }
 
