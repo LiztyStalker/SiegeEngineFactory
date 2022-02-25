@@ -139,13 +139,6 @@ namespace SEF.Manager
             return _conditionProductUnitEvent(unitEntity);
         }
 
-
-        //private System.Func<StatusPackage> _statusPackageEvent;
-        //public void SetOnStatusPackageListener(System.Func<StatusPackage> act) => _statusPackageEvent = act;
-        //private StatusPackage GetStatusPackage() => _statusPackageEvent();
-
-        //LineEvent
-
         #endregion
 
 
