@@ -176,13 +176,23 @@ namespace SEF.Unit
             if (SkeletonAnimation != null)
             {
                 //À¯´Ö »ý¼º
-                if (unitEntity.UnitData.SkeletonDataAsset == null)
-                    SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
-                else
+                if (unitEntity.UnitData.SkeletonDataAsset != null)
+                {
                     SkeletonAnimation.skeletonDataAsset = unitEntity.UnitData.SkeletonDataAsset;
-            }
+                }
+                else
+                {
+                    var data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
+                    Debug.Log(data);
+#if UNITY_EDITOR
+                    if (data == null)
+                        data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>("BowSoldier_SkeletonData", null, null);
+#endif
+                    SkeletonAnimation.skeletonDataAsset = data;
+                }
 
-            transform.localScale = Vector3.one * unitEntity.UnitData.Scale;
+                transform.localScale = Vector3.one * unitEntity.UnitData.Scale;
+            }
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

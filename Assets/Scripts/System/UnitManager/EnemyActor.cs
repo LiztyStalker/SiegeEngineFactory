@@ -212,9 +212,18 @@ namespace SEF.Unit {
             {
                 //À¯´Ö »ý¼º
                 if (enemyEntity.EnemyData.SkeletonDataAsset != null)
+                {
                     SkeletonAnimation.skeletonDataAsset = enemyEntity.EnemyData.SkeletonDataAsset;
+                }
                 else
-                    SkeletonAnimation.skeletonDataAsset = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
+                {
+                    var data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
+#if UNITY_EDITOR
+                    if(data == null)
+                        data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>("BowSoldier_SkeletonData", null, null);
+#endif
+                    SkeletonAnimation.skeletonDataAsset = data;
+                }
             }
         }
 

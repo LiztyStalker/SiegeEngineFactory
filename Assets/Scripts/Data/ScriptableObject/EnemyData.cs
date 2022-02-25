@@ -30,7 +30,11 @@ namespace SEF.Data
 
         [SerializeField]
         private string _spineModelKey;
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+        public string SpineModelKey => (string.IsNullOrEmpty(_spineModelKey)) ? "BowSoldier_SkeletonData" : _spineModelKey;
+#else
         public string SpineModelKey => _spineModelKey;
+#endif
 
         [SerializeField]
         private string _spineSkinKey;

@@ -249,7 +249,9 @@ namespace Storage
             {
                 var dic = _dataDic[ToTypeString<T>()];
                 var cKey = GetConvertKey(key, firstVerb, lastVerb);
-                //Debug.Log(ToTypeString<T>() + " " + cKey);
+//#if UNITY_EDITOR
+//                Debug.Log(ToTypeString<T>() + " " + cKey);
+//#endif
                 return GetDataOrNull<T>(dic, cKey);
             }
             return null;

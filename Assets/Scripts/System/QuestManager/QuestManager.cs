@@ -75,7 +75,7 @@ namespace SEF.Quest
         {
             _dic.Add(typeQuestGroup, new List<QuestEntity>());
             var filterArr = GetRandomQuestEntities(arr, typeQuestGroup, count);
-            _dic[typeQuestGroup].AddRange(filterArr);
+            if(filterArr != null) _dic[typeQuestGroup].AddRange(filterArr);
         }
 
         private QuestEntity[] GetQuestEntities(QuestData[] arr, QuestData.TYPE_QUEST_GROUP typeQuestGroup)
@@ -100,39 +100,43 @@ namespace SEF.Quest
 
         private QuestEntity[] GetRandomQuestEntities(QuestData[] arr, QuestData.TYPE_QUEST_GROUP typeQuestGroup, int count)
         {
-            var filterArr = arr.Where(data => data.TypeQuestGroup == typeQuestGroup).ToArray();
-
-            List<QuestData> questList = new List<QuestData>();
-
-            while (true)
+            if (arr.Length > 0)
             {
-                var questData = filterArr[UnityEngine.Random.Range(0, filterArr.Length)];
+                var filterArr = arr.Where(data => data.TypeQuestGroup == typeQuestGroup).ToArray();
 
-                if (!questList.Contains(questData))
+                List<QuestData> questList = new List<QuestData>();
+
+                while (true)
                 {
-                    questList.Add(questData);
+                    var questData = filterArr[UnityEngine.Random.Range(0, filterArr.Length)];
+
+                    if (!questList.Contains(questData))
+                    {
+                        questList.Add(questData);
+                    }
+
+                    //데이터 부족
+                    //모든 데이터 충전
+                    if (questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
+                    {
+                        break;
+                    }
                 }
 
-                //데이터 부족
-                //모든 데이터 충전
-                if (questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
+                QuestEntity[] entities = new QuestEntity[questList.Count];
+                while (questList.Count > 0)
                 {
-                    break;
+                    var questData = questList[0];
+
+                    var entity = new QuestEntity();
+                    questList.Remove(questData);
+
+                    entity.SetData(questData);
+                    entities[questList.Count] = entity;
                 }
+                return entities;
             }
-
-            QuestEntity[] entities = new QuestEntity[questList.Count];
-            while (questList.Count > 0)
-            {
-                var questData = questList[0];
-
-                var entity = new QuestEntity();
-                questList.Remove(questData);
-
-                entity.SetData(questData);
-                entities[questList.Count] = entity;
-            }
-            return entities;
+            return null;
         }
 
 
