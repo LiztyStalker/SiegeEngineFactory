@@ -31,26 +31,29 @@ namespace SEF.Data
         private float _increaseUpgradeRate;
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
-
         [SerializeField]
         private int _defaultMaxUpgradeValue;
-        private int DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
+        public int DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
+
+
 
         //ConditionUnlockData
         //ConditionUnlockValue
  
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-        public static MineData Create_Test()
+        public static MineData Create_Test(string key = null)
         {
-            return new MineData();
+            return new MineData(key);
         }
 
-        private MineData()
+        private MineData(string key)
         {
+            Key = (string.IsNullOrEmpty(key)) ? "Test" : key;
             _serializedProcessData = SerializedProcessData.Create_Test(typeof(AssetProcessData));
             _serializedStartUpgradeAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
             _increaseUpgradeValue = 1;
             _increaseUpgradeRate = 0.125f;
+            _defaultMaxUpgradeValue = 10;
         }
 
 
@@ -76,9 +79,7 @@ namespace SEF.Data
            
         }
 
-        public override void AddData(string[] arr)
-        {
-        }
+        public override void AddData(string[] arr) { }
 
         public override string[] GetData()
         {
@@ -99,7 +100,10 @@ namespace SEF.Data
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseProcessAssetValue] = increaseValue;
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.ProcessTime] = processTime;
 
-            _serializedStartUpgradeAssetData.GetData(out string upgradeTypeAssetData, out string upgradeAssetValue);
+            _serializedStartUpgradeAssetData.GetData(
+                out string upgradeTypeAssetData, 
+                out string upgradeAssetValue
+                );
 
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.TypeUpgradeAsset] = upgradeTypeAssetData;
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeValue] = upgradeAssetValue;
@@ -107,18 +111,13 @@ namespace SEF.Data
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeValue] = _increaseUpgradeValue.ToString();
             arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeRate] = _increaseUpgradeRate.ToString();
 
+            arr[(int)MineDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgardeValue] = _defaultMaxUpgradeValue.ToString();
+
             return arr;
         }
 
-        public override bool HasDataArray()
-        {
-            return false;
-        }
-
-        public override string[][] GetDataArray()
-        {
-            return null;
-        }
+        public override bool HasDataArray() => false;
+        public override string[][] GetDataArray() => null;
 
 #endif
     }

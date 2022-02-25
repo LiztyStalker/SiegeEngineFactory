@@ -1099,6 +1099,75 @@ namespace SEF.Test
             StatusPackage.Current.RemoveStatusData(statusProvider1);
 
         }
+
+
+        [Test]
+        public void StatusPackageTest_AssetPackage_IncreaseMaxUpgradeMineStatusData()
+        {
+            var data = MineData.Create_Test();
+            var entity = new MineEntity();
+            entity.Initialize();
+            entity.SetData(data);
+
+
+            var statusProvider1 = new StatusProvider_Test();
+
+            var statusData1 = StatusDataUtility.Create<IncreaseMaxUpgradeMineStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var upgradeData = NumberDataUtility.Create<UpgradeData>();
+            upgradeData.IncreaseNumber();
+            var statusEntity1 = new StatusEntity(statusData1, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
+
+            Debug.Log(entity.MaxUpgradeValue);
+            Assert.AreEqual(entity.MaxUpgradeValue.ToString(), "11");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+            var statusData2 = StatusDataUtility.Create<IncreaseMaxUpgradeMineStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusEntity2 = new StatusEntity(statusData2, upgradeData);
+
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
+
+            Debug.Log(entity.MaxUpgradeValue);
+            Assert.AreEqual(entity.MaxUpgradeValue.ToString(), "20");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+
+
+
+            var statusProvider2 = new StatusProvider_Test();
+            var statusData3 = StatusDataUtility.Create<IncreaseMaxUpgradeMineStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusEntity3 = new StatusEntity(statusData3, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
+
+
+            var statusData4 = StatusDataUtility.Create<IncreaseMaxUpgradeMineStatusData>(1, 1, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusEntity4 = new StatusEntity(statusData4, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
+
+
+            Debug.Log(entity.MaxUpgradeValue);
+            Assert.AreEqual(entity.MaxUpgradeValue.ToString(), "21");
+
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+            StatusPackage.Current.RemoveStatusData(statusProvider2);
+
+
+
+
+            var statusData5 = StatusDataUtility.Create<IncreaseMaxUpgradeMineStatusData>(2, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusEntity5 = new StatusEntity(statusData5, upgradeData);
+            StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
+
+            Debug.Log(entity.MaxUpgradeValue);
+            Assert.AreEqual(entity.MaxUpgradeValue.ToString(), "2");
+
+            StatusPackage.Current.RemoveStatusData(statusProvider1);
+
+        }
     }
 }
 #endif

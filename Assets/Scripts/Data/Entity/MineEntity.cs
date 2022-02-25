@@ -1,11 +1,9 @@
 namespace SEF.Entity
 {
-    using SEF.Data;
-    using SEF.Process;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using Data;
+    using Process;
     using Utility.IO;
+    using Status;
 
 
     #region ##### StorableData #####
@@ -42,7 +40,15 @@ namespace SEF.Entity
         public string Content => _data.Key;
         public string Ability => _data.Key;
 
-        public int UpgradeValue => _upgradeData.Value;
+        public int NowUpgradeValue => _upgradeData.Value;
+        public int MaxUpgradeValue
+        {
+            get
+            {
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.DefaultMaxUpgradeValue));
+                return (int)data.Value;
+            }
+        }
 
         public IAssetData UpgradeAssetData
         {
@@ -110,7 +116,7 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var data = new MineEntityStorableData();
-            data.SetData(_data.Key, UpgradeValue);
+            data.SetData(_data.Key, NowUpgradeValue);
             return data;
         }
 
