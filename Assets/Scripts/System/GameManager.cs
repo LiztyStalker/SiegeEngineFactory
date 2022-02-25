@@ -83,6 +83,7 @@ namespace SEF.Manager
 
             _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddOnBlacksmithUpgradeListener(_gameSystem.UpgradeSmithy);
+            _uiGame.AddOnBlacksmithUpTechListener(_gameSystem.UpTechSmithy);
             _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
@@ -131,6 +132,7 @@ namespace SEF.Manager
 
             _uiGame.RemoveOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveOnBlacksmithUpgradeListener(_gameSystem.UpgradeSmithy);
+            _uiGame.RemoveOnBlacksmithUpTechListener(_gameSystem.UpTechSmithy);
             _uiGame.RemoveOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);

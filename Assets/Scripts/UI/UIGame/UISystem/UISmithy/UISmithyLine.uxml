@@ -1,29 +1,29 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="UISmithyLine.uss" />
     <SEF.UI.Toolkit.UISmithyLine style="height: 200px;">
-        <ui:VisualElement name="activate-panel" class="blacksmith-activate-panel" style="display: flex;">
-            <ui:VisualElement name="line-panel" class="blacksmith-line-panel">
-                <ui:VisualElement name="line-icon" class="blacksmith-icon" style="background-color: rgb(255, 255, 255);" />
-                <ui:VisualElement name="information-panel" class="blacksmith-information-panel">
+        <ui:VisualElement name="activate-panel" class="smithy-activate-panel" style="display: flex;">
+            <ui:VisualElement name="line-panel" class="smithy-line-panel">
+                <ui:VisualElement name="line-icon" class="smithy-icon" style="background-color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="information-panel" class="smithy-information-panel">
                     <ui:VisualElement name="name_type_panel" style="flex-direction: row; align-items: flex-end;">
-                        <ui:Label text="투창병" display-tooltip-when-elided="true" name="name-label" class="blacksmith-name-label" />
-                        <ui:Label text="Lv" display-tooltip-when-elided="true" name="level-label" class="unit_name_label blacksmith-level-label" />
-                        <ui:Label text="03" display-tooltip-when-elided="true" name="level-value-label" class="dps_label unit_name_label blacksmith-level-label" />
+                        <ui:Label text="투창병" display-tooltip-when-elided="true" name="name-label" class="smithy-name-label" />
+                        <ui:Label text="Lv" display-tooltip-when-elided="true" name="level-label" class="unit_name_label smithy-level-label" />
+                        <ui:Label text="03" display-tooltip-when-elided="true" name="level-value-label" class="dps_label unit_name_label smithy-level-label" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="advanced_information_panel" class="blacksmith-advanced-information-panel">
+                    <ui:VisualElement name="advanced_information_panel" class="smithy-advanced-information-panel">
                         <ui:VisualElement name="information-view">
-                            <ui:VisualElement name="information-panel" class="blacksmith-value-panel">
-                                <ui:Label text="설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 " display-tooltip-when-elided="true" name="content-label" enable-rich-text="false" class="blacksmith-content-label" />
+                            <ui:VisualElement name="information-panel" class="smithy-value-panel">
+                                <ui:Label text="설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 설명 " display-tooltip-when-elided="true" name="content-label" enable-rich-text="false" class="smithy-content-label" />
                             </ui:VisualElement>
-                            <ui:VisualElement name="ability-panel" class="blacksmith-value-panel">
-                                <ui:Label text="체력" display-tooltip-when-elided="true" name="ability-label" class="blacksmith-ability-label" />
+                            <ui:VisualElement name="ability-panel" class="smithy-value-panel">
+                                <ui:Label text="체력" display-tooltip-when-elided="true" name="ability-label" class="smithy-ability-label" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="button-panel" class="blacksmith-button-panel" style="justify-content: flex-end; position: absolute;">
-                <ui:Button display-tooltip-when-elided="true" name="upgrade-button" class="blacksmith-upgrade-button">
+            <ui:VisualElement name="button-panel" class="smithy-button-panel" style="justify-content: flex-end; position: absolute;">
+                <ui:Button display-tooltip-when-elided="true" name="upgrade-button" class="smithy-upgrade-button">
                     <ui:Label text="업그레이드" display-tooltip-when-elided="true" name="upgrade-label" style="font-size: 16px;" />
                     <ui:VisualElement name="upgrade-asset-panel" style="flex-direction: row;">
                         <ui:VisualElement name="upgrade-asset-icon" style="width: 30px; height: 30px; background-color: rgb(0, 0, 0);" />
@@ -32,7 +32,7 @@
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="inactivate-panel" class="blacksmith-inactivate-panel">
+        <ui:VisualElement name="inactivate-panel" class="smithy-inactivate-panel">
             <ui:Label text="---" display-tooltip-when-elided="true" style="font-size: 60px;" />
         </ui:VisualElement>
     </SEF.UI.Toolkit.UISmithyLine>

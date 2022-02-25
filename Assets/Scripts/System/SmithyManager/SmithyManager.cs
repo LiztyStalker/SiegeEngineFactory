@@ -69,8 +69,9 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
-        public void UpTech(int index)
+        public IAssetData UpTech(int index)
         {
+            return _list[index].UpTech();
         }
 
         private SmithyLine CreateLine()

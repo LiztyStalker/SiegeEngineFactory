@@ -503,7 +503,7 @@ namespace SEF.Manager
 
                     var levelWaveData = enemyActor.GetLevelWaveData();
 
-                    UnityEngine.Debug.Log(levelWaveData.IsBoss());
+                    //UnityEngine.Debug.Log(levelWaveData.IsBoss());
 
                     if (levelWaveData.IsBoss())
                     {
@@ -554,7 +554,10 @@ namespace SEF.Manager
 
         public void UpTechSmithy(int index)
         {
-            _smithyManager.UpTech(index);
+            UnityEngine.Debug.Log("UpTech");
+            var assetData = _smithyManager.UpTech(index);
+
+            SubjectAsset(assetData);
             //통계적용
             AddStatisticsData<TechSmithyStatisticsData>();
             //퀘스트 적용
@@ -562,12 +565,11 @@ namespace SEF.Manager
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelyTechSmithyConditionQuestData>((int)GetStatisticsValue<TechSmithyStatisticsData>());
         }
-        #endregion
+#endregion
 
 
 
-
-        #region ##### Villiage #####
+#region ##### Villiage #####
         public void UpgradeVillage(int index)
         {
             var assetData = _villageManager.Upgrade(index);
@@ -590,12 +592,12 @@ namespace SEF.Manager
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelyTechVillageConditionQuestData>((int)GetStatisticsValue<TechVillageStatisticsData>());
         }
-        #endregion
+#endregion
 
 
 
 
-        #region ##### Research #####
+#region ##### Research #####
         public void SuccessResearchData()
         {
             //통계적용
@@ -605,12 +607,12 @@ namespace SEF.Manager
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelySuccessResearchConditionQuestData>((int)GetStatisticsValue<SuccessResearchStatisticsData>());
         }
-        #endregion
+#endregion
 
 
 
 
-        #region ##### LevelWave #####
+#region ##### LevelWave #####
 
         private LevelWaveData _nowLevelWaveData;
         public void ArrivedLevelWave(LevelWaveData levelWaveData)
@@ -677,14 +679,25 @@ namespace SEF.Manager
                 }
             }
         }
-        #endregion
+#endregion
 
 
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
+        //IEntityResult
+        //UnitEntityResult = UI와 System간 통신용 데이터
+        //index, UnitEntity, float nowTime, bool isUpgrade, bool isTech
         public void AddRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.AddRefreshListener(act);
         public void RemoveRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.RemoveRefreshListener(act);
+        //업글
+        //자원
+        //한계
+
+        //테크
+        //자원
+        //한계
+
         public void AddOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.AddOnRefreshListener(act);
         public void RemoveOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.RemoveOnRefreshListener(act);
         public void AddOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.AddOnRefreshListener(act);
@@ -765,7 +778,7 @@ namespace SEF.Manager
         public void RemoveOnRefreshQuestEntityListener(System.Action<QuestEntity> act) => _questManager.RemoveOnRefreshListener(act);
 
 
-        #endregion
+#endregion
 
 
     }

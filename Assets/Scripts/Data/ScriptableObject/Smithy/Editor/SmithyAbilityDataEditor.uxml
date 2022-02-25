@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="SmithyAbilityDataEditor.uss" />
+    <ui:VisualElement class="smithy-ability-data-layout">
+        <uie:PropertyField name="smithy-ability-type-status-data-field" />
+        <uie:PropertyField name="smithy-ability-type-status-value-field" />
+        <uie:PropertyField name="smithy-ability-start-status-value-field" />
+        <uie:PropertyField name="smithy-ability-increase-status-value-field" />
+        <uie:PropertyField name="smithy-ability-default-max-upgrade-field" />
+        <uie:PropertyField name="smithy-ability-type-upgrade-asset-field" />
+        <uie:PropertyField name="smithy-ability-start-upgrade-value-field" />
+        <uie:PropertyField name="smithy-ability-increase-upgrade-value-field" />
+        <uie:PropertyField name="smithy-ability-increase-upgrade-rate-field" />
+        <uie:PropertyField name="smithy-ability-type-tech-asset-field" />
+        <uie:PropertyField name="smithy-ability-tech-asset-value-field" />
+    </ui:VisualElement>
+</ui:UXML>

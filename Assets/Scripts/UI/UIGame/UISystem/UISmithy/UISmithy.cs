@@ -23,7 +23,7 @@ namespace SEF.UI.Toolkit
 
         public static UISmithy Create()
         {
-            return UIUXML.GetVisualElement<UISmithy>(PATH_UI_UXML);
+            return UIUXML.GetVisualElement<UISmithy>(PATH_UI_UXML, PATH_UI_USS);
         }
 
         public void Initialize()
@@ -36,6 +36,7 @@ namespace SEF.UI.Toolkit
             foreach (var value in _dic.Values)
             {
                 value.RemoveUpgradeListener(OnUpgradeEvent);
+                value.RemoveOnUpTechListener(OnUpTechEvent);
                 value.CleanUp();
             }
             _dic.Clear();
@@ -63,6 +64,7 @@ namespace SEF.UI.Toolkit
                 line.Initialize();
                 line.SetIndex(index);
                 line.AddUpgradeListener(OnUpgradeEvent);
+                line.AddOnUpTechListener(OnUpTechEvent);
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
@@ -86,6 +88,15 @@ namespace SEF.UI.Toolkit
         private void OnUpgradeEvent(int index)
         {
             _upgradeEvent?.Invoke(index);
+        }
+
+
+        private System.Action<int> _uptechEvent;
+        public void AddOnUpTechListener(System.Action<int> act) => _uptechEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int> act) => _uptechEvent -= act;
+        private void OnUpTechEvent(int index)
+        {
+            _uptechEvent?.Invoke(index);
         }
 
         #endregion

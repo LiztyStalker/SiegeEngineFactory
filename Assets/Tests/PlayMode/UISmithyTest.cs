@@ -60,7 +60,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UISmithyTest_Create_UISmithyLine()
         {
-            SmithyEntity entity;
+            SmithyEntity entity = new SmithyEntity();
             entity.Initialize();
             entity.SetData(SmithyData.Create_Test());
             var system = UISmithy_Test.Create();
@@ -79,7 +79,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UISmithyTest_Create_UISmithyLine_x5()
         {
-            SmithyEntity entity;
+            SmithyEntity entity = new SmithyEntity();
             entity.Initialize();
             entity.SetData(SmithyData.Create_Test());
 
@@ -109,7 +109,7 @@ namespace SEF.UI.Test
         public IEnumerator UISmithyLineTest_UpgradeButton_Disable()
         {
 
-            SmithyEntity entity;
+            SmithyEntity entity = new SmithyEntity();
             entity.Initialize();
             entity.SetData(SmithyData.Create_Test());
 
@@ -137,7 +137,7 @@ namespace SEF.UI.Test
         public IEnumerator UISmithyLineTest_UpgradeButton_Enable()
         {
 
-            SmithyEntity entity;
+            SmithyEntity entity = new SmithyEntity();
             entity.Initialize();
             entity.SetData(SmithyData.Create_Test());
 

@@ -20,6 +20,8 @@ namespace SEF.Data
             IncreaseUpgrateRate,
             ConditionUnlockData,
             ConditionUnlockValue,
+            TypeTechAsset,
+            TechAssetValue,            
         }
 
         private readonly static string _dataPath = "Assets/Data/Smithy";

@@ -125,6 +125,8 @@ namespace SEF.UI.Toolkit
         public void RemoveOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnWorkshopUpgradeListener(act);
         public void AddOnBlacksmithUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
         public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
+        public void AddOnBlacksmithUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
+        public void RemoveOnBlacksmithUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpTechListener(act);
         public void AddOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.AddOnMineUpgradeListener(act);
         public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnMineUpgradeListener(act);
 

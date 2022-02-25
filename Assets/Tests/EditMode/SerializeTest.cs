@@ -322,7 +322,7 @@ namespace SEF.Test
                 upgradeData.SetValue(des.UpgradeValue);
 
                 var entity = new SmithyEntity();
-                entity.SetStorableData(upgradeData);
+                entity.SetStorableData(upgradeData, 0);
                 entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);
@@ -350,7 +350,7 @@ namespace SEF.Test
                 upgradeData.SetValue(des.UpgradeValue);
 
                 var entity = new SmithyEntity();
-                entity.SetStorableData(upgradeData);
+                entity.SetStorableData(upgradeData, 0);
                 entity.SetData(SmithyData.Create_Test("Test"));
 
                 Debug.Log(_smithyEntity.Key + " " + entity.Key);

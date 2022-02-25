@@ -3,19 +3,11 @@
     <uie:ObjectField label="Object Field" name="smithy-icon-field" />
     <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="smithy-key-field" />
     <ui:Toggle label="Toggle" name="smithy-multiple-toggle" style="display: none;" />
-    <ui:VisualElement class="smithy-property-layout">
-        <uie:PropertyField name="smithy-asset-data-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="smithy-increase-upgrade-value-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="smithy-increase-upgrade-rate-field" />
-    </ui:VisualElement>
-    <ui:VisualElement name="smithy-multiple-condition-panel" style="display: none;">
+    <ui:VisualElement name="smithy-multiple-panel" style="display: flex;">
         <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
             <ui:Button text="Add" display-tooltip-when-elided="true" name="smithy-multiple-add-button" />
             <ui:Button text="Remove" display-tooltip-when-elided="true" name="smithy-multiple-remove-button" />
         </ui:VisualElement>
-        <ui:VisualElement name="smithy-multiple-condition-layout" class="smithy-condition-layout" />
-    </ui:VisualElement>
-    <ui:VisualElement class="smithy-property-layout">
-        <uie:PropertyField name="smithy-status-data-field" />
+        <ui:VisualElement name="smithy-multiple-layout" class="smithy-condition-layout smithy-multiple-layout" />
     </ui:VisualElement>
 </ui:UXML>

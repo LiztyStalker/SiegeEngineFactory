@@ -1,14 +1,14 @@
-.blacksmith-name-label {
+.smithy-name-label {
     font-size: 36px;
     color: rgb(0, 0, 0);
 }
 
-.blacksmith-ability-label {
+.smithy-ability-label {
     font-size: 20px;
     color: rgb(0, 0, 0);
 }
 
-.blacksmith-line-panel {
+.smithy-line-panel {
     width: 100%;
     height: 100%;
     align-items: center;
@@ -21,14 +21,14 @@
     position: absolute;
 }
 
-.blacksmith-upgrade-button {
+.smithy-upgrade-button {
     width: 200px;
     height: 80%;
     justify-content: center;
     align-items: center;
 }
 
-.blacksmith-button-panel {
+.smithy-button-panel {
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
@@ -40,13 +40,13 @@
     align-items: center;
 }
 
-.blacksmith-activate-panel {
+.smithy-activate-panel {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.blacksmith-inactivate-panel {
+.smithy-inactivate-panel {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -57,7 +57,7 @@
 .expend_asset_value_label {
 }
 
-.blacksmith-value-panel {
+.smithy-value-panel {
     align-items: flex-end;
     justify-content: flex-start;
     flex-direction: row;
@@ -69,26 +69,26 @@
     height: 100%;
 }
 
-.blacksmith-level-label {
+.smithy-level-label {
     font-size: 24px;
     color: rgba(0, 0, 0, 255);
 }
 
-.blacksmith-content-label {
+.smithy-content-label {
     font-size: 24px;
     color: rgba(0, 0, 0, 255);
 }
 
-.blacksmith-information-panel {
+.smithy-information-panel {
     justify-content: center;
     align-items: stretch;
 }
 
-.blacksmith-advanced-information-panel {
+.smithy-advanced-information-panel {
     flex-direction: row;
 }
 
-.blacksmith-icon {
+.smithy-icon {
     width: 180px;
     height: 180px;
     border-left-width: 10px;

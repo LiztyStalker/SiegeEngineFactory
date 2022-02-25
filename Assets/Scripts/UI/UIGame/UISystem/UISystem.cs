@@ -21,6 +21,7 @@ namespace SEF.UI.Toolkit
     {
 
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UISystem.uxml";
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UISystem/UISystem.uss";
 
         public new class UxmlFactory : UxmlFactory<UISystem, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
@@ -246,6 +247,16 @@ namespace SEF.UI.Toolkit
             ui.RemoveUpgradeListener(act);
         }
 
+        public void AddOnSmithyUpTechListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UISmithy>();
+            ui.AddOnUpTechListener(act);
+        }
+        public void RemoveOnSmithyUpTechListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UISmithy>();
+            ui.RemoveOnUpTechListener(act);
+        }
 
 
         public void AddOnVillageUpgradeListener(System.Action<int> act)
@@ -293,7 +304,7 @@ namespace SEF.UI.Toolkit
 
         public void Initialize()
         {
-            var root = UIUXML.GetVisualElement(gameObject, UISystem.PATH_UI_UXML);
+            var root = UIUXML.GetVisualElement(gameObject, UISystem.PATH_UI_UXML, UISystem.PATH_UI_USS);
             _instance = root.Q<UISystem>();
             _instance.Initialize();
         }

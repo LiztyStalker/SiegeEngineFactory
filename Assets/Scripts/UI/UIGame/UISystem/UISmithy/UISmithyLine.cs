@@ -30,6 +30,7 @@ namespace SEF.UI.Toolkit {
         private Button _upgradeButton;
         private VisualElement _upgradeAssetIcon;
         private Label _upgradeValueLabel;
+        private Label _buttonLabel;
 
         private VisualElement _inactivatePanel;
         private Label _inactivateLabel;
@@ -40,7 +41,7 @@ namespace SEF.UI.Toolkit {
 
         public static UISmithyLine Create()
         {
-            return UIUXML.GetVisualElement<UISmithyLine>(PATH_UI_UXML);
+            return UIUXML.GetVisualElement<UISmithyLine>(PATH_UI_UXML, PATH_UI_USS);
         }
 
         public void Initialize()
@@ -58,7 +59,7 @@ namespace SEF.UI.Toolkit {
             _upgradeButton = this.Q<Button>("upgrade-button");
             _upgradeAssetIcon = this.Q<VisualElement>("upgrade-asset-icon");
             _upgradeValueLabel = this.Q<Label>("upgrade-asset-value-label");
-
+            _buttonLabel = this.Q<Label>("upgrade-label");
             _inactivatePanel = this.Q<VisualElement>("inactivate-panel");
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
@@ -91,6 +92,11 @@ namespace SEF.UI.Toolkit {
         }
 
 
+
+
+        private bool isUpgrade = false;
+        private bool isEndTech = false;
+
         public void RefreshSmithyLine(SmithyEntity entity)
         {
             if (_activatePanel.style.display == DisplayStyle.None)
@@ -106,14 +112,51 @@ namespace SEF.UI.Toolkit {
             _contentLabel.text = entity.Content;
             _abilityLabel.text = entity.Ability;
 
-//            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
+            //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
 
-            _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
+            //MaxUpgrade이면 테크로 변경됨
+            isEndTech = false;
+            if (entity.IsMaxUpgrade())
+            {
+                isUpgrade = false;
+
+                //다음 테크 있음
+                if (entity.IsNextTech())
+                {
+                    _upgradeValueLabel.text = entity.TechAssetData.GetValue();
+                    _buttonLabel.text = "테크";
+                }
+                //최종 테크
+                else
+                {
+                    isEndTech = true;
+                    _upgradeValueLabel.text = "-";
+                    _buttonLabel.text = "-";
+                }
+            }
+            else
+            {
+                isUpgrade = true;
+                _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
+                _buttonLabel.text = "업그레이드";
+            }
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
         {
-            var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+            bool isEnough = false;
+            //
+            if (!isEndTech)
+            {
+                if (isUpgrade)
+                {
+                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                }
+                else
+                {
+                    isEnough = assetEntity.IsEnough(_entity.TechAssetData);
+                }
+            }
             _upgradeButton.SetEnabled(isEnough);
         }
 
@@ -133,7 +176,23 @@ namespace SEF.UI.Toolkit {
         public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(ClickEvent e)
         {
-            _upgradeEvent?.Invoke(_index);
+            if (!(isUpgrade || isEndTech))
+                OnUpTechEvent();
+            else
+                _upgradeEvent?.Invoke(_index);
+
+        }
+
+
+        private System.Action<int> _uptechEvent;
+        public void AddOnUpTechListener(System.Action<int> act) => _uptechEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int> act) => _uptechEvent -= act;
+        private void OnUpTechEvent()
+        {
+            UICommon.Current.ShowPopup("테크를 진행하시겠습니까?", "네", "아니오", () => {
+                _uptechEvent?.Invoke(_index);
+                Debug.Log("OK");
+            });
         }
 
         #endregion
