@@ -3,19 +3,11 @@
     <uie:ObjectField label="Object Field" name="village-icon-field" />
     <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="village-key-field" />
     <ui:Toggle label="Toggle" name="village-multiple-toggle" style="display: none;" />
-    <ui:VisualElement class="village-property-layout">
-        <uie:PropertyField name="village-asset-data-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="village-increase-upgrade-value-field" />
-        <uie:FloatField label="Float Field" value="42.2" name="village-increase-upgrade-rate-field" />
-    </ui:VisualElement>
-    <ui:VisualElement name="village-multiple-condition-panel" style="display: none;">
+    <ui:VisualElement name="village-multiple-panel" style="display: flex;">
         <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
             <ui:Button text="Add" display-tooltip-when-elided="true" name="village-multiple-add-button" />
             <ui:Button text="Remove" display-tooltip-when-elided="true" name="village-multiple-remove-button" />
         </ui:VisualElement>
-        <ui:VisualElement name="village-multiple-condition-layout" class="village-condition-layout" />
-    </ui:VisualElement>
-    <ui:VisualElement class="village-property-layout">
-        <uie:PropertyField name="village-status-data-field" />
+        <ui:VisualElement name="village-multiple-layout" class="village-condition-layout village-multiple-layout" />
     </ui:VisualElement>
 </ui:UXML>

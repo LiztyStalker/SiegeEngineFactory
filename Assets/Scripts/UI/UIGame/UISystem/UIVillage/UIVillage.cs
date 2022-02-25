@@ -15,16 +15,15 @@ namespace SEF.UI.Toolkit
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIVillage/UIVillage.uxml";
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UISystem/UIVillage/UIVillage.uss";
 
         private Dictionary<int, UIVillageLine> _dic = new Dictionary<int, UIVillageLine>();
-
-        private int _lineCount = 0;
 
         private ScrollView _scrollView;
 
         public static UIVillageLine Create()
         {
-            return UIUXML.GetVisualElement<UIVillageLine>(PATH_UI_UXML);
+            return UIUXML.GetVisualElement<UIVillageLine>(PATH_UI_UXML, PATH_UI_USS);
         }
 
         public void Initialize()
@@ -37,6 +36,7 @@ namespace SEF.UI.Toolkit
             foreach (var value in _dic.Values)
             {
                 value.RemoveUpgradeListener(OnUpgradeEvent);
+                value.RemoveOnUpTechListener(OnUpTechEvent);
                 value.CleanUp();
             }
             _dic.Clear();
@@ -62,6 +62,7 @@ namespace SEF.UI.Toolkit
                 line.Initialize();
                 line.SetIndex(index);
                 line.AddUpgradeListener(OnUpgradeEvent);
+                line.AddOnUpTechListener(OnUpTechEvent);
                 _scrollView.Add(line);
                 _dic.Add(index, line);
             }
@@ -87,6 +88,14 @@ namespace SEF.UI.Toolkit
             _upgradeEvent?.Invoke(index);
         }
 
+
+        private System.Action<int> _uptechEvent;
+        public void AddOnUpTechListener(System.Action<int> act) => _uptechEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int> act) => _uptechEvent -= act;
+        private void OnUpTechEvent(int index)
+        {
+            _uptechEvent?.Invoke(index);
+        }
         #endregion
 
 

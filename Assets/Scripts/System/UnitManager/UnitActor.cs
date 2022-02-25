@@ -183,7 +183,6 @@ namespace SEF.Unit
                 else
                 {
                     var data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(unitEntity.UnitData.SpineModelKey, null, null);
-                    Debug.Log(data);
 #if UNITY_EDITOR
                     if (data == null)
                         data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>("BowSoldier_SkeletonData", null, null);

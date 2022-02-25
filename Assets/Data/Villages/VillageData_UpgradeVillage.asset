@@ -10,21 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
-  m_Name: VillageData_UpgradeVillage
+  m_Name: UnitData_UpgradeVillage
   m_EditorClassIdentifier: 
   _key: UpgradeVillage
-  _sortIndex: 3
+  _sortIndex: 7
   _isTest: 0
   _icon: {fileID: 0}
-  _serializedStatusData:
-    _classTypeName: SEF.Data.IncreaseMaxUpgradeVillageStatusData
-    _typeStatusData: 0
-    _startValue: 10
-    _increaseValue: 10
-  _serializedAssetData:
-    _typeAssetData: Gold
-    _assetData: 0
-    _assetValue: 100
-  _increaseUpgradeValue: 1
-  _increaseUpgradeRate: 0.125
-  _defaultMaxUpgradeValue: 10
+  _villageAbilityDataArray:
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeVillageStatusData
+      _typeStatusValue: 0
+      _startValue: 10
+      _increaseValue: 10
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 100
+    _defaultMaxUpgradeValue: 10
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: 
+      _assetData: 0
+      _assetValue: 

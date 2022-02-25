@@ -10,21 +10,90 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
-  m_Name: VillageData_UpgradeUnit
+  m_Name: UnitData_UpgradeUnit
   m_EditorClassIdentifier: 
   _key: UpgradeUnit
   _sortIndex: 1
   _isTest: 0
   _icon: {fileID: 0}
-  _serializedStatusData:
-    _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
-    _typeStatusData: 0
-    _startValue: 10
-    _increaseValue: 10
-  _serializedAssetData:
-    _typeAssetData: Gold
-    _assetData: 0
-    _assetValue: 100
-  _increaseUpgradeValue: 1
-  _increaseUpgradeRate: 0.125
-  _defaultMaxUpgradeValue: 10
+  _villageAbilityDataArray:
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 10
+      _increaseValue: 10
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 100
+    _defaultMaxUpgradeValue: 10
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 10000
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 20
+      _increaseValue: 20
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 500
+    _defaultMaxUpgradeValue: 25
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 20000
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 30
+      _increaseValue: 30
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 1000
+    _defaultMaxUpgradeValue: 50
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 40000
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 40
+      _increaseValue: 40
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 2000
+    _defaultMaxUpgradeValue: 100
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 80000
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 50
+      _increaseValue: 50
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 4000
+    _defaultMaxUpgradeValue: 200
+    _increaseUpgradeValue: 1
+    _increaseUpgradeRate: 0.125
+    _serializedTechAssetData:
+      _typeAssetData: 
+      _assetData: 0
+      _assetValue: 

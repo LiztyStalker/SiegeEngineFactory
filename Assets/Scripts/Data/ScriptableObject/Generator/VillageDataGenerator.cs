@@ -20,6 +20,8 @@ namespace SEF.Data
             IncreaseUpgrateRate,
             ConditionUnlockData,
             ConditionUnlockValue,
+            TypeTechAsset,
+            TechAssetValue
         }
 
         private readonly static string _dataPath = "Assets/Data/Villages";
@@ -28,14 +30,14 @@ namespace SEF.Data
         private readonly static string _worksheetKey = "Village_Data";
 
         [MenuItem("Data/Villages/Create And Update All Villages")]
-        private static void CreateAndUpdateAllUnits()
+        private static void CreateAndUpdateAllData()
         {
             GoogleSheetGenerator.CreateAndUpdateAllUnits<VillageData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Villages/Upload All Villages")]
-        private static void UploadAllUnits()
+        private static void UploadAllData()
         {
             GoogleSheetGenerator.UploadAllUnits<VillageData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }

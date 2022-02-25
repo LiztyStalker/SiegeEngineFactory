@@ -124,11 +124,13 @@ namespace SEF.UI.Toolkit
         public void AddOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.AddOnWorkshopUpgradeListener(act);
         public void RemoveOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnWorkshopUpgradeListener(act);
         public void AddOnBlacksmithUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
-        public void RemoveOnBlacksmithUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
+        public void RemoveOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
         public void AddOnBlacksmithUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
-        public void RemoveOnBlacksmithUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpTechListener(act);
-        public void AddOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.AddOnMineUpgradeListener(act);
-        public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnMineUpgradeListener(act);
+        public void RemoveOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpTechListener(act);
+        public void AddOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.AddOnVillageUpgradeListener(act);
+        public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpgradeListener(act);
+        public void AddOnVillageUpTechListener(System.Action<int> act) => _uiSystem.AddOnVillageUpTechListener(act);
+        public void RemoveOnVillageUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpTechListener(act);
 
 
         public void AddUpTechListener(System.Action<int, UnitData> act) => _uiSystem.AddUpTechListener(act);

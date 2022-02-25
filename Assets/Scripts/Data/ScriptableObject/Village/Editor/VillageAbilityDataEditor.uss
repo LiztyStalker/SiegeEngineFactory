@@ -1,8 +1,4 @@
-.village-property-layout {
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+.village-ability-data-layout {
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
@@ -15,14 +11,10 @@
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-}
-
-.village-multiple-layout {
-    width: 100%;
-    height: 100%;
-}
-
-.village-multiple-panel {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 100%;
     height: 100%;
 }

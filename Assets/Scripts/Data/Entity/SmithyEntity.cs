@@ -71,11 +71,14 @@ namespace SEF.Entity
         public void Initialize()
         {
             _upgradeData = NumberDataUtility.Create<UpgradeData>();
+            _nowIndex = 0;
         }
+
         public void CleanUp()
         {
             _data = null;
             _upgradeData = null;
+            _nowIndex = 0;
         }
 
         public void SetData(SmithyData data)

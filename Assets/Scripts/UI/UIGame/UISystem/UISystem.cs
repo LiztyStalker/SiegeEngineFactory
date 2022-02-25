@@ -271,6 +271,19 @@ namespace SEF.UI.Toolkit
         }
 
 
+        public void AddOnVillageUpTechListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIVillage>();
+            ui.AddOnUpTechListener(act);
+        }
+
+        public void RemoveOnVillageUpTechListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIVillage>();
+            ui.RemoveOnUpTechListener(act);
+        }
+
+
         public void AddOnMineUpgradeListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIMine>();

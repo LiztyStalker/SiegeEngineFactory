@@ -60,7 +60,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIVillageTest_Create_UIVillageLine()
         {
-            VillageEntity entity;
+            VillageEntity entity = new VillageEntity();
             entity.Initialize();
             entity.SetData(VillageData.Create_Test());
             var system = UIVillage_Test.Create();
@@ -79,7 +79,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIVillageTest_Create_UIVillageLine_x5()
         {
-            VillageEntity entity;
+            VillageEntity entity = new VillageEntity();
             entity.Initialize();
             entity.SetData(VillageData.Create_Test());
 
@@ -109,7 +109,7 @@ namespace SEF.UI.Test
         public IEnumerator UIVillageLineTest_UpgradeButton_Disable()
         {
 
-            VillageEntity entity;
+            VillageEntity entity = new VillageEntity();
             entity.Initialize();
             entity.SetData(VillageData.Create_Test());
 
@@ -137,7 +137,7 @@ namespace SEF.UI.Test
         public IEnumerator UIVillageLineTest_UpgradeButton_Enable()
         {
 
-            VillageEntity entity;
+            VillageEntity entity = new VillageEntity();
             entity.Initialize();
             entity.SetData(VillageData.Create_Test());
 

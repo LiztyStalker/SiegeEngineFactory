@@ -19,6 +19,11 @@ namespace SEF.Data.Editor
         private FloatField _increaseValueField;
         private FloatField _increaseRateField;
 
+        private VisualElement _multipleLayout;
+        private Button _addButton;
+        private Button _removeButton;
+
+
         public void OnEnable()
         {
             _root = new VisualElement();
@@ -33,6 +38,7 @@ namespace SEF.Data.Editor
 
         public override VisualElement CreateInspectorGUI()
         {
+
             _iconField = _root.Query<ObjectField>("village-icon-field").First();
             _iconField.label = "아이콘";
             _iconField.objectType = typeof(Sprite);
@@ -42,22 +48,61 @@ namespace SEF.Data.Editor
             _keyField.label = "키";
             _keyField.BindProperty(serializedObject.FindProperty("_key"));
 
-            _statusDataField = _root.Query<PropertyField>("village-status-data-field").First();
-            _statusDataField.BindProperty(serializedObject.FindProperty("_serializedStatusData"));
+            _multipleLayout = _root.Query<VisualElement>("village-multiple-layout").First();
 
-            _assetDataField = _root.Query<PropertyField>("village-asset-data-field").First();
-            _assetDataField.BindProperty(serializedObject.FindProperty("_serializedAssetData"));
 
-            _increaseValueField = _root.Query<FloatField>("village-increase-upgrade-value-field").First();
-            _increaseValueField.label = "업글증가량";
-            _increaseValueField.BindProperty(serializedObject.FindProperty("_increaseUpgradeValue"));
+            //_addButton = _root.Query<Button>("smithy-multiple-add-button");
+            //_removeButton = _root.Query<Button>("smithy-multiple-remove-button");
 
-            _increaseRateField = _root.Query<FloatField>("village-increase-upgrade-rate-field").First();
-            _increaseRateField.label = "업글증가비";
-            _increaseRateField.BindProperty(serializedObject.FindProperty("_increaseUpgradeRate"));
+            //_addButton.RegisterCallback<ClickEvent>(AddData);
+            //_removeButton.RegisterCallback<ClickEvent>(RemoveData);
 
-            
+            UpdateLayout(null);
+
             return _root;
+        }
+
+
+        private void AddData(ClickEvent e)
+        {
+            var property = serializedObject.FindProperty("_villageAbilityDataArray");
+            property.arraySize++;
+            serializedObject.ApplyModifiedProperties();
+            UpdateLayout(null);
+        }
+
+        private void RemoveData(ClickEvent e)
+        {
+            var property = serializedObject.FindProperty("_villageAbilityDataArray");
+            property.arraySize--;
+            serializedObject.ApplyModifiedProperties();
+            UpdateLayout(null);
+        }
+
+        private void UpdateLayout(ClickEvent e)
+        {
+            UpdateQuestConditionData(_multipleLayout, serializedObject.FindProperty("_villageAbilityDataArray"));
+        }
+
+        private void UpdateQuestConditionData(VisualElement layout, SerializedProperty property)
+        {
+            layout.Clear();
+            for (int i = 0; i < property.arraySize; i++)
+            {
+                layout.Add(new SmithyAbilityDataEditor(property.GetArrayElementAtIndex(i)));
+            }
+        }
+
+        private void OnDisable()
+        {
+            //if (_multipleConditionLayout != null)
+            //    _multipleConditionLayout.Clear();
+
+            //if (_singleConditionLayout != null)
+            //    _singleConditionLayout.Clear();
+
+            //if (_multipleToggle != null)
+            //    _multipleToggle.UnregisterCallback<ClickEvent>(UpdateLayout);
         }
 
 

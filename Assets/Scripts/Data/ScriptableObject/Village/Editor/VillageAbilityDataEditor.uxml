@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="VillageAbilityDataEditor.uss" />
+    <ui:VisualElement class="village-ability-data-layout">
+        <uie:PropertyField name="village-ability-type-status-data-field" />
+        <uie:PropertyField name="village-ability-type-status-value-field" />
+        <uie:PropertyField name="village-ability-start-status-value-field" />
+        <uie:PropertyField name="village-ability-increase-status-value-field" />
+        <uie:PropertyField name="village-ability-default-max-upgrade-field" />
+        <uie:PropertyField name="village-ability-type-upgrade-asset-field" />
+        <uie:PropertyField name="village-ability-start-upgrade-value-field" />
+        <uie:PropertyField name="village-ability-increase-upgrade-value-field" />
+        <uie:PropertyField name="village-ability-increase-upgrade-rate-field" />
+        <uie:PropertyField name="village-ability-type-tech-asset-field" />
+        <uie:PropertyField name="village-ability-tech-asset-value-field" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -16,55 +16,12 @@ namespace SEF.Data
 
         [SerializeField]
         private SmithyAbillityData[] _smithyAbilityDataArray;
+
         public int MaximumIndex => _smithyAbilityDataArray.Length;
-
         public IAssetData GetTechAssetData(int index) => _smithyAbilityDataArray[index].TechAssetData;
-        //[SerializeField]
-        //private SerializedStatusData _serializedStatusData;
-        //public IStatusData StatusData => _serializedStatusData.GetSerializeData();
-
-
-        //[SerializeField]
-        //private SerializedAssetData _serializedAssetData;
-        //public IAssetData StartUpgradeAssetData => _serializedAssetData.GetData();
-
-        //[SerializeField]
-        //private int _increaseUpgradeValue;
-        //public int IncreaseUpgradeValue => _increaseUpgradeValue;
-
-        //[SerializeField]
-        //private float _increaseUpgradeRate;
-        //public float IncreaseUpgradeRate => _increaseUpgradeRate;
-
-        //[SerializeField]
-        //private int _defaultMaxUpgradeValue = 10;
-        //public float DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
-
-        //[SerializeField]
-        //private string _techDataKey;
-        //public string TechDataKey => _techDataKey;
-
-        //[SerializeField]
-        //private SerializedAssetData _serializedTechAssetData;
-        //public IAssetData TechAssetData => _serializedTechAssetData.GetData();
-
-
-
-        //public IAssetData GetUpgradeAssetData(UpgradeData data)
-        //{
-        //    var assetData = (IAssetData)StartUpgradeAssetData.Clone();
-        //    assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
-        //    return assetData;            
-        //}
-
         public int GetMaxUpgradeData(int index) => _smithyAbilityDataArray[index].DefaultMaxUpgradeValue;
-
         public IStatusData GetStatusData(int index) => _smithyAbilityDataArray[index].StatusData;
-
-        public IAssetData GetUpgradeAssetData(int index, UpgradeData data)
-        {
-            return _smithyAbilityDataArray[index].GetUpgradeAssetData(data);
-        }
+        public IAssetData GetUpgradeAssetData(int index, UpgradeData data) => _smithyAbilityDataArray[index].GetUpgradeAssetData(data);
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static SmithyData Create_Test(string key = null)
@@ -74,7 +31,6 @@ namespace SEF.Data
         private SmithyData(string key)
         {
             Key = key;
-
             _smithyAbilityDataArray = new SmithyAbillityData[1];
             _smithyAbilityDataArray[0] = new SmithyAbillityData();
         }
@@ -92,7 +48,6 @@ namespace SEF.Data
 
         public override void AddData(string[] arr)
         {
-
             var list = new List<SmithyAbillityData>(_smithyAbilityDataArray);
 
             var questConditionData = new SmithyAbillityData();

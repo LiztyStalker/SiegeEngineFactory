@@ -68,9 +68,9 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
-        public void UpTech(int index)
+        public IAssetData UpTech(int index)
         {
-
+            return _list[index].UpTech();
         }
 
         private VillageLine CreateLine()
@@ -94,11 +94,6 @@ namespace SEF.Manager
         {
             _refreshEvent?.Invoke(index, entity);
         }
-
-
-        private System.Action<IProcessProvider, ProcessEntity> _setProcessEvent;
-        public void SetOnProcessEntityListener(System.Action<IProcessProvider, ProcessEntity> act) => _setProcessEvent = act;
-        private void OnProcessEntityEvent(IProcessProvider provider, ProcessEntity entity) => _setProcessEvent?.Invoke(provider, entity);
 
         #endregion
 

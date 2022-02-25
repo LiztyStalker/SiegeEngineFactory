@@ -77,10 +77,8 @@ namespace SEF.Manager
             _smithyManager = SmithyManager.Create();
             _smithyManager.Initialize();
 
-            //수정 예정 //Smithy와 비슷하게
             _villageManager = VillageManager.Create();
             _villageManager.Initialize();
-            _villageManager.SetOnProcessEntityListener(OnSetProcessEntityEvent);
 
             _mineManager = MineManager.Create();
             _mineManager.Initialize();
@@ -554,7 +552,6 @@ namespace SEF.Manager
 
         public void UpTechSmithy(int index)
         {
-            UnityEngine.Debug.Log("UpTech");
             var assetData = _smithyManager.UpTech(index);
 
             SubjectAsset(assetData);

@@ -66,11 +66,15 @@ namespace SEF.Manager
         {
             var assetData = _entity.UpgradeAssetData;
             _entity.Upgrade();
-            
-            
             OnRefreshEvent();
+            return assetData;
+        }
 
-
+        public IAssetData UpTech()
+        {
+            var assetData = _entity.TechAssetData;
+            _entity.UpTech();
+            OnRefreshEvent();
             return assetData;
         }
 
@@ -108,7 +112,7 @@ namespace SEF.Manager
             var upgradeData = new UpgradeData();
             upgradeData.SetValue(entityStorableData.UpgradeValue);
 
-            _entity.SetStorableData(upgradeData);
+            _entity.SetStorableData(upgradeData, entityStorableData.NowIndex);
             Refresh();
         }
 
