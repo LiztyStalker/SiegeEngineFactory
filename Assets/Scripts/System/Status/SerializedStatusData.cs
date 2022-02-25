@@ -39,6 +39,29 @@ namespace SEF.Status
 
 #if UNITY_EDITOR
 
+        public static SerializedStatusData Create_Test(
+            System.Type type, 
+            IStatusData.TYPE_STATUS_DATA typeStatusValue = IStatusData.TYPE_STATUS_DATA.Value, 
+            int startValue = 1, 
+            int increaseValue = 1
+            )
+        {
+            return new SerializedStatusData(type, typeStatusValue, startValue, increaseValue);
+        }
+
+        private SerializedStatusData(
+            System.Type type, 
+            IStatusData.TYPE_STATUS_DATA typeStatusValue, 
+            int startValue, 
+            int increaseValue
+            )
+        {
+            _classTypeName = (type == null) ? typeof(UnitDamageValueStatusData).Name : type.Name;
+            _typeStatusValue = typeStatusValue;
+            _startValue = startValue;
+            _increaseValue = increaseValue;
+        }
+
         public void SetData(string classTypeName, string typeStatusValue, string startValue, string increaseValue)
         {
             _classTypeName = $"SEF.Data.{classTypeName}StatusData";

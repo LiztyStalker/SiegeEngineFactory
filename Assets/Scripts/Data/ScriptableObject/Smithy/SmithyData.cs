@@ -31,7 +31,7 @@ namespace SEF.Data
         public float IncreaseUpgradeRate => _increaseUpgradeRate;
 
         [SerializeField]
-        private int _defaultMaxUpgradeValue;
+        private int _defaultMaxUpgradeValue = 10;
         public float DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
 
 
@@ -51,6 +51,11 @@ namespace SEF.Data
         private SmithyData(string key)
         {
             Key = key;
+            _serializedStatusData = SerializedStatusData.Create_Test(typeof(UnitDamageValueStatusData));
+            _serializedAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
+            _increaseUpgradeValue = 1;
+            _increaseUpgradeRate = 0.125f;
+            _defaultMaxUpgradeValue = 10;
         }
 
         public override void SetData(string[] arr)
