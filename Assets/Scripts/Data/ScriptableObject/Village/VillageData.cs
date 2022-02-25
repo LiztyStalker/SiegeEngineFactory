@@ -49,7 +49,12 @@ namespace SEF.Data
         }
         private VillageData(string key)
         {
-            Key = key;
+            Key = (string.IsNullOrEmpty(key)) ? "Test" : key;
+            _serializedStatusData = SerializedStatusData.Create_Test(typeof(IncreaseMaxUpgradeUnitStatusData));
+            _serializedAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
+            _increaseUpgradeValue = 1;
+            _increaseUpgradeRate = 0.125f;
+            _defaultMaxUpgradeValue = 10;
         }
 
         public override void SetData(string[] arr)

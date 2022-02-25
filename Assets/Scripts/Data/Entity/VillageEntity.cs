@@ -39,7 +39,16 @@ namespace SEF.Entity
         public string Content => _data.Key;
         public string Ability => _data.Key;
 
-        public int UpgradeValue => _upgradeData.Value;
+        public int NowUpgradeValue => _upgradeData.Value;
+
+        public int MaxUpgradeValue
+        {
+            get
+            {
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeVillageStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.DefaultMaxUpgradeValue));
+                return (int)data.Value;
+            }
+        }
 
         public IAssetData UpgradeAssetData
         {
@@ -93,7 +102,7 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var data = new VillageEntityStorableData();
-            data.SetData(_data.Key, UpgradeValue);
+            data.SetData(_data.Key, NowUpgradeValue);
             return data;
         }
 
