@@ -422,11 +422,11 @@ namespace SEF.Data.Editor
 
             _maximumUpgradeValueField = _root.Query<IntegerField>("maximumupgradevalue_intfield").First();
             _maximumUpgradeValueField.label = "최대업글량";
-            _maximumUpgradeValueField.value = _unitData.MaximumUpgradeValue;
+            _maximumUpgradeValueField.value = _unitData.DefaultMaxUpgradeValue;
             _maximumUpgradeValueField.RegisterCallback<ChangeEvent<int>>(
                 e =>
                 {
-                    _unitData.MaximumUpgradeValue = e.newValue;
+                    _unitData.DefaultMaxUpgradeValue = e.newValue;
                     EditorUtility.SetDirty(_unitData);
                 }
             );

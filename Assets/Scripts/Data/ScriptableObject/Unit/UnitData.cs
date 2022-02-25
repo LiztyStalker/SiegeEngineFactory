@@ -140,8 +140,8 @@ namespace SEF.Data
         public float IncreaseUpgradeAssetRate { get => _increaseUpgradeAssetRate; set => _increaseUpgradeAssetRate = value; }
 
         [SerializeField]
-        private int _maximumUpgradeValue;
-        public int MaximumUpgradeValue { get => _maximumUpgradeValue; set => _maximumUpgradeValue = value; }
+        private int _defaultMaxUpgradeValue = 10;
+        public int DefaultMaxUpgradeValue { get => _defaultMaxUpgradeValue; set => _defaultMaxUpgradeValue = value; }
         //private string[] _conditionTechTree;
         //public string[] ConditionTechTree => _conditionTechTree;
 
@@ -191,6 +191,7 @@ namespace SEF.Data
             //private AssetData[] _conditionTechTreeValue;
             _techTreeAsset = GoldAssetData.Create_Test();
             _techTreeKeys = new string[0];
+            _defaultMaxUpgradeValue = 10;
 
             UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
 

@@ -44,10 +44,16 @@ namespace SEF.Entity
 
         public UnitData UnitData => _unitData;
         public UpgradeData UpgradeData => _upgradeData;
-        public int UpgradeValue => _upgradeData.Value;
         public int Population => 1; //_unitData.Population;
-
-
+        public int NowUpgradeValue => _upgradeData.Value;
+        public int MaxUpgradeValue
+        {
+            get
+            {
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeUnitStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.DefaultMaxUpgradeValue));
+                return (int)data.Value;
+            }
+        }
         public float AttackDelay
         {
             get
@@ -128,6 +134,8 @@ namespace SEF.Entity
             _healthData = null;
             _damageData = null;
         }
+
+        public bool IsMaxUpgrade() => _upgradeData.Value >= MaxUpgradeValue;
 
         private IAssetData CalculateUpgradeData()
         {
