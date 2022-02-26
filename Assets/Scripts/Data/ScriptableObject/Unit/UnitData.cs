@@ -10,6 +10,7 @@ namespace SEF.Data
     {
         public enum TYPE_UNIT_GROUP { Thrower, Ram, Ballista, Catapult, MuzzleLoading, Mortar, BreechLoading, RunOutCylinder, Missile}
         public enum TYPE_ATTACK_RANGE { Gun, Howitzer, Mortar, Melee}
+        public enum TYPE_TECH_TREE { AttackValue, AttackDelay, HealthValue, RangeValue, AttackerAttackValue, AttackerDelayValue, AttackerCount }
 
         [SerializeField]
         private Sprite _icon;
@@ -104,6 +105,7 @@ namespace SEF.Data
 
         [SerializeField]
         private List<AttackerData> _attackerDataList = new List<AttackerData>();
+
         public AttackerData[] AttackerDataArray => _attackerDataList.ToArray();
         public void AddAttackerData(AttackerData attackerData) => _attackerDataList.Add(attackerData);
         public void RemoveAttackerData(AttackerData attackerData) => _attackerDataList.Remove(attackerData);
@@ -142,19 +144,14 @@ namespace SEF.Data
         [SerializeField]
         private int _defaultMaxUpgradeValue = 10;
         public int DefaultMaxUpgradeValue { get => _defaultMaxUpgradeValue; set => _defaultMaxUpgradeValue = value; }
-        //private string[] _conditionTechTree;
-        //public string[] ConditionTechTree => _conditionTechTree;
-
-        //private AssetData[] _conditionTechTreeValue;
-        //public AssetData[] ConditionTechTreeValue => _conditionTechTreeValue;
 
         [SerializeField]
-        private GoldAssetData _techTreeAsset = NumberDataUtility.Create<GoldAssetData>();
-        public GoldAssetData TechTreeAsset => _techTreeAsset;
+        private UnitTechData[] _unitTechDataArray;
+        public UnitTechData[] UnitTechDataArray => _unitTechDataArray;
+//        public void AddUnitTechData(UnitTechData data) => _unitTechDataArray.Add(data);
+//        public void RemoveUnitTechData(UnitTechData data) => _unitTechDataArray.Remove(data);
 
-        [SerializeField]
-        private string[] _techTreeKeys;
-        public string[] TechTreeKeys { get => _techTreeKeys; set => _techTreeKeys = value; }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
@@ -189,9 +186,8 @@ namespace SEF.Data
             _increaseUpgradeAssetRate = 0.05f;
             //private string[] _conditionTechTree;
             //private AssetData[] _conditionTechTreeValue;
-            _techTreeAsset = GoldAssetData.Create_Test();
-            _techTreeKeys = new string[0];
             _defaultMaxUpgradeValue = 10;
+            _unitTechDataArray = null;
 
             UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
 
@@ -227,10 +223,36 @@ namespace SEF.Data
             _startUpgradeAsset = GoldAssetData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset]);
             _increaseUpgradeAssetValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
             _increaseUpgradeAssetRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
-            //private string[] _conditionTechTree;
-            //private AssetData[] _conditionTechTreeValue;
-            //_techTreeAsset = GoldAssetData.Create_Test();
-            //_techTreeKeys = new string[0]
+
+            Debug.Log(arr.Length + " " + (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList);
+
+            if (arr.Length > (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList)
+            {
+                var typeTechList = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList];
+                var techUnitkeys = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TechUnitKeys];
+                var typeTechAssets = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechAssets];
+                var techAssetValues = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TechAssetValues];
+
+
+                var list = typeTechList.Split('/');
+                var keys = techUnitkeys.Split('/');
+                var assets = typeTechAssets.Split('/');
+                var values = techAssetValues.Split('/');
+
+
+                if (list.Length == keys.Length && list.Length == assets.Length && list.Length == values.Length)
+                {
+                    _unitTechDataArray = new UnitTechData[list.Length];
+                    for (int i = 0; i < list.Length; i++)
+                    {
+                        Debug.Log("Tech " + i);
+                        UnitTechData data = new UnitTechData();
+                        data.SetData(list[i], keys[i], assets[i], values[i]);
+                        _unitTechDataArray[i] = data;
+//                        _unitTechDataArray.Add(data);
+                    }
+                }
+            }
         }
 
         public override void AddData(string[] arr)
@@ -275,6 +297,36 @@ namespace SEF.Data
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue] = _increaseUpgradeAssetValue.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate] = _increaseUpgradeAssetRate.ToString();
 
+
+            if(_unitTechDataArray.Length != 0)
+            {
+                var typeTechList = "";
+                var techUnitkeys = "";
+                var typeTechAssets = "";
+                var techAssetValues = "";
+
+                for (int i = 0; i < _unitTechDataArray.Length; i++)
+                {
+                    _unitTechDataArray[i].GetData(out string list, out string keys, out string assets, out string values);
+                    typeTechList += list;
+                    techUnitkeys += keys;
+                    typeTechAssets += assets;
+                    techAssetValues += values;
+
+                    if(i != _unitTechDataArray.Length - 1)
+                    {
+                        typeTechList += "/";
+                        techUnitkeys += "/";
+                        typeTechAssets += "/";
+                        techAssetValues += "/";
+                    }
+                }
+                arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList] = typeTechList;
+                arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TechUnitKeys] = techUnitkeys;
+                arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechAssets] = typeTechAssets;
+                arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TechAssetValues] = techAssetValues;
+            }
+
             return arr;
         }
 
@@ -289,5 +341,57 @@ namespace SEF.Data
         }
 
 #endif
+
+    }
+
+    [System.Serializable]
+    public struct UnitTechData
+    {
+        [SerializeField]
+        private UnitData.TYPE_TECH_TREE _typeTechTree;
+        public UnitData.TYPE_TECH_TREE TypeTechTree => _typeTechTree;
+
+
+        [SerializeField]
+        private string _techUnitKey;
+        public string TechUnitKey => _techUnitKey;
+
+
+        [SerializeField]
+        private SerializedAssetData _serializedTechAssetData;
+        public IAssetData StartUpgradeAssetData => _serializedTechAssetData.GetData();
+
+
+        public static UnitTechData Create_Test(string key = null)
+        {
+            return new UnitTechData(UnitData.TYPE_TECH_TREE.AttackValue, key, SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "1000");
+        }
+
+        public static UnitTechData Create_Test(UnitData.TYPE_TECH_TREE typeTechTree, string techUnitkey, SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE typeTechAsset, string assetValue)
+        {
+            return new UnitTechData(typeTechTree, techUnitkey, typeTechAsset, assetValue);
+        }
+
+        private UnitTechData(UnitData.TYPE_TECH_TREE typeTechTree, string techUnitkey, SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE typeAssetData, string assetValue)
+        {
+            _techUnitKey = techUnitkey;
+            _typeTechTree = typeTechTree;
+            _techUnitKey = techUnitkey;
+            _serializedTechAssetData = SerializedAssetData.Create_Test(typeAssetData, assetValue);
+        }
+
+        public void SetData(string typeTechTree, string techUnitkey, string typeAssetData, string assetValue)
+        {
+            _typeTechTree = (UnitData.TYPE_TECH_TREE)System.Enum.Parse(typeof(UnitData.TYPE_TECH_TREE), typeTechTree);
+            _techUnitKey = techUnitkey;
+            _serializedTechAssetData.SetData(typeAssetData, assetValue);
+        }
+
+        public void GetData(out string typeTechTree, out string techUnitkey, out string typeAssetData, out string assetValue)
+        {
+            typeTechTree = _typeTechTree.ToString();
+            techUnitkey = _techUnitKey;
+            _serializedTechAssetData.GetData(out typeAssetData, out assetValue);
+        }
     }
 }

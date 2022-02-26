@@ -30,8 +30,10 @@ namespace SEF.Data
             IncreaseUpgradeAssetRate,
             ConditionTechTree,
             ConditionTechTreeValue,
-            TechTreeAsset,
-            TechTreeKeys
+            TypeTechList,
+            TechUnitKeys,
+            TypeTechAssets,
+            TechAssetValues,
         }
 
         private readonly static string _dataPath = "Assets/Data/Units";
