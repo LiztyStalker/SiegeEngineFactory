@@ -44,7 +44,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="attacker_panel" class="advanced_element">
                 <ui:Label text="공격자" display-tooltip-when-elided="true" name="Label" class="title_label" />
-                <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+                <ui:VisualElement class="unit-button-layout">
                     <ui:Button text="Add" display-tooltip-when-elided="true" name="attacker-add-button" />
                     <ui:Button text="Remove" display-tooltip-when-elided="true" name="attacker-remove-button" />
                 </ui:VisualElement>
@@ -59,19 +59,12 @@
                 <uie:IntegerField label="Int Field" value="42" name="maximumupgradevalue_intfield" />
             </ui:VisualElement>
             <ui:VisualElement name="tech_panel" class="advanced_element">
-                <ui:Label text="테크자원" display-tooltip-when-elided="true" class="title_label" />
-                <ui:VisualElement>
-                    <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
-                        <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
-                        <uie:EnumField label="Enum" value="Center" />
-                    </ui:VisualElement>
+                <ui:Label text="테크" display-tooltip-when-elided="true" class="title_label" />
+                <ui:VisualElement class="unit-button-layout">
+                    <ui:Button text="Add" display-tooltip-when-elided="true" name="attacker-add-button" />
+                    <ui:Button text="Remove" display-tooltip-when-elided="true" name="attacker-remove-button" />
                 </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="techtree_panel" class="advanced_element">
-                <ui:Label text="테크트리" display-tooltip-when-elided="true" class="title_label" />
-                <ui:VisualElement>
-                    <uie:ObjectField label="Object Field" />
-                </ui:VisualElement>
+                <ui:VisualElement name="unit-tech-layout" />
             </ui:VisualElement>
             <ui:VisualElement name="spine_panel" class="advanced_element">
                 <ui:Label text="스파인" display-tooltip-when-elided="true" class="title_label" />

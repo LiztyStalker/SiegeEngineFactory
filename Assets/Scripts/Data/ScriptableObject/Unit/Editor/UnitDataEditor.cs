@@ -49,6 +49,10 @@ namespace SEF.Data.Editor
         private FloatField _increaseUpgradeRateField;
         private IntegerField _maximumUpgradeValueField;
 
+        private Button _techAddButton;
+        private Button _techRemoveButton;
+        private VisualElement _techLayout;
+
         private ObjectField _skeletonDataAssetField;
         private TextField _spineModelKeyField;
         private TextField _spineSkinKeyField;
@@ -58,10 +62,10 @@ namespace SEF.Data.Editor
             _unitData = target as UnitData;
             _root = new VisualElement();
 
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Data/ScriptableObject/Editor/UnitDataEditor.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/Data/ScriptableObject/Unit/Editor/UnitDataEditor.uxml");
             visualTree.CloneTree(_root);
 
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Data/ScriptableObject/Editor/UnitDataEditor.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Scripts/Data/ScriptableObject/Unit/Editor/UnitDataEditor.uss");
             _root.styleSheets.Add(styleSheet);
 
         }
@@ -98,6 +102,8 @@ namespace SEF.Data.Editor
             _skeletonDataAssetField.SetEnabled(_isModified);
             _spineModelKeyField.SetEnabled(false);
             _spineSkinKeyField.SetEnabled(_isModified);
+
+            _techLayout.SetEnabled(_isModified);
         }
 
 
@@ -432,6 +438,20 @@ namespace SEF.Data.Editor
             );
 
 
+
+
+            _techAddButton = _root.Query<Button>("unit-tech-add-button").First();
+            //_techAddButton.RegisterCallback<ClickEvent>();
+
+            _techRemoveButton = _root.Query<Button>("unit-tech-remove-button").First();
+            //_techRemoveButton.RegisterCallback<ClickEvent>();
+
+            _techLayout = _root.Query<VisualElement>("unit-tech-layout");
+
+            var unitTechDataProperty = serializedObject.FindProperty("_unitTechDataArray");
+            if(unitTechDataProperty != null) UpdateTechData(_techLayout, unitTechDataProperty);
+
+
             _spineModelKeyField = _root.Query<TextField>("spinemodelkey_textfield").First();
             _spineModelKeyField.label = "¸ðµ¨Å°";
             _spineModelKeyField.value = _unitData.SpineModelKey;
@@ -472,6 +492,8 @@ namespace SEF.Data.Editor
 
             UpdateFields();
 
+            serializedObject.ApplyModifiedProperties();
+
             return _root;
         }
 
@@ -481,13 +503,46 @@ namespace SEF.Data.Editor
             _attackerAddButton.clicked -= AddAttackerData;
         }
 
-
-        private void UpdateAttackerData(VisualElement layout, AttackerData[] datas)
+        private void UpdateTechData(VisualElement layout, SerializedProperty property)
         {
             layout.Clear();
-            for (int i = 0; i < datas.Length; i++)
+            for (int i = 0; i < property.arraySize; i++)
             {
-                var attackerDataEditor = new AttackerDataEditor(datas[i]);
+                var editor = new UnitTechDataEditor(property.GetArrayElementAtIndex(i));
+                layout.Add(editor);
+            }
+        }
+
+        //private void UpdateTechData(VisualElement layout, UnitTechData[] arr)
+        //{
+        //    layout.Clear();
+        //    for (int i = 0; i < arr.Length; i++)
+        //    {
+        //        var editor = new UnitTechDataEditor(arr[i]);
+        //        editor.SetOnRemoveListener(RemoveUnitTechData);
+        //        layout.Add(editor);
+        //    }
+        //}
+
+
+        //private void AddUnitTechData()
+        //{
+        //    var data = UnitTechData.Create_Test();
+        //    _unitData.AddUnitTechData(data);
+        //    UpdateTechData(_techLayout, _unitData.UnitTechDataArray);
+        //}
+        //private void RemoveUnitTechData(UnitTechData attackerData)
+        //{
+        //    _unitData.RemoveUnitTechData(attackerData);
+        //    UpdateTechData(_techLayout, _unitData.UnitTechDataArray);
+        //}
+
+        private void UpdateAttackerData(VisualElement layout, AttackerData[] arr)
+        {
+            layout.Clear();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                var attackerDataEditor = new AttackerDataEditor(arr[i]);
                 attackerDataEditor.SetOnRemoveListener(RemoveAttackerData);
                 layout.Add(attackerDataEditor);
             }
