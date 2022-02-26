@@ -28,8 +28,9 @@ namespace SEF.Data
             StartUpgradeAsset,
             IncreaseUpgradeAssetValue,
             IncreaseUpgradeAssetRate,
-            ConditionTechTree,
-            ConditionTechTreeValue,
+            DefaultMaxUpgradeValue,
+            //ConditionTechTree, //AA-ZZ까지 사용 가능하면 활성화
+            //ConditionTechTreeValue,
             TypeTechList,
             TechUnitKeys,
             TypeTechAssets,

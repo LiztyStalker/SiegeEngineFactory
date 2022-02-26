@@ -82,9 +82,9 @@ namespace SEF.Manager
             return assetData;
         }
 
-        public void UpTech(UnitData unitData) 
+        public void UpTech(UnitData data) 
         {
-            _unitEntity.UpTech(unitData);
+            _unitEntity.UpTech(data);
             OnRefreshEvent();
         }
 

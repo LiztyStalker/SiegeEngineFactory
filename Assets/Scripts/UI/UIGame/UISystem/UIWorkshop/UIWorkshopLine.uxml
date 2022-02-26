@@ -63,7 +63,7 @@
                         <ui:Label text="1.000A" display-tooltip-when-elided="true" name="upgrade_asset_value_label" style="font-size: 16px;" />
                     </ui:VisualElement>
                 </ui:Button>
-                <ui:Button display-tooltip-when-elided="true" name="tech_button" class="ui_workshop_tech_button ui_system_bar_button" style="display: flex;">
+                <ui:Button display-tooltip-when-elided="true" name="tech_button" class="ui_workshop_tech_button ui_system_bar_button" style="display: none;">
                     <ui:Label text="테크 개발" display-tooltip-when-elided="true" name="upgrade_label" style="font-size: 16px;" />
                 </ui:Button>
             </ui:VisualElement>
@@ -76,6 +76,14 @@
                     <ui:Label text="1.000A" display-tooltip-when-elided="true" name="expend_asset_value_label" class="expend_asset_value_label" style="font-size: 16px;" />
                 </ui:VisualElement>
             </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="ui-workshop-tech-panel" class="ui_workshop_inactivate_panel" style="display: flex;">
+            <ui:VisualElement class="ui-unit-tech-panel">
+                <ui:Button display-tooltip-when-elided="true" name="ui-workshop-tech-cancel_button" class="ui-unit-tech-cancel-button" style="align-items: center; justify-content: center;">
+                    <ui:Label text="취소" display-tooltip-when-elided="true" name="expend_label" style="font-size: 16px;" />
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:VisualElement name="ui-workshop-tech-layout" class="ui-unit-tech-layout" />
         </ui:VisualElement>
     </SEF.UI.Toolkit.UIWorkshopLine>
 </ui:UXML>

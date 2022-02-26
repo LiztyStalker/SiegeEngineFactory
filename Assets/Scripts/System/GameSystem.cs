@@ -436,14 +436,14 @@ namespace SEF.Manager
             SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
 
         }
-        public void UpTechWorkshop(int index, UnitData unitData)
+        public void UpTechWorkshop(int index, UnitTechData data)
         {
-            _workshopManager.UpTechWorkshop(index, unitData);
+            var assetData = _workshopManager.UpTechWorkshop(index, data);
 
-            //unitData TechAssetData ¼Òºñ
-
+            SubjectAsset(assetData);
+            
             AddStatisticsData<TechUnitStatisticsData>();
-            var type = FindType(unitData.Key, typeof(TechUnitStatisticsData));
+            var type = FindType(data.TechUnitKey, typeof(TechUnitStatisticsData));
             if (type != null)
             {
                 _statistics.AddStatisticsData(type, 1);

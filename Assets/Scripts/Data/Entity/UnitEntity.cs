@@ -108,6 +108,8 @@ namespace SEF.Entity
                 return _upgradeAssetData;
             }
         }
+        public bool IsMaxUpgrade() => _upgradeData.Value >= _unitData.DefaultMaxUpgradeValue;
+        public bool IsNextTech() => _unitData.UnitTechDataArray != null && _unitData.UnitTechDataArray.Length != 0;
 
         public void Initialize()
         {
@@ -125,6 +127,7 @@ namespace SEF.Entity
         {
             _unitData = unitData;
             _upgradeData.Initialize();
+            _upgradeData.SetValue(0);
         }
 
         public void Upgrade()
@@ -135,7 +138,6 @@ namespace SEF.Entity
             _damageData = null;
         }
 
-        public bool IsMaxUpgrade() => _upgradeData.Value >= MaxUpgradeValue;
 
         private IAssetData CalculateUpgradeData()
         {

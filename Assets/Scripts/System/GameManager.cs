@@ -82,12 +82,12 @@ namespace SEF.Manager
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 
             _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
-            _uiGame.AddOnBlacksmithUpgradeListener(_gameSystem.UpgradeSmithy);
-            _uiGame.AddOnBlacksmithUpTechListener(_gameSystem.UpTechSmithy);
+            _uiGame.AddOnUpWorkshopTechListener(_gameSystem.UpTechWorkshop);
+            _uiGame.AddOnWorkshopExpendListener(_gameSystem.ExpendWorkshop);
+            _uiGame.AddOnSmithyUpgradeListener(_gameSystem.UpgradeSmithy);
+            _uiGame.AddOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
             _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.AddOnVillageUpTechListener(_gameSystem.UpTechVillage);
-            _uiGame.AddUpTechListener(_gameSystem.UpTechWorkshop);
-            _uiGame.AddExpendListener(_gameSystem.ExpendWorkshop);
 
             _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
 

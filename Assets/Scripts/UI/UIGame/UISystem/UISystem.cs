@@ -213,12 +213,12 @@ namespace SEF.UI.Toolkit
             var ui = GetSystemPanel<UIWorkshop>();
             ui.RemoveUpgradeListener(act);
         }
-        public void AddUpTechListener(System.Action<int, UnitData> act)
+        public void AddUpTechListener(System.Action<int, UnitTechData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             uiWorkshop.AddUpTechListener(act);
         }
-        public void RemoveUpTechListener(System.Action<int, UnitData> act)
+        public void RemoveUpTechListener(System.Action<int, UnitTechData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             uiWorkshop.RemoveUpTechListener(act);

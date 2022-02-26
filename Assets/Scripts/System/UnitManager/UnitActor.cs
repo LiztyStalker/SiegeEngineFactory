@@ -192,6 +192,8 @@ namespace SEF.Unit
 
                 transform.localScale = Vector3.one * unitEntity.UnitData.Scale;
             }
+
+            name = $"Actor@{unitEntity.UnitData.Key}";
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

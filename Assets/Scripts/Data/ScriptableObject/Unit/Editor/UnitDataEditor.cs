@@ -382,7 +382,7 @@ namespace SEF.Data.Editor
             //attackerRemoveButton.clicked += RemoveAttackerData;
 
             _attackerLayout = _root.Query<VisualElement>("attacker-layout").First();
-            UpdateAttackerData(_attackerLayout, _unitData.AttackerDataArray);
+            if(_unitData.AttackerDataArray != null) UpdateAttackerData(_attackerLayout, _unitData.AttackerDataArray);
 
 
 
@@ -429,13 +429,14 @@ namespace SEF.Data.Editor
             _maximumUpgradeValueField = _root.Query<IntegerField>("maximumupgradevalue_intfield").First();
             _maximumUpgradeValueField.label = "최대업글량";
             _maximumUpgradeValueField.value = _unitData.DefaultMaxUpgradeValue;
-            _maximumUpgradeValueField.RegisterCallback<ChangeEvent<int>>(
-                e =>
-                {
-                    _unitData.DefaultMaxUpgradeValue = e.newValue;
-                    EditorUtility.SetDirty(_unitData);
-                }
-            );
+            _maximumUpgradeValueField.BindProperty(serializedObject.FindProperty("_defaultMaxUpgradeValue"));
+            //_maximumUpgradeValueField.RegisterCallback<ChangeEvent<int>>(
+            //    e =>
+            //    {
+            //        _unitData.DefaultMaxUpgradeValue = e.newValue;
+            //        EditorUtility.SetDirty(_unitData);
+            //    }
+            //);
 
 
 
@@ -500,7 +501,7 @@ namespace SEF.Data.Editor
 
         private void OnDisable()
         {
-            _attackerAddButton.clicked -= AddAttackerData;
+            //_attackerAddButton.clicked -= AddAttackerData;
         }
 
         private void UpdateTechData(VisualElement layout, SerializedProperty property)

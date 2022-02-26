@@ -440,9 +440,9 @@ namespace SEF.Test
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
         }
 
         #endregion

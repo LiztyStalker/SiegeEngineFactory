@@ -123,9 +123,9 @@ namespace SEF.UI.Toolkit
         ///
         public void AddOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.AddOnWorkshopUpgradeListener(act);
         public void RemoveOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnWorkshopUpgradeListener(act);
-        public void AddOnBlacksmithUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
+        public void AddOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
         public void RemoveOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
-        public void AddOnBlacksmithUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
+        public void AddOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
         public void RemoveOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpTechListener(act);
         public void AddOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.AddOnVillageUpgradeListener(act);
         public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpgradeListener(act);
@@ -133,9 +133,9 @@ namespace SEF.UI.Toolkit
         public void RemoveOnVillageUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpTechListener(act);
 
 
-        public void AddUpTechListener(System.Action<int, UnitData> act) => _uiSystem.AddUpTechListener(act);
-        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uiSystem.RemoveUpTechListener(act);
-        public void AddExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
+        public void AddOnUpWorkshopTechListener(System.Action<int, UnitTechData> act) => _uiSystem.AddUpTechListener(act);
+        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveUpTechListener(act);
+        public void AddOnWorkshopExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
         public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
 
 

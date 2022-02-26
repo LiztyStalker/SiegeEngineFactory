@@ -143,10 +143,10 @@ namespace SEF.Data
 
         [SerializeField]
         private int _defaultMaxUpgradeValue = 10;
-        public int DefaultMaxUpgradeValue { get => _defaultMaxUpgradeValue; set => _defaultMaxUpgradeValue = value; }
+        public int DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;// { get => _defaultMaxUpgradeValue; set => _defaultMaxUpgradeValue = value; }
 
         [SerializeField]
-        private UnitTechData[] _unitTechDataArray;
+        private UnitTechData[] _unitTechDataArray = null;
         public UnitTechData[] UnitTechDataArray => _unitTechDataArray;
 //        public void AddUnitTechData(UnitTechData data) => _unitTechDataArray.Add(data);
 //        public void RemoveUnitTechData(UnitTechData data) => _unitTechDataArray.Remove(data);
@@ -223,8 +223,9 @@ namespace SEF.Data
             _startUpgradeAsset = GoldAssetData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset]);
             _increaseUpgradeAssetValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
             _increaseUpgradeAssetRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
+            _defaultMaxUpgradeValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgradeValue]);
 
-            Debug.Log(arr.Length + " " + (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList);
+            //Debug.Log(arr.Length + " " + (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList);
 
             if (arr.Length > (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList)
             {
@@ -252,6 +253,10 @@ namespace SEF.Data
 //                        _unitTechDataArray.Add(data);
                     }
                 }
+            }
+            else
+            {
+                _unitTechDataArray = null;
             }
         }
 
@@ -296,9 +301,10 @@ namespace SEF.Data
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset] = _startUpgradeAsset.ValueText;
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue] = _increaseUpgradeAssetValue.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate] = _increaseUpgradeAssetRate.ToString();
+            arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgradeValue] = DefaultMaxUpgradeValue.ToString();
 
 
-            if(_unitTechDataArray.Length != 0)
+            if (_unitTechDataArray.Length != 0)
             {
                 var typeTechList = "";
                 var techUnitkeys = "";
@@ -359,7 +365,7 @@ namespace SEF.Data
 
         [SerializeField]
         private SerializedAssetData _serializedTechAssetData;
-        public IAssetData StartUpgradeAssetData => _serializedTechAssetData.GetData();
+        public IAssetData TechAssetData => _serializedTechAssetData.GetData();
 
 
         public static UnitTechData Create_Test(string key = null)

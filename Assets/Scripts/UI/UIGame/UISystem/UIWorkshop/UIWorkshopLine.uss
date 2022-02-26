@@ -36,7 +36,7 @@
 }
 
 .ui_workshop_upgrade_button {
-    width: 200px;
+    width: 100px;
     height: 80%;
 }
 
@@ -135,4 +135,37 @@
     background-image: url('/Assets/Images/UI/UIGame/UIWorkshop/ui_workshop_expend_button.png');
     width: 20%;
     height: 60%;
+}
+
+.ui-unit-tech-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    margin-right: 0;
+    padding-right: 30px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.ui-unit-tech-cancel-button {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.ui-unit-tech-layout {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin-right: 0;
+    padding-right: 30px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-direction: row;
 }

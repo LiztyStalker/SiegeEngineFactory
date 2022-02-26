@@ -88,9 +88,12 @@ namespace SEF.Manager
             //return ExpendAssetData to Count
         }
 
-        public void UpTechWorkshop(int index, UnitData unitData)
+        public IAssetData UpTechWorkshop(int index, UnitTechData data)
         {
-            _list[index].UpTech(unitData);
+            var unitData = Storage.DataStorage.Instance.GetDataOrNull<UnitData>(data.TechUnitKey);
+             _list[index].UpTech(unitData);
+            return data.TechAssetData;
+
         }
 
         private WorkshopLine CreateLine()
@@ -104,7 +107,7 @@ namespace SEF.Manager
             _list.Add(workshopLine);
 
             //기본 유닛 적용
-            workshopLine.UpTech(Storage.DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_Test", null, null)); 
+            workshopLine.UpTech(Storage.DataStorage.Instance.GetDataOrNull<UnitData>("UnitData_ThrowerStone", null, null)); 
             return workshopLine;
         }
 

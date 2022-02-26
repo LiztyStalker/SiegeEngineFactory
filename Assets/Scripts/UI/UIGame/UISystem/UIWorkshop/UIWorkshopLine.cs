@@ -4,12 +4,15 @@ namespace SEF.UI.Toolkit
     using UnityEngine;
     using UnityEngine.UIElements;
     using Data;
+    using System.Collections.Generic;
+
     public class UIWorkshopLine : VisualElement
     {
         public new class UxmlFactory : UxmlFactory<UIWorkshopLine, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits { }
 
         internal static readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLine.uxml";
+        internal static readonly string PATH_UI_USS = "Assets/Scripts/UI/UIGame/UISystem/UIWorkshop/UIWorkshopLine.uss";
 
         private int _index;
 
@@ -44,12 +47,13 @@ namespace SEF.UI.Toolkit
         private Label _attackTypeLabel;
         private Label _attackTypeValueLabel;
 
-        private UIFillable _uiFillable;
+        //private UIFillable _uiFillable;
 
         private Button _upgradeButton;
         private VisualElement _upgradeAssetIcon;
         private Label _upgradeValueLabel;
-        private Button _techButton;
+        private Label _buttonLabel;
+        //        private Button _techButton;
 
 
 
@@ -57,6 +61,12 @@ namespace SEF.UI.Toolkit
         private Button _expendButton;
         private VisualElement _expendAssetIcon;
         private Label _expendValueLabel;
+
+        private VisualElement _techPanel;
+        private VisualElement _techLayout;
+        private Button _techCancelButton;
+
+        private List<Button> _techButtons = new List<Button>();
 
         public void SetIndex(int index) => _index = index;
 
@@ -102,12 +112,13 @@ namespace SEF.UI.Toolkit
             _attackDelayLabel = this.Q<Label>("attack_delay_label");
             _attackDelayValueLabel = this.Q<Label>("attack_delay_value_label");
 
-            _uiFillable = this.Q<UIFillable>();
+            //_uiFillable = this.Q<UIFillable>();
 
             _upgradeButton = this.Q<Button>("upgrade_button");
             _upgradeAssetIcon = this.Q<VisualElement>("upgrade_asset_icon");
             _upgradeValueLabel = this.Q<Label>("upgrade_asset_value_label");
-            _techButton = this.Q<Button>("tech_button");
+            _buttonLabel = this.Q<Label>("upgrade_label");
+            //_techButton = this.Q<Button>("tech_button");
 
 
 
@@ -116,6 +127,9 @@ namespace SEF.UI.Toolkit
             _expendAssetIcon = this.Q<VisualElement>("expend_asset_icon");
             _expendValueLabel = this.Q<Label>("expend_asset_value_label");
 
+            _techPanel = this.Q<VisualElement>("ui-workshop-tech-panel");
+            _techLayout = this.Q<VisualElement>("ui-workshop-tech-layout");
+            _techCancelButton = this.Q<Button>("ui-workshop-tech-cancel_button");
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
@@ -144,14 +158,17 @@ namespace SEF.UI.Toolkit
             Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
             Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
-            Debug.Assert(_uiFillable != null, "_uiProgressbar element 를 찾지 못했습니다");
+            //Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
+            //Debug.Assert(_uiFillable != null, "_uiProgressbar element 를 찾지 못했습니다");
 
             Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
             Debug.Assert(_expendButton != null, "_expendButton element 를 찾지 못했습니다");
             Debug.Assert(_expendAssetIcon != null, "_expendAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_expendValueLabel != null, "_expendValueLabel element 를 찾지 못했습니다");
 
+
+            Debug.Assert(_techPanel != null, "_techPanel element 를 찾지 못했습니다");
+            Debug.Assert(_techLayout != null, "_techLayout element 를 찾지 못했습니다");
 
             //_icon
 
@@ -172,7 +189,7 @@ namespace SEF.UI.Toolkit
             _attackCountValueLabel.text = "1";
             _attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
-            _uiFillable.FillAmount = 0;
+            //_uiFillable.FillAmount = 0;
 
             _dpsValueLabel.text = "0";
             _dpsUpLabel.text = "(0)";
@@ -183,8 +200,10 @@ namespace SEF.UI.Toolkit
             _levelValueLabel.text = "1";
 
             _upgradeButton.RegisterCallback<ClickEvent>(OnUpgradeEvent);
-            _techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
+            //_techButton.RegisterCallback<ClickEvent>(OnUpTechEvent);
             _expendButton.RegisterCallback<ClickEvent>(OnExpendEvent);
+
+            _techCancelButton.RegisterCallback<ClickEvent>(OnCancelTechEvent);
 
 
             _activatePanel.style.display = DisplayStyle.None;
@@ -197,15 +216,19 @@ namespace SEF.UI.Toolkit
             _dpsValueLabel.style.display = DisplayStyle.None;
             _dpsUpLabel.style.display = DisplayStyle.None;
 
+            HideTechSelector();
         }
 
 
-        private UnitEntity _unitEntity;
+        private UnitEntity _entity;
         //UI가 오브젝트를 가지고 있으면 안됨
         //차후에 WorkshopManager에서 가져오는 것을 목표로 함
         //RefreshAssetEntity -> RefreshAssetData로 변경 예정
 
-        public void RefreshUnit(UnitEntity unitEntity, float nowTime)
+        private bool isUpgrade = false;
+        private bool isEndTech = false;
+
+        public void RefreshUnit(UnitEntity entity, float nowTime)
         {
             if(_activatePanel.style.display == DisplayStyle.None)
             {
@@ -213,30 +236,80 @@ namespace SEF.UI.Toolkit
                 _inactivatePanel.style.display = DisplayStyle.None;
             }
 
-            _unitEntity = unitEntity;
+            _entity = entity;
 
-            var unitData = unitEntity.UnitData;
+            var unitData = entity.UnitData;
             _nameLabel.text = unitData.name;
             _groupLabel.text = unitData.Group.ToString();
-            _healthValueLabel.text = _unitEntity.HealthData.GetValue();
-            _attackValueLabel.text = _unitEntity.DamageData.GetValue();
+            _healthValueLabel.text = _entity.HealthData.GetValue();
+            _attackValueLabel.text = _entity.DamageData.GetValue();
             _productValueLabel.text = $"{unitData.ProductTime}s";
             _attackDelayValueLabel.text = $"{unitData.AttackDelay}s";
             _attackCountValueLabel.text = unitData.AttackCount.ToString();
             _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
 
-            _levelValueLabel.text = unitEntity.NowUpgradeValue.ToString();
+            _levelValueLabel.text = $"{entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
 
-            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
+            //_uiFillable.FillAmount = nowTime / unitData.ProductTime;
 
-            _upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
+            //_upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
+
+
+
+            isEndTech = false;
+
+            if (entity.IsMaxUpgrade())
+            {
+                isUpgrade = false;
+
+                //다음 테크 있음
+                if (entity.IsNextTech())
+                {
+                    _upgradeValueLabel.text = "-";//entity.TechAssetData.GetValue();
+                    _buttonLabel.text = "테크";
+                }
+                //최종 테크
+                else
+                {
+                    isEndTech = true;
+                    _upgradeValueLabel.text = "-";
+                    _buttonLabel.text = "-";
+                }
+            }
+            else
+            {
+                isUpgrade = true;
+                _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
+                _buttonLabel.text = "업그레이드";
+            }
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
         {
-            //Debug.Log("Refresh " + assetEntity);
-            var isEnough = assetEntity.IsEnough(_unitEntity.UpgradeAssetData);
+            bool isEnough = false;
+            //
+            if (!isEndTech)
+            {
+                if (isUpgrade)
+                {
+                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                }
+                else
+                {
+                    //무조건 테크 가능
+                    isEnough = true;
+                }
+                //각 버튼 활성 비활성
+                //else
+                //{
+                //    isEnough = assetEntity.IsEnough(_entity.TechAssetData);
+                //}
+            }
             _upgradeButton.SetEnabled(isEnough);
+
+            //Debug.Log("Refresh " + assetEntity);
+//            var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+//            _upgradeButton.SetEnabled(isEnough);
         }
 
         public void RefreshExpend(IAssetData assetData, bool isActive)
@@ -249,12 +322,41 @@ namespace SEF.UI.Toolkit
         public void CleanUp()
         {
             _upgradeButton.UnregisterCallback<ClickEvent>(OnUpgradeEvent);
-            _techButton.UnregisterCallback<ClickEvent>(OnUpTechEvent);
+            //_techButton.UnregisterCallback<ClickEvent>(OnUpTechEvent);
             _expendButton.UnregisterCallback<ClickEvent>(OnExpendEvent);
             _icon = null;
         }
 
 
+        private void ShowTechSelector(UnitTechData[] arr)
+        {
+            for (int i = 0; i < _techButtons.Count; i++)
+            {
+                _techButtons[i].style.display = DisplayStyle.None;
+            }
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if(i >= _techButtons.Count)
+                {
+                    var button = new Button();
+                    button.focusable = true;
+                    _techLayout.Add(button);
+                    _techButtons.Add(button);
+                    button.RegisterCallback<ClickEvent>(e => OnUpTechEvent(button));
+                }
+                _techButtons[i].text = arr[i].TechUnitKey;
+                _techButtons[i].style.display = DisplayStyle.Flex;
+            }
+
+
+            _techPanel.style.display = DisplayStyle.Flex;
+        }
+
+        private void HideTechSelector()
+        {
+            _techPanel.style.display = DisplayStyle.None;
+        }
 
         #region ##### Listener #####
 
@@ -264,15 +366,33 @@ namespace SEF.UI.Toolkit
         public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(ClickEvent e)
         {
-            _upgradeEvent?.Invoke(_index);
+            if (!(isUpgrade || isEndTech))
+            {
+                //테크창 열리기
+                ShowTechSelector(_entity.UnitData.UnitTechDataArray);
+            }
+            else
+                _upgradeEvent?.Invoke(_index);
         }
 
-        private System.Action<int, UnitData> _uptechEvent;
-        public void AddUpTechListener(System.Action<int, UnitData> act) => _uptechEvent += act;
-        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uptechEvent -= act;
-        private void OnUpTechEvent(ClickEvent e) 
+
+        private System.Action<int, UnitTechData> _uptechEvent;
+        public void AddUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent += act;
+        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent -= act;
+        private void OnUpTechEvent(Button button) 
         {
-            _uptechEvent?.Invoke(_index, UnitData.Create_Test());
+
+            for (int i = 0; i < _techButtons.Count; i++)
+            {
+                if(_techButtons[i] == button)
+                {
+                    _uptechEvent?.Invoke(_index, _entity.UnitData.UnitTechDataArray[i]);
+                }
+            }
+
+
+            //_uptechEvent?.Invoke(_index, UnitData.Create_Test());
+            HideTechSelector();
         }
 
         private System.Action _expendEvent;
@@ -281,6 +401,11 @@ namespace SEF.UI.Toolkit
         private void OnExpendEvent(ClickEvent e)
         {
             _expendEvent?.Invoke();
+        }
+
+        private void OnCancelTechEvent(ClickEvent e)
+        {
+            HideTechSelector();
         }
 
         #endregion

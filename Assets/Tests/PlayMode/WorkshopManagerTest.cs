@@ -105,10 +105,10 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator WorkshopManagerTest_UpTech()
         {
-            var newUnitData = UnitData.Create_Test();
+            var newUnitData = UnitTechData.Create_Test();
             _workshopManager.AddRefreshListener((index, unit, time) =>
             {
-                Assert.IsTrue(unit.UnitData == newUnitData, "UpTech 가 진행되지 않았습니다");
+                Assert.IsTrue(unit.UnitData.Key == newUnitData.TechUnitKey, "UpTech 가 진행되지 않았습니다");
             });
             _workshopManager.UpTechWorkshop(0, newUnitData);
             yield return null;
@@ -129,10 +129,10 @@ namespace SEF.Test
             _workshopManager.RemoveRefreshListener(UpgradeMessageEvent);
 
 
-            var newUnitData = UnitData.Create_Test();
+            var newUnitData = UnitTechData.Create_Test();
             _workshopManager.AddRefreshListener((index, unit, time) =>
             {
-                Assert.IsTrue(unit.UnitData == newUnitData, "UpTech 가 진행되지 않았습니다");
+                Assert.IsTrue(unit.UnitData.Key == newUnitData.TechUnitKey, "UpTech 가 진행되지 않았습니다");
                 Assert.IsTrue(unit.NowUpgradeValue == 1, "Upgrade 초기화가 진행되지 않았습니다");
             });
             _workshopManager.UpTechWorkshop(0, newUnitData);

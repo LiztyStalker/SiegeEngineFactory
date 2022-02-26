@@ -116,12 +116,12 @@ namespace SEF.UI.Toolkit
             _upgradeEvent?.Invoke(index);
         }
 
-        private System.Action<int, UnitData> _uptechEvent;
-        public void AddUpTechListener(System.Action<int, UnitData> act) => _uptechEvent += act;
-        public void RemoveUpTechListener(System.Action<int, UnitData> act) => _uptechEvent -= act;
-        private void OnUpTechEvent(int index, UnitData unitData)
+        private System.Action<int, UnitTechData> _uptechEvent;
+        public void AddUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent += act;
+        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent -= act;
+        private void OnUpTechEvent(int index, UnitTechData data)
         {
-            _uptechEvent?.Invoke(index, unitData);
+            _uptechEvent?.Invoke(index, data);
         }
 
         private System.Action _expendEvent;

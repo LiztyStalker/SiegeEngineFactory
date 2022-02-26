@@ -71,7 +71,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_TestCreateUnitStatisticsData()
         {
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
 
             int count = 0;
             _gameSystem.AddProductUnitListener(delegate
@@ -135,7 +135,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_TestDestoryUnitStatisticsData()
         {
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
 
             int count = 0;
             List<UnitActor> list = new List<UnitActor>();
@@ -242,9 +242,9 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_TechUnitStatisticsData()
         {
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
 
             yield return null;
 
@@ -254,9 +254,9 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_TestTechUnitStatisticsData()
         {
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
-            _gameSystem.UpTechWorkshop(0, UnitData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
+            _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
 
             yield return null;
 
