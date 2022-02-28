@@ -392,6 +392,10 @@ namespace SEF.Manager
                 }
             }
         }
+        public void RefreshQuest(System.DateTime utcSavedTime)
+        {
+            _questManager.RefreshAllQuests(utcSavedTime);
+        }
         public void RefreshQuest(QuestData.TYPE_QUEST_GROUP typeQuestGroup)
         {
             _questManager.RefreshAllQuests(typeQuestGroup);

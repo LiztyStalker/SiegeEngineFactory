@@ -266,7 +266,7 @@ namespace SEF.Manager
             }
 
             //퀘스트 초기화
-            //_gameSystem.RefreshQuest(dateTime);
+            _gameSystem.RefreshQuest(mainData.UTCSavedTime);
 
         }
 

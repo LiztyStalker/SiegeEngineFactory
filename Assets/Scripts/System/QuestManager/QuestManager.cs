@@ -15,8 +15,9 @@ namespace SEF.Quest
     {
         [UnityEngine.SerializeField] private string _group;
 
+
         public string Group => _group;
-        public void SetData(string group, StorableData[] children)
+        public void SetData(string group,  StorableData[] children)
         {
             _group = group;
             Children = children;
@@ -26,8 +27,15 @@ namespace SEF.Quest
     [System.Serializable]
     public class QuestManagerStorableData : StorableData
     {
-        public void SetData(StorableData[] children)
+        [UnityEngine.SerializeField] private System.DateTime _daily;
+        [UnityEngine.SerializeField] private System.DateTime _weekly;
+
+        public System.DateTime Daily => _daily;
+        public System.DateTime Weekly => _weekly;
+        public void SetData(System.DateTime daily, System.DateTime weekly, StorableData[] children)
         {
+            _daily = daily;
+            _weekly = weekly;
             Children = children;
         }
     }
@@ -39,7 +47,12 @@ namespace SEF.Quest
         private const int COUNT_DAILY_QUEST = 3;
         private const int COUNT_WEEKLY_QUEST = 7;
 
+        private readonly System.DateTime WEEKLY_STANDARD_DATE = new System.DateTime(2022, 1, 2);
+
         private Dictionary<QuestData.TYPE_QUEST_GROUP, List<QuestEntity>> _dic;
+
+        private System.DateTime _daily;
+        private System.DateTime _weekly;
 
         public static QuestManager Create()
         {
@@ -60,9 +73,33 @@ namespace SEF.Quest
             //목표
             SetDictionary(arr, QuestData.TYPE_QUEST_GROUP.Goal);
 
+
+            //오늘
+            _daily = GetToday();
+
+            //주간
+            _weekly = GetWeekly();
+
             RefreshAllQuests();
         }
 
+        private System.DateTime GetToday()
+        {
+            return new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
+        }
+
+        private System.DateTime GetWeekly()
+        {
+            var weekly = new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
+
+            //현재 위치의 첫주
+            if (weekly.DayOfWeek != System.DayOfWeek.Sunday)
+            {
+                var subtract = weekly.DayOfWeek - System.DayOfWeek.Sunday;
+                weekly.Subtract(new System.TimeSpan(subtract, 0, 0, 0));
+            }
+            return weekly;
+        }
 
         private void SetDictionary(QuestData[] arr, QuestData.TYPE_QUEST_GROUP typeQuestGroup)
         {
@@ -159,6 +196,45 @@ namespace SEF.Quest
             for (int i = 0; i < values.Count; i++)
             {
                 RefreshQuest(values[i]);
+            }
+        }
+
+        public void RefreshAllQuests(System.DateTime utcSavedTime)
+        {
+            var arr = DataStorage.Instance.GetAllDataArrayOrZero<QuestData>();
+
+            //일일
+            //하루가 지났으면
+            if (utcSavedTime.Day - _daily.Day >= 1) 
+            {
+                //하루 지났으면 재구성
+                if (_dic.ContainsKey(QuestData.TYPE_QUEST_GROUP.Daily))
+                {
+                    _dic[QuestData.TYPE_QUEST_GROUP.Daily].Clear();
+                }
+
+                //퀘스트 재갱신
+                SetRandomDictionary(arr, QuestData.TYPE_QUEST_GROUP.Daily, COUNT_DAILY_QUEST);
+
+                //오늘날짜 등록
+                _daily = new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
+            }
+
+            //주간
+            //일주일이 지났으면
+            if(utcSavedTime.Day - _weekly.Day >= 7)
+            {
+                //7일이 지났으면 재구성
+                if (_dic.ContainsKey(QuestData.TYPE_QUEST_GROUP.Weekly))
+                {
+                    _dic[QuestData.TYPE_QUEST_GROUP.Weekly].Clear();
+                }
+
+                //퀘스트 재갱신
+                SetRandomDictionary(arr, QuestData.TYPE_QUEST_GROUP.Weekly, COUNT_WEEKLY_QUEST);
+
+                //오늘날짜 등록
+                _weekly = GetWeekly();
             }
         }
 
@@ -334,7 +410,7 @@ namespace SEF.Quest
                 strData.SetData(key.ToString(), GetChildren(_dic[key].ToArray()));
                 list.Add(strData);
             }
-            data.SetData(list.ToArray());
+            data.SetData(_daily, _weekly, list.ToArray());
             return data;
         }
 
@@ -350,7 +426,12 @@ namespace SEF.Quest
 
         public void SetStorableData(StorableData data)
         {
-            var children = data.Children;
+            var storableData = (QuestManagerStorableData)data;
+
+            _daily = storableData.Daily;
+            _weekly = storableData.Weekly;
+
+            var children = storableData.Children;
             for (int i = 0; i < children.Length; i++)
             {
                 var child = (QuestDictionaryStorableData)children[i];
