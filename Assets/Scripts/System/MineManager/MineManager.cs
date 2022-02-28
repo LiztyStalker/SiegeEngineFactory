@@ -1,14 +1,14 @@
 namespace SEF.Manager
 {
-    using SEF.Account;
-    using SEF.Data;
-    using SEF.Entity;
-    using System.Collections;
+    using Data;
+    using Entity;
     using System.Collections.Generic;
     using UnityEngine;
     using Storage;
-    using SEF.Process;
+    using Process;
     using Utility.IO;
+    using System.Linq;
+    
 
 
     #region ##### Serialize #####
@@ -73,14 +73,14 @@ namespace SEF.Manager
 
         }
 
-        public IAssetData RewardOffline(System.TimeSpan timeSpan)
+        public RewardAssetPackage RewardOffline(System.TimeSpan timeSpan)
         {
-            var assetData = NumberDataUtility.Create<GoldAssetData>();
+            var rewardAssetPackage = new RewardAssetPackage();
             for(int i = 0; i < _list.Count; i++)
             {
-                assetData.AssetValue += _list[i].RewardOffline(timeSpan).AssetValue;
+                rewardAssetPackage.AddAssetData(_list[i].RewardOffline(timeSpan));
             }
-            return assetData;
+            return rewardAssetPackage;
         }
 
         private MineLine CreateLine()
@@ -167,5 +167,30 @@ namespace SEF.Manager
 
         //한계 테스트
 #endif
+    }
+
+
+    public struct RewardAssetPackage
+    {
+        private List<IAssetData> _list;
+
+        public void AddAssetData(IAssetData assetData)
+        {
+            if (_list == null) _list = new List<IAssetData>();
+
+            var index = _list.FindIndex(data => data.GetType() == assetData.GetType());
+            if(index == -1)
+            {
+                _list.Add((IAssetData)assetData.Clone());
+            }
+            else
+            {
+                var data = _list[index];
+                data.AssetValue += assetData.AssetValue;
+                _list[index] = data;
+            }
+        }
+
+        public IAssetData[] GetAssetArray() => _list.ToArray();
     }
 }
