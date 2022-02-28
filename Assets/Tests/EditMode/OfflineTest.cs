@@ -6,11 +6,14 @@ namespace SEF.Test
     using Data;
     using Manager;
     using Entity;
+    using SEF.Unit;
 
     public class OfflineTest
     {
         private MineManager _mineManager;
         private MineLine _mineLine;
+
+        private UnitManager _unitManager;
 
         [SetUp]
         public void SetUp()
@@ -25,6 +28,9 @@ namespace SEF.Test
 
             _mineManager = MineManager.Create();
             _mineManager.Initialize();
+
+            _unitManager = UnitManager.Create();
+            _unitManager.Initialize();
         }
 
         [TearDown]
@@ -32,6 +38,7 @@ namespace SEF.Test
         {
             _mineLine.CleanUp();
             _mineManager.CleanUp();
+            _unitManager.CleanUp();
         }
 
         [Test] 
@@ -82,6 +89,29 @@ namespace SEF.Test
                 var data = assetArray[i];
                 Debug.Log(data.AssetValue);
 //                Assert.AreEqual(data.AssetValue.ToString(), "833760");
+            }
+
+        }
+
+        [Test]
+        public void Offline_UnitManager()
+        {
+            System.DateTime nowTime = new System.DateTime(2022, 2, 2, 12, 0, 0);
+            System.DateTime savedTime = new System.DateTime(2022, 2, 1, 12, 0, 0);
+
+            //86400
+
+            var timespan = nowTime - savedTime;
+
+            var asset = _unitManager.RewardOffline(timespan);
+
+            var assetArray = asset.GetAssetArray();
+
+            for (int i = 0; i < assetArray.Length; i++)
+            {
+                var data = assetArray[i];
+                Debug.Log(data.AssetValue);
+                //Assert.AreEqual(data.AssetValue.ToString(), "86400");
             }
 
         }
