@@ -9,6 +9,7 @@ namespace SEF.Unit
     using Storage;
     using UtilityManager;
     using Utility.IO;
+    using Manager;
 
 
     #region ##### StorableData #####
@@ -242,6 +243,18 @@ namespace SEF.Unit
                 _poolEnemyActor.RetrieveElement(enemyActor);
             }
 
+            public RewardAssetPackage RewardOffline(System.TimeSpan timeSpan)
+            {
+                //10ÃÊ´ç 1Å³
+                var rewardCount = (int)(timeSpan.TotalSeconds / 10);
+                var assetData = NowEnemy.GetRewardAssetData();
+                assetData.AssetValue *= rewardCount;
+
+                var rewardAssetPackage = new RewardAssetPackage();
+                rewardAssetPackage.AddAssetData(assetData);
+                return rewardAssetPackage;
+            }
+
             public void CleanUp()
             {
                 _poolEnemyActor?.CleanUp();
@@ -456,6 +469,8 @@ namespace SEF.Unit
             _enemyQueueData.RetrieveEnemyActor(enemyActor);
         }
 
+
+        public RewardAssetPackage RewardOffline(System.TimeSpan timeSpan) => _enemyQueueData.RewardOffline(timeSpan);
 
         public void RunProcess(float deltaTime)
         {

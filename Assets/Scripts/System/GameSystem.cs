@@ -255,6 +255,15 @@ namespace SEF.Manager
             }
         }
 
+        public void AddAssetPackage(RewardAssetPackage assetPackage)
+        {
+            var arr = assetPackage.GetAssetArray();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                AddAsset(arr[i]);
+            }
+        }
+
         public void SubjectAsset(IAssetData assetData)
         {
             _assetPackage.Subject(assetData);

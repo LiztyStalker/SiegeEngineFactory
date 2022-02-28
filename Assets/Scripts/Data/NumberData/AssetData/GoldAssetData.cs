@@ -36,10 +36,14 @@ namespace SEF.Data
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
+            //UnityEngine.Debug.Log(enemyData.IncreaseLevelRewardAssetRate);
             var level = levelWaveData.GetLevel();
             var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartRewardAssetValue.Value, enemyData.IncreaseLevelRewardAssetValue, enemyData.IncreaseLevelRewardAssetRate, level);
-            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value % 10) - enemyData.IncreaseWaveRewardAssetValue) * enemyData.IncreaseWaveRewardAssetRate * 100f))) / 100;
+            //UnityEngine.Debug.Log(levelValue);
+            var waveValue = (levelValue * (UnityEngine.Mathf.Round((float)((levelWaveData.Value % 10) - enemyData.IncreaseWaveRewardAssetValue) * enemyData.IncreaseWaveRewardAssetRate)));
+            //UnityEngine.Debug.Log(waveValue);
             var value = levelValue + waveValue;
+            //UnityEngine.Debug.Log(value);
 //            UnityEngine.Debug.Log(levelValue + " " + waveValue + " " + value);
             if (levelWaveData.IsThemeBoss())
                 value *= 4;
@@ -48,6 +52,7 @@ namespace SEF.Data
                 value *= 2;
             }
             Value = value;
+            //UnityEngine.Debug.Log(Value);
 
         }
 

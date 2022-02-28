@@ -237,14 +237,29 @@ namespace SEF.Manager
             _gameSystem.SetStorableData(data.Children[1]);
 
             var mainData = (GameManagerStorableData)data;
+
             //오프라인 보상 및 퀘스트 초기화
             Debug.Log(mainData.UTCSavedTime);
 
             var timeSpan = System.DateTime.UtcNow - mainData.UTCSavedTime;
 
-            //오프라인 보상
-            var asset1 = _gameSystem.RewardOffline(timeSpan);
-            //var asset2 = _unitManager.RewardOffline(timeSpan);
+            //최소 보상시간 1분
+            if (timeSpan.TotalSeconds >= 60)
+            {
+                if(timeSpan.TotalSeconds > 86400)
+                {
+                    //최대 보상시간 24시간
+                    timeSpan = new System.TimeSpan(1, 0, 0, 0);
+                }
+
+                //오프라인 보상
+                var assetPackage = _gameSystem.RewardOffline(timeSpan);
+                assetPackage.AddAssetPackage(_unitManager.RewardOffline(timeSpan));
+
+                //var asset2 = _unitManager.RewardOffline(timeSpan);
+
+                //_uiGame.ShowRewardOffline(assetPackage, _gameSystem.AddAssetPackage);
+            }
 
             //퀘스트 초기화
             //_gameSystem.RefreshQuest(dateTime);

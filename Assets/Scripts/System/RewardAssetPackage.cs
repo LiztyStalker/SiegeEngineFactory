@@ -7,6 +7,16 @@ namespace SEF.Manager
     {
         private List<IAssetData> _list;
 
+
+        public void AddAssetPackage(RewardAssetPackage assetPackage)
+        {
+            var arr = assetPackage.GetAssetArray();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                AddAssetData(arr[i]);
+            }
+        }
+
         public void AddAssetData(IAssetData assetData)
         {
             if (_list == null) _list = new List<IAssetData>();

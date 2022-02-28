@@ -63,6 +63,7 @@ namespace SEF.Data
         private string _valueText;
         public string ValueText { get { return _valueText; } set { _valueText = value; } }
 
+        [NonSerialized]
         private BigDecimal? _value;
         public BigDecimal Value 
         { 
