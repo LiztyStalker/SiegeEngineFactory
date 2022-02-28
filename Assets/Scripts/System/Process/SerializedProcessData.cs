@@ -18,6 +18,7 @@ namespace SEF.Process
 
         public IProcessData GetData()
         {
+            Debug.Log(_classTypeName);
             var data = (IProcessData)System.Activator.CreateInstance(System.Type.GetType(_classTypeName));
             data.SetValue(_processAssetData.GetData(), _increaseValue, _processTime);
             return data;
@@ -39,7 +40,7 @@ namespace SEF.Process
 
         public void SetData(string classTypeName, string typeAssetData, string assetValue, string increaseValue, string processTime)
         {
-            _classTypeName = $"SEF.Data.{classTypeName}ProcessData";
+            _classTypeName = $"SEF.Process.{classTypeName}ProcessData";
             _processAssetData.SetData(typeAssetData, assetValue);
             _increaseValue = int.Parse(increaseValue);
             _processTime = float.Parse(processTime);

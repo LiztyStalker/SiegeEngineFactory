@@ -17,7 +17,7 @@ MonoBehaviour:
   _isTest: 0
   _icon: {fileID: 0}
   _serializedProcessData:
-    _classTypeName: SEF.Data.AssetProcessData
+    _classTypeName: SEF.Process.AssetProcessData
     _processAssetData:
       _typeAssetData: Gold
       _assetData: 0
