@@ -83,20 +83,20 @@ namespace SEF.Quest
             RefreshAllQuests();
         }
 
-        private System.DateTime GetToday()
+        public static System.DateTime GetToday()
         {
             return new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
         }
 
-        private System.DateTime GetWeekly()
+        public static System.DateTime GetWeekly()
         {
             var weekly = new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
 
             //현재 위치의 첫주
             if (weekly.DayOfWeek != System.DayOfWeek.Sunday)
             {
-                var subtract = weekly.DayOfWeek - System.DayOfWeek.Sunday;
-                weekly.Subtract(new System.TimeSpan(subtract, 0, 0, 0));
+                var subtract = (int)weekly.DayOfWeek;
+                weekly = weekly.Subtract(new System.TimeSpan(subtract, 0, 0, 0));
             }
             return weekly;
         }
@@ -205,7 +205,7 @@ namespace SEF.Quest
 
             //일일
             //하루가 지났으면
-            if (utcSavedTime.Day - _daily.Day >= 1) 
+            if ((utcSavedTime - _daily).TotalDays >= 1) 
             {
                 //하루 지났으면 재구성
                 if (_dic.ContainsKey(QuestData.TYPE_QUEST_GROUP.Daily))
@@ -217,12 +217,12 @@ namespace SEF.Quest
                 SetRandomDictionary(arr, QuestData.TYPE_QUEST_GROUP.Daily, COUNT_DAILY_QUEST);
 
                 //오늘날짜 등록
-                _daily = new System.DateTime(System.DateTime.UtcNow.Year, System.DateTime.UtcNow.Month, System.DateTime.UtcNow.Day);
+                _daily = GetToday();
             }
 
             //주간
             //일주일이 지났으면
-            if(utcSavedTime.Day - _weekly.Day >= 7)
+            if((utcSavedTime - _weekly).TotalDays >= 7)
             {
                 //7일이 지났으면 재구성
                 if (_dic.ContainsKey(QuestData.TYPE_QUEST_GROUP.Weekly))

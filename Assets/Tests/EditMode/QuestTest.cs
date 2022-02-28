@@ -184,7 +184,32 @@ namespace SEF.Test
             }
         }
 
-        
+
+
+        [Test]
+        public void QuestTest_Daily()
+        {
+            var now1 = new System.DateTime(2022, 2, 27);
+            var now2 = new System.DateTime(2022, 3, 1);
+            var daily = QuestManager.GetToday();
+            Debug.Log(daily);
+            Debug.Log((daily - now1).TotalDays);
+            Debug.Log((now2 - now1).TotalDays);
+        }
+
+        [Test]
+        public void QuestTest_Weekly()
+        {
+            var now1 = new System.DateTime(2022, 2, 20);
+            var now2 = new System.DateTime(2022, 3, 1);
+
+            var weekly = QuestManager.GetWeekly();
+            Debug.Log(weekly);
+            Debug.Log((weekly - now1).TotalDays);
+            Debug.Log((now2 - now1).TotalDays);
+        }
+
+
 
         #region ##### 즉석웨이브달성 누적웨이브달성 #####
         [Test]
