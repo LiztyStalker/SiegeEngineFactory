@@ -1,9 +1,6 @@
 namespace SEF.Process 
 {
-    using SEF.Data;
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+    using Data;
 
     public class AssetProcessData : IProcessData    
     {
@@ -28,5 +25,11 @@ namespace SEF.Process
             return data;
         }
 
+        public IAssetData GetAssetData(UpgradeData upgradeData, int processCount)
+        {
+            var data = GetAssetData(upgradeData);
+            data.AssetValue *= processCount;
+            return data;
+        }
     }
 }

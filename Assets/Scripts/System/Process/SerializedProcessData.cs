@@ -32,7 +32,7 @@ namespace SEF.Process
         private SerializedProcessData(System.Type type)
         {
             _classTypeName = type.FullName;
-            _processAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
+            _processAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "1");
             _increaseValue = 1f;
             _processTime = 1f;
         }

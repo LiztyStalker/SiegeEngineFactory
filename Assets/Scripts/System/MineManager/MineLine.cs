@@ -68,14 +68,11 @@ namespace SEF.Manager
         {
             var assetData = _entity.UpgradeAssetData;
             _entity.Upgrade();
-            
-            
             OnRefreshEvent();
-
-
             return assetData;
         }
 
+        public IAssetData RewardOffline(System.TimeSpan timeSpan) => _entity.RewardOffline(timeSpan);
 
 
         #region ##### Listener #####

@@ -73,6 +73,16 @@ namespace SEF.Manager
 
         }
 
+        public IAssetData RewardOffline(System.TimeSpan timeSpan)
+        {
+            var assetData = NumberDataUtility.Create<GoldAssetData>();
+            for(int i = 0; i < _list.Count; i++)
+            {
+                assetData.AssetValue += _list[i].RewardOffline(timeSpan).AssetValue;
+            }
+            return assetData;
+        }
+
         private MineLine CreateLine()
         {
             var line = MineLine.Create();

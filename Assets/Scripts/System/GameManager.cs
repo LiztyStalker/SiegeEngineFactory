@@ -12,13 +12,13 @@ namespace SEF.Manager
     public class GameManagerStorableData : StorableData
     {
         [SerializeField] private string _version;
-        [SerializeField] private System.DateTime _lastTime;
+        [SerializeField] private System.DateTime _utcSavedTime;
         public string Version => _version;
-        public System.DateTime UTCLastTime => _lastTime;
-        public void SetData(string version, System.DateTime saveTime, StorableData unitStorableData, StorableData systemStorableData)
+        public System.DateTime UTCSavedTime => _utcSavedTime;
+        public void SetData(string version, System.DateTime utcSaveTime, StorableData unitStorableData, StorableData systemStorableData)
         {
             _version = version;
-            _lastTime = saveTime;
+            _utcSavedTime = utcSaveTime;
 
             Children = new StorableData[2];
             Children[0] = unitStorableData;
@@ -232,10 +232,23 @@ namespace SEF.Manager
         //불러오기 
         public void LoadDataInMemory()
         {
-            var data = Account.Current.GetStorableData();
-            //오프라인 보상 적용            
+            var data = Account.Current.GetStorableData();           
             _unitManager.SetStorableData(data.Children[0]);
-            _gameSystem.SetStorableData(data.Children[1]);            
+            _gameSystem.SetStorableData(data.Children[1]);
+
+            var mainData = (GameManagerStorableData)data;
+            //오프라인 보상 및 퀘스트 초기화
+            Debug.Log(mainData.UTCSavedTime);
+
+            var timeSpan = System.DateTime.UtcNow - mainData.UTCSavedTime;
+
+            //오프라인 보상
+            var asset1 = _gameSystem.RewardOffline(timeSpan);
+            //var asset2 = _unitManager.RewardOffline(timeSpan);
+
+            //퀘스트 초기화
+            //_gameSystem.RefreshQuest(dateTime);
+
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS

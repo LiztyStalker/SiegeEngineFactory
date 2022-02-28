@@ -97,6 +97,13 @@ namespace SEF.Entity
             return assetData;
         }
 
+        public IAssetData RewardOffline(System.TimeSpan timeSpan)
+        {
+            var processData = _data.ProcessData;
+            var processCount = (int)(timeSpan.TotalSeconds / processData.ProcessTime);
+            return ((AssetProcessData)processData).GetAssetData(_upgradeData, processCount);           
+        }
+
         #region ##### Listener #####
 
         private System.Action<IProcessProvider, ProcessEntity> _processEntityEvent;

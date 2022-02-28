@@ -213,6 +213,18 @@ namespace SEF.Manager
 
 
 
+        #region ##### Offline #####
+        public IAssetData RewardOffline(System.TimeSpan timeSpan)
+        {
+            var assetData = NumberDataUtility.Create<GoldAssetData>();
+
+            assetData.AssetValue += _mineManager.RewardOffline(timeSpan).AssetValue;
+
+            return assetData;
+        }
+        #endregion
+
+
         #region ##### AssetEntity #####
 
 
