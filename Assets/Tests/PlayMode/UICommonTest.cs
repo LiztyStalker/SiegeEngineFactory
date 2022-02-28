@@ -266,6 +266,24 @@ namespace SEF.UI.Test
             }
             UICommon.Current.CleanUp();
         }
+
+
+        [UnityTest]
+        public IEnumerator UICommonTest_UIOffline()
+        {
+            System.DateTime nowTime = new System.DateTime(2022, 2, 2, 12, 0, 0);
+            System.DateTime savedTime = new System.DateTime(2022, 2, 1, 12, 0, 0);
+
+            bool isRun = true;
+            UICommon.Current.ShowRewardOffline("Test", "보상", "광고보상", delegate { isRun = false; }, delegate { isRun = false; });
+
+            while (isRun)
+            {
+                yield return null;
+            }
+            yield return null;
+        }
+
     }
 }
 #endif

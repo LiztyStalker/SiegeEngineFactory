@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="UIRewardOfflinePopup.uss" />
+    <ui:VisualElement name="window" class="window">
+        <ui:VisualElement name="background" class="background" style="background-color: rgba(0, 0, 0, 0.5);" />
+        <ui:VisualElement name="popup_panel" class="popup_panel">
+            <ui:VisualElement name="msg_panel" class="msg_panel">
+                <ui:Label text="Label" display-tooltip-when-elided="true" name="msg_text" class="msg_text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="button_panel" class="button_panel">
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="reward_button" class="button" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" name="advertisement_button" class="button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

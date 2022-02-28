@@ -90,7 +90,29 @@ namespace SEF.Test
                 Debug.Log(data.AssetValue);
 //                Assert.AreEqual(data.AssetValue.ToString(), "833760");
             }
+        }
 
+        [Test]
+        public void Offline_TotalReward()
+        {
+            System.DateTime nowTime = new System.DateTime(2022, 2, 2, 12, 0, 0);
+            System.DateTime savedTime = new System.DateTime(2022, 2, 1, 12, 0, 0);
+
+            //21600
+
+            var timespan = nowTime - savedTime;
+
+            var asset = _mineManager.RewardOffline(timespan);
+            asset.AddAssetPackage(_unitManager.RewardOffline(timespan));
+
+            var assetArray = asset.GetAssetArray();
+
+            for (int i = 0; i < assetArray.Length; i++)
+            {
+                var data = assetArray[i];
+                Debug.Log(data.AssetValue);
+                //Assert.AreEqual(data.AssetValue.ToString(), "920160");
+            }
         }
 
         [Test]
@@ -115,6 +137,7 @@ namespace SEF.Test
             }
 
         }
+
 
     }
 }

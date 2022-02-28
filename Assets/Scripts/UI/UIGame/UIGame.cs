@@ -6,6 +6,7 @@ namespace SEF.UI.Toolkit
     using Data;
     using Unit;
     using Utility.Address;
+    using SEF.Manager;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIGame : MonoBehaviour
@@ -93,10 +94,16 @@ namespace SEF.UI.Toolkit
             ProcessEvent?.Invoke(deltaTime);
         }
 
-        //오프라인 보상
-        //public void CompensateOffline(AccountData)
-
-        
+        public void ShowRewardOffline(RewardAssetPackage assetPackage, System.Action rewardCallback, System.Action advertisementCallback)
+        {
+            var msg = "";
+            var arr = assetPackage.GetAssetArray();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                msg += arr[i].GetType().Name + " " + arr[i].GetValue() + "\n";
+            }
+            UICommon.Current.ShowRewardOffline(msg, "보상", "광고보상", rewardCallback, advertisementCallback);
+        }
 
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);

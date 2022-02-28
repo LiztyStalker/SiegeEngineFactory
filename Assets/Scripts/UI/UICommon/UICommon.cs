@@ -26,7 +26,7 @@ namespace SEF.UI
         private UIPopup _uiPopup;
         private UICredits _uiCredits;
         private UISettings _uiSettings;
-
+        private UIRewardOfflinePopup _uiRewardOffline;
         private static UICommon Create()
         {
             var obj = new GameObject();
@@ -66,7 +66,17 @@ namespace SEF.UI
                 _uiSettings = UISettings.Create();
                 _uiSettings.transform.SetParent(transform);
             }
-            _uiSettings.Initialize();            
+            _uiSettings.Initialize();
+
+
+            _uiRewardOffline = GetComponentInChildren<UIRewardOfflinePopup>();
+            if (_uiRewardOffline == null)
+            {
+                _uiRewardOffline = UIRewardOfflinePopup.Create();
+                _uiRewardOffline.transform.SetParent(transform);
+            }
+            _uiRewardOffline.Initialize();
+
         }
 
 
@@ -75,6 +85,7 @@ namespace SEF.UI
             _uiPopup.CleanUp();
             _uiSettings.CleanUp();
             _uiCredits.CleanUp();
+            _uiRewardOffline.CleanUp();
             _current = null;
         }
 
@@ -108,6 +119,10 @@ namespace SEF.UI
             _uiCredits.Show(closedCallback);
         }
 
+        public void ShowRewardOffline(string msg, string reward, string advertisement, System.Action rewardCallback, System.Action advertisementCallback)
+        {
+            _uiRewardOffline.ShowRewardOfflinePopup(msg, reward, advertisement, rewardCallback, advertisementCallback);
+        }
 
     }
 }

@@ -256,9 +256,13 @@ namespace SEF.Manager
                 var assetPackage = _gameSystem.RewardOffline(timeSpan);
                 assetPackage.AddAssetPackage(_unitManager.RewardOffline(timeSpan));
 
-                //var asset2 = _unitManager.RewardOffline(timeSpan);
-
-                //_uiGame.ShowRewardOffline(assetPackage, _gameSystem.AddAssetPackage);
+                _uiGame.ShowRewardOffline(assetPackage, 
+                    delegate { 
+                        _gameSystem.AddAssetPackage(assetPackage); 
+                    },
+                    delegate {
+                        _gameSystem.AddAssetPackage(assetPackage);
+                    });
             }
 
             //퀘스트 초기화
