@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
-  m_Name: UnitData_WoodenCutter
+  m_Name: EnemyData_WoodenCutter
   m_EditorClassIdentifier: 
-  _sortIndex: 11
   _key: WoodenCutter
+  _sortIndex: 11
+  _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: WoodenCutter_SkeletonData
   _spineSkinKey: 
@@ -22,14 +23,14 @@ MonoBehaviour:
   _scale: 1
   _startHealthValue:
     _valueText: 100
-  _increaseLevelHealthValue: 20
-  _increaseLevelHealthRate: 10
-  _increaseWaveHealthValue: 10
-  _increaseWaveHealthRate: 5
+  _increaseLevelHealthValue: 1
+  _increaseLevelHealthRate: 0.125
+  _increaseWaveHealthValue: 1
+  _increaseWaveHealthRate: 0.125
   _startDamageValue:
     _valueText: 10
   _increaseDamageValue: 1
-  _increaseDamageRate: 1
+  _increaseDamageRate: 0.125
   _attackCount: 1
   _attackDelay: 1
   _attackBulletKey: Arrow
