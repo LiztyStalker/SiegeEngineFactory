@@ -12,11 +12,13 @@ namespace SEF.UI
         [SerializeField]
         private Text _loadValueLabel;
 
+        [SerializeField]
+        private Slider _slider;
+
         public static UILoad Create()
         {
             var obj = new GameObject();
             obj.name = "UI@Load";
-            obj.AddComponent<Canvas>();
             return obj.AddComponent<UILoad>();
         }
 
@@ -31,11 +33,13 @@ namespace SEF.UI
 
         public void CleanUp()
         {
+
         }
 
         public void ShowLoad(float progress)
         {
             _loadValueLabel.text = progress.ToString();
+            _slider.value = progress;
             gameObject.SetActive(true);
         }
 

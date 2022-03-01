@@ -16,7 +16,6 @@ namespace SEF.UI
         {
             var obj = new GameObject();
             obj.name = "UI@Start";
-            obj.AddComponent<Canvas>();
             return obj.AddComponent<UIStart>();
         }
 
