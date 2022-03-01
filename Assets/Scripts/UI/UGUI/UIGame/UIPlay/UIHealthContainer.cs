@@ -1,11 +1,15 @@
 namespace SEF.UI
 {
     using UnityEngine;
-    using UnityEngine.UIElements;
+    using UnityEngine.UI;
     using PoolSystem;
 
     public class UIHealthContainer : MonoBehaviour
     {
+
+        private readonly static string UGUI_NAME = "UI@HealthContainer";
+
+        [SerializeField]
         private UIEnemyHealthBar _uiEnemyHealthBar;
 
         private PoolSystem<UIHealthBar> _pool;
@@ -13,9 +17,7 @@ namespace SEF.UI
         public void Initialize()
         {
             _pool = new PoolSystem<UIHealthBar>();
-            _pool.Initialize(Create);
-
-            //_uiEnemyHealthBar = parent.Q<UIEnemyHealthBar>();
+            _pool.Initialize(CreateBar);
         }
 
         public void CleanUp()
@@ -58,21 +60,36 @@ namespace SEF.UI
             _pool.RetrieveElement(block);
         }
 
-        private UIHealthBar Create()
+        private UIHealthBar CreateBar()
         {
             var block = UIHealthBar.Create();
             block.Initialize();
             block.SetOnRetrieveBlockListener(Retrieve);
+            block.transform.SetParent(transform);
             return block;
         }
 
-        public static UIHealthContainer Create(Transform parent)
+
+
+        public static UIHealthContainer Create()
         {
-            var obj = new GameObject();
-            obj.name = "UIHealthContainer";
-            var container = obj.AddComponent<UIHealthContainer>();
-            container.transform.SetParent(parent);
-            return container;
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIHealthContainer>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIHealthContainer>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
+
     }
 }

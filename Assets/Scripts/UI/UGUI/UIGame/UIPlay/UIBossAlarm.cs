@@ -4,6 +4,9 @@ namespace SEF.UI
     using UnityEngine.UI;
     public class UIBossAlarm : MonoBehaviour
     {
+
+        private readonly static string UGUI_NAME = "UI@BossAlarm";
+
         [SerializeField]
         private GameObject _bossPanel;
 
@@ -72,6 +75,28 @@ namespace SEF.UI
             }
         }
 
+
+        public static UIBossAlarm Create()
+        {
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIBossAlarm>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIBossAlarm>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
+        }
+
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         /// <summary>
         /// 테스트용
@@ -110,8 +135,7 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            //var root = UIUXML.GetVisualElement(gameObject, UIBossAlarm.PATH_UI_UXML);
-            //_instance = root.Q<UIBossAlarm>();
+            _instance = UIBossAlarm.Create();
             _instance.Initialize();
         }
 

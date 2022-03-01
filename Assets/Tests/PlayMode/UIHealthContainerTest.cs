@@ -18,22 +18,18 @@ namespace SEF.UI.Test
 
         private UIHealthContainer _uiContainer;
         private UIHealthBar _uiblock;
-        private UIEnemyHealthBar_Test _uiEnemyHealthBar;
 
         [SetUp]
         public void SetUp()
         {
             _camera = PlayTestUtility.CreateCamera();
             _light = PlayTestUtility.CreateLight();
-            _uiContainer = UIHealthContainer.Create(null);
+            _uiContainer = UIHealthContainer.Create();
             Assert.IsNotNull(_uiContainer);
 
             _uiblock = UIHealthBar.Create();
             Assert.IsNotNull(_uiblock);
             _uiblock.Initialize();
-
-            _uiEnemyHealthBar = UIEnemyHealthBar_Test.Create();
-            _uiEnemyHealthBar.Initialize();
 
             _uiContainer.Initialize();
         }
@@ -43,11 +39,9 @@ namespace SEF.UI.Test
         {
             _uiContainer.CleanUp();
             _uiblock.CleanUp();
-            _uiEnemyHealthBar.Dispose();
 
             _uiContainer = null;
             _uiblock = null;
-            _uiEnemyHealthBar = null;
 
             PlayTestUtility.DestroyCamera(_camera);
             PlayTestUtility.DestroyLight(_light);
@@ -85,7 +79,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIHealthTest_ShowEnemyBlock()
         {
-            _uiEnemyHealthBar.Instance.ShowHealth("1.234A", 0.4f);
+            _uiContainer.ShowEnemyHealthData("1.234A", 0.4f);
             yield return new WaitForSeconds(1f);
         }
 

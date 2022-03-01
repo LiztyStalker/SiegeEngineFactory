@@ -6,7 +6,10 @@ namespace SEF.UI
     using SEF.Unit;
 
     public class UIPlay : MonoBehaviour
-    {        
+    {
+        private readonly static string UGUI_NAME = "UI@Play";
+
+
         private UILevelWave _uiLevelWave;
 
         private UIHealthContainer _uiHealthContainer;
@@ -17,18 +20,39 @@ namespace SEF.UI
         
         public static UIPlay Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Play";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIPlay>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIPlay>());
+            }
+#if UNITY_EDITOR
+            else
+            { 
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                obj.AddComponent<RectTransform>();
+                return obj.AddComponent<UIPlay>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
 
         public void Initialize() {
+            
             _uiLevelWave = GetComponentInChildren<UILevelWave>();
+            if (_uiLevelWave == null) _uiLevelWave = UILevelWave.Create();
+
             _uiBossAlarm = GetComponentInChildren<UIBossAlarm>();
+            if (_uiBossAlarm == null) _uiBossAlarm = UIBossAlarm.Create();
 
             _uiHealthContainer = GetComponentInChildren<UIHealthContainer>();
+            if (_uiHealthContainer == null) _uiHealthContainer = UIHealthContainer.Create();
+
             _uiHitContainer = GetComponentInChildren<UIHitContainer>();
+            if (_uiHitContainer == null) _uiHitContainer = UIHitContainer.Create();
+
 
             Debug.Assert(_uiLevelWave != null, "_uiLevelWave 이 등록되지 않았습니다");
             Debug.Assert(_uiBossAlarm != null, "_uiBossAlarm 이 등록되지 않았습니다");
@@ -93,8 +117,6 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            //var root = UIUXML.GetVisualElement(gameObject, UIPlay.PATH_UI_UXML);
-            //_instance = root.Q<UIPlay>();
             _instance = UIPlay.Create();
             _instance.Initialize();
         }

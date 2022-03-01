@@ -6,6 +6,7 @@ namespace SEF.UI
 
     public class UIHealthBar : MonoBehaviour, IPoolElement
     {
+        private readonly static string UGUI_NAME = "UI@HealthBar";
 
         [SerializeField]
         private Slider _slider;
@@ -70,15 +71,24 @@ namespace SEF.UI
 
 
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static UIHealthBar Create()
         {
-            var obj = new GameObject();
-            obj.name = "UIHealthBar";
-            var block = obj.AddComponent<UIHealthBar>();
-            //UIUXML.GetVisualElement(obj, PATH_UI_UXML);
-            return block;
-        }
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIHealthBar>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIHealthBar>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
 #endif
+
+        }
     }
 }

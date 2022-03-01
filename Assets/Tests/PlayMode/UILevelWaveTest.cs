@@ -46,11 +46,6 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UILevelWaveTest_Initialize()
         {
-            yield return null;
-            _uiLevelWave.Instance.Level = 1;
-            _uiLevelWave.Instance.Wave = 4;
-            _uiLevelWave.Instance.MaxValue = 9;
-            _uiLevelWave.Instance.MinValue = 0;
             yield return new WaitForSeconds(1f);
         }
 
@@ -59,10 +54,6 @@ namespace SEF.UI.Test
         {
 
             yield return null;
-            _uiLevelWave.Instance.Level = 0;
-            _uiLevelWave.Instance.Wave = 0;
-            _uiLevelWave.Instance.MaxValue = 9;
-            _uiLevelWave.Instance.MinValue = 0;
 
             var nowTime = 0f;
             int level = 0;
@@ -99,10 +90,6 @@ namespace SEF.UI.Test
         {
 
             yield return null;
-            _uiLevelWave.Instance.Level = 0;
-            _uiLevelWave.Instance.Wave = 0;
-            _uiLevelWave.Instance.MaxValue = 9;
-            _uiLevelWave.Instance.MinValue = 0;
 
             var nowTime = 0f;
 

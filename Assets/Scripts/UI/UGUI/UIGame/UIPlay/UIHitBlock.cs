@@ -8,10 +8,11 @@ namespace SEF.UI
 
     public class UIHitBlock : MonoBehaviour, IPoolElement
     {
+
+        private readonly static string UGUI_NAME = "UI@HitBlock";
+
         [SerializeField]
         private Text _label;
-
-        private float _opacity = 1f;
 
         public void Initialize() 
         {
@@ -105,19 +106,19 @@ namespace SEF.UI
 
         }
 
-        //private float nowTime = 0;
-        //private void Update()
-        //{
-        //    nowTime += Time.deltaTime;
-        //    if (nowTime > 1f) 
-        //    {
-        //        nowTime = 0;
-        //        _retrieveEvent?.Invoke(this);
-        //        Inactivate();
-        //    }
-        //}
+        private float nowTime = 0;
+        private void Update()
+        {
+            nowTime += Time.deltaTime;
+            if (nowTime > 1f)
+            {
+                nowTime = 0;
+                _retrieveEvent?.Invoke(this);
+                Inactivate();
+            }
+        }
 
-#region ##### Listener #####
+        #region ##### Listener #####
 
         private System.Action<UIHitBlock> _retrieveEvent;
         public void SetOnRetrieveBlockListener(System.Action<UIHitBlock> act) => _retrieveEvent = act;
@@ -128,12 +129,23 @@ namespace SEF.UI
 
         public static UIHitBlock Create()
         {
-            var obj = new GameObject();
-            obj.name = "UIHitBlock";
-            var block = obj.AddComponent<UIHitBlock>();
-//            var root = UIUXML.GetVisualElement(obj, PATH_UI_UXML);
-            //Debug.Log(root.name);
-            return block;
+            var data = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+
+            if (data != null)
+            {
+                return Instantiate(data.GetComponent<UIHitBlock>());
+            }
+            else
+            {
+#if UNITY_EDITOR
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                var block = obj.AddComponent<UIHitBlock>();
+                return block;
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
     }
 }

@@ -5,13 +5,14 @@ namespace SEF.UI
 
     public class UIHitContainer : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@HitContainer";
 
         private PoolSystem<UIHitBlock> _pool;
 
         public void Initialize()
         {
             _pool = new PoolSystem<UIHitBlock>();
-            _pool.Initialize(Create);
+            _pool.Initialize(CreateBlock);
         }
 
         public void CleanUp()
@@ -31,26 +32,37 @@ namespace SEF.UI
             _pool.RetrieveElement(block);
         }
 
-        private UIHitBlock Create()
+        private UIHitBlock CreateBlock()
         {
             var block = UIHitBlock.Create();
             block.Initialize();
             block.SetOnRetrieveBlockListener(Retrieve);
+            block.transform.SetParent(transform);
             return block;
+        }
+
+        public static UIHitContainer Create()
+        {
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIHitContainer>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIHitContainer>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-
-        public static UIHitContainer Create(Transform parent)
-        {
-            var obj = new GameObject();
-            obj.name = "UIHitContainer";
-            var container = obj.AddComponent<UIHitContainer>();
-            container.transform.SetParent(parent);
-            return container;
-        }
-
 
         /// <summary>
         /// ShowHit 테스트판

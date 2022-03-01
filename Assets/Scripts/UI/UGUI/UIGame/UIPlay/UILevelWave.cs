@@ -5,47 +5,7 @@ namespace SEF.UI
 
     public class UILevelWave : MonoBehaviour
     {
-
-        private int _level;
-        private int _wave;
-        private int _minValue;
-        private int _maxValue;
-
-        public int Level { 
-            get => _level;
-            set
-            {
-                _level = value;
-                ShowLabel();
-            }
-        }
-        public int Wave { 
-            get => _wave;
-            set
-            {
-                if (_wave > _maxValue)
-                    _wave = MaxValue;
-                else
-                    _wave = value;
-                ShowLabel();
-                //UpdateHandlePosition();
-            }
-        }
-        public int MinValue { 
-            get => _minValue;
-            set
-            {
-                _minValue = value;
-            }
-        }
-        public int MaxValue { 
-            get => _maxValue;
-            set
-            {
-                _maxValue = value;
-            }
-        }
-
+        private readonly static string UGUI_NAME = "UI@LevelWave";
 
 
         [SerializeField]
@@ -66,8 +26,8 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            _minValue = 0;
-            _maxValue = 9;
+            _sliderBar.maxValue = 9;
+            _sliderBar.minValue = 0;
         }
 
         public void CleanUp()
@@ -76,10 +36,9 @@ namespace SEF.UI
 
         public void ShowLevelWave(int level, int wave)
         {
-            _level = level;
-            _wave = wave;
+            _sliderBar.value = wave;
             //UpdateHandlePosition();
-            ShowLabel();
+            ShowLabel(level, wave);
         }
 
         //private void UpdateHandlePosition()
@@ -124,11 +83,31 @@ namespace SEF.UI
         //    return ((float)currentValue - (float)lowerValue) / ((float)higherValue - (float)lowerValue);
         //}
 
-        private void ShowLabel()
+        private void ShowLabel(int level, int wave)
         {
             //Debug.Log("ShowLabel");
-            _levelLabel.text = _level.ToString();
-            _waveLabel.text = $"{_wave + 1}/{_maxValue + 1}";
+            _levelLabel.text = level.ToString();
+            _waveLabel.text = $"{wave + 1}/{_sliderBar.maxValue + 1}";
+        }
+
+        public static UILevelWave Create()
+        {
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UILevelWave>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UILevelWave>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
     }
 
@@ -151,8 +130,8 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            //var root = UIUXML.GetVisualElement(gameObject, UILevelWave.PATH_UI_UXML);
-            //_instance = root.Q<UILevelWave>();
+            _instance = UILevelWave.Create();
+            _instance.Initialize();
         }
 
         public void Dispose()
