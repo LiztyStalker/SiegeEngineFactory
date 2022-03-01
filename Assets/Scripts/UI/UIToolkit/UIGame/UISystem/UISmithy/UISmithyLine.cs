@@ -1,10 +1,9 @@
-namespace SEF.UI.Toolkit { 
-    using UnityEditor;
+#if INCLUDE_UI_TOOLKIT
+namespace SEF.UI.Toolkit 
+{ 
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor.UIElements;
     using Entity;
-    using SEF.Data;
 
     public class UISmithyLine : VisualElement
     {
@@ -169,7 +168,7 @@ namespace SEF.UI.Toolkit {
 
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -196,10 +195,10 @@ namespace SEF.UI.Toolkit {
             });
         }
 
-        #endregion
+#endregion
     }
 
-    #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
     [RequireComponent(typeof(UIDocument))]
     public class UISmithyLine_Test : MonoBehaviour
     {
@@ -226,5 +225,6 @@ namespace SEF.UI.Toolkit {
             DestroyImmediate(gameObject);
         }
     }
-    #endif
+#endif
 }
+#endif

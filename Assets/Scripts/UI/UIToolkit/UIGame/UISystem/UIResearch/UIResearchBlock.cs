@@ -1,9 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor.UIElements;
     using SEF.Entity;
 
     public class UIResearchBlock : VisualElement
@@ -111,7 +110,7 @@ namespace SEF.UI.Toolkit
 
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -122,7 +121,7 @@ namespace SEF.UI.Toolkit
             _upgradeEvent?.Invoke(_index);
         }
 
-        #endregion
+#endregion
     }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -154,3 +153,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

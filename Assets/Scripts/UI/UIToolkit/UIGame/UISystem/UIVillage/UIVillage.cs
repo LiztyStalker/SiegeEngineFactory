@@ -1,13 +1,10 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Data;
     using Entity;
-    using Utility.Address;
 
     public class UIVillage : VisualElement, ISystemPanel
     {
@@ -77,7 +74,7 @@ namespace SEF.UI.Toolkit
             }
         }
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -96,7 +93,7 @@ namespace SEF.UI.Toolkit
         {
             _uptechEvent?.Invoke(index);
         }
-        #endregion
+#endregion
 
 
     }
@@ -132,6 +129,5 @@ namespace SEF.UI.Toolkit
         }
     }
 #endif
-
-
 }
+#endif

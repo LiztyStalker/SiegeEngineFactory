@@ -1,7 +1,11 @@
 
 namespace SEF.Quest
 {
+#if INCLUDE_UI_TOOLKIT
     using SEF.UI.Toolkit;
+#else
+    using SEF.UI;
+#endif
     using System.Collections.Generic;
     using System.Linq;
 

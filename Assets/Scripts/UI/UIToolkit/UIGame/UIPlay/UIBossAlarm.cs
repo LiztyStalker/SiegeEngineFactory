@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
@@ -98,13 +99,13 @@ namespace SEF.UI.Toolkit
 #endif
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
         private System.Action _closedEvent;
 
         public void SetOnClosedEvent(System.Action act) => _closedEvent = act;
 
-        #endregion
+#endregion
 
     }
 
@@ -138,3 +139,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

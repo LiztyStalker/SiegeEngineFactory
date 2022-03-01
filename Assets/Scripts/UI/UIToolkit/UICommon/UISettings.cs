@@ -1,8 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Storage;
 
     [RequireComponent(typeof(UIDocument))]
     public class UISettings : MonoBehaviour
@@ -242,7 +242,7 @@ namespace SEF.UI.Toolkit
 
 
 
-        #region ##### Event #####
+#region ##### Event #####
 
 
         private System.Action _closedEvent;
@@ -258,7 +258,7 @@ namespace SEF.UI.Toolkit
             _closedEvent?.Invoke();
         }
 
-        #endregion
+#endregion
 
 
         private void Load()
@@ -289,3 +289,4 @@ namespace SEF.UI.Toolkit
         }
     }
 }
+#endif

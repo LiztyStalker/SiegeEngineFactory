@@ -1,8 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Storage;
 
     [RequireComponent(typeof(UIDocument))]
 
@@ -82,3 +82,4 @@ namespace SEF.UI.Toolkit
 
     }
 }
+#endif

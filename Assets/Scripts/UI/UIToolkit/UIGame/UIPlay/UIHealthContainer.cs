@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
@@ -78,3 +79,4 @@ namespace SEF.UI.Toolkit
         }
     }
 }
+#endif

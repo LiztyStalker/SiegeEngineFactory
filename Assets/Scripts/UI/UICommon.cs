@@ -1,9 +1,11 @@
 namespace SEF.UI
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+
+#if INCLUDE_UI_TOOLKIT
     using Toolkit;
+#endif
+
+    using UnityEngine;
 
     public class UICommon : MonoBehaviour
     {

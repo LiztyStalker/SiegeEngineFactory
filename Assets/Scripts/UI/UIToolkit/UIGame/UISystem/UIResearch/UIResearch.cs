@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
 
@@ -76,7 +77,7 @@ namespace SEF.UI.Toolkit
             }
         }
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -87,7 +88,7 @@ namespace SEF.UI.Toolkit
             _upgradeEvent?.Invoke(index);
         }
 
-        #endregion
+#endregion
 
 
     }
@@ -123,6 +124,5 @@ namespace SEF.UI.Toolkit
         }
     }
 #endif
-
-
 }
+#endif

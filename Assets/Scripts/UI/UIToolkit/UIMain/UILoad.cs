@@ -1,10 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Storage;
 
     public class UILoad : MonoBehaviour
     {
@@ -68,3 +66,4 @@ namespace SEF.UI.Toolkit
 
     }
 }
+#endif

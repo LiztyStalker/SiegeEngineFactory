@@ -1,13 +1,17 @@
 namespace SEF.Manager
 {
-    using UnityEngine;
+#if INCLUDE_UI_TOOLKIT
     using SEF.UI.Toolkit;
+#else
+    using SEF.UI;
+#endif
+    using UnityEngine;
     using Account;
     using Unit;
     using SEF.Data;
     using Utility.IO;
 
-    #region ##### StorableData #####
+#region ##### StorableData #####
     [System.Serializable]
     public class GameManagerStorableData : StorableData
     {
@@ -25,7 +29,7 @@ namespace SEF.Manager
             Children[1] = systemStorableData;
         }
     }
-    #endregion
+#endregion
 
     public class GameManager : MonoBehaviour
     {

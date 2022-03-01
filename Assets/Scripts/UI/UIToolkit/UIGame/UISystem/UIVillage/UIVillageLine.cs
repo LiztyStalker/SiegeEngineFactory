@@ -1,9 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor.UIElements;
     using SEF.Entity;
 
     public class UIVillageLine : VisualElement
@@ -169,7 +168,7 @@ namespace SEF.UI.Toolkit
 
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -196,7 +195,7 @@ namespace SEF.UI.Toolkit
         }
 
 
-        #endregion
+#endregion
     }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -228,3 +227,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

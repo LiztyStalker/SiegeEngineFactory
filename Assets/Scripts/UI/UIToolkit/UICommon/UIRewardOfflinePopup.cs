@@ -1,10 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using Storage;
 
     [RequireComponent(typeof(UIDocument))]
     public class UIRewardOfflinePopup : MonoBehaviour
@@ -91,7 +89,7 @@ namespace SEF.UI.Toolkit
         }
 
 
-        #region ##### Event #####
+#region ##### Event #####
 
         private System.Action _rewardEvent;
         private System.Action _advertisementEvent;
@@ -107,7 +105,7 @@ namespace SEF.UI.Toolkit
             Hide();
         }
 
-        #endregion
+#endregion
 
         public void Hide()
         {
@@ -120,3 +118,4 @@ namespace SEF.UI.Toolkit
 
     }
 }
+#endif

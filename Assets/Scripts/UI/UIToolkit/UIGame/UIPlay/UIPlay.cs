@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEditor;
@@ -102,3 +103,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

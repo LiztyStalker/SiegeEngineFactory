@@ -1,7 +1,6 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
     using Data;
@@ -87,3 +86,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

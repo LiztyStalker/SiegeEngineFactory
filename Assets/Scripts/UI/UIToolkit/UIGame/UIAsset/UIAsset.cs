@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using Data;
@@ -88,3 +89,4 @@ namespace SEF.UI.Toolkit
 #endif
     #endregion
 }
+#endif

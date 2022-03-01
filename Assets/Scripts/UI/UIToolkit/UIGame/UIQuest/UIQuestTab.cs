@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
@@ -75,7 +76,7 @@ namespace SEF.UI.Toolkit
         }
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> _rewardEvent;
@@ -88,6 +89,7 @@ namespace SEF.UI.Toolkit
             _rewardEvent?.Invoke(QuestData.TYPE_QUEST_GROUP.Goal, _questKey, _addressKey, _hasGoal);
         }
 
-        #endregion
+#endregion
     }
 }
+#endif

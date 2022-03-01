@@ -1,9 +1,8 @@
-namespace SEF.UI.Toolkit {
-    using UnityEditor;
+#if INCLUDE_UI_TOOLKIT
+namespace SEF.UI.Toolkit 
+{
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor.UIElements;
-
 
     public class UILevelWave : VisualElement
     {
@@ -204,3 +203,4 @@ namespace SEF.UI.Toolkit {
     }
 #endif
 }
+#endif

@@ -1,9 +1,9 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
     using UnityEngine.UIElements;
     using Unity.Mathematics;
-    using Unity.Collections;
 
     public class UIFillable : VisualElement
     {
@@ -349,3 +349,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

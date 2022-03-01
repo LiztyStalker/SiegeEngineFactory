@@ -1,9 +1,8 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using UnityEditor;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor.UIElements;
     using PoolSystem;
 
     [RequireComponent(typeof(UIDocument))]
@@ -101,3 +100,4 @@ namespace SEF.UI.Toolkit
 #endif
     }
 }
+#endif

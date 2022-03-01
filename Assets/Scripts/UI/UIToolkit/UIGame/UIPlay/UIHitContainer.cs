@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using System.Collections;
@@ -76,3 +77,4 @@ namespace SEF.UI.Toolkit
 #endif
     }
 }
+#endif

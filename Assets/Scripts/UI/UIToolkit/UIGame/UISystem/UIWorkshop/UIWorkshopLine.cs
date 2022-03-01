@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using Entity;
@@ -358,7 +359,7 @@ namespace SEF.UI.Toolkit
             _techPanel.style.display = DisplayStyle.None;
         }
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
@@ -408,7 +409,7 @@ namespace SEF.UI.Toolkit
             HideTechSelector();
         }
 
-        #endregion
+#endregion
     }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -440,3 +441,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

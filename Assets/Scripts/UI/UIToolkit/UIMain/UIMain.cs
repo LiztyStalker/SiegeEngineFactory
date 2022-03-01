@@ -1,9 +1,9 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using System.Collections;
     using UnityEngine;
     using UnityEngine.UIElements;
-    using UnityEditor;
     using Storage;
     using SEF.Account;
     using Utility.IO;
@@ -144,3 +144,4 @@ namespace SEF.UI.Toolkit
         }
     }
 }
+#endif

@@ -1,12 +1,11 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UIElements;
     using Entity;
     using Data;
-    using Utility.Address;
 
     public interface ISystemPanel
     {
@@ -157,7 +156,7 @@ namespace SEF.UI.Toolkit
         }
 
 
-        #region ##### Entity #####
+#region ##### Entity #####
 
         public void RefreshUnit(int index, UnitEntity entity, float nowTime)
         {
@@ -199,10 +198,10 @@ namespace SEF.UI.Toolkit
             uiWorkshop.RefreshExpend(assetData, isActive);
         }
 
-        #endregion
+#endregion
 
 
-        #region ##### Listener #####
+#region ##### Listener #####
         public void AddOnWorkshopUpgradeListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIWorkshop>();
@@ -296,7 +295,7 @@ namespace SEF.UI.Toolkit
         }
 
 
-        #endregion
+#endregion
     }
 
 
@@ -330,3 +329,4 @@ namespace SEF.UI.Toolkit
     }
 #endif
 }
+#endif

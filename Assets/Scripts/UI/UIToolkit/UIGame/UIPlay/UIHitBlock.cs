@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Toolkit
 {
     using UnityEngine;
@@ -121,12 +122,12 @@ namespace SEF.UI.Toolkit
         //    }
         //}
 
-        #region ##### Listener #####
+#region ##### Listener #####
 
         private System.Action<UIHitBlock> _retrieveEvent;
         public void SetOnRetrieveBlockListener(System.Action<UIHitBlock> act) => _retrieveEvent = act;
 
-        #endregion
+#endregion
 
 
 
@@ -141,3 +142,4 @@ namespace SEF.UI.Toolkit
         }
     }
 }
+#endif
