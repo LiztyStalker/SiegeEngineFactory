@@ -1,0 +1,29 @@
+.ui_system_bar_button {
+    justify-content: center;
+    width: 200px;
+    font-size: 40px;
+    background-image: url('/Assets/Images/UI/UIGame/UISystem/ui_system_button.png');
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.ui_system_bar_background {
+    background-image: url('/Assets/Images/UI/UIGame/UISystem/ui_system_background.png');
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    flex-direction: row;
+    height: 10%;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
