@@ -5,6 +5,7 @@ namespace SEF.UI
 
     public class UIRewardOfflinePopup : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@RewardOfflinePopup";
 
         [SerializeField]
         private Text _msgLabel;
@@ -21,9 +22,22 @@ namespace SEF.UI
 
         public static UIRewardOfflinePopup Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@RewardOffline";
-            return obj.AddComponent<UIRewardOfflinePopup>();            
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIRewardOfflinePopup>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = "UI@RewardOfflinePopup";
+                return obj.AddComponent<UIRewardOfflinePopup>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
 
         public void Initialize()

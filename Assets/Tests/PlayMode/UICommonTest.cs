@@ -13,7 +13,21 @@ namespace SEF.UI.Test
     public class UICommonTest
     {
         private Camera _camera;
+        private GameObject _eventSystem;
 
+
+        private void CreateEventSystem()
+        {
+            _eventSystem = new GameObject();
+            _eventSystem.name = "EventSystem";
+            _eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            _eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+        }
+
+        private void DestroyEventSystem()
+        {
+            Object.DestroyImmediate(_eventSystem);
+        }
 
         private void CreateCamera()
         {
@@ -24,7 +38,7 @@ namespace SEF.UI.Test
 
         }
 
-        private void DestoryCamera()
+        private void DestroyCamera()
         {
             Object.DestroyImmediate(_camera.gameObject);
         }
@@ -70,12 +84,14 @@ namespace SEF.UI.Test
         public void SetUp()
         {
             CreateCamera();
+            CreateEventSystem();
         }
 
         [TearDown]
         public void TearDown()
         {
-            DestoryCamera();
+            DestroyCamera();
+            DestroyEventSystem();
         }
 
         [UnityTest]

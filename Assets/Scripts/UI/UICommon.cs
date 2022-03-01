@@ -9,6 +9,8 @@ namespace SEF.UI
 
     public class UICommon : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@Common";
+
         private static UICommon _current;
 
 
@@ -31,9 +33,21 @@ namespace SEF.UI
         private UIRewardOfflinePopup _uiRewardOffline;
         private static UICommon Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Common";
-            return obj.AddComponent<UICommon>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UICommon>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = "UI@Common";
+                return obj.AddComponent<UICommon>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");               
+#endif
         }
 
         public void Initialize()

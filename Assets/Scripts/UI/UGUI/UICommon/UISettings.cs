@@ -5,6 +5,7 @@ namespace SEF.UI
 
     public class UISettings : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@Settings";
 
         private readonly string SETTINGS_BGM_KEY = "BGM_VALUE";
         private readonly string SETTINGS_SFX_KEY = "SFX_VALUE";
@@ -58,9 +59,22 @@ namespace SEF.UI
 
         public static UISettings Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Settings";
-            return obj.AddComponent<UISettings>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UISettings>());
+            }
+#if UNITY_EDITOR
+            else
+            { 
+                var obj = new GameObject();
+                obj.name = "UI@Settings";
+                return obj.AddComponent<UISettings>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+
         }
 
         public void Initialize()
@@ -112,7 +126,7 @@ namespace SEF.UI
 
 
             _uiHitActivateToggle.onValueChanged.AddListener(OnHitToggleEvent);
-            _effectActivateToggle.onValueChanged.AddListener(OnHitToggleEvent);
+            _effectActivateToggle.onValueChanged.AddListener(OnEffectToggleEvent);
 
 
             _saveButton.onClick.AddListener(OnSaveEvent);
@@ -134,7 +148,7 @@ namespace SEF.UI
 
 
             _uiHitActivateToggle.onValueChanged.RemoveListener(OnHitToggleEvent);
-            _effectActivateToggle.onValueChanged.RemoveListener(OnHitToggleEvent);
+            _effectActivateToggle.onValueChanged.RemoveListener(OnEffectToggleEvent);
 
 
             _saveButton.onClick.RemoveListener(OnSaveEvent);

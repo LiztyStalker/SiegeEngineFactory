@@ -5,6 +5,8 @@ namespace SEF.UI
 
     public class UIPopup : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@Popup";
+
         [SerializeField]
         private Text _msgLabel;
 
@@ -18,9 +20,21 @@ namespace SEF.UI
 
         public static UIPopup Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Popup";
-            return obj.AddComponent<UIPopup>();            
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIPopup>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = "UI@Popup";
+                return obj.AddComponent<UIPopup>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
 
         public void Initialize()
@@ -55,6 +69,7 @@ namespace SEF.UI
         {
             SetPopup(msg, closedCallback);
             _exitButton.gameObject.SetActive(true);
+            _cancelButton.gameObject.SetActive(false);
             Activate();
         }
 
@@ -62,6 +77,7 @@ namespace SEF.UI
         {
             SetPopup(msg, applyText, applyCallback, closedCallback);
             _applyButton.gameObject.SetActive(true);
+            _cancelButton.gameObject.SetActive(false);
             _exitButton.gameObject.SetActive(true);
             Activate();
         }
