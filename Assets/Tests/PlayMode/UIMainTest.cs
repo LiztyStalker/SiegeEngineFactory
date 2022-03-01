@@ -8,7 +8,9 @@ namespace SEF.UI.Test
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.TestTools;
-    using SEF.UI.Toolkit;
+#if INCLUDE_UI_TOOLKIT
+    using Toolkit;
+#endif
     using Storage;
     using SEF.Account;
 
@@ -47,7 +49,7 @@ namespace SEF.UI.Test
         private UIStart CreateUIStart()
         {
             var uiStart = UIStart.Create();
-            uiStart.Initialize(null);
+            uiStart.Initialize();
             return uiStart;
         }
 
@@ -59,7 +61,7 @@ namespace SEF.UI.Test
         private UILoad CreateUILoad()
         {
             var uiLoad = UILoad.Create();
-            uiLoad.Initialize(null);
+            uiLoad.Initialize();
             return uiLoad;
         }
 

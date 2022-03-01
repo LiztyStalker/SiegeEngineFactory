@@ -8,7 +8,9 @@ namespace SEF.UI.Test
     using UnityEngine.TestTools;
     using UnityEngine.Experimental.Rendering.Universal;
     using UtilityManager.Test;
+#if INCLUDE_UI_TOOLKIT
     using Toolkit;
+#endif
     using Data;
 
     public class UIAssetTest

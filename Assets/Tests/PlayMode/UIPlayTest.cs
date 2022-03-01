@@ -8,7 +8,9 @@ namespace SEF.UI.Test
     using UnityEngine.Experimental.Rendering.Universal;
     using UnityEngine.UIElements;
     using UtilityManager.Test;
-    using SEF.UI.Toolkit;
+#if INCLUDE_UI_TOOLKIT
+    using Toolkit;
+#endif
     using Entity;
     using Data;
     using SEF.Unit;

@@ -6,7 +6,9 @@ namespace SEF.UI.Test
     using UnityEngine;
     using UnityEngine.TestTools;
     using SEF.UI;
-    using SEF.UI.Toolkit;
+#if INCLUDE_UI_TOOLKIT
+    using Toolkit;
+#endif
 
     public class UICommonTest
     {

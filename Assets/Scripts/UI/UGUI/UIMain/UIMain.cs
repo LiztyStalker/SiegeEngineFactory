@@ -1,0 +1,132 @@
+namespace SEF.UI
+{
+    using System.Collections;
+    using UnityEngine;
+    using UnityEngine.UIElements;
+    using Storage;
+    using SEF.Account;
+    using Utility.IO;
+
+    public class UIMain : MonoBehaviour
+    {
+        private UIStart _uiStart;
+        private UILoad _uiLoad;
+
+        public static UIMain Create()
+        {
+            var obj = new GameObject();
+            obj.name = "UI@Main";
+            return obj.AddComponent<UIMain>();
+        }
+
+
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        private void Start()
+        {
+            InitializeAssetBundle();
+        }
+
+        private void InitializeAssetBundle()
+        {
+            //AssetBundle 불러오기
+            DataStorage.Initialize(_uiLoad.ShowLoad, result =>
+            {
+                if (result == TYPE_IO_RESULT.Success)
+                {
+                    InitializeAccount();
+                }
+                else
+                {
+                    //Success가 아니면 메시지 출력
+                    ShowPopup(result);
+                }
+
+            });
+        }
+
+        private void InitializeAccount()
+        {
+            //데이터 불러오기
+            Account.Current.LoadData(_uiLoad.ShowLoad, result =>
+            {
+                if (result == TYPE_IO_RESULT.Success)
+                {
+                    _uiLoad.Hide();
+                    _uiStart.ShowStart(GameStart);
+                }
+                else
+                {
+                    //Success가 아니면 메시지 출력
+                    ShowPopup(result);
+                }
+            });
+        }
+
+        private void ShowPopup(TYPE_IO_RESULT result)
+        {
+            UICommon.Current.ShowPopup(result.ToString(), Quit);
+        }
+
+        public void Initialize()
+        {
+            _uiStart = GetComponentInChildren<UIStart>(true);
+
+            if (_uiStart == null)
+            {
+                _uiStart = UIStart.Create();
+                _uiStart.transform.SetParent(transform);
+            }
+
+            _uiStart.Initialize();
+
+
+            _uiLoad = GetComponentInChildren<UILoad>(true);
+
+            if (_uiLoad == null)
+            {
+                _uiLoad = UILoad.Create();
+                _uiLoad.transform.SetParent(transform);
+            }
+            _uiLoad.Initialize();
+        }
+
+     
+        private void GameStart()
+        {
+            StartCoroutine(LoadAsyncCoroutine());
+        }
+
+        private IEnumerator LoadAsyncCoroutine()
+        {
+            var async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Game_Scene");
+            _uiStart.Hide();
+
+            while (!async.isDone)
+            {
+                _uiLoad.ShowLoad(async.progress);
+                yield return null;
+            }
+        }
+
+        private void Quit()
+        {
+            Application.Quit();
+        }
+
+        public void CleanUp()
+        {
+            _uiStart.CleanUp();
+            _uiLoad.CleanUp();
+
+        }
+
+        private void OnDestroy()
+        {
+            CleanUp();
+        }
+    }
+}

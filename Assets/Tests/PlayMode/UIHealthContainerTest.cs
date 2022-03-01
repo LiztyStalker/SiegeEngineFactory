@@ -7,7 +7,9 @@ namespace SEF.UI.Test
     using UnityEngine.TestTools;
     using UnityEngine.Experimental.Rendering.Universal;
     using UtilityManager.Test;
-    using SEF.UI.Toolkit;
+#if INCLUDE_UI_TOOLKIT
+    using Toolkit;
+#endif
 
     public class UIHealthContainerTest
     {
@@ -33,7 +35,7 @@ namespace SEF.UI.Test
             _uiEnemyHealthBar = UIEnemyHealthBar_Test.Create();
             _uiEnemyHealthBar.Initialize();
 
-            _uiContainer.Initialize(_uiEnemyHealthBar.Instance);
+            _uiContainer.Initialize();
         }
 
         [TearDown]

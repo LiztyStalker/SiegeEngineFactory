@@ -7,7 +7,9 @@ namespace SEF.UI.Test
     using UnityEngine.TestTools;
     using UnityEngine.Experimental.Rendering.Universal;
     using UtilityManager.Test;
-    using SEF.UI.Toolkit;
+#if INCLUDE_UI_TOOLKIT
+    using Toolkit;
+#endif
 
     public class UIHitTest
     {

@@ -1,3 +1,4 @@
+#if INCLUDE_UI_TOOLKIT
 namespace SEF.UI.Test
 {
     using System.Collections;
@@ -7,9 +8,9 @@ namespace SEF.UI.Test
     using UnityEngine.TestTools;
     using UnityEngine.Experimental.Rendering.Universal;
     using UtilityManager.Test;
-    using SEF.UI.Toolkit;
+    using Toolkit;
 
-    public class UIEnemyHealthBarTest
+public class UIEnemyHealthBarTest
     {
 
 
@@ -65,3 +66,4 @@ namespace SEF.UI.Test
         }
     }
 }
+#endif
