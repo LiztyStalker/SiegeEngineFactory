@@ -246,7 +246,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activatePanel: {fileID: 8943081913987629276}
-  _icon: {fileID: 0}
   _contentLabel: {fileID: 8943081913144827368}
   _slider: {fileID: 8943081913717663264}
   _sliderText: {fileID: 8943081912974589043}
@@ -254,7 +253,7 @@ MonoBehaviour:
   _rewardAssetIcon: {fileID: 8943081914867454303}
   _rewardValueLabel: {fileID: 8943081913009987692}
   _rewardedPanel: {fileID: 8943081914403574354}
-  _rewardedLabel: {fileID: 8943081914781632671}
+  _rewardedLabel: {fileID: 8943081913151473692}
 --- !u!1 &8943081913144827366
 GameObject:
   m_ObjectHideFlags: 0
