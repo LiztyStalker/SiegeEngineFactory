@@ -78,7 +78,7 @@ namespace SEF.UI
         private void SetPosition()
         {
             var screenPos = Camera.main.WorldToScreenPoint(transform.position);
-            screenPos.y = Screen.height - screenPos.y;
+            //screenPos.y = Screen.height - screenPos.y;
             screenPos.z = 0;
             transform.position = screenPos;
 //            _uiDocument.rootVisualElement.transform.position = screenPos;
@@ -99,11 +99,7 @@ namespace SEF.UI
 
         private void SetLabel()
         {
-            //Inactivate되면 기존에 연결한 VisualElement가 해제되므로 
-            //Activate후 다시 연결할 필요 있음
             _label.text = transform.name;
-
-
         }
 
         private float nowTime = 0;
