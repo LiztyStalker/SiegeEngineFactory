@@ -6,13 +6,15 @@ namespace SEF.UI
 
     public class UIMineLine : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@MineLine";
+
         private int _index;
 
         [SerializeField]
         private GameObject _activatePanel;
 
-        [SerializeField]
-        private Image _icon;
+        //[SerializeField]
+        //private Image _icon;
 
         [SerializeField]
         private Text _nameLabel;
@@ -33,8 +35,6 @@ namespace SEF.UI
 
         [SerializeField]
         private GameObject _inactivatePanel;
-        [SerializeField]
-        private Text _inactivateLabel;
 
         public void SetIndex(int index) => _index = index;
 
@@ -42,16 +42,28 @@ namespace SEF.UI
 
         public static UIMineLine Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@MineLine";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIMineLine>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIMineLine>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIMineLine>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {            
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
-            Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
+            //Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
 
@@ -110,7 +122,7 @@ namespace SEF.UI
         public void CleanUp()
         {
             _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
-            _icon = null;
+            //_icon = null;
         }
 
 
@@ -129,30 +141,4 @@ namespace SEF.UI
 #endregion
     }
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-    public class UIMineLine_Test : MonoBehaviour
-    {
-        private UIMineLine _instance;
-        public UIMineLine Instance => _instance;
-
-        public static UIMineLine_Test Create()
-        {
-            var obj = new GameObject();
-            obj.name = "UIMineLine_Test";
-            return obj.AddComponent<UIMineLine_Test>();
-        }
-
-        public void Initialize()
-        {
-            _instance = UIMineLine.Create();
-            _instance.Initialize();
-        }
-
-        public void Dispose()
-        {
-            _instance = null;
-            DestroyImmediate(gameObject);
-        }
-    }
-#endif
 }

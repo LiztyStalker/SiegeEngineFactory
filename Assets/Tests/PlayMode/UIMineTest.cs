@@ -36,14 +36,6 @@ namespace SEF.UI.Test
         }
 
 
-        [UnityTest]
-        public IEnumerator UIMineLineTest_Initialize()
-        {
-            var line = UIMineLine_Test.Create();
-            line.Initialize();
-            yield return new WaitForSeconds(1f);
-            line.Dispose();
-        }
 
         [UnityTest]
         public IEnumerator UIMineTest_Initialize()
@@ -103,63 +95,63 @@ namespace SEF.UI.Test
 
 
 
-        /// <summary>
-        /// UIBlacksmithLine UpgradeButton 비활성화
-        /// </summary>
-        /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UIMineLineTest_UpgradeButton_Disable()
-        {
+        ///// <summary>
+        ///// UIBlacksmithLine UpgradeButton 비활성화
+        ///// </summary>
+        ///// <returns></returns>
+        //[UnityTest]
+        //public IEnumerator UIMineLineTest_UpgradeButton_Disable()
+        //{
 
-            MineEntity entity;
-            entity.Initialize();
-            entity.SetData(MineData.Create_Test());
+        //    MineEntity entity;
+        //    entity.Initialize();
+        //    entity.SetData(MineData.Create_Test());
 
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-
-
-            var line = UIMineLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshMineLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
-
-            yield return new WaitForSeconds(1f);
-
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
 
 
-        /// <summary>
-        /// UIBlacksmithLine UpgradeButton 활성화
-        /// </summary>
-        /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UIMineLineTest_UpgradeButton_Enable()
-        {
+        //    var line = UIMineLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshMineLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
 
-            MineEntity entity;
-            entity.Initialize();
-            entity.SetData(MineData.Create_Test());
+        //    yield return new WaitForSeconds(1f);
 
-            IAssetData assetData = GoldAssetData.Create_Test(500);
-
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-            assetEntity.Add(assetData);
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
 
 
-            var line = UIMineLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshMineLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
+        ///// <summary>
+        ///// UIBlacksmithLine UpgradeButton 활성화
+        ///// </summary>
+        ///// <returns></returns>
+        //[UnityTest]
+        //public IEnumerator UIMineLineTest_UpgradeButton_Enable()
+        //{
 
-            yield return new WaitForSeconds(1f);
+        //    MineEntity entity;
+        //    entity.Initialize();
+        //    entity.SetData(MineData.Create_Test());
+
+        //    IAssetData assetData = GoldAssetData.Create_Test(500);
+
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
+        //    assetEntity.Add(assetData);
+
+
+        //    var line = UIMineLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshMineLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
+
+        //    yield return new WaitForSeconds(1f);
                         
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
     }
 }
 #endif

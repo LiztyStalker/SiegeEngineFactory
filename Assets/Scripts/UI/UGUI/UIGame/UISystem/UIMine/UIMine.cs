@@ -8,6 +8,8 @@ namespace SEF.UI
 
     public class UIMine : MonoBehaviour, ISystemPanel
     {
+        private readonly static string UGUI_NAME = "UI@Mine";
+
         private Dictionary<int, UIMineLine> _dic = new Dictionary<int, UIMineLine>();
 
         private int _lineCount = 0;
@@ -15,13 +17,26 @@ namespace SEF.UI
         [SerializeField]
         private ScrollRect _scrollView;
 
+
         public static UIMine Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Mine";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIMine>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIMine>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIMine>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
