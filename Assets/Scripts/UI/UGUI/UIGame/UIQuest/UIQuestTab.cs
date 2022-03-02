@@ -9,6 +9,8 @@ namespace SEF.UI
     public class UIQuestTab : MonoBehaviour
     {
 
+        private readonly static string UGUI_NAME = "UI@QuestTab";
+
         [SerializeField]
         private Text _contentLabel;
 
@@ -27,11 +29,23 @@ namespace SEF.UI
 
         public static UIQuestTab Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@QuestTab";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIQuestTab>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIQuestTab>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIQuestTab>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
         public void Initialize()
         {            
 

@@ -64,7 +64,7 @@ namespace SEF.UI
             //_uiSystem.Initialize();
             _uiPlay.Initialize();
             //_uiQuest.Initialize();
-            //_uiQuestTab.Initialize();
+            _uiQuestTab.Initialize();
 
             _addressDictionary = AddressDictionary.Create();
             _addressDictionary.Initialize();
