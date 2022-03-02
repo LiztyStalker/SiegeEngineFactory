@@ -48,13 +48,10 @@ namespace SEF.UI
 
         public void Initialize()
         {            
-
-            //Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_contentLabel != null, "_contentLabel element 를 찾지 못했습니다");
             Debug.Assert(_slider != null, "_slider element 를 찾지 못했습니다");
             Debug.Assert(_rewardButton != null, "_rewardButton element 를 찾지 못했습니다");
 
-            ////_icon
             _rewardButton.onClick.AddListener(OnRewardClickedEvent);
 
         }

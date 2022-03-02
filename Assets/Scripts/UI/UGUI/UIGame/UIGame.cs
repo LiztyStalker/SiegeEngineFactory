@@ -37,7 +37,6 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            //            _questButton = _root.Q<Button>("quest-button");
 
             _uiAsset = GetComponentInChildren<UIAsset>(true);
             if (_uiAsset == null) _uiAsset = UIAsset.Create();
@@ -111,13 +110,12 @@ namespace SEF.UI
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
-
+        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpend(assetData, isActive);
         public void RefreshSmithy(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
         public void RefreshMine(int index, MineEntity entity) => _uiSystem.RefreshMine(index, entity);
 
         public void RefreshAssetEntity(AssetPackage assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
-        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpend(assetData, isActive);
         public void RefreshAssetData(IAssetData assetData) => _uiAsset.RefreshAssetData(assetData);
         public void ShowHit(PlayActor playActor, DamageData attackData) => _uiPlay.ShowHit(playActor, attackData);
 
@@ -131,9 +129,12 @@ namespace SEF.UI
 
         #region ##### Listener #####
 
-        ///
         public void AddOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.AddOnWorkshopUpgradeListener(act);
         public void RemoveOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnWorkshopUpgradeListener(act);
+        public void AddOnUpWorkshopTechListener(System.Action<int, UnitTechData> act) => _uiSystem.AddUpTechListener(act);
+        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveUpTechListener(act);
+        public void AddOnWorkshopExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
+        public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
         public void AddOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
         public void RemoveOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
         public void AddOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
@@ -145,10 +146,6 @@ namespace SEF.UI
         public void AddOnMineUpgradeListener(System.Action<int> act) => _uiSystem.AddOnMineUpgradeListener(act);
         public void RemoveOnMineUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnMineUpgradeListener(act);
 
-        public void AddOnUpWorkshopTechListener(System.Action<int, UnitTechData> act) => _uiSystem.AddUpTechListener(act);
-        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveUpTechListener(act);
-        public void AddOnWorkshopExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
-        public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
 
 
         private System.Action<QuestData.TYPE_QUEST_GROUP, string> _rewardQuestEvent;
@@ -168,7 +165,6 @@ namespace SEF.UI
 
         private void OnRewardQuestEvent(QuestData.TYPE_QUEST_GROUP typeQuestGroup, string questKey, string addressKey, bool hasGoal)
         {
-            //Debug.Log(questKey + " " + addressKey + " " + hasGoal);
             if (hasGoal)
             {
                 _rewardQuestEvent?.Invoke(typeQuestGroup, questKey);
@@ -179,8 +175,6 @@ namespace SEF.UI
                 _addressDictionary.ShowAddress(addressKey);
             }
         }
-
-
         public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
         {
             _uiQuest.AddOnRefreshListener(act);
