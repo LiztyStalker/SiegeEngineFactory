@@ -39,19 +39,19 @@ namespace SEF.UI
         {
             //            _questButton = _root.Q<Button>("quest-button");
 
-            _uiAsset = GetComponentInChildren<UIAsset>();
+            _uiAsset = GetComponentInChildren<UIAsset>(true);
             if (_uiAsset == null) _uiAsset = UIAsset.Create();
 
-            _uiSystem = GetComponentInChildren<UISystem>();
+            _uiSystem = GetComponentInChildren<UISystem>(true);
             if (_uiSystem == null) _uiSystem = UISystem.Create();
 
-            _uiPlay = GetComponentInChildren<UIPlay>();
+            _uiPlay = GetComponentInChildren<UIPlay>(true);
             if (_uiPlay == null) _uiPlay = UIPlay.Create();
 
-            _uiQuest = GetComponentInChildren<UIQuest>();
+            _uiQuest = GetComponentInChildren<UIQuest>(true);
             if (_uiQuest == null) _uiQuest = UIQuest.Create();
 
-            _uiQuestTab = GetComponentInChildren<UIQuestTab>();
+            _uiQuestTab = GetComponentInChildren<UIQuestTab>(true);
             if (_uiQuestTab == null) _uiQuestTab = UIQuestTab.Create();
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
@@ -107,8 +107,9 @@ namespace SEF.UI
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
 
-        public void RefreshBlacksmith(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
+        public void RefreshSmithy(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
+        public void RefreshMine(int index, MineEntity entity) => _uiSystem.RefreshMine(index, entity);
 
         public void RefreshAssetEntity(AssetPackage assetEntity) => _uiSystem.RefreshAssetEntity(assetEntity);
         public void RefreshExpend(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpend(assetData, isActive);
@@ -136,7 +137,8 @@ namespace SEF.UI
         public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpgradeListener(act);
         public void AddOnVillageUpTechListener(System.Action<int> act) => _uiSystem.AddOnVillageUpTechListener(act);
         public void RemoveOnVillageUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpTechListener(act);
-
+        public void AddOnMineUpgradeListener(System.Action<int> act) => _uiSystem.AddOnMineUpgradeListener(act);
+        public void RemoveOnMineUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnMineUpgradeListener(act);
 
         public void AddOnUpWorkshopTechListener(System.Action<int, UnitTechData> act) => _uiSystem.AddUpTechListener(act);
         public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveUpTechListener(act);

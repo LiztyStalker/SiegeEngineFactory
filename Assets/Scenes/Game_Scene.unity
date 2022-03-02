@@ -867,6 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1250c42037baca43a76e78ed7a0990b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _systemLayout: {fileID: 0}
   _uiWorkshopButton: {fileID: 1881905608}
   _uiSmithyButton: {fileID: 488184840}
   _uiVillageButton: {fileID: 1263116939}
@@ -2085,7 +2086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795872449477931225, guid: a4e04e6b18dbc8a498203ea06016966b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4e04e6b18dbc8a498203ea06016966b, type: 3}

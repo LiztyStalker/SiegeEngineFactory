@@ -68,7 +68,6 @@ namespace SEF.UI
             gameObject.SetActive(false);
         }
 
-        //BlacksmithEntity
         public void RefreshMine(int index, MineEntity entity)
         {
             if (!_dic.ContainsKey(index))

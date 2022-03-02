@@ -182,7 +182,7 @@ namespace SEF.UI
             ui.RefreshVillage(index, entity);
         }
 
-        public void RefreshVillage(int index, MineEntity entity)
+        public void RefreshMine(int index, MineEntity entity)
         {
             var ui = GetSystemPanel<UIMine>();
             ui.RefreshMine(index, entity);

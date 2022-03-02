@@ -138,6 +138,17 @@ namespace SEF.Quest
         public string AddressKey => typeof(UIVillage).Name;
     }
 
+    public class UpgradeMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIMine).Name;
+    }
+
+    public class AccumulativelyUpgradeMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UIMine).Name;
+    }
+
+
     //제작하지 않음
     public class UpgradeCommanderConditionQuestData : IConditionQuestData
     {

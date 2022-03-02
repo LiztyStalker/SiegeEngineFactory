@@ -610,12 +610,36 @@ namespace SEF.Manager
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelyTechVillageConditionQuestData>((int)GetStatisticsValue<TechVillageStatisticsData>());
         }
-#endregion
+        #endregion
+
+        #region ##### Mine #####
+        public void UpgradeMine(int index)
+        {
+            var assetData = _mineManager.Upgrade(index);
+            SubjectAsset(assetData);
+            //통계적용
+            AddStatisticsData<UpgradeMineStatisticsData>();
+            //퀘스트 적용
+            AddQuestValue<UpgradeMineConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyUpgradeMineConditionQuestData>((int)GetStatisticsValue<UpgradeMineStatisticsData>());
+        }
+
+        //public void UpTechMine(int index)
+        //{
+        //    _villageManager.UpTech(index);
+        //    //통계적용
+        //    AddStatisticsData<TechVillageStatisticsData>();
+        //    //퀘스트 적용
+        //    AddQuestValue<TechVillageConditionQuestData>();
+        //    //누적 퀘스트 적용
+        //    SetQuestValue<AccumulativelyTechVillageConditionQuestData>((int)GetStatisticsValue<TechVillageStatisticsData>());
+        //}
+        #endregion
 
 
 
-
-#region ##### Research #####
+        #region ##### Research #####
         public void SuccessResearchData()
         {
             //통계적용
@@ -716,10 +740,13 @@ namespace SEF.Manager
         //자원
         //한계
 
-        public void AddOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.AddOnRefreshListener(act);
-        public void RemoveOnRefreshBlacksmithListener(System.Action<int, SmithyEntity> act) => _smithyManager.RemoveOnRefreshListener(act);
+        public void AddOnRefreshSmithyListener(System.Action<int, SmithyEntity> act) => _smithyManager.AddOnRefreshListener(act);
+        public void RemoveOnRefreshSmithyListener(System.Action<int, SmithyEntity> act) => _smithyManager.RemoveOnRefreshListener(act);
         public void AddOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.AddOnRefreshListener(act);
         public void RemoveOnRefreshVillageListener(System.Action<int, VillageEntity> act) => _villageManager.RemoveOnRefreshListener(act);
+        public void AddOnRefreshMineListener(System.Action<int, MineEntity> act) => _mineManager.AddOnRefreshListener(act);
+        public void RemoveOnRefreshMineListener(System.Action<int, MineEntity> act) => _mineManager.RemoveOnRefreshListener(act);
+
 
         public void AddProductUnitListener(System.Action<UnitEntity> act)
         {

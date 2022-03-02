@@ -749,7 +749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activatePanel: {fileID: 3115399758736898844}
-  _icon: {fileID: 0}
   _nameLabel: {fileID: 3115399758867739761}
   _levelValueLabel: {fileID: 3115399759689100319}
   _contentLabel: {fileID: 3115399758939988211}
@@ -757,8 +756,8 @@ MonoBehaviour:
   _upgradeButton: {fileID: 3115399759166666077}
   _upgradeAssetIcon: {fileID: 3115399759169766966}
   _upgradeValueLabel: {fileID: 3115399760530001722}
+  _buttonLabel: {fileID: 3115399760453352330}
   _inactivatePanel: {fileID: 3115399758873656864}
-  _inactivateLabel: {fileID: 0}
 --- !u!1 &3115399759689100317
 GameObject:
   m_ObjectHideFlags: 0

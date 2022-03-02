@@ -64,12 +64,9 @@ namespace SEF.Statistics
 #endif
 
     public class TechVillageStatisticsData : IStatisticsData { }
-
     public class UpgradeSmithyStatisticsData : IStatisticsData { }
-
-
     public class UpgradeVillageStatisticsData : IStatisticsData { }
-
+    public class UpgradeMineStatisticsData : IStatisticsData { }
 
 
 

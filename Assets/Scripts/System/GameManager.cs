@@ -71,8 +71,9 @@ namespace SEF.Manager
             //Event 연결
             //RefreshEntity 통합 필요?
             _gameSystem.AddRefreshUnitListener(_uiGame.RefreshUnit);
-            _gameSystem.AddOnRefreshBlacksmithListener(_uiGame.RefreshBlacksmith);
+            _gameSystem.AddOnRefreshSmithyListener(_uiGame.RefreshSmithy);
             _gameSystem.AddOnRefreshVillageListener(_uiGame.RefreshVillage);
+            _gameSystem.AddOnRefreshMineListener(_uiGame.RefreshMine);
 
             _gameSystem.AddRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
             _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
@@ -92,6 +93,7 @@ namespace SEF.Manager
             _uiGame.AddOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
             _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.AddOnVillageUpTechListener(_gameSystem.UpTechVillage);
+            _uiGame.AddOnMineUpgradeListener(_gameSystem.UpgradeMine);
 
             _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
 
@@ -121,9 +123,9 @@ namespace SEF.Manager
         {
             //Event 해제
             _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
-            _gameSystem.RemoveOnRefreshBlacksmithListener(_uiGame.RefreshBlacksmith);
+            _gameSystem.RemoveOnRefreshSmithyListener(_uiGame.RefreshSmithy);
             _gameSystem.RemoveOnRefreshVillageListener(_uiGame.RefreshVillage);
-
+            _gameSystem.RemoveOnRefreshMineListener(_uiGame.RefreshMine);
 
             _gameSystem.RemoveRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
             _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
@@ -142,6 +144,7 @@ namespace SEF.Manager
             _uiGame.RemoveOnVillageUpTechListener(_gameSystem.UpTechVillage);
             _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
+            _uiGame.RemoveOnMineUpgradeListener(_gameSystem.UpgradeMine);
 
             _uiGame.RemoveOnRewardQuestListener(_gameSystem.GetRewardAssetData);
 

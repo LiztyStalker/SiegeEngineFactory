@@ -32,6 +32,9 @@ namespace SEF.UI
         private Image _upgradeAssetIcon;
         [SerializeField]
         private Text _upgradeValueLabel;
+        [SerializeField]
+        private Text _buttonLabel;
+
 
         [SerializeField]
         private GameObject _inactivatePanel;
@@ -73,6 +76,7 @@ namespace SEF.UI
             Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
             Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
             Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
+            Debug.Assert(_buttonLabel != null, "_buttonLabel element 를 찾지 못했습니다");
 
             Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
 
@@ -108,7 +112,7 @@ namespace SEF.UI
             _contentLabel.text = entity.Ability;
 
             //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
-
+            _buttonLabel.text = "업그레이드";
             _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
 
         }
