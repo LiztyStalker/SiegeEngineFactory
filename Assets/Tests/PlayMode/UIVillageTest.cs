@@ -2,7 +2,6 @@
 namespace SEF.UI.Test
 {
     using System.Collections;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.TestTools;
@@ -35,15 +34,6 @@ namespace SEF.UI.Test
 
         }
 
-
-        [UnityTest]
-        public IEnumerator UIVillageLineTest_Initialize()
-        {
-            var line = UIVillageLine_Test.Create();
-            line.Initialize();
-            yield return new WaitForSeconds(1f);
-            line.Dispose();
-        }
 
         [UnityTest]
         public IEnumerator UIVillageTest_Initialize()
@@ -106,60 +96,60 @@ namespace SEF.UI.Test
         /// <summary>
         /// UIBlacksmithLine UpgradeButton 비활성화
         /// </summary>
-        /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UIVillageLineTest_UpgradeButton_Disable()
-        {
+        ///// <returns></returns>
+        //[UnityTest]
+        //public IEnumerator UIVillageLineTest_UpgradeButton_Disable()
+        //{
 
-            VillageEntity entity = new VillageEntity();
-            entity.Initialize();
-            entity.SetData(VillageData.Create_Test());
+        //    VillageEntity entity = new VillageEntity();
+        //    entity.Initialize();
+        //    entity.SetData(VillageData.Create_Test());
 
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-
-
-            var line = UIVillageLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshVillageLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
-
-            yield return new WaitForSeconds(1f);
-
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
 
 
-        /// <summary>
-        /// UIBlacksmithLine UpgradeButton 활성화
-        /// </summary>
-        /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UIVillageLineTest_UpgradeButton_Enable()
-        {
+        //    var line = UIVillageLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshVillageLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
 
-            VillageEntity entity = new VillageEntity();
-            entity.Initialize();
-            entity.SetData(VillageData.Create_Test());
+        //    yield return new WaitForSeconds(1f);
 
-            IAssetData assetData = GoldAssetData.Create_Test(500);
-
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-            assetEntity.Add(assetData);
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
 
 
-            var line = UIVillageLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshVillageLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
+        ///// <summary>
+        ///// UIBlacksmithLine UpgradeButton 활성화
+        ///// </summary>
+        ///// <returns></returns>
+        //[UnityTest]
+        //public IEnumerator UIVillageLineTest_UpgradeButton_Enable()
+        //{
 
-            yield return new WaitForSeconds(1f);
+        //    VillageEntity entity = new VillageEntity();
+        //    entity.Initialize();
+        //    entity.SetData(VillageData.Create_Test());
+
+        //    IAssetData assetData = GoldAssetData.Create_Test(500);
+
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
+        //    assetEntity.Add(assetData);
+
+
+        //    var line = UIVillageLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshVillageLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
+
+        //    yield return new WaitForSeconds(1f);
                         
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
     }
 }
 #endif

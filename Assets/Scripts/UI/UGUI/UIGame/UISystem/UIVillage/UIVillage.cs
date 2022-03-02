@@ -7,6 +7,8 @@ namespace SEF.UI
 
     public class UIVillage : MonoBehaviour, ISystemPanel
     {
+        private readonly static string UGUI_NAME = "UI@Village";
+
         private Dictionary<int, UIVillageLine> _dic = new Dictionary<int, UIVillageLine>();
 
         [SerializeField]
@@ -14,10 +16,21 @@ namespace SEF.UI
 
         public static UIVillage Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Village";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIVillage>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIVillage>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIVillage>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
 
         public void Initialize()
