@@ -79,17 +79,6 @@ namespace SEF.UI
         private Text _buttonLabel;
         //        private Button _techButton;
 
-
-
-        [SerializeField]
-        private GameObject _inactivatePanel;
-        [SerializeField]
-        private Button _expendButton;
-        [SerializeField]
-        private Image _expendAssetIcon;
-        [SerializeField]
-        private Text _expendValueLabel;
-
         [SerializeField]
         private GameObject _techPanel;
         [SerializeField]
@@ -97,7 +86,7 @@ namespace SEF.UI
         [SerializeField]
         private Button _techCancelButton;
 
-        private List<Button> _techButtons = new List<Button>();
+        private List<UIAssetButton> _techButtons = new List<UIAssetButton>();
 
         public void SetIndex(int index) => _index = index;
 
@@ -154,12 +143,6 @@ namespace SEF.UI
             //Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
             //Debug.Assert(_uiFillable != null, "_uiProgressbar element 를 찾지 못했습니다");
 
-            Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
-            Debug.Assert(_expendButton != null, "_expendButton element 를 찾지 못했습니다");
-            Debug.Assert(_expendAssetIcon != null, "_expendAssetIcon element 를 찾지 못했습니다");
-            Debug.Assert(_expendValueLabel != null, "_expendValueLabel element 를 찾지 못했습니다");
-
-
             Debug.Assert(_techPanel != null, "_techPanel element 를 찾지 못했습니다");
             Debug.Assert(_techLayout != null, "_techLayout element 를 찾지 못했습니다");
 
@@ -188,17 +171,14 @@ namespace SEF.UI
             //_dpsUpLabel.text = "(0)";
 
             //_expendAssetIcon = Texture
-            _expendValueLabel.text = "0";
 
             _levelValueLabel.text = "1";
 
 
             _upgradeButton.onClick.AddListener(OnUpgradeEvent);
-            _expendButton.onClick.AddListener(OnUpgradeEvent);
-            _techCancelButton.onClick.AddListener(OnUpgradeEvent);
+            _techCancelButton.onClick.AddListener(OnCancelTechEvent);
 
-            _activatePanel.SetActive(false);
-            _inactivatePanel.SetActive(true);
+            _activatePanel.SetActive(true);
 
             //_attackUpLabel.gameObject.SetActive(false);
             //_healthUpLabel.gameObject.SetActive(false);
@@ -221,12 +201,6 @@ namespace SEF.UI
 
         public void RefreshUnit(UnitEntity entity, float nowTime)
         {
-            if (!_activatePanel.activeSelf)
-            {
-                _activatePanel.SetActive(true);
-                _inactivatePanel.SetActive(false);
-            }
-
             _entity = entity;
 
             var unitData = entity.UnitData;
@@ -245,7 +219,7 @@ namespace SEF.UI
 
             //_upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
 
-
+            
 
             isEndTech = false;
 
@@ -305,21 +279,11 @@ namespace SEF.UI
 //            _upgradeButton.SetEnabled(isEnough);
         }
 
-        public void RefreshExpend(IAssetData assetData, bool isActive)
-        {
-            //_expendAssetIcon = 
-            _expendValueLabel.text = assetData.GetValue();
-            _expendButton.interactable = isActive;
-//            _expendButton.SetEnabled(isActive);
-        }
 
         public void CleanUp()
         {
             _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
-            _expendButton.onClick.RemoveListener(OnExpendEvent);
             _techCancelButton.onClick.RemoveListener(OnCancelTechEvent);
-
-            _icon = null;
         }
 
 
@@ -335,7 +299,7 @@ namespace SEF.UI
             {
                 if(i >= _techButtons.Count)
                 {
-                    var button = CreateButton();
+                    var button = UIAssetButton.Create();
                     button.transform.SetParent(_techLayout.transform);
                     _techButtons.Add(button);
                     button.onClick.AddListener(() => OnUpTechEvent(button));
@@ -344,14 +308,6 @@ namespace SEF.UI
                 _techButtons[i].gameObject.SetActive(true);
             }
             _techPanel.SetActive(true);
-        }
-
-        private Button CreateButton()
-        {
-            var obj = new GameObject();
-            obj.name = "Btn@Tech";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<Button>();
         }
 
         private void HideTechSelector()
@@ -412,30 +368,4 @@ namespace SEF.UI
 #endregion
     }
 
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-    public class UIWorkshopLine_Test : MonoBehaviour
-    {
-        private UIWorkshopLine _instance;
-        public UIWorkshopLine Instance => _instance;
-
-        public static UIWorkshopLine_Test Create()
-        {
-            var obj = new GameObject();
-            obj.name = "UIWorkshopLine_Test";
-            return obj.AddComponent<UIWorkshopLine_Test>();
-        }
-
-        public void Initialize()
-        {
-            _instance = UIWorkshopLine.Create();
-            _instance.Initialize();
-        }
-
-        public void Dispose()
-        {
-            _instance = null;
-            DestroyImmediate(gameObject);
-        }
-    }
-#endif
 }

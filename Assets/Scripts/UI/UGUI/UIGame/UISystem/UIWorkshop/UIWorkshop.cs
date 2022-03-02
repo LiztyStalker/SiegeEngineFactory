@@ -15,7 +15,7 @@ namespace SEF.UI
 
         private int _lineCount = 0;
 
-        private UIWorkshopLine _expendWorkshopLine;
+        private UIWorkshopExpend _workshopExpend;
         //prviate UIWorkshopExpendLine // 분리 필요
 
         [SerializeField]
@@ -54,8 +54,8 @@ namespace SEF.UI
 
         public void CleanUp()
         {
-            _expendWorkshopLine.RemoveExpendListener(OnExpendEvent);
-            _expendWorkshopLine.CleanUp();
+            _workshopExpend.RemoveExpendListener(OnExpendEvent);
+            _workshopExpend.CleanUp();
 
             foreach (var value in _dic.Values)
             {
@@ -102,22 +102,22 @@ namespace SEF.UI
             }
         }
 
-        public void RefreshExpend(IAssetData assetData, bool isActive) => _expendWorkshopLine.RefreshExpend(assetData, isActive);
+        public void RefreshExpend(IAssetData assetData, bool isActive) => _workshopExpend.RefreshExpend(assetData, isActive);
 
         private void CreateExpendWorkshopLine()
         {
-            _expendWorkshopLine = UIWorkshopLine.Create();
-            _expendWorkshopLine.Initialize();
-            _expendWorkshopLine.AddExpendListener(OnExpendEvent);
-            _expendWorkshopLine.transform.SetAsLastSibling();
-//            _scrollView.Insert(_scrollView.childCount, _expendWorkshopLine);
+            _workshopExpend = UIWorkshopExpend.Create();
+            _workshopExpend.Initialize();
+            _workshopExpend.AddExpendListener(OnExpendEvent);
+            _workshopExpend.transform.SetParent(_scrollView.content);
+            _workshopExpend.transform.SetAsLastSibling();
         }
 
         private void ChangeExpendWorkshopLine()
         {
             if (_lineCount != _scrollView.content.childCount)
             {
-                _expendWorkshopLine.transform.SetAsLastSibling();
+                _workshopExpend.transform.SetAsLastSibling();
             }
             _lineCount = _scrollView.content.childCount;
         }

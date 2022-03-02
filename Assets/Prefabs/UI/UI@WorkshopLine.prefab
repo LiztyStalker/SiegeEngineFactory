@@ -1842,7 +1842,7 @@ MonoBehaviour:
   _upgradeAssetIcon: {fileID: 3115399759169766966}
   _upgradeValueLabel: {fileID: 3115399760530001722}
   _buttonLabel: {fileID: 3115399760453352330}
-  _inactivatePanel: {fileID: 3115399758881877257}
+  _inactivatePanel: {fileID: 3115399758873656864}
   _expendButton: {fileID: 3115399758772408077}
   _expendAssetIcon: {fileID: 3115399758572808614}
   _expendValueLabel: {fileID: 3115399760246066095}
