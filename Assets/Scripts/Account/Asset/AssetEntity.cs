@@ -22,7 +22,6 @@ namespace SEF.Entity
                 if (_limitAssetData is PopulationAssetData)
                 {
                     var data = new UniversalAssetData(StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxPopulationStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_limitAssetData.AssetValue)));
-                    UnityEngine.Debug.Log("Limit " + data.GetValue());
                     return data;
 
                 }
