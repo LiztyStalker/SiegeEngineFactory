@@ -97,7 +97,7 @@ namespace SEF.Data
     
         public StorableData GetStorableData() => null;
 
-        public string GetValue() => null;
+        public string GetValue() => AssetValue.ToString();
 
         public void SetCompoundInterest(float nowValue, float rate, int length = 1) { }
 
