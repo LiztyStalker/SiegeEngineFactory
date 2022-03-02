@@ -12,9 +12,6 @@ namespace SEF.UI
     {
         public static event System.Action<float> ProcessEvent;
 
-        private readonly string PATH_UI_UXML = "Assets/Scripts/UI/UIGame/UIGameUXML.uxml";
-
-
         private AddressDictionary _addressDictionary;
 
         private UIAsset _uiAsset;
@@ -23,8 +20,8 @@ namespace SEF.UI
         private UIQuest _uiQuest;
         private UIQuestTab _uiQuestTab;
 
+        [SerializeField]
         private Button _questButton;
-        //private UIOfflineReward _uiOfflineReward;
 
         public static UIGame Create()
         {
@@ -40,13 +37,22 @@ namespace SEF.UI
 
         public void Initialize()
         {
-//            _questButton = _root.Q<Button>("quest-button");
+            //            _questButton = _root.Q<Button>("quest-button");
 
-            _uiAsset = UIAsset.Create();
-            _uiSystem = UISystem.Create();
-            _uiPlay = UIPlay.Create();
-            _uiQuest = UIQuest.Create();
-            _uiQuestTab = UIQuestTab.Create();
+            _uiAsset = GetComponentInChildren<UIAsset>();
+            if (_uiAsset == null) _uiAsset = UIAsset.Create();
+
+            _uiSystem = GetComponentInChildren<UISystem>();
+            if (_uiSystem == null) _uiSystem = UISystem.Create();
+
+            _uiPlay = GetComponentInChildren<UIPlay>();
+            if (_uiPlay == null) _uiPlay = UIPlay.Create();
+
+            _uiQuest = GetComponentInChildren<UIQuest>();
+            if (_uiQuest == null) _uiQuest = UIQuest.Create();
+
+            _uiQuestTab = GetComponentInChildren<UIQuestTab>();
+            if (_uiQuestTab == null) _uiQuestTab = UIQuestTab.Create();
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
@@ -55,10 +61,10 @@ namespace SEF.UI
             Debug.Assert(_uiQuestTab != null, "_uiQuestTab 가 등록되지 않았습니다");
 
             _uiAsset.Initialize();
-            _uiSystem.Initialize();
+            //_uiSystem.Initialize();
             _uiPlay.Initialize();
-            _uiQuest.Initialize();
-            _uiQuestTab.Initialize();
+            //_uiQuest.Initialize();
+            //_uiQuestTab.Initialize();
 
             _addressDictionary = AddressDictionary.Create();
             _addressDictionary.Initialize();

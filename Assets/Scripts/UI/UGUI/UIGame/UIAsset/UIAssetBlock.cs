@@ -4,8 +4,11 @@ namespace SEF.UI
     using UnityEngine.UI;
     using Data;
 
-    public class UIAssetBlock 
+    public class UIAssetBlock : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@AssetBlock";
+
+
         [SerializeField]
         private Image _icon;
 
@@ -14,8 +17,23 @@ namespace SEF.UI
 
         public static UIAssetBlock Create()
         {
-            return new UIAssetBlock();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIAssetBlock>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIAssetBlock>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize(string key)
         {

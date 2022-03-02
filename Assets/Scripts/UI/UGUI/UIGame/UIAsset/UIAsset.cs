@@ -3,10 +3,11 @@ namespace SEF.UI
     using Data;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
 
+    [RequireComponent(typeof(Canvas))]
     public class UIAsset : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@Asset";
 
         private string[] assetArray = new string[]
         {
@@ -19,7 +20,30 @@ namespace SEF.UI
 
         private Dictionary<string, UIAssetBlock> _dic = new Dictionary<string, UIAssetBlock>();
 
-        public static UIAsset Create() => new UIAsset();
+        [SerializeField]
+        private Transform _layout;
+
+
+
+        public static UIAsset Create()
+        {
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIAsset>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIAsset>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
+        }
+
 
         public void Initialize()
         {
@@ -27,6 +51,7 @@ namespace SEF.UI
             {
                 var block = UIAssetBlock.Create();
                 block.Initialize(assetArray[i]);
+                block.transform.SetParent(_layout);
                 _dic.Add(assetArray[i], block);
             }
         }
@@ -34,7 +59,6 @@ namespace SEF.UI
         public void RefreshAssetData(IAssetData data)
         {
             var typeName = data.GetType().Name;
-            //Debug.Log(typeName);
             if (_dic.ContainsKey(typeName))
             {
                 _dic[typeName].RefreshAssetData(data);
@@ -49,8 +73,8 @@ namespace SEF.UI
 
     }
 
-    #region ##### Test #####
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
+    #region ##### Test #####
     public class UIAsset_Test : MonoBehaviour
     {
 
@@ -77,6 +101,6 @@ namespace SEF.UI
             DestroyImmediate(gameObject);
         }
     }
-#endif
     #endregion
+#endif
 }

@@ -2,7 +2,6 @@
 namespace SEF.UI.Test
 {
     using System.Collections;
-    using System.Collections.Generic;
     using NUnit.Framework;
     using UnityEngine;
     using UnityEngine.TestTools;
@@ -33,52 +32,6 @@ namespace SEF.UI.Test
             PlayTestUtility.DestroyLight(_light);
 
         }
-
-
-        [UnityTest]
-        public IEnumerator UIAssetBlockTest_Initialize()
-        {
-            var block = UIAssetBlock_Test.Create();
-            block.Initialize();
-            yield return new WaitForSeconds(1f);
-            block.Dispose();
-        }
-
-
-
-        [UnityTest]
-        public IEnumerator UIAssetBlockTest_Refresh()
-        {
-            //var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
-            var data = GoldAssetData.Create_Test(100);
-            var block = UIAssetBlock_Test.Create();
-            block.Initialize();
-            block.Instance.RefreshAssetData(data);
-            yield return new WaitForSeconds(1f);
-            block.Dispose();
-        }
-
-        [UnityTest]
-        public IEnumerator UIAssetBlockTest_Refresh_Random()
-        {
-            var data = GoldAssetData.Create_Test(100);
-//            var data = AssetData.Create_Test(TYPE_ASSET.Gold, 100);
-            var block = UIAssetBlock_Test.Create();
-            block.Initialize();
-            int count = 0;
-            while (true)
-            {
-                var value = (int)Random.Range(0, 1000000000);
-                data.Value += value;
-                block.Instance.RefreshAssetData(data);
-                count++;
-                if (count > 1000)
-                    break;
-                yield return null;
-            }
-            block.Dispose();
-        }
-
 
         [UnityTest]
         public IEnumerator UIAssetTest_Initialize()
