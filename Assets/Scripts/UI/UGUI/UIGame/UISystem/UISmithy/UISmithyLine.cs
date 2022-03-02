@@ -6,14 +6,15 @@ namespace SEF.UI
 
     public class UISmithyLine : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@SmithyLine";
 
         private int _index;
 
         [SerializeField]
         private GameObject _activatePanel;
 
-        [SerializeField]
-        private Image _icon;
+        //[SerializeField]
+        //private Image _icon;
 
         [SerializeField]
         private Text _nameLabel;
@@ -36,26 +37,38 @@ namespace SEF.UI
 
         [SerializeField]
         private GameObject _inactivatePanel;
-        [SerializeField]
-        private Text _inactivateLabel;
 
         public void SetIndex(int index) => _index = index;
 
         private SmithyEntity _entity;
 
+
         public static UISmithyLine Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@SmithyLine";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UISmithyLine>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UISmithyLine>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UISmithyLine>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
+
 
         public void Initialize()
         {
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
-            Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
+            //Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
 
@@ -157,7 +170,7 @@ namespace SEF.UI
         {
             _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
             //_upgradeButton.UnregisterCallback<ClickEvent>(OnUpgradeEvent);
-            _icon = null;
+            //_icon = null;
         }
 
 

@@ -35,16 +35,6 @@ namespace SEF.UI.Test
 
         }
 
-
-        [UnityTest]
-        public IEnumerator UISmithyLineTest_Initialize()
-        {
-            var line = UISmithyLine_Test.Create();
-            line.Initialize();
-            yield return new WaitForSeconds(1f);
-            line.Dispose();
-        }
-
         [UnityTest]
         public IEnumerator UISmithyTest_Initialize()
         {
@@ -107,59 +97,59 @@ namespace SEF.UI.Test
         /// UISmithyLine UpgradeButton 비활성화
         /// </summary>
         /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UISmithyLineTest_UpgradeButton_Disable()
-        {
+        //[UnityTest]
+        //public IEnumerator UISmithyTest_UpgradeButton_Disable()
+        //{
 
-            SmithyEntity entity = new SmithyEntity();
-            entity.Initialize();
-            entity.SetData(SmithyData.Create_Test());
+        //    SmithyEntity entity = new SmithyEntity();
+        //    entity.Initialize();
+        //    entity.SetData(SmithyData.Create_Test());
 
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
 
 
-            var line = UISmithyLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshSmithyLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
+        //    var line = UISmithyLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshSmithyLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
 
-            yield return new WaitForSeconds(1f);
+        //    yield return new WaitForSeconds(1f);
 
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
 
 
         /// <summary>
         /// UISmithyLine UpgradeButton 활성화
         /// </summary>
         /// <returns></returns>
-        [UnityTest]
-        public IEnumerator UISmithyLineTest_UpgradeButton_Enable()
-        {
+        //[UnityTest]
+        //public IEnumerator UISmithyTest_UpgradeButton_Enable()
+        //{
 
-            SmithyEntity entity = new SmithyEntity();
-            entity.Initialize();
-            entity.SetData(SmithyData.Create_Test());
+        //    SmithyEntity entity = new SmithyEntity();
+        //    entity.Initialize();
+        //    entity.SetData(SmithyData.Create_Test());
 
-            IAssetData assetData = GoldAssetData.Create_Test(500);
+        //    IAssetData assetData = GoldAssetData.Create_Test(500);
 
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-            assetEntity.Add(assetData);
+        //    AssetPackage assetEntity = AssetPackage.Create();
+        //    assetEntity.Initialize();
+        //    assetEntity.Add(assetData);
 
 
-            var line = UISmithyLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshSmithyLine(entity);
-            line.Instance.RefreshAssetEntity(assetEntity);
+        //    var line = UISmithyLine_Test.Create();
+        //    line.Initialize();
+        //    line.Instance.RefreshSmithyLine(entity);
+        //    line.Instance.RefreshAssetEntity(assetEntity);
 
-            yield return new WaitForSeconds(1f);
+        //    yield return new WaitForSeconds(1f);
                         
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
+        //    assetEntity.CleanUp();
+        //    line.Dispose();
+        //}
     }
 }
 #endif

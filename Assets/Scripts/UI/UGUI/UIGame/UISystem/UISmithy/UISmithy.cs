@@ -7,17 +7,31 @@ namespace SEF.UI
 
     public class UISmithy : MonoBehaviour, ISystemPanel
     {
+        private readonly static string UGUI_NAME = "UI@Smithy";
+
         private Dictionary<int, UISmithyLine> _dic = new Dictionary<int, UISmithyLine>();
 
         [SerializeField]
         private ScrollRect _scrollView;
 
+
         public static UISmithy Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Smithy";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UISmithy>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UISmithy>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UISmithy>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
 
         public void Initialize()
@@ -59,7 +73,6 @@ namespace SEF.UI
             if (!_dic.ContainsKey(index))
             {
                 var line = UISmithyLine.Create();
-                Debug.Log("Create " + line);
                 line.Initialize();
                 line.SetIndex(index);
                 line.AddUpgradeListener(OnUpgradeEvent);

@@ -62,20 +62,20 @@ namespace SEF.UI
 
 
 
-            //var uiSmithy = UISmithy.Create();
-            //Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
-            //_uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
+            var uiSmithy = UISmithy.Create();
+            Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
+            _uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
 
 
 
-            //var uiVillage = UIVillage.Create();
-            //Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
-            //_uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
+            var uiVillage = UIVillage.Create();
+            Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
+            _uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
 
 
-            //var uiMine = UIMine.Create();
-            //Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
-            //_uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
+            var uiMine = UIMine.Create();
+            Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
+            _uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
 
 
             //var uiResearch = UIResearch.Create();
@@ -87,9 +87,9 @@ namespace SEF.UI
 
 
             _list.Add(uiWorkshop);
-            //_list.Add(uiSmithy);
-            //_list.Add(uiVillage);
-            //_list.Add(uiMine);
+            _list.Add(uiSmithy);
+            _list.Add(uiVillage);
+            _list.Add(uiMine);
             //_list.Add(uiResearch);
 
             for (int i = 0; i < _list.Count; i++)
