@@ -8,6 +8,8 @@ namespace SEF.UI
 
     public class UIWorkshop : MonoBehaviour, ISystemPanel
     {
+        private readonly static string UGUI_NAME = "UI@Workshop";
+
 
         private Dictionary<int, UIWorkshopLine> _dic = new Dictionary<int, UIWorkshopLine>();
 
@@ -21,11 +23,23 @@ namespace SEF.UI
 
         public static UIWorkshop Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Workshop";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIWorkshop>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIWorkshop>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIWorkshop>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
@@ -101,9 +115,6 @@ namespace SEF.UI
 
         private void ChangeExpendWorkshopLine()
         {
-
-
-
             if (_lineCount != _scrollView.content.childCount)
             {
                 _expendWorkshopLine.transform.SetAsLastSibling();

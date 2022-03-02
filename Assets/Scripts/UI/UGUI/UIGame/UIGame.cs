@@ -61,7 +61,7 @@ namespace SEF.UI
             Debug.Assert(_uiQuestTab != null, "_uiQuestTab 가 등록되지 않았습니다");
 
             _uiAsset.Initialize();
-            //_uiSystem.Initialize();
+            _uiSystem.Initialize();
             _uiPlay.Initialize();
             _uiQuest.Initialize();
             _uiQuestTab.Initialize();

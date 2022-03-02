@@ -35,16 +35,6 @@ namespace SEF.UI.Test
 
         }
 
-
-        [UnityTest]
-        public IEnumerator UIWorkshopLineTest_Initialize()
-        {
-            var line = UIWorkshopLine_Test.Create();
-            line.Initialize();
-            yield return new WaitForSeconds(1f);
-            line.Dispose();
-        }
-
         [UnityTest]
         public IEnumerator UIWorkshopTest_Initialize()
         {
@@ -89,56 +79,6 @@ namespace SEF.UI.Test
             workshop.Dispose();
         }
 
-        [UnityTest]
-        public IEnumerator UIWorkshopLineTest_UpgradeButton_Disable()
-        {
-
-            UnitEntity unitEntity = new UnitEntity();
-            unitEntity.Initialize();
-            unitEntity.UpTech(UnitData.Create_Test());
-
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-
-
-            var line = UIWorkshopLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshUnit(unitEntity, 0.5f);
-
-
-            line.Instance.RefreshAssetEntity(assetEntity);
-            yield return new WaitForSeconds(1f);
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
-
-        [UnityTest]
-        public IEnumerator UIWorkshopLineTest_UpgradeButton_Enable()
-        {
-
-            UnitEntity unitEntity = new UnitEntity();
-            unitEntity.Initialize();
-            unitEntity.UpTech(UnitData.Create_Test());
-
-            //AssetData assetData = AssetData.Create_Test(TYPE_ASSET.Gold, 500);
-            IAssetData assetData = GoldAssetData.Create_Test(500);
-
-            AssetPackage assetEntity = AssetPackage.Create();
-            assetEntity.Initialize();
-            assetEntity.Add(assetData);
-
-
-            var line = UIWorkshopLine_Test.Create();
-            line.Initialize();
-            line.Instance.RefreshUnit(unitEntity, 0.5f);
-            line.Instance.RefreshAssetEntity(assetEntity);
-            
-            yield return new WaitForSeconds(1f);
-
-            unitEntity.CleanUp();
-            assetEntity.CleanUp();
-            line.Dispose();
-        }
     }
 }
 #endif

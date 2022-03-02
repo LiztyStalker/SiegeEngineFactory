@@ -8,6 +8,7 @@ namespace SEF.UI
 
     public class UIWorkshopLine : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@WorkshopLine";
 
         private int _index;
 
@@ -26,43 +27,43 @@ namespace SEF.UI
 
         [SerializeField]
         private Text _levelValueLabel;
-        [SerializeField]
-        private Text _dpsSlideLabel;
-        [SerializeField]
-        private Text _dpsLabel;
-        [SerializeField]
-        private Text _dpsValueLabel;
-        [SerializeField]
-        private Text _dpsUpLabel;
+        //[SerializeField]
+        //private Text _dpsSlideLabel;
+        //[SerializeField]
+        //private Text _dpsLabel;
+        //[SerializeField]
+        //private Text _dpsValueLabel;
+        //[SerializeField]
+        //private Text _dpsUpLabel;
 
-        [SerializeField]
-        private Text _healthLabel;
+        //[SerializeField]
+        //private Text _healthLabel;
         [SerializeField]
         private Text _healthValueLabel;
-        [SerializeField]
-        private Text _healthUpLabel;
+        //[SerializeField]
+        //private Text _healthUpLabel;
 
-        [SerializeField]
-        private Text _attackLabel;
+        //[SerializeField]
+        //private Text _attackLabel;
         [SerializeField]
         private Text _attackValueLabel;
-        [SerializeField]
-        private Text _attackUpLabel;
+        //[SerializeField]
+        //private Text _attackUpLabel;
 
-        [SerializeField]
-        private Text _productLabel;
+        //[SerializeField]
+        //private Text _productLabel;
         [SerializeField]
         private Text _productValueLabel;
-        [SerializeField]
-        private Text _attackDelayLabel;
+        //[SerializeField]
+        //private Text _attackDelayLabel;
         [SerializeField]
         private Text _attackDelayValueLabel;
-        [SerializeField]
-        private Text _attackCountLabel;
+        //[SerializeField]
+        //private Text _attackCountLabel;
         [SerializeField]
         private Text _attackCountValueLabel;
-        [SerializeField]
-        private Text _attackTypeLabel;
+        //[SerializeField]
+        //private Text _attackTypeLabel;
         [SerializeField]
         private Text _attackTypeValueLabel;
 
@@ -100,13 +101,26 @@ namespace SEF.UI
 
         public void SetIndex(int index) => _index = index;
 
+
         public static UIWorkshopLine Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@WorkshopLine";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIWorkshopLine>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIWorkshopLine>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIWorkshopLine>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
@@ -117,22 +131,22 @@ namespace SEF.UI
             Debug.Assert(_typeLabel != null, "_typeLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
 
-            Debug.Assert(_dpsSlideLabel != null, "_dpsSlideLabel element 를 찾지 못했습니다");
-            Debug.Assert(_dpsLabel != null, "_dpsLabel element 를 찾지 못했습니다");
-            Debug.Assert(_dpsValueLabel != null, "_dpsValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_dpsUpLabel != null, "_dpsUpLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_dpsSlideLabel != null, "_dpsSlideLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_dpsLabel != null, "_dpsLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_dpsValueLabel != null, "_dpsValueLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_dpsUpLabel != null, "_dpsUpLabel element 를 찾지 못했습니다");
 
-            Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthValueLabel != null, "_healthValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackValueLabel != null, "_attackValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_productLabel != null, "_productLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_productLabel != null, "_productLabel element 를 찾지 못했습니다");
             Debug.Assert(_productValueLabel != null, "_productValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_attackDelayLabel != null, "_attackDelayLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_attackDelayLabel != null, "_attackDelayLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackDelayValueLabel != null, "_attackDelayValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_attackCountLabel != null, "_attackCountLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_attackCountLabel != null, "_attackCountLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackCountValueLabel != null, "_attackCountValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_attackTypeLabel != null, "_attackTypeLabel element 를 찾지 못했습니다");
+            //Debug.Assert(_attackTypeLabel != null, "_attackTypeLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackTypeValueLabel != null, "_attackTypeValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
             Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
@@ -154,24 +168,24 @@ namespace SEF.UI
             _nameLabel.text = "이름";
             _groupLabel.text = "그룹";
             _typeLabel.text = "타입";
-            _healthLabel.text = "체력";
+            //_healthLabel.text = "체력";
             _healthValueLabel.text = "0";
-            _healthUpLabel.text = "(0)";
-            _attackLabel.text = "공격";
+            //_healthUpLabel.text = "(0)";
+            //_attackLabel.text = "공격";
             _attackValueLabel.text = "0";
-            _attackUpLabel.text = "(0)";
-            _productLabel.text = "생산";
+            //_attackUpLabel.text = "(0)";
+            //_productLabel.text = "생산";
             _productValueLabel.text = "1.000s";
-            _attackDelayLabel.text = "공격딜레이";
+            //_attackDelayLabel.text = "공격딜레이";
             _attackDelayValueLabel.text = "1.000s";
-            _attackCountLabel.text = "공격횟수";
+            //_attackCountLabel.text = "공격횟수";
             _attackCountValueLabel.text = "1";
-            _attackTypeLabel.text = "공격타입";
+            //_attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
             //_uiFillable.FillAmount = 0;
 
-            _dpsValueLabel.text = "0";
-            _dpsUpLabel.text = "(0)";
+            //_dpsValueLabel.text = "0";
+            //_dpsUpLabel.text = "(0)";
 
             //_expendAssetIcon = Texture
             _expendValueLabel.text = "0";
@@ -186,12 +200,12 @@ namespace SEF.UI
             _activatePanel.SetActive(false);
             _inactivatePanel.SetActive(true);
 
-            _attackUpLabel.gameObject.SetActive(false);
-            _healthUpLabel.gameObject.SetActive(false);
-            _dpsSlideLabel.gameObject.SetActive(false);
-            _dpsLabel.gameObject.SetActive(false);
-            _dpsValueLabel.gameObject.SetActive(false);
-            _dpsUpLabel.gameObject.SetActive(false);
+            //_attackUpLabel.gameObject.SetActive(false);
+            //_healthUpLabel.gameObject.SetActive(false);
+            //_dpsSlideLabel.gameObject.SetActive(false);
+            //_dpsLabel.gameObject.SetActive(false);
+            //_dpsValueLabel.gameObject.SetActive(false);
+            //_dpsUpLabel.gameObject.SetActive(false);
 
             HideTechSelector();
         }

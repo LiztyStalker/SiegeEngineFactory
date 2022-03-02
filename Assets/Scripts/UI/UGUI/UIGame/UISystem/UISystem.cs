@@ -17,6 +17,9 @@ namespace SEF.UI
 
     public class UISystem : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@System";
+
+
         [SerializeField]
         private Button _uiWorkshopButton;
         [SerializeField]
@@ -33,47 +36,46 @@ namespace SEF.UI
 
         public static UISystem Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@System";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UISystem>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UISystem>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UISystem>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
-            //UISystem에 등록되어있지 않으면 자동 생성 필요
-            //UIWorkshop uiWorkshop = this.Q<UIWorkshop>();
             var uiWorkshop = UIWorkshop.Create();
             Debug.Assert(uiWorkshop != null, "uiWorkshop 이 등록되지 않았습니다");
             _uiWorkshopButton.onClick.AddListener(() => { OnShowPanelEvent(uiWorkshop); });
-//            _uiWorkshopButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiWorkshop); });
 
 
 
-            var uiSmithy = UISmithy.Create();
-            //UISystem에 등록되어있지 않으면 자동 생성 필요
-            Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
-
-            _uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
-            //_uiSmithyButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiSmithy); });
+            //var uiSmithy = UISmithy.Create();
+            //Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
+            //_uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
 
 
 
-            var uiVillage = UIVillage.Create();
-            //UISystem에 등록되어있지 않으면 자동 생성 필요
-            Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
-            _uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
-            //_uiVillageButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
+            //var uiVillage = UIVillage.Create();
+            //Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
+            //_uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
 
 
-
-            var uiMine = UIMine.Create();
-            //UISystem에 등록되어있지 않으면 자동 생성 필요
-            Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
-
-            _uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
-            //_uiMineButton.RegisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiMine); });
-
+            //var uiMine = UIMine.Create();
+            //Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
+            //_uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
 
 
             //var uiResearch = UIResearch.Create();
@@ -85,9 +87,9 @@ namespace SEF.UI
 
 
             _list.Add(uiWorkshop);
-            _list.Add(uiSmithy);
-            _list.Add(uiVillage);
-            _list.Add(uiMine);
+            //_list.Add(uiSmithy);
+            //_list.Add(uiVillage);
+            //_list.Add(uiMine);
             //_list.Add(uiResearch);
 
             for (int i = 0; i < _list.Count; i++)
@@ -121,27 +123,17 @@ namespace SEF.UI
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             _uiWorkshopButton.onClick.AddListener(() => { OnShowPanelEvent(uiWorkshop); });
 
-            //_uiWorkshopButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiWorkshop); });
-
             var uiSmithy = GetSystemPanel<UISmithy>();
             _uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
-
-            //_uiSmithyButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiBlacksmith); });
 
             var uiVillage = GetSystemPanel<UIVillage>();
             _uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
 
-            //_uiVillageButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiVillage); });
-
             var uiMine = GetSystemPanel<UIMine>();
             _uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
 
-            //_uiMineButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiMine); });
-
             //var uiResearch = GetSystemPanel<UIResearch>();
             //_uiResearchButton.onClick.AddListener(() => { OnShowPanelEvent(uiResearch); });
-
-            //_uiResearchButton.UnregisterCallback<ClickEvent>(e => { OnShowPanelEvent(uiResearch); });
 
             for (int i = 0; i < _list.Count; i++)
             {
