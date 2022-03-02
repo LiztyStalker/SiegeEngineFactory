@@ -17,7 +17,7 @@ namespace SEF.UI.Test
     {
         private Camera _camera;
         private Light2D _light;
-
+        private GameObject _eventSystem;
         //private UIQuest _uiQuest;
         //private UIQuestTab _uiQuestTab;
 
@@ -26,7 +26,7 @@ namespace SEF.UI.Test
         {
             _camera = PlayTestUtility.CreateCamera();
             _light = PlayTestUtility.CreateLight();
-
+            _eventSystem = PlayTestUtility.CreateEventSystem();
 //            _uiQuest = UIQuest.Create();
 //            _uiQuestTab = UIQuestTab.Create();
 
@@ -42,6 +42,7 @@ namespace SEF.UI.Test
 
             PlayTestUtility.DestroyCamera(_camera);
             PlayTestUtility.DestroyLight(_light);
+            PlayTestUtility.DestroyEventSystem(_eventSystem);
         }
 
 
@@ -53,7 +54,6 @@ namespace SEF.UI.Test
             yield return new WaitForSeconds(1f);
             _uiQuestTab.CleanUp();
         }
-
 
         [UnityTest]
         public IEnumerator UIQuestTab_Refresh()
@@ -121,31 +121,36 @@ namespace SEF.UI.Test
         }
 
 
-        //[UnityTest]
-        //public IEnumerator UIHitTest_ShowHitContainer_10()
-        //{
-        //    int count = 0;
+        [UnityTest]
+        public IEnumerator UIQuest_Initialize()
+        {
 
-        //    yield return new WaitForSeconds(1f);
+            var uiQuest = UIQuest.Create();
+            uiQuest.Initialize();
+            uiQuest.Show();
 
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        Vector2 pos = new Vector2(UnityEngine.Random.Range(-2f, 2f), 2f);
-        //        _uiHitContainer.ShowHit_Test("1.234A", pos, block =>
-        //        {
-        //            Debug.Log("End");
-        //            count++;
-        //        });
-        //        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
-        //    }
+            var questManager = QuestManager.Create();
+            questManager.AddOnRefreshListener(uiQuest.RefreshQuest);
+            questManager.Initialize();
 
-        //    while (true)
-        //    {
-        //        if (count >= 10)
-        //            break;
-        //        yield return null;
-        //    }
-        //}
+            uiQuest.AddOnRefreshListener(questManager.RefreshAllQuests);
+
+            bool isRun = true;
+            uiQuest.AddOnClosedListener(delegate
+            {
+                Debug.Log("Closed");
+                isRun = false;
+            });
+
+            while (isRun)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(1f);
+            uiQuest.CleanUp();
+        }
+
+
 
     }
 }

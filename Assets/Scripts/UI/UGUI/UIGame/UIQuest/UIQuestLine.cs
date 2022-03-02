@@ -6,12 +6,13 @@ namespace SEF.UI
 
     public class UIQuestLine : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@QuestLine";
 
         [SerializeField]
         private GameObject _activatePanel;
 
-        [SerializeField]
-        private Image _icon;
+//        [SerializeField]
+        //private Image _icon;
 
         [SerializeField]
         private Text _contentLabel;
@@ -41,18 +42,32 @@ namespace SEF.UI
         private string _addressKey;
         private bool _hasGoal = false;
 
+
         public static UIQuestLine Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@QuestLine";
-            return obj.AddComponent<UIQuestLine>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIQuestLine>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIQuestLine>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
 
             Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
-            Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
+            //Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
 
             Debug.Assert(_contentLabel != null, "_contentLabel element 를 찾지 못했습니다");
 
@@ -71,7 +86,7 @@ namespace SEF.UI
             _rewardButton.onClick.AddListener(OnRewardClickedEvent);
 
             _activatePanel.SetActive(true);
-            _activatePanel.SetActive(false);
+            _rewardedPanel.SetActive(false);
         }
 
 
@@ -105,7 +120,6 @@ namespace SEF.UI
         public void CleanUp()
         {
             _rewardButton.onClick.RemoveAllListeners();
-            _icon = null;
         }
 
         public void Show()
@@ -131,32 +145,8 @@ namespace SEF.UI
         }
 
 #endregion
+
+
+
     }
-
-#if UNITY_EDITOR || UNITY_INCLUDE_TESTS
-    public class UIQuestLine_Test : MonoBehaviour
-    {
-        private UIQuestLine _instance;
-        public UIQuestLine Instance => _instance;
-
-        public static UIQuestLine_Test Create()
-        {
-            var obj = new GameObject();
-            obj.name = "UIQuestLine_Test";
-            return obj.AddComponent<UIQuestLine_Test>();
-        }
-
-        public void Initialize()
-        {
-            _instance = UIQuestLine.Create();
-            _instance.Initialize();
-        }
-
-        public void Dispose()
-        {
-            _instance = null;
-            DestroyImmediate(gameObject);
-        }
-    }
-#endif
 }

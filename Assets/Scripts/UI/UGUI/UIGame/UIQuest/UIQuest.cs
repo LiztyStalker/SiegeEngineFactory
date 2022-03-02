@@ -8,6 +8,8 @@ namespace SEF.UI
 
     public class UIQuest : MonoBehaviour
     {
+        private readonly static string UGUI_NAME = "UI@Quest";
+
         private Dictionary<string, UIQuestLine> _dic = new Dictionary<string, UIQuestLine>();
 
         [SerializeField]
@@ -27,13 +29,26 @@ namespace SEF.UI
 
         private QuestData.TYPE_QUEST_GROUP _typeQuestGroup;
 
+
         public static UIQuest Create()
         {
-            var obj = new GameObject();
-            obj.name = "UI@Quest";
-            obj.AddComponent<RectTransform>();
-            return obj.AddComponent<UIQuest>();
+            var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
+            if (ui != null)
+            {
+                return Instantiate(ui.GetComponent<UIQuest>());
+            }
+#if UNITY_EDITOR
+            else
+            {
+                var obj = new GameObject();
+                obj.name = UGUI_NAME;
+                return obj.AddComponent<UIQuest>();
+            }
+#else
+            Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+#endif
         }
+
 
         public void Initialize()
         {
@@ -70,6 +85,8 @@ namespace SEF.UI
             _goalButton.onClick.RemoveAllListeners();
 
             _exitButton.onClick.RemoveListener(Hide);
+
+            _closedEvent = null;
         }
 
         private void ClearDictionary()
@@ -88,10 +105,12 @@ namespace SEF.UI
         public void Hide()
         {
             gameObject.SetActive(false);
+            OnClosedEvent();
         }
 
         public void RefreshQuest(QuestEntity entity)
         {
+            Debug.Log(entity);
             if (entity.TypeQuestGroup == _typeQuestGroup)
             {
                 var key = entity.Key;
@@ -129,7 +148,17 @@ namespace SEF.UI
             _refreshEvent?.Invoke(_typeQuestGroup);
         }
 
-#endregion
+        private System.Action _closedEvent;
+        public void AddOnClosedListener(System.Action act) => _closedEvent += act;
+        public void RemoveOnClosedListener(System.Action act) => _closedEvent -= act;
+
+        private void OnClosedEvent()
+        {
+            _closedEvent?.Invoke();
+        }
+
+
+        #endregion
 
 
     }
@@ -152,8 +181,7 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            //var root = UIUXML.GetVisualElement(gameObject, UIQuest.PATH_UI_UXML);
-            //_instance = root.Q<UIQuest>();
+            _instance = UIQuest.Create();
             _instance.Initialize();
         }
 

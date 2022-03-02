@@ -58,7 +58,10 @@ namespace Storage
             InitializeDatasFromAssetDatabase<MineData>("Data/Mines");
             InitializeDatasFromAssetDatabase<SmithyData>("Data/Smithy");
             InitializeDatasFromAssetDatabase<VillageData>("Data/Villages");
-            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Daily");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Weekly");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Goal");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challange");
             InitializeDatasFromAssetDatabase<GameObject>("Prefabs/UI");
             //            InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
 
@@ -112,7 +115,11 @@ namespace Storage
         }
 
 
-
+        /// <summary>
+        /// AssetDatabase로 해당 패스 데이터 가져오 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path"></param>
         private void InitializeDatasFromAssetDatabase<T>(string path) where T : Object
         {
             var files = System.IO.Directory.GetFiles($"Assets/{path}");

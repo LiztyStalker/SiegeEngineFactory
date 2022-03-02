@@ -47,8 +47,6 @@ namespace SEF.Quest
         private const int COUNT_DAILY_QUEST = 3;
         private const int COUNT_WEEKLY_QUEST = 7;
 
-        private readonly System.DateTime WEEKLY_STANDARD_DATE = new System.DateTime(2022, 1, 2);
-
         private Dictionary<QuestData.TYPE_QUEST_GROUP, List<QuestEntity>> _dic;
 
         private System.DateTime _daily;
@@ -141,38 +139,52 @@ namespace SEF.Quest
             {
                 var filterArr = arr.Where(data => data.TypeQuestGroup == typeQuestGroup).ToArray();
 
-                List<QuestData> questList = new List<QuestData>();
-
-                while (true)
+                if (filterArr.Length > 0)
                 {
-                    var questData = filterArr[UnityEngine.Random.Range(0, filterArr.Length)];
+                    List<QuestData> questList = new List<QuestData>();
 
-                    if (!questList.Contains(questData))
+                    while (true)
                     {
-                        questList.Add(questData);
+                        var questData = filterArr[UnityEngine.Random.Range(0, filterArr.Length)];
+
+                        if (!questList.Contains(questData))
+                        {
+                            questList.Add(questData);
+                        }
+
+                        //데이터 부족
+                        //모든 데이터 충전
+                        if (questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
+                        {
+                            break;
+                        }
                     }
 
-                    //데이터 부족
-                    //모든 데이터 충전
-                    if (questList.Count == count || count > filterArr.Length && filterArr.Length == questList.Count)
+                    QuestEntity[] entities = new QuestEntity[questList.Count];
+                    while (questList.Count > 0)
                     {
-                        break;
+                        var questData = questList[0];
+
+                        var entity = new QuestEntity();
+                        questList.Remove(questData);
+
+                        entity.SetData(questData);
+                        entities[questList.Count] = entity;
                     }
+                    return entities;
                 }
-
-                QuestEntity[] entities = new QuestEntity[questList.Count];
-                while (questList.Count > 0)
+#if UNITY_EDITOR
+                else
                 {
-                    var questData = questList[0];
-
-                    var entity = new QuestEntity();
-                    questList.Remove(questData);
-
-                    entity.SetData(questData);
-                    entities[questList.Count] = entity;
+                    UnityEngine.Debug.LogWarning("QuestData Filter List가 비어있습니다");
                 }
-                return entities;
+#endif
             }
+#if UNITY_EDITOR
+            else {
+                UnityEngine.Debug.LogWarning("QuestData List가 비어있습니다");
+            }
+#endif
             return null;
         }
 
@@ -240,6 +252,7 @@ namespace SEF.Quest
 
         private void RefreshQuest(QuestEntity entity)
         {
+            UnityEngine.Debug.Log("Refresh");
             OnRefreshEvent(entity);
         }
         public void SetQuestValue(System.Type type, int value)

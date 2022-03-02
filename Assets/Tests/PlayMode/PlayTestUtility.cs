@@ -44,6 +44,20 @@ namespace UtilityManager.Test {
             Object.DestroyImmediate(light.gameObject);
         }
 
+        public static GameObject CreateEventSystem()
+        {
+            var eventSystem = new GameObject();
+            eventSystem.name = "Test@EventSystem";
+            eventSystem.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            eventSystem.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            return eventSystem;
+        }
+
+        public static void DestroyEventSystem(GameObject obj)
+        {
+            Object.DestroyImmediate(obj);
+        }
+
     }
 }
 #endif
