@@ -1,5 +1,4 @@
 namespace SEF.Manager {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
@@ -16,9 +15,14 @@ namespace SEF.Manager {
 
         private void OnEnable()
         {
+#if UNITY_EDITOR
             _gameManager.SetOnRefreshStatisticsListener(ShowLabel);
+#else
+            DestroyImmediate(this);
+#endif
         }
 
+#if UNITY_EDITOR
         public void OnGUI()
         {
 
@@ -71,5 +75,6 @@ namespace SEF.Manager {
             GUILayout.EndScrollView();
             GUILayout.EndArea();
         }
+#endif
     }
 }

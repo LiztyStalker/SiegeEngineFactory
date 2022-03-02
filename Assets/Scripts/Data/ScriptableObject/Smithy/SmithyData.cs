@@ -116,6 +116,18 @@ namespace SEF.Data
         private SerializedAssetData _serializedTechAssetData;
         public IAssetData TechAssetData => _serializedTechAssetData.GetData();
 
+
+        public IAssetData GetUpgradeAssetData(UpgradeData data)
+        {
+            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
+            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            return assetData;
+        }
+
+
+#if UNITY_EDITOR
+        public static SmithyAbillityData Create_Test(string key) => new SmithyAbillityData(key);
+
         public SmithyAbillityData(string key = "")
         {
             _serializedStatusData = SerializedStatusData.Create_Test(typeof(UnitDamageValueStatusData));
@@ -126,17 +138,8 @@ namespace SEF.Data
             _serializedTechAssetData = new SerializedAssetData();
         }
 
-        public IAssetData GetUpgradeAssetData(UpgradeData data)
-        {
-            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
-            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
-            return assetData;
-        }
-
-
         public void SetData(string[] arr)
         {
-
             _serializedStatusData.SetData(
                 arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusData],
                 arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeStatusValue],
@@ -159,15 +162,13 @@ namespace SEF.Data
                             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TypeTechAsset],
                             arr[(int)SmithyDataGenerator.TYPE_SHEET_COLUMNS.TechAssetValue]
                             );
-            }
-            
+            }           
             
         }
 
 
         public string[] GetData()
         {
-
             string[] arr = new string[System.Enum.GetValues(typeof(SmithyDataGenerator.TYPE_SHEET_COLUMNS)).Length];
 
             _serializedStatusData.GetData(out string typeStatusData, out string typeStatusValue, out string startStatusValue, out string increaseStatusValue);
@@ -196,6 +197,7 @@ namespace SEF.Data
 
             return arr;
         }
+#endif
 
     }
 }

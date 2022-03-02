@@ -11,7 +11,7 @@ namespace SEF.Data
 
     
     [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]    
-    public class EnemyData : ScriptableObjectData
+    public class EnemyData : Utility.Data.ScriptableObjectData
     {
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;

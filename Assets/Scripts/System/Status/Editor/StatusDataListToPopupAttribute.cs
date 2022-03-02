@@ -1,6 +1,5 @@
-#if UNITY_EDITOR
 
-namespace SEF.Status.Editor
+namespace SEF.Status
 {
     using UnityEngine;
 
@@ -8,4 +7,3 @@ namespace SEF.Status.Editor
     public class StatusDataListToPopupAttribute : PropertyAttribute { }
 
 }
-#endif

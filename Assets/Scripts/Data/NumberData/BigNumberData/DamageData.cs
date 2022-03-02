@@ -1,7 +1,5 @@
 namespace SEF.Data
 {
-    using UnityEngine;
-
     [System.Serializable]
     public class DamageData : BigNumberData
     {

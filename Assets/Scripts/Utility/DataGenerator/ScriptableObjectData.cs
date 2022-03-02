@@ -8,6 +8,8 @@ namespace Utility.Data
         private string _key;
         public string Key { get => _key; protected set => _key = value; }
 
+#if UNITY_EDITOR
+
         [SerializeField]
         private int _sortIndex;
         public int SortIndex { get => _sortIndex; protected set => _sortIndex = value; }
@@ -15,7 +17,6 @@ namespace Utility.Data
         public void SetSortIndex(int index) => SortIndex = index;
         public abstract void SetData(string[] arr);
         public abstract void AddData(string[] arr);
-
         public abstract bool HasDataArray();
         public abstract string[] GetData();
         public abstract string[][] GetDataArray();
@@ -26,7 +27,6 @@ namespace Utility.Data
             importer.SetAssetBundleNameAndVariant(bundleName, "");
         }
 
-#if UNITY_EDITOR
         [SerializeField]
         private bool _isTest = false;
         public bool IsTest => _isTest;

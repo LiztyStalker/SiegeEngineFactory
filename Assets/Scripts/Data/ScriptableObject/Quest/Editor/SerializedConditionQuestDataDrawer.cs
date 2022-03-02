@@ -1,8 +1,8 @@
+#if UNITY_EDITOR
 namespace SEF.Data.Editor
 {
     using UnityEngine;
     using UnityEditor;
-    using UnityEditor.UIElements;
 
     [CustomPropertyDrawer(typeof(SerializedConditionQuestData))]
     public class SerializedConditionQuestDataDrawer : PropertyDrawer
@@ -14,3 +14,4 @@ namespace SEF.Data.Editor
         }
     }
 }
+#endif

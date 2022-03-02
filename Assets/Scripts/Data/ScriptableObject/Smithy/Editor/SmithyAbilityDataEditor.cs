@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace SEF.Data.Editor
 {
     using UnityEditor;
@@ -43,3 +44,4 @@ namespace SEF.Data.Editor
         }
     }
 }
+#endif

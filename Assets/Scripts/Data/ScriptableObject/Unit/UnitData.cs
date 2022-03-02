@@ -367,6 +367,7 @@ namespace SEF.Data
         private SerializedAssetData _serializedTechAssetData;
         public IAssetData TechAssetData => _serializedTechAssetData.GetData();
 
+#if UNITY_EDITOR
 
         public static UnitTechData Create_Test(string key = null)
         {
@@ -399,5 +400,6 @@ namespace SEF.Data
             techUnitkey = _techUnitKey;
             _serializedTechAssetData.GetData(out typeAssetData, out assetValue);
         }
+#endif
     }
 }

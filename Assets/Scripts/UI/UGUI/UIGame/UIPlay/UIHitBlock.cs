@@ -135,9 +135,9 @@ namespace SEF.UI
             {
                 return Instantiate(data.GetComponent<UIHitBlock>());
             }
+#if UNITY_EDITOR
             else
             {
-#if UNITY_EDITOR
                 var obj = new GameObject();
                 obj.name = UGUI_NAME;
                 var block = obj.AddComponent<UIHitBlock>();
@@ -145,6 +145,7 @@ namespace SEF.UI
             }
 #else
             Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+            return null;
 #endif
         }
     }

@@ -1,7 +1,6 @@
 namespace SEF.Status
 {
     using Data;
-    using Editor;
     using UnityEngine;
 
     [System.Serializable]

@@ -1,8 +1,5 @@
 namespace SEF.Data
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
     using System.Numerics;
     using System;
     using Utility.IO;
@@ -29,6 +26,25 @@ namespace SEF.Data
             return new PopulationAssetData(this);
         }
 
+        /// <summary>
+        /// null 반환
+        /// </summary>
+        /// <returns></returns>
+        public Type AccumulativelyUsedStatisticsType() => null;
+
+        /// <summary>
+        /// null 반환
+        /// </summary>
+        /// <returns></returns>
+        public Type AccumulativelyGetStatisticsType() => null;
+
+        public StorableData GetStorableData()
+        {
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
+            return data;
+        }
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static PopulationAssetData Create_Test()
@@ -44,34 +60,6 @@ namespace SEF.Data
             data.Value = value;
             return data;
         }
-
-        /// <summary>
-        /// null 반환
-        /// </summary>
-        /// <returns></returns>
-        public Type AccumulativelyUsedStatisticsType() => null;
-
-        /// <summary>
-        /// null 반환
-        /// </summary>
-        /// <returns></returns>
-        public Type AccumulativelyGetStatisticsType() => null;
-
-        /// <summary>
-        /// null 반환
-        /// </summary>
-        /// <returns></returns>
-        public Type AccumulateStatisticsType() => null;
-
-
-        public StorableData GetStorableData()
-        {
-            var data = new AssetDataStorableData();
-            data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
-            return data;
-        }
-
-
 #endif
     }
 }

@@ -15,7 +15,12 @@ namespace SEF.Data
                 Value = val;
             }
         }
-
+        public static GoldAssetData Create(string value)
+        {
+            var data = new GoldAssetData();
+            data.ValueText = value;
+            return data;
+        }
         public GoldAssetData() { }
         private GoldAssetData(GoldAssetData data) : base(data) { }
 
@@ -53,15 +58,21 @@ namespace SEF.Data
             }
             Value = value;
             //UnityEngine.Debug.Log(Value);
-
         }
 
-        public static GoldAssetData Create(string value)
+
+
+        public System.Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyGoldUsedAssetStatisticsData);
+        public System.Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyGoldGetAssetStatisticsData);
+
+        public StorableData GetStorableData()
         {
-            var data = new GoldAssetData();
-            data.ValueText = value;
+            var data = new AssetDataStorableData();
+            data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
             return data;
         }
+
+
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static GoldAssetData Create_Test() 
@@ -78,17 +89,6 @@ namespace SEF.Data
             return data;
         }
 
-        public System.Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyGoldUsedAssetStatisticsData);
-        public System.Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyGoldGetAssetStatisticsData);
-        //public System.Type ConditionQuestDataType() => typeof(Quest.GetGoldAssetDataConditionQuestData);
-        //public System.Type AccumulativelyConditionQuestDataType() => typeof(Quest.AccumulativelyGetGoldAssetDataConditionQuestData); 
-
-        public StorableData GetStorableData()
-        {
-            var data = new AssetDataStorableData();
-            data.SetData(GetType().AssemblyQualifiedName, AssetValue.ToString());
-            return data;
-        }
 #endif
 
     }

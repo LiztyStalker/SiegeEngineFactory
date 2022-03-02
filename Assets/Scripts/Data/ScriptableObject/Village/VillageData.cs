@@ -117,7 +117,16 @@ namespace SEF.Data
         private SerializedAssetData _serializedTechAssetData;
         public IAssetData TechAssetData => _serializedTechAssetData.GetData();
 
-        public VillageAbillityData(string key = "")
+        public IAssetData GetUpgradeAssetData(UpgradeData data)
+        {
+            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
+            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            return assetData;
+        }
+
+#if UNITY_EDITOR
+        public static VillageAbillityData Create_Test(string key) => new VillageAbillityData(key);
+        private VillageAbillityData(string key = "")
         {
             _serializedStatusData = SerializedStatusData.Create_Test(typeof(IncreaseMaxPopulationStatusData));
             _serializedAssetData = SerializedAssetData.Create_Test(SerializedAssetData.TYPE_ASSET_DATA_ATTRIBUTE.Gold, "100");
@@ -126,14 +135,6 @@ namespace SEF.Data
             _defaultMaxUpgradeValue = 10;
             _serializedTechAssetData = new SerializedAssetData();
         }
-
-        public IAssetData GetUpgradeAssetData(UpgradeData data)
-        {
-            var assetData = (IAssetData)StartUpgradeAssetData.Clone();
-            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
-            return assetData;
-        }
-
 
         public void SetData(string[] arr)
         {
@@ -161,11 +162,7 @@ namespace SEF.Data
                             arr[(int)VillageDataGenerator.TYPE_SHEET_COLUMNS.TechAssetValue]
                             );
             }
-
-
         }
-
-
         public string[] GetData()
         {
 
@@ -197,6 +194,6 @@ namespace SEF.Data
 
             return arr;
         }
-
+#endif
     }
 }

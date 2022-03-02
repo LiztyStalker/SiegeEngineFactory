@@ -31,6 +31,7 @@ namespace SEF.UI
             }
 #else
             Debug.LogWarning($"{UGUI_NAME}을 찾을 수 없습니다");
+            return null;
 #endif
         }
 

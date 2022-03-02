@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace SEF.Data.Editor
 {
     using UnityEditor;
@@ -104,8 +105,6 @@ namespace SEF.Data.Editor
             //if (_multipleToggle != null)
             //    _multipleToggle.UnregisterCallback<ClickEvent>(UpdateLayout);
         }
-
-
-
     }
 }
+#endif

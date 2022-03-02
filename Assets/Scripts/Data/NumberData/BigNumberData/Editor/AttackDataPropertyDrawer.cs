@@ -1,11 +1,8 @@
+#if UNITY_EDITOR
 namespace SEF.Data.Editor
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
     using UnityEditor;
-    using UnityEditor.UIElements;
-    using UnityEngine.UIElements;
 
     [CustomPropertyDrawer(typeof(DamageData))]
     [CanEditMultipleObjects]
@@ -16,14 +13,6 @@ namespace SEF.Data.Editor
         {
             EditorGUI.PropertyField(position, property.FindPropertyRelative("_valueText"), label);
         }
-
-        //public override VisualElement CreatePropertyGUI(SerializedProperty property)
-        //{
-        //    var container = new VisualElement();
-        //    var value = new PropertyField(property.FindPropertyRelative("_numberText"));
-        //    container.Add(value);
-        //    return container;
-
-        //}
     }
 }
+#endif

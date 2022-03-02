@@ -28,28 +28,7 @@ namespace Storage
 
         private DataStorage()
         {
-
-
-#if UNITY_ASSETBUNDLES
-            InitializeDataFromAssetBundle<TextAsset>();
-
-            //InitializeDataFromAssetBundle<SkeletonDataAsset>("spine", "data");
-            InitializeDataFromAssetBundle<AudioClip>("sfx", "sound");
-            InitializeDataFromAssetBundle<AudioClip>("bgm", "sound");
-            InitializeDataFromAssetBundle<Sprite>("unit", "sprite");
-            InitializeDataFromAssetBundle<Sprite>("type", "sprite");
-
-            //InitializeDataFromAssetBundle<TribeData>("data");
-            //InitializeDataFromAssetBundle<BulletData>("data");
-            //InitializeDataFromAssetBundle<EffectData>("data");
-            //InitializeDataFromAssetBundle<SkillData>("data");
-            //InitializeDataFromAssetBundle<StatusData>("data");
-            //InitializeDataFromAssetBundle<UnitData>("data");
-            //InitializeDataFromAssetBundle<CommanderData>("data");
-            //InitializeDataFromAssetBundle<BattleFieldData>("data");
-
-            InitializeDataFromAssetBundle<GameObject>("prefab", null);
-#elif UNITY_EDITOR
+#if UNITY_EDITOR
             InitializeDatasFromAssetDatabase<Sprite>("Images/Icons/Assets");
             InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
             InitializeDatasFromAssetDatabase<BulletData>("Data/Bullets");
@@ -63,8 +42,17 @@ namespace Storage
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Goal");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challange");
             InitializeDatasFromAssetDatabase<GameObject>("Prefabs/UI");
-            //            InitializeDatasFromAssetDatabase<SkeletonDataAsset>("Data/Spine");
-
+#else
+            InitializeDataFromAssetBundle<Sprite>("Images/Icons/Assets");
+            InitializeDataFromAssetBundle<SkeletonDataAsset>("Data/Spine");
+            InitializeDataFromAssetBundle<BulletData>("Data/Bullets");
+            InitializeDataFromAssetBundle<EnemyData>("Data/Enemies");
+            InitializeDataFromAssetBundle<UnitData>("Data/Units");
+            InitializeDataFromAssetBundle<MineData>("Data/Mines");
+            InitializeDataFromAssetBundle<SmithyData>("Data/Smithy");
+            InitializeDataFromAssetBundle<VillageData>("Data/Smithy");
+            InitializeDataFromAssetBundle<QuestData>("Data/Quests");
+            InitializeDataFromAssetBundle<GameObject>("Prefabs/UI");
 #endif
         }
 
@@ -81,7 +69,7 @@ namespace Storage
             });
         }
 #else
-        public static void Initialize(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
+        public static void Initialize(System.Action<float> loadCallback, System.Action<Utility.IO.TYPE_IO_RESULT> endCallback)
         {
             var loader = DataLoader.Create();
             loader.Load(loadCallback, result => 
@@ -97,7 +85,7 @@ namespace Storage
             _instance = null;
         }
 
-
+#if UNITY_EDITOR
         private void InitializeDatasFromAssetDatabase(string key, string path)
         {
             var files = System.IO.Directory.GetFiles($"Assets/{path}");
@@ -116,7 +104,7 @@ namespace Storage
 
 
         /// <summary>
-        /// AssetDatabase로 해당 패스 데이터 가져오 
+        /// AssetDatabase로 해당 패스 데이터 가져오기
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
@@ -143,7 +131,7 @@ namespace Storage
         }
 
 
-
+#endif
 
         private void InitializeDataFromAssetBundle<T>(string path, string directory = null) where T : Object
         {

@@ -98,6 +98,7 @@ namespace GoogleSheetsToUnity
 
 
                 ValueRange rawData = JSON.Load(request.downloadHandler.text).Make<ValueRange>();
+                Debug.Log(request.downloadHandler.text);
                 GSTU_SpreadsheetResponce responce = new GSTU_SpreadsheetResponce(rawData);
 
                 //if it contains merged cells then process a second set of json data to know what these cells are
@@ -118,6 +119,7 @@ namespace GoogleSheetsToUnity
 
                 if (callback != null)
                 {
+                    Debug.Log(responce.valueRange.range);
                     callback(new GstuSpreadSheet(responce, search.titleColumn,search.titleRow));
                 }
             }

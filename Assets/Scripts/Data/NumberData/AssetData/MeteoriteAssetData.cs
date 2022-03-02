@@ -23,6 +23,10 @@ namespace SEF.Data
             return new MeteoriteAssetData(this);
         }
 
+        public Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteUsedAssetStatisticsData);
+        public Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteGetAssetStatisticsData);
+
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public static MeteoriteAssetData Create_Test()
         {
@@ -38,8 +42,6 @@ namespace SEF.Data
             return data;
         }
 
-        public Type AccumulativelyUsedStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteUsedAssetStatisticsData);
-        public Type AccumulativelyGetStatisticsType() => typeof(Statistics.AccumulativelyMeteoriteGetAssetStatisticsData);
 
 
 #endif

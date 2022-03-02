@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿#if UNITY_EDITOR
+using System.Net;
 using UnityEditor;
 using UnityEngine;
 using System.Security.Cryptography.X509Certificates;
@@ -226,3 +227,4 @@ namespace GoogleSheetsToUnity.Editor
 #endif
     }
 }
+#endif
