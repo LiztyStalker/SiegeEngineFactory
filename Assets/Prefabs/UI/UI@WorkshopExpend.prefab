@@ -361,7 +361,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3115399759669718314}
-  - component: {fileID: 3115399759669718317}
   - component: {fileID: 9053162418835830166}
   m_Layer: 0
   m_Name: UI@WorkshopExpend
@@ -390,37 +389,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3115399759669718317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115399759669718315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3e79e778bd72841be8c5cea16bd512, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _activatePanel: {fileID: 0}
-  _icon: {fileID: 0}
-  _nameLabel: {fileID: 0}
-  _groupLabel: {fileID: 0}
-  _typeLabel: {fileID: 0}
-  _levelValueLabel: {fileID: 0}
-  _healthValueLabel: {fileID: 0}
-  _attackValueLabel: {fileID: 0}
-  _productValueLabel: {fileID: 0}
-  _attackDelayValueLabel: {fileID: 0}
-  _attackCountValueLabel: {fileID: 0}
-  _attackTypeValueLabel: {fileID: 0}
-  _upgradeButton: {fileID: 0}
-  _upgradeAssetIcon: {fileID: 0}
-  _upgradeValueLabel: {fileID: 0}
-  _buttonLabel: {fileID: 0}
-  _techPanel: {fileID: 0}
-  _techLayout: {fileID: 0}
-  _techCancelButton: {fileID: 0}
 --- !u!114 &9053162418835830166
 MonoBehaviour:
   m_ObjectHideFlags: 0

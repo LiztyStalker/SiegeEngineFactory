@@ -8,8 +8,6 @@ namespace SEF.UI
     {
         private readonly static string UGUI_NAME = "UI@WorkshopExpend";
 
-        private int _index;
-
         [SerializeField]
         private Button _expendButton;
         [SerializeField]
@@ -45,6 +43,7 @@ namespace SEF.UI
 
         public void RefreshExpend(IAssetData assetData, bool isActive)
         {
+            //_expendAssetIcon.sprite = null;
             _expendValueLabel.text = assetData.GetValue();
             _expendButton.interactable = isActive;
         }
