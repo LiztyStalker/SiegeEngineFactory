@@ -19,7 +19,8 @@ namespace SEF.UI
     {
         private readonly static string UGUI_NAME = "UI@System";
 
-
+        [SerializeField]
+        private Transform _systemLayout;
         [SerializeField]
         private Button _uiWorkshopButton;
         [SerializeField]
@@ -56,24 +57,28 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            var uiWorkshop = UIWorkshop.Create();
+            var uiWorkshop = GetComponentInChildren<UIWorkshop>(true);
+            if(uiWorkshop == null) uiWorkshop = UIWorkshop.Create();
             Debug.Assert(uiWorkshop != null, "uiWorkshop 이 등록되지 않았습니다");
             _uiWorkshopButton.onClick.AddListener(() => { OnShowPanelEvent(uiWorkshop); });
 
 
 
-            var uiSmithy = UISmithy.Create();
+            var uiSmithy = GetComponentInChildren<UISmithy>(true);
+            if (uiSmithy == null) uiSmithy = UISmithy.Create();
             Debug.Assert(uiSmithy != null, "uiSmithy 이 등록되지 않았습니다");
             _uiSmithyButton.onClick.AddListener(() => { OnShowPanelEvent(uiSmithy); });
 
 
 
-            var uiVillage = UIVillage.Create();
+            var uiVillage = GetComponentInChildren<UIVillage>(true);
+            if (uiVillage == null) uiVillage = UIVillage.Create();
             Debug.Assert(uiVillage != null, "uiVillage 이 등록되지 않았습니다");
             _uiVillageButton.onClick.AddListener(() => { OnShowPanelEvent(uiVillage); });
 
 
-            var uiMine = UIMine.Create();
+            var uiMine = GetComponentInChildren<UIMine>(true);
+            if (uiMine == null) uiMine = UIMine.Create();
             Debug.Assert(uiMine != null, "uiMine 이 등록되지 않았습니다");
             _uiMineButton.onClick.AddListener(() => { OnShowPanelEvent(uiMine); });
 
