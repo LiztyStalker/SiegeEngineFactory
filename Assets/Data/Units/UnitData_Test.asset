@@ -43,7 +43,5 @@ MonoBehaviour:
     _valueText: 10
   _increaseUpgradeAssetValue: 1
   _increaseUpgradeAssetRate: 0.05
-  _maximumUpgradeValue: 0
-  _techTreeAsset:
-    _valueText: 
-  _techTreeKeys: []
+  _defaultMaxUpgradeValue: 0
+  _unitTechDataArray: []
