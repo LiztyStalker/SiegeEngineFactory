@@ -79,7 +79,10 @@ namespace SEF.UI
                 _questKey = entity.Key;
                 _addressKey = entity.AddressKey;
                 _hasGoal = entity.HasQuestGoal();
-                _rewardButton.GetComponentInChildren<Text>().text = (_hasGoal) ? "보상" : "이동";
+
+                bool isRewardLabel = (_hasGoal || string.IsNullOrEmpty(_addressKey));
+                _rewardButton.GetComponentInChildren<Text>().text = (isRewardLabel) ? "보상" : "이동";
+                _rewardButton.interactable = (_hasGoal || !string.IsNullOrEmpty(entity.AddressKey));
                 _contentLabel.text = entity.Key;
                 _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
             }
