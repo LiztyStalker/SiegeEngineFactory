@@ -102,7 +102,6 @@ namespace SEF.Data
         private BigDecimal GetStringToBigDecimal(string value)
         {
             var str = value;
-
             Dictionary<string, int> dic = new Dictionary<string, int>();
             int digit = 0;
             string letter = null;
@@ -117,7 +116,7 @@ namespace SEF.Data
                     //첫 위치에 문자가 들어오면 무조건 에러
                     if (i == 0)
                     {
-                        Debug.LogError("첫 위치에 문자가 들어올 수 없습니다");
+                        Debug.LogError($"{ch} 첫 위치에 문자가 들어올 수 없습니다");
                         break;
                     }
 

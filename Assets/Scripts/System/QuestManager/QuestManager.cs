@@ -176,7 +176,7 @@ namespace SEF.Quest
 #if UNITY_EDITOR
                 else
                 {
-                    UnityEngine.Debug.LogWarning("QuestData Filter List가 비어있습니다");
+                    UnityEngine.Debug.LogWarning($"{typeQuestGroup} QuestData Filter List가 비어있습니다");
                 }
 #endif
             }
@@ -252,7 +252,6 @@ namespace SEF.Quest
 
         private void RefreshQuest(QuestEntity entity)
         {
-            UnityEngine.Debug.Log("Refresh");
             OnRefreshEvent(entity);
         }
         public void SetQuestValue(System.Type type, int value)

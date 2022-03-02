@@ -109,8 +109,7 @@ namespace SEF.UI
         }
 
         public void RefreshQuest(QuestEntity entity)
-        {
-            Debug.Log(entity);
+        {            
             if (entity.TypeQuestGroup == _typeQuestGroup)
             {
                 var key = entity.Key;
