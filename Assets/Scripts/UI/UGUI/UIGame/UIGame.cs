@@ -41,18 +41,23 @@ namespace SEF.UI
 
             _uiAsset = GetComponentInChildren<UIAsset>(true);
             if (_uiAsset == null) _uiAsset = UIAsset.Create();
+            _uiAsset.gameObject.SetActive(true);
 
             _uiSystem = GetComponentInChildren<UISystem>(true);
             if (_uiSystem == null) _uiSystem = UISystem.Create();
+            _uiSystem.gameObject.SetActive(true);
 
             _uiPlay = GetComponentInChildren<UIPlay>(true);
             if (_uiPlay == null) _uiPlay = UIPlay.Create();
+            _uiPlay.gameObject.SetActive(true);
 
             _uiQuest = GetComponentInChildren<UIQuest>(true);
             if (_uiQuest == null) _uiQuest = UIQuest.Create();
+            _uiQuest.Hide();
 
             _uiQuestTab = GetComponentInChildren<UIQuestTab>(true);
             if (_uiQuestTab == null) _uiQuestTab = UIQuestTab.Create();
+            _uiQuestTab.gameObject.SetActive(true);
 
             Debug.Assert(_uiAsset != null, "_uiAsset 이 등록되지 않았습니다");
             Debug.Assert(_uiSystem != null, "_uiSystem 이 등록되지 않았습니다");
