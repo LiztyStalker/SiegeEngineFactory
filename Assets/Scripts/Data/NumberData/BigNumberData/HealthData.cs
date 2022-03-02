@@ -40,9 +40,9 @@ namespace SEF.Data
         {
             var level = levelWaveData.GetLevel();
             var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartHealthValue.Value, enemyData.IncreaseLevelHealthValue, enemyData.IncreaseLevelHealthRate, level);
-            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)(levelWaveData.Value % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate)));
+            var waveValue = (levelValue * (levelWaveData.GetWave() - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate);
             var value = levelValue + waveValue;
-//            Debug.Log(levelValue + " " + waveValue + " " + value);
+            //Debug.Log(levelValue.GetDecimalValue() + " " + waveValue.GetDecimalValue() + " " + value.GetDecimalValue());
             if (levelWaveData.IsThemeBoss())
                 value *= 5;
             else if (levelWaveData.IsBoss())
