@@ -1,0 +1,57 @@
+ManifestFileVersion: 0
+CRC: 4190426434
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 19608f4a54a44edf3d687a105bf6c69d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bf8667e9e7b33e2ce3f0d2d39b916abe
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 2a85091110bfe28419cca6fbd044e2d9, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Units/UnitData_Palintonon.asset
+- Assets/Data/Units/UnitData_ThrowerSpear.asset
+- Assets/Data/Units/UnitData_Helepolis.asset
+- Assets/Data/Units/UnitData_MonsMeg.asset
+- Assets/Data/Units/UnitData_CheonjaCannon(Deajangunjun).asset
+- Assets/Data/Units/UnitData_Scorpio.asset
+- Assets/Data/Units/UnitData_ShieldRam.asset
+- Assets/Data/Units/UnitData_MysoreRocket.asset
+- Assets/Data/Units/UnitData_Cannon.asset
+- Assets/Data/Units/UnitData_SiegeTower.asset
+- Assets/Data/Units/UnitData_RootedBattringRam.asset
+- Assets/Data/Units/UnitData_Saker.asset
+- Assets/Data/Units/UnitData_Trebuchet.asset
+- Assets/Data/Units/UnitData_ByeoldeaWangu.asset
+- Assets/Data/Units/UnitData_JijaChongtong.asset
+- Assets/Data/Units/UnitData_DemiCannon.asset
+- Assets/Data/Units/UnitData_Onager.asset
+- Assets/Data/Units/UnitData_Warwolf.asset
+- Assets/Data/Units/UnitData_FrankishGun.asset
+- Assets/Data/Units/UnitData_CheonjaChongtong.asset
+- Assets/Data/Units/UnitData_CongreveRocket.asset
+- Assets/Data/Units/UnitData_Catapult.asset
+- Assets/Data/Units/UnitData_ThrowerSling.asset
+- Assets/Data/Units/UnitData_BatteringRam.asset
+- Assets/Data/Units/UnitData_UrbanCannon.asset
+- Assets/Data/Units/UnitData_Mangonel.asset
+- Assets/Data/Units/UnitData_HwanjaChongtong.asset
+- Assets/Data/Units/UnitData_Singijun.asset
+- Assets/Data/Units/UnitData_Falconet.asset
+- Assets/Data/Units/UnitData_DeaWangu.asset
+- Assets/Data/Units/UnitData_SoWangu.asset
+- Assets/Data/Units/UnitData_ThrowerSpearTool.asset
+- Assets/Data/Units/UnitData_Hwacha.asset
+- Assets/Data/Units/UnitData_ThrowerStone.asset
+- Assets/Data/Units/UnitData_Ballista.asset
+- Assets/Data/Units/UnitData_JungWangu.asset
+- Assets/Data/Units/UnitData_Culverin.asset
+- Assets/Data/Units/UnitData_Polybolos.asset
+- Assets/Data/Units/UnitData_HyunjaChongtong.asset
+Dependencies: []

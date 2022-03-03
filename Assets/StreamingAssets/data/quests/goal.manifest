@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3145641589
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0ff25183600d313ba1b728b7314b4a0b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f08d45b6d83e55eb15644a163417e727
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Quests/Goal/QuestData_Standard.asset
+Dependencies: []

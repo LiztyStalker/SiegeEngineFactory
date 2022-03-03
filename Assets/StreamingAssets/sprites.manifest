@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 3214825593
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 198b05c3e6e158ad25dd48b1e9810dc7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4df8c69f2c8a6ad9e3cbf82bb83e4dc3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Images/Icons/Assets/Icon_ResourceAssetData.png
+- Assets/Images/Icons/Assets/Icon_GoldAssetData.png
+- Assets/Images/Icons/Assets/Icon_ResearchAssetData.png
+- Assets/Images/Icons/Assets/Icon_MeteoriteAssetData.png
+- Assets/Images/Icons/Assets/Icon_PopulationAssetData.png
+Dependencies: []

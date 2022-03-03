@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 3869035646
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5f19e1aa2d296af94091c755325fc4f9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f08d45b6d83e55eb15644a163417e727
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Quests/Daily/QuestData_ArrivedLevel.asset
+- Assets/Data/Quests/Daily/QuestData_DestroyBoss.asset
+- Assets/Data/Quests/Daily/QuestData_DestroyEnemy.asset
+- Assets/Data/Quests/Daily/QuestData_UpgradeVillage.asset
+- Assets/Data/Quests/Daily/QuestData_UpgradeSmithy.asset
+- Assets/Data/Quests/Daily/QuestData_DailyQuest.asset
+Dependencies: []

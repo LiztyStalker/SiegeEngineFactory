@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 3536677299
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 09dcce07be64ab25fb0d911f7e2f8745
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 69c8e27f7b3623c8eb423d6482296b8f
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Villages/VillageData_UpgradeUnit.asset
+- Assets/Data/Villages/VillageData_UpgradeSmithy.asset
+- Assets/Data/Villages/VillageData_UpgradeVillage.asset
+- Assets/Data/Villages/VillageData_UpgradeMine.asset
+- Assets/Data/Villages/VillageData_Population.asset
+Dependencies: []

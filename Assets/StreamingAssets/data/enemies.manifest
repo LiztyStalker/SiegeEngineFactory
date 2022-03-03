@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 2812370642
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 10d37a1a8614bc766146b51d4e6105a3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3b9d40196cb6460e1de59fa2529f6f8d
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 42e7c2d3fd2bf7c409eb63489bd01d86, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Enemies/EnemyData_Tower.asset
+- Assets/Data/Enemies/EnemyData_Market.asset
+- Assets/Data/Enemies/EnemyData_Pasture.asset
+- Assets/Data/Enemies/EnemyData_Hut.asset
+- Assets/Data/Enemies/EnemyData_LogCabin.asset
+- Assets/Data/Enemies/EnemyData_MushroomPlantation.asset
+- Assets/Data/Enemies/EnemyData_Inn.asset
+- Assets/Data/Enemies/EnemyData_WoodenFort.asset
+- Assets/Data/Enemies/EnemyData_Plaza.asset
+- Assets/Data/Enemies/EnemyData_Stall.asset
+- Assets/Data/Enemies/EnemyData_WaterWheel.asset
+- Assets/Data/Enemies/EnemyData_Lumber.asset
+- Assets/Data/Enemies/EnemyData_WoodenCutter.asset
+- Assets/Data/Enemies/EnemyData_Storage.asset
+- Assets/Data/Enemies/EnemyData_WoodenBarriar.asset
+- Assets/Data/Enemies/EnemyData_Camp.asset
+- Assets/Data/Enemies/EnemyData_Hideout.asset
+- Assets/Data/Enemies/EnemyData_CharcoalBurner.asset
+- Assets/Data/Enemies/EnemyData_Barracks.asset
+- Assets/Data/Enemies/EnemyData_WoodenWorkShop.asset
+Dependencies: []

@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 3136039741
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4a1d6a90ccb520d7e1b68a7e690690dc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0e03cc09c52f85a646da4ec578b59b8
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 40da76afa05f37740b1b30a8234ff7ab, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Mines/MineData_Mine12.asset
+- Assets/Data/Mines/MineData_Mine11.asset
+- Assets/Data/Mines/MineData_Mine7.asset
+- Assets/Data/Mines/MineData_Mine3.asset
+- Assets/Data/Mines/MineData_Crater.asset
+- Assets/Data/Mines/MineData_Mine6.asset
+- Assets/Data/Mines/MineData_Mine9.asset
+- Assets/Data/Mines/MineData_Mine2.asset
+- Assets/Data/Mines/MineData_Mine4.asset
+- Assets/Data/Mines/MineData_Mine8.asset
+- Assets/Data/Mines/MineData_Mine5.asset
+- Assets/Data/Mines/MineData_Mine10.asset
+- Assets/Data/Mines/MineData_Mine1.asset
+Dependencies: []

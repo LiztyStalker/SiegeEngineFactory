@@ -7,7 +7,7 @@ namespace UtilityManager
     public class AssetBundleGenerator
     {
 
-        private readonly static string PATH_BUNDLE = "Assets/AssetBundles";
+        private readonly static string PATH_BUNDLE = "Assets/StreamingAssets";
 
         [MenuItem("AssetBundle/Build AssetBundles for Android")]
         static void BuildAllAssetBundlesAndroid()

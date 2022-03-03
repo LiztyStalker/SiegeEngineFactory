@@ -25,7 +25,7 @@ namespace SEF.Data
         }
 
         private readonly static string _dataPath = "Assets/Data/Smithy";
-        private readonly static string _bundleName = "data/smithys";
+        private readonly static string _bundleName = "data/smithies";
         private readonly static string _sheetKey = "16Ps885lj_8ZSY6Gv_WQgehpCxusaz2l9J50JBXKq2DY";
         private readonly static string _worksheetKey = "Smithy_Data";
 

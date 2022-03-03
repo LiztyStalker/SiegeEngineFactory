@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 3087960083
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 55c3719a2c9d2c08be24d283a9d21a91
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1f9b847f3ff61eff9ff19f82d08059d9
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 7311407be61c63b479298e8f0cddc8c7, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Smithy/SmithyData_UnitHealthValue.asset
+- Assets/Data/Smithy/SmithyData_UnitProductTime.asset
+- Assets/Data/Smithy/SmithyData_UnitDamageDelay.asset
+- Assets/Data/Smithy/SmithyData_AttackerDamageDelay.asset
+- Assets/Data/Smithy/SmithyData_UnitDamageValue.asset
+- Assets/Data/Smithy/SmithyData_AttackerDamageValue.asset
+Dependencies: []

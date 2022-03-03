@@ -18,7 +18,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _smithyAbilityDataArray:
   - _serializedStatusData:
-      _classTypeName: SEF.Data.UnitDamageValueStatusData
+      _classTypeName: SEF.Data.UnitHealthValueStatusData
       _typeStatusValue: 1
       _startValue: 0.01
       _increaseValue: 0.01

@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 2738880542
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c39e219ee99f89cffb0a67f5b91a915e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f69a3af33719691d8250f3dbb161b415
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Spine/BowSoldier_Atlas.asset
+- Assets/Data/Spine/BowSoldier_SkeletonData.asset
+- Assets/Data/Spine/BowSoldier.atlas.txt
+- Assets/Data/Spine/BowSoldier_Material.mat
+- Assets/Data/Spine/BowSoldier.json
+- Assets/Data/Spine/BowSoldier.png
+Dependencies: []
