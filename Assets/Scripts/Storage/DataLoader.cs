@@ -36,6 +36,16 @@ namespace Storage
         private IEnumerator LoadCoroutine(System.Action<float> loadCallback, System.Action<TYPE_IO_RESULT> endCallback)
         {
 
+            loadCallback?.Invoke(0.5f);
+            yield return new WaitForSeconds(0.5f);
+
+            DataStorage.Instance.ToString();
+            endCallback?.Invoke(TYPE_IO_RESULT.Success);
+
+            yield break;
+
+            //차후에 서버 연결 코드 적용
+
             UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(PATH_ASSET_BUNDLE);
             UnityWebRequestAsyncOperation op = www.SendWebRequest();
 

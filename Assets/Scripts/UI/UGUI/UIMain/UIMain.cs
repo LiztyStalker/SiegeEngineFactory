@@ -2,15 +2,19 @@ namespace SEF.UI
 {
     using System.Collections;
     using UnityEngine;
-    using UnityEngine.UIElements;
     using Storage;
     using SEF.Account;
     using Utility.IO;
 
     public class UIMain : MonoBehaviour
     {
+        [SerializeField]
         private UIStart _uiStart;
+
+        [SerializeField]
         private UILoad _uiLoad;
+
+#if UNITY_EDITOR
 
         public static UIMain Create()
         {
@@ -19,12 +23,7 @@ namespace SEF.UI
             obj.AddComponent<Canvas>();
             return obj.AddComponent<UIMain>();
         }
-
-
-        private void Awake()
-        {
-            Initialize();
-        }
+#endif
 
         private void Start()
         {
@@ -33,19 +32,16 @@ namespace SEF.UI
 
         private void InitializeAssetBundle()
         {
+            Initialize();
             //AssetBundle 불러오기
             DataStorage.Initialize(_uiLoad.ShowLoad, result =>
             {
-                if (result == TYPE_IO_RESULT.Success)
-                {
-                    InitializeAccount();
-                }
-                else
+                if (result != TYPE_IO_RESULT.Success)
                 {
                     //Success가 아니면 메시지 출력
                     ShowPopup(result);
                 }
-
+                InitializeAccount();
             });
         }
 
@@ -54,16 +50,14 @@ namespace SEF.UI
             //데이터 불러오기
             Account.Current.LoadData(_uiLoad.ShowLoad, result =>
             {
-                if (result == TYPE_IO_RESULT.Success)
-                {
-                    _uiLoad.Hide();
-                    _uiStart.ShowStart(GameStart);
-                }
-                else
-                {
-                    //Success가 아니면 메시지 출력
-                    ShowPopup(result);
-                }
+                //if (result != TYPE_IO_RESULT.Success)
+                //{
+                //Success가 아니면 메시지 출력
+                //ShowPopup(result);
+                //}
+                Debug.Log("LoadData " + _uiLoad + " " + _uiStart);
+                _uiLoad.Hide();
+                _uiStart.ShowStart(GameStart);
             });
         }
 
@@ -74,28 +68,15 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            _uiStart = GetComponentInChildren<UIStart>(true);
-
-            if (_uiStart == null)
-            {
-                _uiStart = UIStart.Create();
-                _uiStart.transform.SetParent(transform);
-            }
-
+            //_uiStart = GetComponentInChildren<UIStart>(true);
             _uiStart.Initialize();
 
 
-            _uiLoad = GetComponentInChildren<UILoad>(true);
-
-            if (_uiLoad == null)
-            {
-                _uiLoad = UILoad.Create();
-                _uiLoad.transform.SetParent(transform);
-            }
+            //_uiLoad = GetComponentInChildren<UILoad>(true);
             _uiLoad.Initialize();
         }
 
-     
+
         private void GameStart()
         {
             StartCoroutine(LoadAsyncCoroutine());
@@ -103,8 +84,9 @@ namespace SEF.UI
 
         private IEnumerator LoadAsyncCoroutine()
         {
-            var async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Game_Scene");
             _uiStart.Hide();
+
+            var async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Game_Scene");
 
             while (!async.isDone)
             {
@@ -125,9 +107,9 @@ namespace SEF.UI
 
         }
 
-        private void OnDestroy()
-        {
-            CleanUp();
-        }
+        //private void OnDestroy()
+        //{
+        //    CleanUp();
+        //}
     }
 }

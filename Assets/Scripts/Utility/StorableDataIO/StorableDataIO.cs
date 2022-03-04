@@ -304,12 +304,12 @@ namespace Utility.IO
                     object data = null;
                     using (FileStream file = new FileStream(string.Format("{0}/{1}.{2}", FilePath, fileName, FILE_EXTENTION), FileMode.Open, FileAccess.Read))
                     {
-                    
+
                         using (CryptoStream cryptoStream = new CryptoStream(file, _decryptor, CryptoStreamMode.Read))
                         {
                             byte[] arr = new byte[file.Length];
                             cryptoStream.Read(arr, 0, arr.Length);
-                            using(MemoryStream mem = new MemoryStream())
+                            using (MemoryStream mem = new MemoryStream())
                             {
                                 mem.Write(arr, 0, arr.Length);
                                 mem.Seek(0, SeekOrigin.Begin);
@@ -330,13 +330,14 @@ namespace Utility.IO
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.LogWarning("파일 입출력 불러오기 오류 : " + e.Message +  " " + e.HelpLink);
+                    UnityEngine.Debug.LogWarning("파일 입출력 불러오기 오류 : " + e.Message + " " + e.HelpLink);
                     endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
                 }
             }
             else
             {
                 Debug.LogWarning("파일을 찾을 수 없습니다");
+                endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
             }
         }
 
@@ -366,6 +367,7 @@ namespace Utility.IO
                     endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
                 }
             }
+            endCallback?.Invoke(TYPE_IO_RESULT.DataProcessingError, null);
         }
 
         #endregion

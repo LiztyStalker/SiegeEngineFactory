@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4190426434
+CRC: 2905604674
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 19608f4a54a44edf3d687a105bf6c69d
+    Hash: 25fa28fda036096c4196047e4b40cd19
   TypeTreeHash:
     serializedVersion: 2
     Hash: bf8667e9e7b33e2ce3f0d2d39b916abe
@@ -18,9 +18,8 @@ Assets:
 - Assets/Data/Units/UnitData_Palintonon.asset
 - Assets/Data/Units/UnitData_ThrowerSpear.asset
 - Assets/Data/Units/UnitData_Helepolis.asset
-- Assets/Data/Units/UnitData_MonsMeg.asset
-- Assets/Data/Units/UnitData_CheonjaCannon(Deajangunjun).asset
 - Assets/Data/Units/UnitData_Scorpio.asset
+- Assets/Data/Units/UnitData_CheonjaCannon(Deajangunjun).asset
 - Assets/Data/Units/UnitData_ShieldRam.asset
 - Assets/Data/Units/UnitData_MysoreRocket.asset
 - Assets/Data/Units/UnitData_Cannon.asset
@@ -40,18 +39,16 @@ Assets:
 - Assets/Data/Units/UnitData_ThrowerSling.asset
 - Assets/Data/Units/UnitData_BatteringRam.asset
 - Assets/Data/Units/UnitData_UrbanCannon.asset
+- Assets/Data/Units/UnitData_Test.asset
 - Assets/Data/Units/UnitData_Mangonel.asset
 - Assets/Data/Units/UnitData_HwanjaChongtong.asset
-- Assets/Data/Units/UnitData_Singijun.asset
 - Assets/Data/Units/UnitData_Falconet.asset
 - Assets/Data/Units/UnitData_DeaWangu.asset
 - Assets/Data/Units/UnitData_SoWangu.asset
 - Assets/Data/Units/UnitData_ThrowerSpearTool.asset
-- Assets/Data/Units/UnitData_Hwacha.asset
 - Assets/Data/Units/UnitData_ThrowerStone.asset
+- Assets/Data/Units/UnitData_Culverin.asset
 - Assets/Data/Units/UnitData_Ballista.asset
 - Assets/Data/Units/UnitData_JungWangu.asset
-- Assets/Data/Units/UnitData_Culverin.asset
-- Assets/Data/Units/UnitData_Polybolos.asset
 - Assets/Data/Units/UnitData_HyunjaChongtong.asset
 Dependencies: []

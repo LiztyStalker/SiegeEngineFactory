@@ -1,40 +1,34 @@
 ManifestFileVersion: 0
-CRC: 1079563596
+CRC: 3742576797
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: uxml
-      Dependencies: {}
-    Info_1:
-      Name: data/units
-      Dependencies: {}
-    Info_2:
-      Name: data/enemies
-      Dependencies: {}
-    Info_3:
-      Name: data/villages
-      Dependencies: {}
-    Info_4:
-      Name: data/quests/daily
-      Dependencies: {}
-    Info_5:
-      Name: data/quests/goal
-      Dependencies: {}
-    Info_6:
-      Name: data/mines
-      Dependencies: {}
-    Info_7:
       Name: ui
       Dependencies: {}
+    Info_1:
+      Name: data/enemies
+      Dependencies: {}
+    Info_2:
+      Name: data/mines
+      Dependencies: {}
+    Info_3:
+      Name: data/quests/daily
+      Dependencies: {}
+    Info_4:
+      Name: data/quests/goal
+      Dependencies: {}
+    Info_5:
+      Name: data/smithies
+      Dependencies: {}
+    Info_6:
+      Name: spines
+      Dependencies: {}
+    Info_7:
+      Name: data/units
+      Dependencies: {}
     Info_8:
-      Name: data/bullets
+      Name: data/villages
       Dependencies: {}
     Info_9:
       Name: sprites
-      Dependencies: {}
-    Info_10:
-      Name: spines
-      Dependencies: {}
-    Info_11:
-      Name: data/smithies
       Dependencies: {}

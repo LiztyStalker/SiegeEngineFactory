@@ -218,10 +218,14 @@ namespace SEF.Unit {
                 else
                 {
                     var data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>(enemyEntity.EnemyData.SpineModelKey, null, null);
-#if UNITY_EDITOR
-                    if(data == null)
+
+                    //#if UNITY_EDITOR
+                    if (data == null)
+                    {
+                        Debug.LogWarning("임시 스파인 데이터 사용");
                         data = DataStorage.Instance.GetDataOrNull<SkeletonDataAsset>("BowSoldier_SkeletonData", null, null);
-#endif
+                    }
+                    //#endif
                     SkeletonAnimation.skeletonDataAsset = data;
                 }
             }

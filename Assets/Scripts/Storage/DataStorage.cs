@@ -25,7 +25,6 @@ namespace Storage
         }
 
         private Dictionary<string, Dictionary<string, Object>> _dataDic = new Dictionary<string, Dictionary<string, Object>>();
-
         private DataStorage()
         {
 #if UNITY_EDITOR
@@ -38,23 +37,27 @@ namespace Storage
             InitializeDatasFromAssetDatabase<SmithyData>("Data/Smithy");
             InitializeDatasFromAssetDatabase<VillageData>("Data/Villages");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Daily");
-            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Weekly");
+            //InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Weekly");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Goal");
-            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challange");
+            //InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challange");
             InitializeDatasFromAssetDatabase<GameObject>("Prefabs/UI");
 #else
-            InitializeDataFromAssetBundle<Sprite>("Images/Icons/Assets");
-            InitializeDataFromAssetBundle<SkeletonDataAsset>("Data/Spine");
-            InitializeDataFromAssetBundle<BulletData>("Data/Bullets");
-            InitializeDataFromAssetBundle<EnemyData>("Data/Enemies");
-            InitializeDataFromAssetBundle<UnitData>("Data/Units");
-            InitializeDataFromAssetBundle<MineData>("Data/Mines");
-            InitializeDataFromAssetBundle<SmithyData>("Data/Smithy");
-            InitializeDataFromAssetBundle<VillageData>("Data/Smithy");
-            InitializeDataFromAssetBundle<QuestData>("Data/Quests");
-            InitializeDataFromAssetBundle<GameObject>("Prefabs/UI");
+            InitializeDataFromAssetBundle<Sprite>("sprites", null);
+            InitializeDataFromAssetBundle<SkeletonDataAsset>("spines", null);
+            InitializeDataFromAssetBundle<BulletData>("bullets", "data");
+            InitializeDataFromAssetBundle<EnemyData>("enemies", "data");
+            InitializeDataFromAssetBundle<UnitData>("units", "data");
+            InitializeDataFromAssetBundle<MineData>("mines", "data");
+            InitializeDataFromAssetBundle<SmithyData>("smithies", "data");
+            InitializeDataFromAssetBundle<VillageData>("villages", "data");
+            InitializeDataFromAssetBundle<QuestData>("daily", "data/quests");
+            //InitializeDataFromAssetBundle<QuestData>("weekly", "data/quests");
+            InitializeDataFromAssetBundle<QuestData>("goal", "data/quests");
+            //InitializeDataFromAssetBundle<QuestData>("challenge", "data/quests");
+            InitializeDataFromAssetBundle<GameObject>("ui", null);
 #endif
         }
+
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -133,6 +136,7 @@ namespace Storage
 
 #endif
 
+
         private void InitializeDataFromAssetBundle<T>(string path, string directory = null) where T : Object
         {
             string bundlePath = path;
@@ -141,26 +145,41 @@ namespace Storage
                 bundlePath = Path.Combine(directory, path);
             }
 
-            bundlePath = Path.Combine(Application.streamingAssetsPath, bundlePath);
+#if UNITY_EDITOR
+            string dataPath = Application.streamingAssetsPath;
+#else
+            string dataPath = "jar:file://" + Application.dataPath + "!/assets";
+#endif
 
-            var assetbundle = AssetBundle.LoadFromFile(Path.Combine(Application.streamingAssetsPath, bundlePath));
-            if (assetbundle == null)
+            try
             {
-                Debug.LogError($"{bundlePath} AssetBundle을 찾을 수 없습니다");
-                return;
-            }
 
-            var files = assetbundle.LoadAllAssets<T>();
-            for (int i = 0; i < files.Length; i++)
-            {
-                var data = files[i];
-                //Debug.Log(files[i]);
-                if (data != null)
+                var assetbundle = AssetBundle.LoadFromFile(Path.Combine(dataPath, bundlePath));
+                if (assetbundle == null)
                 {
-                    AddDirectoryInData(data.name, data);
+                    Debug.LogError($"{bundlePath} AssetBundle을 찾을 수 없습니다");
+                    return;
                 }
+
+                var files = assetbundle.LoadAllAssets<T>();
+                for (int i = 0; i < files.Length; i++)
+                {
+                    var data = files[i];
+                    Debug.Log(files[i]);
+                    if (data != null)
+                    {
+                        AddDirectoryInData(data.name, data);
+                    }
+                }
+                assetbundle.Unload(false);
             }
-            assetbundle.Unload(false);
+
+            catch
+            {
+#if UNITY_EDITOR
+                Debug.LogWarning($"{bundlePath} 가 존재하지 않습니다");
+#endif
+            }
         }
 
 
