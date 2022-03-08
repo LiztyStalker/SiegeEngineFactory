@@ -59,9 +59,40 @@ namespace SEF.Data
         /// <param name="rate"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static BigDecimal GetIsolationInterest(BigDecimal startValue, float nowValue = 1, int length = 1)
+        //public static BigDecimal GetIsolationInterest(BigDecimal startValue, float nowValue = 1, int length = 1)
+        //{
+        //    var value = startValue + nowValue * length;
+        //    return value;
+        //}
+
+
+        /// <summary>
+        /// 단리 계산식
+        /// </summary>
+        /// <param name="startValue"></param>
+        /// <param name="increaseValue"></param>
+        /// <param name="increaseRate"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static BigDecimal GetIsolationInterest(BigDecimal startValue, float increaseValue = 1, float increaseRate = 0.1f, int length = 1)
         {
-            var value = startValue + nowValue * length;
+            var value = startValue + increaseValue * (float)length;
+            value += value * increaseRate * (float)length;
+            return value;
+        }
+
+        /// <summary>
+        /// 단리 계산식
+        /// </summary>
+        /// <param name="startValue"></param>
+        /// <param name="increaseValue"></param>
+        /// <param name="increaseRate"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static float GetIsolationInterest(float startValue, float increaseValue = 1, float increaseRate = 0.1f, int length = 1)
+        {
+            var value = startValue + increaseValue * (float)length;
+            value += value * increaseRate * (float)length;
             return value;
         }
     }

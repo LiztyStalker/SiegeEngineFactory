@@ -173,6 +173,40 @@ namespace SEF.Data
             return new EnemyData();
         }
 
+        //private EnemyData(string name = null)
+        //{
+
+        //    Key = "Test";
+        //    _spineModelKey = "BowSoldier_SkeletonData";
+        //    _group = TYPE_ENEMY_GROUP.Normal;
+        //    _typeLevelTheme = TYPE_THEME_GROUP.Grass;
+
+        //    _attackBulletKey = "Arrow";
+
+        //    _startHealthValue = HealthData.Create_Test(100);
+        //    _increaseLevelHealthValue = 2;// HealthData.Create_Test();
+        //    _increaseLevelHealthRate = 0.125f;
+        //    _increaseWaveHealthValue = 1;// HealthData.Create_Test();
+        //    _increaseWaveHealthRate = 0.125f;
+        //    _startDamageValue = DamageData.Create_Test(30);
+        //    _increaseDamageValue = 1;// AttackData.Create_Test();
+        //    _increaseDamageRate = 0.125f;
+        //    _attackCount = 1;
+        //    //_attackDelay = new float[1];
+        //    //_attackDelay[0] = 1f;
+        //    _attackDelay = 1f;
+
+        //    _startRewardAssetValue = GoldAssetData.Create_Test(10);
+        //    _increaseLevelRewardAssetValue = 1;// GoldAssetData.Create_Test();
+        //    _increaseLevelRewardAssetRate = 0.125f;
+        //    _increaseWaveRewardAssetValue = 1;// GoldAssetData.Create_Test();
+        //    _increaseWaveRewardAssetRate = 0.125f;
+
+        //    UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");
+
+        //}
+
+
         private EnemyData(string name = null)
         {
 
@@ -184,23 +218,23 @@ namespace SEF.Data
             _attackBulletKey = "Arrow";
 
             _startHealthValue = HealthData.Create_Test(100);
-            _increaseLevelHealthValue = 2;// HealthData.Create_Test();
-            _increaseLevelHealthRate = 0.125f;
-            _increaseWaveHealthValue = 1;// HealthData.Create_Test();
-            _increaseWaveHealthRate = 0.125f;
-            _startDamageValue = DamageData.Create_Test(30);
-            _increaseDamageValue = 1;// AttackData.Create_Test();
-            _increaseDamageRate = 0.125f;
+            _increaseLevelHealthValue = 100;
+            _increaseLevelHealthRate = 1.5f;
+            _increaseWaveHealthValue = 30;
+            _increaseWaveHealthRate = 0.5f;
+
+            _startDamageValue = DamageData.Create_Test(20);
+            _increaseDamageValue = 1;
+            _increaseDamageRate = 0.1f;
+
             _attackCount = 1;
-            //_attackDelay = new float[1];
-            //_attackDelay[0] = 1f;
             _attackDelay = 1f;
 
             _startRewardAssetValue = GoldAssetData.Create_Test(10);
-            _increaseLevelRewardAssetValue = 1;// GoldAssetData.Create_Test();
-            _increaseLevelRewardAssetRate = 0.125f;
-            _increaseWaveRewardAssetValue = 1;// GoldAssetData.Create_Test();
-            _increaseWaveRewardAssetRate = 0.125f;
+            _increaseLevelRewardAssetValue = 10;
+            _increaseLevelRewardAssetRate = 1f;
+            _increaseWaveRewardAssetValue = 1;
+            _increaseWaveRewardAssetRate = 0.5f;
 
             UnityEngine.Debug.LogWarning("테스트 적을 생성하였습니다");
 

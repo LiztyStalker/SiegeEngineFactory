@@ -76,14 +76,12 @@ namespace System.Numerics
 
         private static decimal GetDecimalValue(BigInteger bigint, byte exponent)
         {
+            //오버플로우 버그
 //            Debug.Log(bigint + " " + exponent);
             return ((decimal)bigint) * (decimal)Mathf.Pow(0.1f, (int)exponent);
         }
 
-        public override string ToString()
-        {
-            return null;
-        }
+        public override string ToString() => GetDecimalValue().ToString();
 
         private BigInteger ConvertToBigInteger(decimal value)
         {

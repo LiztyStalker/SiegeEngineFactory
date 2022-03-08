@@ -76,8 +76,8 @@ namespace SEF.Entity
 
         public void SetValue(string value) => NowAssetData.SetValue(value);
 
-        public void SetCompoundInterest(float nowValue, float rate, int length = 1) => NowAssetData.SetCompoundInterest(nowValue, rate, length);
-        public void SetIsolationInterest(float nowValue, int length) => NowAssetData.SetIsolationInterest(nowValue, length);
+        //public void SetCompoundInterest(float nowValue, float rate, int length = 1) => NowAssetData.SetCompoundInterest(nowValue, rate, length);
+        public void SetIsolationInterest(float increaseValue, float increaseRate, int length) => NowAssetData.SetIsolationInterest(increaseValue, increaseRate, length);
 
         public INumberData Clone()
         {

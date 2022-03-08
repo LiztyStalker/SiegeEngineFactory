@@ -99,9 +99,9 @@ namespace SEF.Data
 
         public string GetValue() => AssetValue.ToString();
 
-        public void SetCompoundInterest(float nowValue, float rate, int length = 1) { }
+        //public void SetCompoundInterest(float nowValue, float rate, int length = 1) { }
 
-        public void SetIsolationInterest(float nowValue, int length = 1) { }
+        public void SetIsolationInterest(float increaseValue, float increaseRate, int length = 1) { Debug.LogWarning("사용하지 않음"); }
 
         public void SetValue(string value) { }
     }

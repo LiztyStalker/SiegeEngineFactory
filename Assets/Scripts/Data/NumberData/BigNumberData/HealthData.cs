@@ -33,22 +33,28 @@ namespace SEF.Data
 
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
         {
-            Value = NumberDataUtility.GetCompoundInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value) + (upgradeData.Value);
+            //Value = NumberDataUtility.GetCompoundInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value) + (upgradeData.Value);
+            Value = NumberDataUtility.GetIsolationInterest(unitData.StartHealthValue.Value, unitData.IncreaseHealthValue, unitData.IncreaseHealthRate, upgradeData.Value);
         }
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
             var level = levelWaveData.GetLevel();
-            var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartHealthValue.Value, enemyData.IncreaseLevelHealthValue, enemyData.IncreaseLevelHealthRate, level);
-            var waveValue = (levelValue * (levelWaveData.GetWave() - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate);
-            var value = levelValue + waveValue;
-            //Debug.Log(levelValue.GetDecimalValue() + " " + waveValue.GetDecimalValue() + " " + value.GetDecimalValue());
+            var wave = levelWaveData.GetWave();
+
+            //var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartHealthValue.Value, enemyData.IncreaseLevelHealthValue, enemyData.IncreaseLevelHealthRate, level);
+            var levelValue = NumberDataUtility.GetIsolationInterest(enemyData.StartHealthValue.Value, enemyData.IncreaseLevelHealthValue, enemyData.IncreaseLevelHealthRate, level);
+
+            //var waveValue = (levelValue * (levelWaveData.GetWave() - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate);
+            var waveValue = NumberDataUtility.GetIsolationInterest(levelValue, enemyData.IncreaseWaveHealthValue, enemyData.IncreaseWaveHealthRate, wave);
+
+            var value = waveValue;
+
             if (levelWaveData.IsThemeBoss())
                 value *= 5;
             else if (levelWaveData.IsBoss())
-            {
                 value *= 3;
-            }
+
             Value = value;
         }
 

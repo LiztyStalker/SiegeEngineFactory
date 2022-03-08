@@ -13,16 +13,21 @@ namespace SEF.Data
 
         public void SetAssetData(UnitData unitData, UpgradeData upgradeData)
         {
-            Value = NumberDataUtility.GetCompoundInterest(unitData.StartAttackValue.Value, unitData.IncreaseAttackValue, unitData.IncreaseAttackRate, upgradeData.Value) + (upgradeData.Value);
+            //Value = NumberDataUtility.GetCompoundInterest(unitData.StartAttackValue.Value, unitData.IncreaseAttackValue, unitData.IncreaseAttackRate, upgradeData.Value) + (upgradeData.Value);
+            Value = NumberDataUtility.GetIsolationInterest(unitData.StartAttackValue.Value, unitData.IncreaseAttackValue, unitData.IncreaseAttackRate, upgradeData.Value);
         }
 
         public void SetAssetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
             var level = levelWaveData.GetLevel();
-            var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartAttackValue.Value, enemyData.IncreaseAttackValue, enemyData.IncreaseAttackRate, level);
-            //            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
+
+            //var levelValue = NumberDataUtility.GetCompoundInterest(enemyData.StartAttackValue.Value, enemyData.IncreaseAttackValue, enemyData.IncreaseAttackRate, level);
+            var levelValue = NumberDataUtility.GetIsolationInterest(enemyData.StartAttackValue.Value, enemyData.IncreaseAttackValue, enemyData.IncreaseAttackRate, level);
+
+            //var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
+
             var value = levelValue;// + waveValue;
-            //            Debug.Log(levelValue + " " + waveValue + " " + value);
+            
             if (levelWaveData.IsThemeBoss())
                 value *= 3;
             else if (levelWaveData.IsBoss())
@@ -35,16 +40,18 @@ namespace SEF.Data
         public void SetAssetData(AttackData attackData, LevelWaveData levelWaveData)
         {
             var level = levelWaveData.GetLevel();
-            var levelValue = NumberDataUtility.GetCompoundInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
-            //            var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
+
+            //var levelValue = NumberDataUtility.GetCompoundInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
+            var levelValue = NumberDataUtility.GetIsolationInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
+
+            //var waveValue = (levelValue * (int)(UnityEngine.Mathf.Round((float)((levelWaveData.Value - 1) % 10 - enemyData.IncreaseWaveHealthValue) * enemyData.IncreaseWaveHealthRate * 100f))) / 100;
             var value = levelValue;// + waveValue;
-            //            Debug.Log(levelValue + " " + waveValue + " " + value);
+
             if (levelWaveData.IsThemeBoss())
                 value *= 3;
             else if (levelWaveData.IsBoss())
-            {
                 value *= 2;
-            }
+
             Value = value;
 
         }
@@ -52,7 +59,8 @@ namespace SEF.Data
         public void SetAssetData(AttackData attackData, NumberData numberData)
         {
             var level = numberData.Value;
-            var levelValue = NumberDataUtility.GetCompoundInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
+            //var levelValue = NumberDataUtility.GetCompoundInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
+            var levelValue = NumberDataUtility.GetIsolationInterest(attackData.DamageValue.Value, attackData.IncreaseDamageValue, attackData.IncreaseDamageRate, level);
             var value = levelValue;
             Value = value;
 

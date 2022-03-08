@@ -209,18 +209,18 @@ namespace SEF.Test
             Assert.IsTrue(_entity.IsOverflow(data5), "넘치지 않았습니다");
         }
 
-        [Test]
-        public void AssetEntityTest_CompoundInterest()
-        {
-            var data = GoldAssetData.Create_Test(100);
-            data.SetValue();
-            data.SetCompoundInterest(1f, 0.125f, 1);
-            Debug.Log(data.GetValue());
+        //[Test]
+        //public void AssetEntityTest_CompoundInterest()
+        //{
+        //    var data = GoldAssetData.Create_Test(100);
+        //    data.SetValue();
+        //    data.SetCompoundInterest(1f, 0.125f, 1);
+        //    Debug.Log(data.GetValue());
 
-            var clone = (IAssetData)data.Clone();
-            clone.SetCompoundInterest(1f, 0.125f, 1);
-            Debug.Log(clone.GetValue());
-        }
+        //    var clone = (IAssetData)data.Clone();
+        //    clone.SetCompoundInterest(1f, 0.125f, 1);
+        //    Debug.Log(clone.GetValue());
+        //}
 
 
         //[Test]

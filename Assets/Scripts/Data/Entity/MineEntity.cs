@@ -93,7 +93,8 @@ namespace SEF.Entity
         private IAssetData CalculateUpgradeData()
         {
             var assetData = (IAssetData)_data.StartUpgradeAssetData.Clone();
-            assetData.SetCompoundInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
+            //assetData.SetCompoundInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
+            assetData.SetIsolationInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
             return assetData;
         }
 

@@ -36,8 +36,11 @@ namespace SEF.Data
             _value = 0;
         }
 
-        public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { Debug.LogWarning("계산되지 않음"); }
-        public void SetIsolationInterest(float nowValue = 1, int length = 1) { Debug.LogWarning("계산되지 않음"); }
+        //public void SetCompoundInterest(float nowValue = 1, float rate = 0.1f, int length = 1) { Debug.LogWarning("계산되지 않음"); }
+        public void SetIsolationInterest(float increaseValue, float increaseRate, int length = 1) 
+        {
+            _value = (int)NumberDataUtility.GetIsolationInterest(_value, increaseValue, increaseRate, length);
+        }
 
     }
 }

@@ -120,7 +120,8 @@ namespace SEF.Data
         public IAssetData GetUpgradeAssetData(UpgradeData data)
         {
             var assetData = (IAssetData)StartUpgradeAssetData.Clone();
-            assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            //assetData.SetCompoundInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
+            assetData.SetIsolationInterest(_increaseUpgradeValue, IncreaseUpgradeRate, data.Value);
             return assetData;
         }
 

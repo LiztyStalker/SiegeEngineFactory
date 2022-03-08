@@ -143,14 +143,11 @@ namespace SEF.Data
 
         [SerializeField]
         private int _defaultMaxUpgradeValue = 10;
-        public int DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;// { get => _defaultMaxUpgradeValue; set => _defaultMaxUpgradeValue = value; }
+        public int DefaultMaxUpgradeValue => _defaultMaxUpgradeValue;
 
         [SerializeField]
         private UnitTechData[] _unitTechDataArray = null;
         public UnitTechData[] UnitTechDataArray => _unitTechDataArray;
-//        public void AddUnitTechData(UnitTechData data) => _unitTechDataArray.Add(data);
-//        public void RemoveUnitTechData(UnitTechData data) => _unitTechDataArray.Remove(data);
-
 
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
@@ -160,6 +157,41 @@ namespace SEF.Data
             return new UnitData(name);
         }
 
+        //복리형
+        //private UnitData(string name = null)
+        //{
+
+        //    Key = (string.IsNullOrEmpty(name)) ? "Test" : name;
+        //    _spineModelKey = "BowSoldier_SkeletonData";
+        //    _group = TYPE_UNIT_GROUP.Thrower;
+        //    _scale = 1f;
+
+        //    _attackBulletKey = "Arrow";
+
+        //    _startHealthValue = HealthData.Create_Test(100);
+        //    _increaseHealthValue = 1;
+        //    _increaseHealthRate = 0.05f;
+        //    _productTime = 1f;
+        //    _attackValue = DamageData.Create_Test(15);
+        //    _increaseAttackValue = 1;
+        //    _increaseAttackRate = 0.05f;
+        //    _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
+        //    _attackPopulation = 1;
+        //    _attackCount = 1;
+        //    _attackDelay = 1f;
+        //    _startUpgradeAsset = GoldAssetData.Create_Test(10);
+        //    _increaseUpgradeAssetValue = 1;
+        //    _increaseUpgradeAssetRate = 0.05f;
+        //    _defaultMaxUpgradeValue = 10;
+        //    _unitTechDataArray = null;
+
+        //    UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
+        //}
+
+        /// <summary>
+        /// 단리형
+        /// </summary>
+        /// <param name="name"></param>
         private UnitData(string name = null)
         {
 
@@ -170,27 +202,24 @@ namespace SEF.Data
 
             _attackBulletKey = "Arrow";
 
-            _startHealthValue = HealthData.Create_Test(100);
-            _increaseHealthValue = 1;
-            _increaseHealthRate = 0.05f;
+            _startHealthValue = HealthData.Create_Test(50);
+            _increaseHealthValue = 2;
+            _increaseHealthRate = 0.1f;
             _productTime = 1f;
-            _attackValue = DamageData.Create_Test(15);
+            _attackValue = DamageData.Create_Test(20);
             _increaseAttackValue = 1;
-            _increaseAttackRate = 0.05f;
+            _increaseAttackRate = 0.1f;
             _typeAttackRange = TYPE_ATTACK_RANGE.Gun;
             _attackPopulation = 1;
             _attackCount = 1;
             _attackDelay = 1f;
             _startUpgradeAsset = GoldAssetData.Create_Test(10);
             _increaseUpgradeAssetValue = 1;
-            _increaseUpgradeAssetRate = 0.05f;
-            //private string[] _conditionTechTree;
-            //private AssetData[] _conditionTechTreeValue;
+            _increaseUpgradeAssetRate = 0.125f;
             _defaultMaxUpgradeValue = 10;
             _unitTechDataArray = null;
 
             UnityEngine.Debug.LogWarning("테스트 유닛을 생성하였습니다");
-
         }
 
 
@@ -200,6 +229,8 @@ namespace SEF.Data
         {
 
             Key = arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Key];
+
+            Debug.Log($"Create Key {Key}");
 
             name = $"{typeof(UnitData).Name}_{Key}";
 
@@ -217,15 +248,13 @@ namespace SEF.Data
             _increaseAttackValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageValue]);
             _increaseAttackRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageRate]);
             _typeAttackRange = (TYPE_ATTACK_RANGE)System.Enum.Parse(typeof(TYPE_ATTACK_RANGE), arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeAttackRange]);
-            _attackPopulation = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation]);
+            //_attackPopulation = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation]);
             _attackCount = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackCount]);
             _attackDelay = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay]);
             _startUpgradeAsset = GoldAssetData.Create(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset]);
             _increaseUpgradeAssetValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetValue]);
             _increaseUpgradeAssetRate = float.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseUpgradeAssetRate]);
             _defaultMaxUpgradeValue = int.Parse(arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.DefaultMaxUpgradeValue]);
-
-            //Debug.Log(arr.Length + " " + (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList);
 
             if (arr.Length > (int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeTechList)
             {
@@ -250,7 +279,6 @@ namespace SEF.Data
                         UnitTechData data = new UnitTechData();
                         data.SetData(list[i], keys[i], assets[i], values[i]);
                         _unitTechDataArray[i] = data;
-//                        _unitTechDataArray.Add(data);
                     }
                 }
             }
@@ -268,13 +296,7 @@ namespace SEF.Data
         {
             string[] arr = new string[System.Enum.GetValues(typeof(UnitDataGenerator.TYPE_SHEET_COLUMNS)).Length];
 
-            //_key = arr[(int)UnitDataGenerator.TYPE_UNIT_SHEET_COLUMNS.Key];
-
-            //name = $"{typeof(UnitData).Name}_{_key}";
-
-            //_spineModelKey = $"{_key}_SkeletonData";
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.Group] = _group.ToString();
-            //_scale = 1f; //Scale
 
             if (!string.IsNullOrEmpty(_attackBulletKey)) {
                 var split = _attackBulletKey.Split('_');
@@ -295,7 +317,7 @@ namespace SEF.Data
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageValue] = _increaseAttackValue.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.IncreaseDamageRate] = _increaseAttackRate.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.TypeAttackRange] = _typeAttackRange.ToString();
-            arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation] = _attackPopulation.ToString();
+            //arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackPopulation] = _attackPopulation.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackCount] = _attackCount.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.AttackDelay] = _attackDelay.ToString();
             arr[(int)UnitDataGenerator.TYPE_SHEET_COLUMNS.StartUpgradeAsset] = _startUpgradeAsset.ValueText;

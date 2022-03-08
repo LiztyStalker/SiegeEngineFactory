@@ -65,6 +65,8 @@ namespace SEF.Data
 
         [NonSerialized]
         private BigDecimal? _value;
+
+        //소숫점이 안나타남
         public BigDecimal Value 
         { 
             get {
@@ -266,7 +268,7 @@ namespace SEF.Data
             {
                 var digit = GetDigit(stack.Count);
                 var str = value % 1000;
-                stack.Push(string.Format("{0:d3}{1} ", str, digit));
+                stack.Push(string.Format("{0:d3}{1}", str, digit));
                 value /= 1000;
                 if (value == 0)
                     break;
@@ -329,14 +331,14 @@ namespace SEF.Data
 
         protected BigInteger Pow(BigInteger value, int exponent) => BigInteger.Pow(value, exponent);
 
-        public void SetCompoundInterest(float nowValue, float rate, int length = 1)
-        {
-            _value = NumberDataUtility.GetCompoundInterest(_value.Value, nowValue, rate, length);
-        }
+        //public void SetCompoundInterest(float nowValue, float rate, int length = 1)
+        //{
+        //    _value = NumberDataUtility.GetCompoundInterest(_value.Value, nowValue, rate, length);
+        //}
 
-        public void SetIsolationInterest(float nowValue, int length = 1)
+        public void SetIsolationInterest(float increaseValue, float increaseRate, int length = 1)
         {
-            _value = NumberDataUtility.GetIsolationInterest(_value.Value, nowValue, length);
+            _value = NumberDataUtility.GetIsolationInterest(_value.Value, increaseValue, increaseRate, length);
         }
 
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
