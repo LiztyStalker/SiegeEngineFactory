@@ -7,11 +7,11 @@ namespace SEF.Data
 
     public enum TYPE_THEME_GROUP { Grass, Forest}
 
-    public enum TYPE_ENEMY_GROUP { Normal, Resource, Boss, ThemeBoss}
+    public enum TYPE_ENEMY_GROUP { Normal, Resource, Boss, SpecialBoss, ThemeBoss}
 
     
     [CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData")]    
-    public class EnemyData : Utility.Data.ScriptableObjectData
+    public class EnemyData : ScriptableObjectData
     {
         [SerializeField]
         private SkeletonDataAsset _skeletonDataAsset;
@@ -166,6 +166,11 @@ namespace SEF.Data
         public float IncreaseWaveRewardAssetRate { get => _increaseWaveRewardAssetRate; set => _increaseWaveRewardAssetRate = value; }
 
 
+        [SerializeField]
+        private int _appearRate;
+        public int AppearRate => _appearRate;
+
+
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
 
         public static EnemyData Create_Test()
@@ -271,6 +276,7 @@ namespace SEF.Data
             _increaseLevelRewardAssetRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetRate]);
             _increaseWaveRewardAssetValue = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetValue]);
             _increaseWaveRewardAssetRate = float.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetRate]);
+            _appearRate = int.Parse(arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AppearRate]);
         }
 
         public override string[] GetData()
@@ -301,6 +307,7 @@ namespace SEF.Data
             arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardLevelAssetRate] = _increaseLevelRewardAssetRate.ToString();
             arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetValue] = _increaseWaveRewardAssetValue.ToString();
             arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.IncreaseRewardWaveAssetRate] = _increaseWaveRewardAssetRate.ToString();
+            arr[(int)EnemyDataGenerator.TYPE_SHEET_COLUMNS.AppearRate] = _appearRate.ToString();
 
             return arr;
         }

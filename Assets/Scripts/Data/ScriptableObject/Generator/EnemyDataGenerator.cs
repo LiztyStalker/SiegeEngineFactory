@@ -28,7 +28,8 @@ namespace SEF.Data
             IncreaseRewardLevelAssetValue,
             IncreaseRewardLevelAssetRate,
             IncreaseRewardWaveAssetValue,
-            IncreaseRewardWaveAssetRate
+            IncreaseRewardWaveAssetRate,
+            AppearRate
         }
 
         private readonly static string _dataPath = "Assets/Data/Enemies";
@@ -39,14 +40,14 @@ namespace SEF.Data
 
 
         [MenuItem("Data/Enemy/Create And Update All Enemies")]
-        private static void CreateAndUpdateAllUnits()
+        private static void CreateAndUpdateAllData()
         {
             GoogleSheetGenerator.CreateAndUpdateAllUnits<EnemyData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Enemy/Upload All Enemies")]
-        private static void UploadAllUnits()
+        private static void UploadAllData()
         {
             GoogleSheetGenerator.UploadAllUnits<EnemyData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
