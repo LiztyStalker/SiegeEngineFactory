@@ -1,9 +1,11 @@
 namespace SEF.UI
 {
+    using SEF.Data;
     using UnityEngine;
     using UnityEngine.UI;
+    using UnityEngine.EventSystems;
 
-    public class UIAssetButton : Button
+    public class UIAssetButton : Button, IPointerDownHandler, IPointerUpHandler
     {
         private readonly static string UGUI_NAME = "UI@AssetButton";
 
@@ -16,6 +18,9 @@ namespace SEF.UI
 
         [SerializeField]
         private Text _buttonText;
+
+        [SerializeField]
+        private GameObject _assetLayout;
 
         public static UIAssetButton Create()
         {
@@ -37,12 +42,57 @@ namespace SEF.UI
 #endif
         }
 
-
-        public void SetData(string text, Sprite icon, string value)
+        public void SetData(IAssetData data)
         {
+            var icon = Storage.DataStorage.Instance.GetDataOrNull<Sprite>($"Icon_{data.GetType().Name}", null, null);
             _icon.sprite = icon;
-            _valueLabel.text = value;
+            _valueLabel.text = data.GetValue();
+            _assetLayout.gameObject.SetActive(true);
+        }
+
+        public void SetLabel(string text)
+        {
             _buttonText.text = text;
+        }
+
+        public void SetEmpty()
+        {
+            _assetLayout.gameObject.SetActive(false);
+        }
+
+        private bool _isDown = false;
+        private float _nowTime = 0f;
+
+        private void Update()
+        {
+            if (_isDown)
+            {
+
+                if (!interactable && !_assetLayout.activeSelf) _isDown = false;
+
+                _nowTime += Time.deltaTime;
+                if(_nowTime > 1f)
+                {
+                    OnSubmit(null);
+                    _nowTime = 0.95f;
+                }
+            }
+        }
+
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            //Debug.Log("down");
+            _isDown = true;
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            if (_isDown)
+            {
+                //Debug.Log("up");
+                _isDown = false;
+                _nowTime = 0f;
+            }
         }
     }
 }

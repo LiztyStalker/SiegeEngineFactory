@@ -26,6 +26,9 @@ namespace SEF.UI
         private Text _typeLabel;
 
         [SerializeField]
+        private Slider _productSlider;
+
+        [SerializeField]
         private Text _levelValueLabel;
         //[SerializeField]
         //private Text _dpsSlideLabel;
@@ -70,14 +73,7 @@ namespace SEF.UI
         //private UIFillable _uiFillable;
 
         [SerializeField]
-        private Button _upgradeButton;
-        [SerializeField]
-        private Image _upgradeAssetIcon;
-        [SerializeField]
-        private Text _upgradeValueLabel;
-        [SerializeField]
-        private Text _buttonLabel;
-        //        private Button _techButton;
+        private UIAssetButton _upgradeButton;
 
         [SerializeField]
         private GameObject _techPanel;
@@ -121,11 +117,6 @@ namespace SEF.UI
             Debug.Assert(_typeLabel != null, "_typeLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
 
-            //Debug.Assert(_dpsSlideLabel != null, "_dpsSlideLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_dpsLabel != null, "_dpsLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_dpsValueLabel != null, "_dpsValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_dpsUpLabel != null, "_dpsUpLabel element 를 찾지 못했습니다");
-
             //Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthValueLabel != null, "_healthValueLabel element 를 찾지 못했습니다");
             //Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
@@ -139,10 +130,6 @@ namespace SEF.UI
             //Debug.Assert(_attackTypeLabel != null, "_attackTypeLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackTypeValueLabel != null, "_attackTypeValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
-            Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
-            Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_techButton != null, "_techButton element 를 찾지 못했습니다");
-            //Debug.Assert(_uiFillable != null, "_uiProgressbar element 를 찾지 못했습니다");
 
             Debug.Assert(_techPanel != null, "_techPanel element 를 찾지 못했습니다");
             Debug.Assert(_techLayout != null, "_techLayout element 를 찾지 못했습니다");
@@ -218,9 +205,11 @@ namespace SEF.UI
 
             //_uiFillable.FillAmount = nowTime / unitData.ProductTime;
 
+            _productSlider.value = nowTime / entity.ProductTime;
+
             //_upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
 
-            
+
 
             isEndTech = false;
 
@@ -231,22 +220,22 @@ namespace SEF.UI
                 //다음 테크 있음
                 if (entity.IsNextTech())
                 {
-                    _upgradeValueLabel.text = "-";//entity.TechAssetData.GetValue();
-                    _buttonLabel.text = "테크";
+                    _upgradeButton.SetLabel("테크");
+                    _upgradeButton.SetEmpty();
                 }
                 //최종 테크
                 else
                 {
                     isEndTech = true;
-                    _upgradeValueLabel.text = "-";
-                    _buttonLabel.text = "-";
+                    _upgradeButton.SetLabel("-");
+                    _upgradeButton.SetEmpty();
                 }
             }
             else
             {
                 isUpgrade = true;
-                _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
-                _buttonLabel.text = "업그레이드";
+                _upgradeButton.SetLabel("업그레이드");
+                _upgradeButton.SetData(entity.UpgradeAssetData);
             }
         }
 
