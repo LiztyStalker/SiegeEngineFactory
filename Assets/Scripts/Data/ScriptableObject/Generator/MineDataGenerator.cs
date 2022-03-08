@@ -20,7 +20,9 @@ namespace SEF.Data
             IncreaseUpgradeRate,
             DefaultMaxUpgardeValue,
             ConditionUnlockData,
-            ConditionUnlockValue
+            ConditionUnlockValue,
+            TypeTechAsset,
+            TechAssetValue,
         }
 
         private readonly static string _dataPath = "Assets/Data/Mines";
