@@ -175,6 +175,8 @@ namespace SEF.UI
             //_dpsValueLabel.gameObject.SetActive(false);
             //_dpsUpLabel.gameObject.SetActive(false);
 
+            _upgradeButton.SetRepeat(true);
+
             HideTechSelector();
         }
 
@@ -294,7 +296,8 @@ namespace SEF.UI
                     _techButtons.Add(button);
                     button.onClick.AddListener(() => OnUpTechEvent(button));
                 }
-                _techButtons[i].GetComponentInChildren<Text>().text = arr[i].TechUnitKey;
+                _techButtons[i].SetLabel(arr[i].TechUnitKey);
+                _techButtons[i].SetData(arr[i].TechAssetData);
                 _techButtons[i].gameObject.SetActive(true);
             }
             _techPanel.SetActive(true);

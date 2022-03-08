@@ -22,6 +22,11 @@ namespace SEF.UI
         [SerializeField]
         private GameObject _assetLayout;
 
+        [SerializeField]
+        private bool _isRepeat = false;
+
+        public void SetRepeat(bool isRepeat) => _isRepeat = isRepeat;
+
         public static UIAssetButton Create()
         {
             var ui = Storage.DataStorage.Instance.GetDataOrNull<GameObject>(UGUI_NAME, null, null);
@@ -67,8 +72,7 @@ namespace SEF.UI
         {
             if (_isDown)
             {
-
-                if (!interactable && !_assetLayout.activeSelf) _isDown = false;
+                if (!interactable || !_assetLayout.activeSelf) _isDown = false;
 
                 _nowTime += Time.deltaTime;
                 if(_nowTime > 1f)
@@ -81,15 +85,16 @@ namespace SEF.UI
 
         public override void OnPointerDown(PointerEventData eventData)
         {
-            //Debug.Log("down");
-            _isDown = true;
+            if (_isRepeat)
+            {
+                _isDown = true;
+            }
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
-            if (_isDown)
+            if (_isRepeat)
             {
-                //Debug.Log("up");
                 _isDown = false;
                 _nowTime = 0f;
             }
