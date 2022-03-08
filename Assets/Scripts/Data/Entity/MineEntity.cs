@@ -12,14 +12,16 @@ namespace SEF.Entity
     {
         [UnityEngine.SerializeField] private string _key;
         [UnityEngine.SerializeField] private int _upgradeValue;
+        [UnityEngine.SerializeField] private int _nowIndex;
 
         public string Key => _key;
         public int UpgradeValue => _upgradeValue;
 
-        internal void SetData(string key, int value)
+        internal void SetData(string key, int value, int nowIndex)
         {
             _key = key;
             _upgradeValue = value;
+            _nowIndex = nowIndex;
             Children = null;
         }
     }
@@ -29,6 +31,7 @@ namespace SEF.Entity
     {
         //Member
         private MineData _data;
+        private int _nowIndex;
 
         //Lazy Member
         private UpgradeData _upgradeData;
@@ -45,7 +48,7 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.DefaultMaxUpgradeValue));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowIndex)));
                 return (int)data.Value;
             }
         }
@@ -62,14 +65,19 @@ namespace SEF.Entity
             }
         }
 
+        public IAssetData TechAssetData => _data.GetTechAssetData(_nowIndex);
+
+
         public void Initialize()
         {
             _upgradeData = NumberDataUtility.Create<UpgradeData>();
+            _nowIndex = 0;
         }
         public void CleanUp()
         {
             _data = null;
             _upgradeData = null;
+            _nowIndex = 0;
         }
 
         public void SetData(MineData data)
@@ -87,20 +95,25 @@ namespace SEF.Entity
         {
             _upgradeData.IncreaseNumber();
             _upgradeAssetData = null;
+
             OnProcessEntityEvent(this);
         }
 
-        private IAssetData CalculateUpgradeData()
+        //업그레이드 유지
+        //업그레이드 초기화
+        public void UpTech()
         {
-            var assetData = (IAssetData)_data.StartUpgradeAssetData.Clone();
-            //assetData.SetCompoundInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
-            assetData.SetIsolationInterest(_data.IncreaseUpgradeValue, _data.IncreaseUpgradeRate, _upgradeData.Value);
-            return assetData;
+            _nowIndex++;
+            _upgradeData.SetValue(0);
         }
+
+        public bool IsNextTech() => _nowIndex + 1 < _data.MaximumIndex;
+        public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowIndex, _upgradeData);
 
         public IAssetData RewardOffline(System.TimeSpan timeSpan)
         {
-            var processData = _data.ProcessData;
+            var processData = _data.GetProcessData(_nowIndex);
             var processCount = (int)(timeSpan.TotalSeconds / processData.ProcessTime);
             return ((AssetProcessData)processData).GetAssetData(_upgradeData, processCount);           
         }
@@ -112,7 +125,7 @@ namespace SEF.Entity
 
         private void OnProcessEntityEvent(IProcessProvider provider)
         {
-            var entity = new ProcessEntity(_data.ProcessData, _upgradeData);
+            var entity = new ProcessEntity(_data.GetProcessData(_nowIndex), _upgradeData);
             _processEntityEvent?.Invoke(provider, entity);
         }
 
@@ -124,7 +137,7 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var data = new MineEntityStorableData();
-            data.SetData(_data.Key, NowUpgradeValue);
+            data.SetData(_data.Key, NowUpgradeValue, _nowIndex);
             return data;
         }
 

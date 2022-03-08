@@ -54,7 +54,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIMineTest_Create_UIMineLine()
         {
-            MineEntity entity;
+            MineEntity entity = new MineEntity();
             entity.Initialize();
             entity.SetData(MineData.Create_Test());
             var system = UIMine_Test.Create();
@@ -73,7 +73,7 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIMineTest_Create_UIMineLine_x5()
         {
-            MineEntity entity;
+            MineEntity entity = new MineEntity();
             entity.Initialize();
             entity.SetData(MineData.Create_Test());
 

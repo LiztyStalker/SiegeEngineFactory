@@ -320,7 +320,14 @@ namespace SEF.Unit {
         #region ##### Spine Event #####
         private void OnSpineEvent(TrackEntry trackEntry, Spine.Event e)
         {
-            OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
+            try
+            {
+                OnAttackTargetEvent(transform.position, _enemyEntity.EnemyData.AttackBulletKey, _enemyEntity.EnemyData.BulletScale, _enemyEntity.AttackData);
+            }
+            catch
+            {
+
+            }
         }
 
         private void OnCompleteEvent(TrackEntry trackEntry)

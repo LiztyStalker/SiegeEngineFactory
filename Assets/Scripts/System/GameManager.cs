@@ -87,17 +87,20 @@ namespace SEF.Manager
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 
             _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
-            _uiGame.AddOnUpWorkshopTechListener(_gameSystem.UpTechWorkshop);
-            _uiGame.AddOnWorkshopExpendListener(_gameSystem.ExpendWorkshop);
+            _uiGame.AddOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
+            _uiGame.AddOnExpendWorkshopListener(_gameSystem.ExpendWorkshop);
+
             _uiGame.AddOnSmithyUpgradeListener(_gameSystem.UpgradeSmithy);
             _uiGame.AddOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
+
             _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.AddOnVillageUpTechListener(_gameSystem.UpTechVillage);
-            _uiGame.AddOnMineUpgradeListener(_gameSystem.UpgradeMine);
+
+            _uiGame.AddOnUpgradeMineListener(_gameSystem.UpgradeMine);
+            _uiGame.AddOnUpTechMineListener(_gameSystem.UpTechMine);
+            _uiGame.AddOnExpendMineListener(_gameSystem.ExpendMine);
 
             _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
-
-
             _uiGame.AddOnRewardQuestListener(_gameSystem.GetRewardAssetData);
         }
 
@@ -138,13 +141,18 @@ namespace SEF.Manager
             _unitManager.RemoveOnRefreshPopulationListener(_gameSystem.SetAsset);
 
             _uiGame.RemoveOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.RemoveOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
+            _uiGame.RemoveOnExpendWorkshopListener(_gameSystem.ExpendWorkshop);
+
             _uiGame.RemoveOnSmithyUpgradeListener(_gameSystem.UpgradeSmithy);
             _uiGame.RemoveOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
+
             _uiGame.RemoveOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
             _uiGame.RemoveOnVillageUpTechListener(_gameSystem.UpTechVillage);
-            _uiGame.RemoveUpTechListener(_gameSystem.UpTechWorkshop);
-            _uiGame.RemoveExpendListener(_gameSystem.ExpendWorkshop);
-            _uiGame.RemoveOnMineUpgradeListener(_gameSystem.UpgradeMine);
+
+            _uiGame.RemoveOnUpgradeMineListener(_gameSystem.UpgradeMine);
+            _uiGame.RemoveOnUpTechMineListener(_gameSystem.UpTechMine);
+            _uiGame.RemoveOnExpendMineListener(_gameSystem.ExpendMine);
 
             _uiGame.RemoveOnRewardQuestListener(_gameSystem.GetRewardAssetData);
 

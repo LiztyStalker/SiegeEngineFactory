@@ -72,6 +72,15 @@ namespace SEF.Manager
             return assetData;
         }
 
+
+        public IAssetData UpTech()
+        {
+            var assetData = _entity.TechAssetData;
+            _entity.UpTech();
+            OnRefreshEvent();
+            return assetData;
+        }
+
         public IAssetData RewardOffline(System.TimeSpan timeSpan) => _entity.RewardOffline(timeSpan);
 
 
@@ -117,8 +126,8 @@ namespace SEF.Manager
 
         public bool Contains(StorableData data)
         {
-            var storableData = (VillageLineStorableData)data;
-            var entityStorableData = (VillageEntityStorableData)storableData.Children[0];
+            var storableData = (MineLineStorableData)data;
+            var entityStorableData = (MineEntityStorableData)storableData.Children[0];
             return entityStorableData.Key == _entity.Key;
 
         }

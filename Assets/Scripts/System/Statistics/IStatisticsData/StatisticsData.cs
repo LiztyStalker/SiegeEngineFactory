@@ -54,7 +54,6 @@ namespace SEF.Statistics
 
     public class SuccessResearchStatisticsData : IStatisticsData { }
 
-    public class TechSmithyStatisticsData : IStatisticsData { }
 
 
 
@@ -63,10 +62,13 @@ namespace SEF.Statistics
     public class TestTechUnitStatisticsData : IStatisticsData { }
 #endif
 
-    public class TechVillageStatisticsData : IStatisticsData { }
     public class UpgradeSmithyStatisticsData : IStatisticsData { }
+    public class TechSmithyStatisticsData : IStatisticsData { }
     public class UpgradeVillageStatisticsData : IStatisticsData { }
+    public class TechVillageStatisticsData : IStatisticsData { }
     public class UpgradeMineStatisticsData : IStatisticsData { }
+    public class TechMineStatisticsData : IStatisticsData { }
+    public class ExpendMineStatisticsData : IStatisticsData { }
 
 
 

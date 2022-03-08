@@ -441,22 +441,7 @@ namespace SEF.Manager
         }
 
 
-        public void ExpendWorkshop()
-        {
-            var assetData = _workshopManager.ExpendAssetData;
-            int count = _workshopManager.ExpendWorkshop();
-                       
-            SubjectAsset(assetData);
-
-            //통계 적용
-            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
-
-            //퀘스트 적용
-            SetQuestValue<ExpendWorkshopLineConditionQuestData>(count);
-            //누적 퀘스트 적용
-            SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
-
-        }
+       
         public void UpTechWorkshop(int index, UnitTechData data)
         {
             var assetData = _workshopManager.UpTechWorkshop(index, data);
@@ -476,6 +461,23 @@ namespace SEF.Manager
             SetQuestValue<AccumulativelyTechUnitConditionQuestData>((int)GetStatisticsValue<TechUnitStatisticsData>());
 
         }
+
+        public void ExpendWorkshop()
+        {
+            var assetData = _workshopManager.ExpendAssetData;
+            int count = _workshopManager.ExpendWorkshop();
+
+            SubjectAsset(assetData);
+
+            //통계 적용
+            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
+
+            //퀘스트 적용
+            SetQuestValue<ExpendWorkshopLineConditionQuestData>(count);
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
+        }
+
 
         private bool IsConditionProductUnitEvent(UnitEntity unitEntity)
         {
@@ -625,16 +627,34 @@ namespace SEF.Manager
             SetQuestValue<AccumulativelyUpgradeMineConditionQuestData>((int)GetStatisticsValue<UpgradeMineStatisticsData>());
         }
 
-        //public void UpTechMine(int index)
-        //{
-        //    _villageManager.UpTech(index);
-        //    //통계적용
-        //    AddStatisticsData<TechVillageStatisticsData>();
-        //    //퀘스트 적용
-        //    AddQuestValue<TechVillageConditionQuestData>();
-        //    //누적 퀘스트 적용
-        //    SetQuestValue<AccumulativelyTechVillageConditionQuestData>((int)GetStatisticsValue<TechVillageStatisticsData>());
-        //}
+        public void UpTechMine(int index)
+        {
+            var assetData = _mineManager.UpTech(index);
+
+            SubjectAsset(assetData);
+            //통계적용
+            AddStatisticsData<TechMineStatisticsData>();
+            //퀘스트 적용
+            AddQuestValue<TechMineConditionQuestData>();
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyTechMineConditionQuestData>((int)GetStatisticsValue<TechMineStatisticsData>());
+        }
+
+        public void ExpendMine()
+        {
+            var assetData = _mineManager.ExpendAssetData;
+            int count = _mineManager.Expend();
+
+            SubjectAsset(assetData);
+
+            //통계 적용
+            SetStatisticsData<ExpendMineStatisticsData>(count);
+
+            //퀘스트 적용
+            SetQuestValue<ExpendMineConditionQuestData>(count);
+            //누적 퀘스트 적용
+            SetQuestValue<AccumulativelyExpendMineConditionQuestData>((int)GetStatisticsValue<ExpendMineStatisticsData>());
+        }
         #endregion
 
 

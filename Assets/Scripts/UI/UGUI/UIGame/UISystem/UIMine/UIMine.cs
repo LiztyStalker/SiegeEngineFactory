@@ -5,6 +5,7 @@ namespace SEF.UI
     using UnityEngine;
     using UnityEngine.UI;
     using Entity;
+    using SEF.Data;
 
     public class UIMine : MonoBehaviour, ISystemPanel
     {
@@ -13,6 +14,8 @@ namespace SEF.UI
         private Dictionary<int, UIMineLine> _dic = new Dictionary<int, UIMineLine>();
 
         private int _lineCount = 0;
+
+        private UIMineExpend _uiMineExpend;
 
         [SerializeField]
         private ScrollRect _scrollView;
@@ -45,18 +48,24 @@ namespace SEF.UI
             {
                 _scrollView = GetComponentInChildren<ScrollRect>();
             }
+            
             Debug.Assert(_scrollView != null, "_scrollView element 를 찾지 못했습니다");
+
+            CreateExpendLine();
         }
 
         public void CleanUp()
         {
+            _uiMineExpend.RemoveOnExpendListener(OnExpendEvent);
+            _uiMineExpend.CleanUp();
+
             foreach (var value in _dic.Values)
             {
-                value.RemoveUpgradeListener(OnUpgradeEvent);
+                value.RemoveOnUpgradeListener(OnUpgradeEvent);
+                value.RemoveOnUpTechListener(OnUpTechEvent);
                 value.CleanUp();
             }
             _dic.Clear();
-            _scrollView = null;
         }
 
         public void Show()
@@ -76,11 +85,13 @@ namespace SEF.UI
                 var line = UIMineLine.Create();
                 line.Initialize();
                 line.SetIndex(index);
-                line.AddUpgradeListener(OnUpgradeEvent);
+                line.AddOnUpgradeListener(OnUpgradeEvent);
+                line.AddOnUpTechListener(OnUpTechEvent);
                 line.transform.SetParent(_scrollView.content);
                 _dic.Add(index, line);
             }
             _dic[index].RefreshMineLine(entity);
+            ChangeExpendLine();
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -91,18 +102,56 @@ namespace SEF.UI
             }
         }
 
-#region ##### Listener #####
+        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiMineExpend.RefreshExpend(assetData, isActive);
+
+        private void CreateExpendLine()
+        {
+            _uiMineExpend = UIMineExpend.Create();
+            _uiMineExpend.Initialize();
+            _uiMineExpend.AddOnExpendListener(OnExpendEvent);
+            _uiMineExpend.transform.SetParent(_scrollView.content);
+            _uiMineExpend.transform.SetAsLastSibling();
+        }
+
+        private void ChangeExpendLine()
+        {
+            if (_lineCount != _scrollView.content.childCount)
+            {
+                _uiMineExpend.transform.SetAsLastSibling();
+            }
+            _lineCount = _scrollView.content.childCount;
+        }
+
+        #region ##### Listener #####
 
 
         private System.Action<int> _upgradeEvent;
-        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
-        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
+        public void AddOnUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveOnUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(int index)
         {
             _upgradeEvent?.Invoke(index);
         }
 
-#endregion
+        private System.Action<int> _techEvent;
+        public void AddOnUpTechListener(System.Action<int> act) => _techEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int> act) => _techEvent -= act;
+        private void OnUpTechEvent(int index)
+        {
+            _techEvent?.Invoke(index);
+        }
+
+
+        private System.Action _expendEvent;
+        public void AddOnExpendListener(System.Action act) => _expendEvent += act;
+        public void RemoveOnExpendListener(System.Action act) => _expendEvent -= act;
+        private void OnExpendEvent()
+        {
+            _expendEvent?.Invoke();
+        }
+
+
+        #endregion
 
 
     }

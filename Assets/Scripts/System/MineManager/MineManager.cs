@@ -34,13 +34,6 @@ namespace SEF.Manager
         public void Initialize()
         {
             _list = new List<MineLine>();
-            var arr = DataStorage.Instance.GetAllDataArrayOrZero<MineData>();
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                var line = CreateLine();
-                line.SetData(arr[i]);
-            }
         }
 
         public void CleanUp()
@@ -65,10 +58,33 @@ namespace SEF.Manager
             return _list[index].Upgrade();
         }
 
-        public void UpTech(int index)
+        public IAssetData UpTech(int index)
         {
-
+            return _list[index].UpTech();
         }
+
+        private IAssetData _expendAssetData;
+        public IAssetData ExpendAssetData
+        {
+            get
+            {
+                if (_expendAssetData == null)
+                {
+                    var assetData = NumberDataUtility.Create<GoldAssetData>();
+                    assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count).ToString();
+                    _expendAssetData = assetData;
+                }
+                return _expendAssetData;
+            }
+        }
+
+        public int Expend()
+        {
+            CreateLine();
+            _expendAssetData = null;
+            return _list.Count;
+        }
+
 
         public RewardAssetPackage RewardOffline(System.TimeSpan timeSpan)
         {
@@ -88,7 +104,17 @@ namespace SEF.Manager
             line.SetOnRefreshListener(OnRefreshEvent);
             line.SetOnProcessEntityListener(OnProcessEntityEvent);
             _list.Add(line);
+
+
+            //기본 데이터 적용
+            line.SetData(GetMineData());
+
             return line;
+        }
+
+        private MineData GetMineData()
+        {
+            return DataStorage.Instance.GetDataOrNull<MineData>("Mine");
         }
 
 

@@ -96,6 +96,8 @@ namespace SEF.UI
 
         }
 
+        private bool isUpgrade = false;
+        private bool isEndTech = false;
 
         public void RefreshMineLine(MineEntity entity)
         {
@@ -113,21 +115,55 @@ namespace SEF.UI
             _contentLabel.text = entity.Ability;
 
             //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
-            _buttonLabel.text = "업그레이드";
-            _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
+            isEndTech = false;
+            if (entity.IsMaxUpgrade())
+            {
+                isUpgrade = false;
+
+                //다음 테크 있음
+                if (entity.IsNextTech())
+                {
+                    _upgradeValueLabel.text = entity.TechAssetData.GetValue();
+                    _buttonLabel.text = "테크";
+                }
+                //최종 테크
+                else
+                {
+                    isEndTech = true;
+                    _upgradeValueLabel.text = "-";
+                    _buttonLabel.text = "-";
+                }
+            }
+            else
+            {
+                isUpgrade = true;
+                _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
+                _buttonLabel.text = "업그레이드";
+            }
 
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
         {
-            var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+            bool isEnough = false;
+
+            if (!isEndTech)
+            {
+                if (isUpgrade)
+                {
+                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                }
+                else
+                {
+                    isEnough = assetEntity.IsEnough(_entity.TechAssetData);
+                }
+            }
             _upgradeButton.interactable = isEnough;
         }
 
         public void CleanUp()
         {
             _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
-            //_icon = null;
         }
 
 
@@ -136,14 +172,26 @@ namespace SEF.UI
 
 
         private System.Action<int> _upgradeEvent;
-        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
-        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
+        public void AddOnUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveOnUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent()
         {
             _upgradeEvent?.Invoke(_index);
         }
 
-#endregion
+
+        private System.Action<int> _uptechEvent;
+        public void AddOnUpTechListener(System.Action<int> act) => _uptechEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int> act) => _uptechEvent -= act;
+        private void OnUpTechEvent()
+        {
+            UICommon.Current.ShowPopup("테크를 진행하시겠습니까?", "네", "아니오", () => {
+                _uptechEvent?.Invoke(_index);
+                Debug.Log("OK");
+            });
+        }
+
+        #endregion
     }
 
 }
