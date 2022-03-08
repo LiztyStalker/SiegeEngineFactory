@@ -19,18 +19,16 @@ namespace SEF.Data
             IncreaseDamageRate,
             TypeAttackRange,
             TypeAttackAction,
-            AttackPopulation,
             AttackCount,
             AttackDelay,
             BulletDataKey,
+            BulletCount,
             BulletScale,
             AttackDataKeys,
             StartUpgradeAsset,
             IncreaseUpgradeAssetValue,
             IncreaseUpgradeAssetRate,
             DefaultMaxUpgradeValue,
-            //ConditionTechTree, //AA-ZZ까지 사용 가능하면 활성화
-            //ConditionTechTreeValue,
             TypeTechList,
             TechUnitKeys,
             TypeTechAssets,
@@ -45,14 +43,14 @@ namespace SEF.Data
 
 
         [MenuItem("Data/Unit/Create And Update All Units")]
-        private static void CreateAndUpdateAllUnits()
+        private static void CreateAndUpdateAllData()
         {
             GoogleSheetGenerator.CreateAndUpdateAllUnits<UnitData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Unit/Upload All Units")]
-        private static void UploadAllUnits()
+        private static void UploadAllData()
         {
             GoogleSheetGenerator.UploadAllUnits<UnitData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
