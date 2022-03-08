@@ -37,52 +37,53 @@ namespace Utility.Generator
             for (int c = startRow; c < sheet.RowCount + startRow; c++, index++)
             {
 
-                var row = sheet.rows[c];
-                var key = row[0].value; //0 = Key
-
-
-
-                if (!string.IsNullOrEmpty(key))
+                if (sheet.rows.ContainsKey(c))
                 {
-                    //연계 퀘스트 - 키가 같음
-                    if (tmpData != null && tmpData.Key == key)
-                    {
-                        tmpData.AddData(row.Select(cell => cell.value).ToArray());
-                        EditorUtility.SetDirty(tmpData);
-                    }
-                    else 
-                    {
-                        tmpData = null;
-                        //try
-                        //{
-                        var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
+                    var row = sheet.rows[c];
+                    var key = row[0].value; //0 = Key
 
-                        if (data == null)
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        //연계 퀘스트 - 키가 같음
+                        if (tmpData != null && tmpData.Key == key)
                         {
-                            data = ScriptableObject.CreateInstance<T>();
-                            data.SetSortIndex(index);
-                            data.SetData(row.Select(cell => cell.value).ToArray());
-                            AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
-                            data.SetAssetBundle(bundleName);
-                            EditorUtility.SetDirty(data);
-                            AssetDatabase.SaveAssets();
+                            tmpData.AddData(row.Select(cell => cell.value).ToArray());
+                            EditorUtility.SetDirty(tmpData);
                         }
                         else
                         {
-                            data.SetSortIndex(index);
-                            data.SetData(row.Select(cell => cell.value).ToArray());
-                            data.SetAssetBundle(bundleName);
-                            EditorUtility.SetDirty(data);
-                        }
+                            tmpData = null;
+                            //try
+                            //{
+                            var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
 
-                        tmpData = data;
+                            if (data == null)
+                            {
+                                data = ScriptableObject.CreateInstance<T>();
+                                data.SetSortIndex(index);
+                                data.SetData(row.Select(cell => cell.value).ToArray());
+                                AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
+                                data.SetAssetBundle(bundleName);
+                                EditorUtility.SetDirty(data);
+                                AssetDatabase.SaveAssets();
+                            }
+                            else
+                            {
+                                data.SetSortIndex(index);
+                                data.SetData(row.Select(cell => cell.value).ToArray());
+                                data.SetAssetBundle(bundleName);
+                                EditorUtility.SetDirty(data);
+                            }
+
+                            tmpData = data;
+                        }
+                        //}
+                        //catch (System.Exception e)
+                        //{
+                        //    Debug.LogWarning(e.Message);
+                        //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
+                        //}
                     }
-                    //}
-                    //catch (System.Exception e)
-                    //{
-                    //    Debug.LogWarning(e.Message);
-                    //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
-                    //}
                 }
             }
             Debug.Log("Create And Update End");
