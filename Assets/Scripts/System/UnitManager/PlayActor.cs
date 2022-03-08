@@ -21,7 +21,7 @@ namespace SEF.Unit
 
 
         private TYPE_UNIT_STATE _typeUnitState;
-        protected TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
+        public TYPE_UNIT_STATE TypeUnitState => _typeUnitState;
         public Vector2 NowPosition => transform.position;
 
         private HealthData _nowHealthData;

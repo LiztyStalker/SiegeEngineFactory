@@ -419,6 +419,7 @@ namespace SEF.Unit
             unitActor.AddOnDestoryedListener(OnDestroyedEvent);
             unitActor.SetOnAttackTargetListener(OnAttackTargetEvent);
             unitActor.SetOnHasAttackTargetListener(HasAttackTarget);
+            unitActor.SetMovement(GetTypeUnitActionCycle(_enemyQueueData.NowEnemy.TypeUnitState));
 
             _unitDic.Add(unitActor.GetHashCode(), unitActor);
 
@@ -594,20 +595,23 @@ namespace SEF.Unit
         {
             foreach(var key in _unitDic.Keys)
             {
-                switch (typeUnitState)
-                {
-                    case TYPE_UNIT_STATE.Action:
-                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Action);
-                        break;
-                    case TYPE_UNIT_STATE.Appear:
-                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Move);
-                        break;
-                    default:
-                        _unitDic[key].SetMovement(UnitActor.TYPE_UNIT_ACTION_CYCLE.Idle);
-                        break;
-                }
+                _unitDic[key].SetMovement(GetTypeUnitActionCycle(typeUnitState));
             }
         }
+
+        private UnitActor.TYPE_UNIT_ACTION_CYCLE GetTypeUnitActionCycle(TYPE_UNIT_STATE typeUnitState)
+        {
+            switch (typeUnitState)
+            {
+                case TYPE_UNIT_STATE.Action:
+                    return UnitActor.TYPE_UNIT_ACTION_CYCLE.Action;
+                case TYPE_UNIT_STATE.Appear:
+                    return UnitActor.TYPE_UNIT_ACTION_CYCLE.Move;
+                default:
+                    return UnitActor.TYPE_UNIT_ACTION_CYCLE.Idle;
+            }
+        }
+
 
         #region ##### Listener #####
 
