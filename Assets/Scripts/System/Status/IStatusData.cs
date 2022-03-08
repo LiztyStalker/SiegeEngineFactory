@@ -85,7 +85,7 @@ namespace SEF.Data
             _dic.Add(typeof(AttackerDamageValueStatusData), "포탑공격력");
             _dic.Add(typeof(AttackerDamageDelayStatusData), "포탑공격딜레이");
             _dic.Add(typeof(UnitProductTimeStatusData), "생산시간");
-            _dic.Add(typeof(UnitHealthDataStatusData), "체력");
+            _dic.Add(typeof(UnitHealthValueStatusData), "체력");
 
 
             _dic.Add(typeof(IncreaseMaxPopulationStatusData), "생산인구");

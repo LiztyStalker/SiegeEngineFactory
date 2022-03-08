@@ -29,9 +29,9 @@ namespace SEF.Data
     }
 
 
-    public class UnitHealthDataStatusData : StatusData, IStatusData
+    public class UnitHealthValueStatusData : StatusData, IStatusData
     {
-        public UnitHealthDataStatusData() { }
+        public UnitHealthValueStatusData() { }
     }
 
 

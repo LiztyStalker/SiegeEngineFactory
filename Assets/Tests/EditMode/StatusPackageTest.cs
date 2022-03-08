@@ -613,7 +613,7 @@ namespace SEF.Test
 
 
 
-            var statusData1 = StatusDataUtility.Create<UnitHealthDataStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData1 = StatusDataUtility.Create<UnitHealthValueStatusData>(5, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity1 = new StatusEntity(statusData1, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity1);
 
@@ -628,7 +628,7 @@ namespace SEF.Test
             var entity2 = CreateEntity();
 
 
-            var statusData2 = StatusDataUtility.Create<UnitHealthDataStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData2 = StatusDataUtility.Create<UnitHealthValueStatusData>(0.5f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity2 = new StatusEntity(statusData2, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity2);
 
@@ -645,11 +645,11 @@ namespace SEF.Test
             var statusProvider2 = new StatusProvider_Test();
 
 
-            var statusData3 = StatusDataUtility.Create<UnitHealthDataStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
+            var statusData3 = StatusDataUtility.Create<UnitHealthValueStatusData>(3, 1, IStatusData.TYPE_STATUS_DATA.Value);
             var statusEntity3 = new StatusEntity(statusData3, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity3);
 
-            var statusData4 = StatusDataUtility.Create<UnitHealthDataStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
+            var statusData4 = StatusDataUtility.Create<UnitHealthValueStatusData>(0.3f, 0.01f, IStatusData.TYPE_STATUS_DATA.Rate);
             var statusEntity4 = new StatusEntity(statusData4, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider2, statusEntity4);
 
@@ -665,7 +665,7 @@ namespace SEF.Test
 
             var entity4 = CreateEntity();
 
-            var statusData5 = StatusDataUtility.Create<UnitHealthDataStatusData>(200, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
+            var statusData5 = StatusDataUtility.Create<UnitHealthValueStatusData>(200, 1, IStatusData.TYPE_STATUS_DATA.Absolute);
             var statusEntity5 = new StatusEntity(statusData5, NumberDataUtility.Create<UpgradeData>());
             StatusPackage.Current.SetStatusEntity(statusProvider1, statusEntity5);
 

@@ -80,7 +80,7 @@ namespace SEF.Entity
                 {
                     _healthData = CalculateHealthData();
                 }
-                return StatusPackage.Current.GetStatusDataToBigNumberData<UnitHealthDataStatusData, HealthData>(_healthData);
+                return StatusPackage.Current.GetStatusDataToBigNumberData<UnitHealthValueStatusData, HealthData>(_healthData);
             }
         }
 
