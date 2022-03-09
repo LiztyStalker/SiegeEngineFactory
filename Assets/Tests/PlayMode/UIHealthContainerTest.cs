@@ -79,14 +79,14 @@ namespace SEF.UI.Test
         [UnityTest]
         public IEnumerator UIHealthTest_ShowEnemyBlock()
         {
-            _uiContainer.ShowEnemyHealthData("1.234A", 0.4f);
+            _uiContainer.ShowEnemyHealthData("Test", "1.234A", 0.4f);
             yield return new WaitForSeconds(1f);
         }
 
         [UnityTest]
         public IEnumerator UIHealthTest_ShowHealthContainerEnemyBlock()
         {
-            _uiContainer.ShowEnemyHealthData("1.234A", 0.4f);
+            _uiContainer.ShowEnemyHealthData("Test", "1.234A", 0.4f);
             yield return new WaitForSeconds(1f);
         }
 
@@ -114,7 +114,7 @@ namespace SEF.UI.Test
                     count++;
                 });
                 var value = UnityEngine.Random.Range(0.1f, 1f);
-                _uiContainer.ShowEnemyHealthData(value.ToString(), value);
+                _uiContainer.ShowEnemyHealthData("Test", value.ToString(), value);
                 yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
             }
 

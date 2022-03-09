@@ -25,8 +25,9 @@ namespace SEF.UI
             _pool.CleanUp();
         }
 
-        public void ShowEnemyHealthData(string value, float rate)
+        public void ShowEnemyHealthData(string name, string value, float rate)
         {
+            _uiEnemyHealthBar.ShowName(name);
             _uiEnemyHealthBar.ShowHealth(value, rate);
         }
 

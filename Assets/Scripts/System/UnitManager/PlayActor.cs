@@ -19,6 +19,7 @@ namespace SEF.Unit
         public AttackerActor[] AttackActorArray => _attackActorList.ToArray();
 
 
+        public abstract string Key { get; }
 
         private TYPE_UNIT_STATE _typeUnitState;
         public TYPE_UNIT_STATE TypeUnitState => _typeUnitState;

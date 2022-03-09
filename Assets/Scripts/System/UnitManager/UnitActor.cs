@@ -65,7 +65,7 @@ namespace SEF.Unit
         public bool IsArriveAction() => (Vector2.Distance(transform.position, UNIT_ACTION_POSITION) < ACTOR_ARRIVE_DISTANCE);
 
         private UnitEntity _unitEntity;
-        public string Key => _unitEntity.UnitData.Key;
+        public override string Key => _unitEntity.UnitData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
 
@@ -80,6 +80,7 @@ namespace SEF.Unit
                 return _skeletonAnimation;
             }
         }
+               
 
         private Spine.AnimationState _skeletonAnimationState;
 

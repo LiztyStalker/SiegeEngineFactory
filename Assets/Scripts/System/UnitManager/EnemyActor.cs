@@ -48,7 +48,7 @@ namespace SEF.Unit {
 
         private Vector2 _position;
 
-        public string Key => _enemyEntity.EnemyData.Key;
+        public override string Key => _enemyEntity.EnemyData.Key;
 
         private SkeletonAnimation _skeletonAnimation;
 

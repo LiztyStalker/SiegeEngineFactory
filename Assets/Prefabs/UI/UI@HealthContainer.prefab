@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777ab6ba9bc122448a39f5e728bc11a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: {fileID: 5957623064941583084}
   _value: {fileID: 4515329683425502932}
   _slider: {fileID: 4515329683939508730}
 --- !u!1 &4515329683873292522

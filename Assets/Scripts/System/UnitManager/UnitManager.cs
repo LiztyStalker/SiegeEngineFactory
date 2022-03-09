@@ -209,20 +209,21 @@ namespace SEF.Unit
                 //일반, 보스, 테마보스 찾기
                 var arr = DataStorage.Instance.GetAllDataArrayOrZero<EnemyData>();
                 var themeArray = arr.Where(data => (int)data.TypeLevelTheme == levelWaveData.GetTheme());
+
                 EnemyData data;
                 if (levelWaveData.IsThemeBoss())
                 {
                     data = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.ThemeBoss).Single();
                 }
-                else if (levelWaveData.IsBoss())
-                {
-                    var bossArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Boss).ToArray();
-                    data = bossArray[UnityEngine.Random.Range(0, bossArray.Length)];
-                }
+                //else if (levelWaveData.IsBoss())
+                //{
+                //    var bossArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Boss).ToArray();
+                //    data = bossArray[UnityEngine.Random.Range(0, bossArray.Length)];
+                //}
                 else
                 {
                     var enemyArray = themeArray.Where(data => data.Group == TYPE_ENEMY_GROUP.Normal).ToArray();
-                    data = enemyArray[UnityEngine.Random.Range(0, enemyArray.Length)];
+                    data = SelectData(enemyArray);
                 }
 
                 enemyEntity.SetData(data, levelWaveData);
@@ -235,6 +236,43 @@ namespace SEF.Unit
                 _levelWaveData.IncreaseNumber();
 
                 return enemyActor;
+            }
+
+            private EnemyData[] Suffle(EnemyData[] arr)
+            {
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    var index = UnityEngine.Random.Range(0, arr.Length);
+                    if (i != index)
+                    {
+                        var tmp = arr[i];
+                        arr[i] = arr[index];
+                        arr[index] = tmp;
+                    }
+                    else
+                    {
+                        i--;
+                        continue;
+                    }
+                }
+                return arr;
+            }
+
+
+            private EnemyData SelectData(EnemyData[] arr)
+            {
+                var weight = arr.Sum(data => data.AppearRate);
+                var index = UnityEngine.Random.Range(0, weight);
+                arr = Suffle(arr);
+
+                for(int i = 0; i < arr.Length - 1; i++)
+                {
+                    if(arr[i].AppearRate > index && arr[i+1].AppearRate <= index)
+                    {
+                        return arr[i];
+                    }
+                }
+                return arr[arr.Length - 1];
             }
 
             public void RetrieveEnemyActor(EnemyActor enemyActor)
