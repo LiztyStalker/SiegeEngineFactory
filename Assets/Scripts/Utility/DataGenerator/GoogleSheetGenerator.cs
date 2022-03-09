@@ -21,7 +21,7 @@ namespace Utility.Generator
         /// <typeparam name="T"></typeparam>
         /// <param name="dataPath"></param>
         /// <param name="bundleName"></param>
-        public static void CreateAndUpdateAllUnits<T>(string sheetkey, string worksheet, string dataPath, string bundleName = null) where T : ScriptableObjectData
+        public static void CreateAndUpdateAllData<T>(string sheetkey, string worksheet, string dataPath, string bundleName = null) where T : ScriptableObjectData
         {
             GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet, "A2", 2);
             SpreadsheetManager.Read(gstuSearcher, sheet =>
@@ -101,7 +101,7 @@ namespace Utility.Generator
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dataPath"></param>
-        public static void UploadAllUnits<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
+        public static void UploadAllData<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
         {
             Upload<T>(sheetkey, worksheet, dataPath, endCallback);
         }

@@ -33,14 +33,14 @@ namespace SEF.Data
         [MenuItem("Data/Mines/Create And Update All Mines")]
         private static void CreateAndUpdateAllData()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<MineData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<MineData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Mines/Upload All Mines")]
         private static void UploadAllData()
         {
-            GoogleSheetGenerator.UploadAllUnits<MineData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<MineData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }

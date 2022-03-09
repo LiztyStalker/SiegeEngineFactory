@@ -32,28 +32,28 @@ namespace SEF.Data
         [MenuItem("Data/Quest/Daily/Create And Update All Daily Quests")]
         private static void CreateAndUpdateAllUnits()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<QuestData>(_sheetKey, _worksheetDailyKey, _dataDailyPath, _bundleDailyName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<QuestData>(_sheetKey, _worksheetDailyKey, _dataDailyPath, _bundleDailyName);
         }
 
 
         [MenuItem("Data/Quest/Daily/Upload All Daily Quests")]
         private static void UploadAllUnits()
         {
-            GoogleSheetGenerator.UploadAllUnits<QuestData>(_sheetKey, _worksheetDailyKey, _dataDailyPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<QuestData>(_sheetKey, _worksheetDailyKey, _dataDailyPath, () => UnityEngine.Debug.Log("Upload End"));
         }
 
 
         [MenuItem("Data/Quest/Goal/Create And Update All Goal Quests")]
         private static void CreateAndUpdateAllQuestGoal()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<QuestData>(_sheetKey, _worksheetGoalKey, _dataGoalPath, _bundleGoalName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<QuestData>(_sheetKey, _worksheetGoalKey, _dataGoalPath, _bundleGoalName);
         }
 
 
         [MenuItem("Data/Quest/Goal/Upload All Goal Quests")]
         private static void UploadAllQuestGoal()
         {
-            GoogleSheetGenerator.UploadAllUnits<QuestData>(_sheetKey, _worksheetGoalKey, _dataGoalPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<QuestData>(_sheetKey, _worksheetGoalKey, _dataGoalPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }

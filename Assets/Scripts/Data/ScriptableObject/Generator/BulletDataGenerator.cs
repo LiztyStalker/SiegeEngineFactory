@@ -27,14 +27,14 @@ namespace SEF.Data
         [MenuItem("Data/Bullets/Create And Update All Bullets")]
         private static void CreateAndUpdateAllData()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<BulletData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<BulletData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Bullets/Upload All Bullets")]
         private static void UploadAllData()
         {
-            GoogleSheetGenerator.UploadAllUnits<BulletData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<BulletData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }

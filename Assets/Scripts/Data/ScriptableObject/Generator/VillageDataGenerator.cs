@@ -32,14 +32,14 @@ namespace SEF.Data
         [MenuItem("Data/Villages/Create And Update All Villages")]
         private static void CreateAndUpdateAllData()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<VillageData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<VillageData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Villages/Upload All Villages")]
         private static void UploadAllData()
         {
-            GoogleSheetGenerator.UploadAllUnits<VillageData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<VillageData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }

@@ -32,14 +32,14 @@ namespace SEF.Data
         [MenuItem("Data/Smithy/Create And Update All Smithy")]
         private static void CreateAndUpdateAllData()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<SmithyData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<SmithyData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Smithy/Upload All Smithy")]
         private static void UploadAllData()
         {
-            GoogleSheetGenerator.UploadAllUnits<SmithyData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<SmithyData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }

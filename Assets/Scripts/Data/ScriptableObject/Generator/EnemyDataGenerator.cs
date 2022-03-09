@@ -42,14 +42,14 @@ namespace SEF.Data
         [MenuItem("Data/Enemy/Create And Update All Enemies")]
         private static void CreateAndUpdateAllData()
         {
-            GoogleSheetGenerator.CreateAndUpdateAllUnits<EnemyData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
+            GoogleSheetGenerator.CreateAndUpdateAllData<EnemyData>(_sheetKey, _worksheetKey, _dataPath, _bundleName);
         }
 
 
         [MenuItem("Data/Enemy/Upload All Enemies")]
         private static void UploadAllData()
         {
-            GoogleSheetGenerator.UploadAllUnits<EnemyData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
+            GoogleSheetGenerator.UploadAllData<EnemyData>(_sheetKey, _worksheetKey, _dataPath, () => UnityEngine.Debug.Log("Upload End"));
         }
     }
 }
