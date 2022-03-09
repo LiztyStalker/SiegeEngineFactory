@@ -50,9 +50,9 @@ namespace SEF.Data
         {
             var list = new List<SmithyAbillityData>(_smithyAbilityDataArray);
 
-            var questConditionData = new SmithyAbillityData();
-            questConditionData.SetData(arr);
-            list.Add(questConditionData);
+            var abilityData = new SmithyAbillityData();
+            abilityData.SetData(arr);
+            list.Add(abilityData);
 
             _smithyAbilityDataArray = list.ToArray();
         }

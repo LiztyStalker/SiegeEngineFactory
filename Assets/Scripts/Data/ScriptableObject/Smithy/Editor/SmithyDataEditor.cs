@@ -95,8 +95,7 @@ namespace SEF.Data.Editor
 
         private void OnDisable()
         {
-            //if (_multipleConditionLayout != null)
-            //    _multipleConditionLayout.Clear();
+            _multipleLayout.Clear();
 
             //if (_singleConditionLayout != null)
             //    _singleConditionLayout.Clear();
