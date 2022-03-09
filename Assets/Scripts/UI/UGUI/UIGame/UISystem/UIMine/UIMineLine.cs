@@ -27,17 +27,7 @@ namespace SEF.UI
         private Text _abilityLabel;
 
         [SerializeField]
-        private Button _upgradeButton;
-        [SerializeField]
-        private Image _upgradeAssetIcon;
-        [SerializeField]
-        private Text _upgradeValueLabel;
-        [SerializeField]
-        private Text _buttonLabel;
-
-
-        [SerializeField]
-        private GameObject _inactivatePanel;
+        private UIAssetButton _upgradeBtn;
 
         public void SetIndex(int index) => _index = index;
 
@@ -74,12 +64,7 @@ namespace SEF.UI
             Debug.Assert(_contentLabel != null, "_contentLabel element 를 찾지 못했습니다");
             Debug.Assert(_abilityLabel != null, "_abilityLabel element 를 찾지 못했습니다");
 
-            Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
-            Debug.Assert(_upgradeAssetIcon != null, "_upgradeAssetIcon element 를 찾지 못했습니다");
-            Debug.Assert(_upgradeValueLabel != null, "_upgradeValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_buttonLabel != null, "_buttonLabel element 를 찾지 못했습니다");
-
-            Debug.Assert(_inactivatePanel != null, "_inactivatePanel element 를 찾지 못했습니다");
+            Debug.Assert(_upgradeBtn != null, "_upgradeBtn element 를 찾지 못했습니다");
 
 
             //_icon
@@ -89,10 +74,9 @@ namespace SEF.UI
             _contentLabel.text = "설명";
             _abilityLabel.text = "능력";
 
-            _upgradeButton.onClick.AddListener(OnUpgradeEvent);
+            _upgradeBtn.onClick.AddListener(OnUpgradeEvent);
 
-            _activatePanel.SetActive(false);
-            _inactivatePanel.SetActive(true);
+            _activatePanel.SetActive(true);
 
         }
 
@@ -101,18 +85,12 @@ namespace SEF.UI
 
         public void RefreshMineLine(MineEntity entity)
         {
-            if (!_activatePanel.activeSelf)
-            {
-                _activatePanel.SetActive(true);
-                _inactivatePanel.SetActive(false);
-            }
-
             _entity = entity;
 
             _nameLabel.text = entity.Name;
-            _levelValueLabel.text = entity.NowUpgradeValue.ToString();
+            _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue} / {entity.MaxUpgradeValue}";
             _contentLabel.text = entity.Content;
-            _contentLabel.text = entity.Ability;
+            _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
 
             //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
             isEndTech = false;
@@ -123,22 +101,21 @@ namespace SEF.UI
                 //다음 테크 있음
                 if (entity.IsNextTech())
                 {
-                    _upgradeValueLabel.text = entity.TechAssetData.GetValue();
-                    _buttonLabel.text = "테크";
+                    _upgradeBtn.SetData(entity.TechAssetData);
+                    _upgradeBtn.SetLabel("테크");
                 }
                 //최종 테크
                 else
                 {
                     isEndTech = true;
-                    _upgradeValueLabel.text = "-";
-                    _buttonLabel.text = "-";
+                    _upgradeBtn.SetEmpty();
                 }
             }
             else
             {
                 isUpgrade = true;
-                _upgradeValueLabel.text = entity.UpgradeAssetData.GetValue();
-                _buttonLabel.text = "업그레이드";
+                _upgradeBtn.SetData(entity.UpgradeAssetData);
+                _upgradeBtn.SetLabel("업그레이드");
             }
 
         }
@@ -158,12 +135,12 @@ namespace SEF.UI
                     isEnough = assetEntity.IsEnough(_entity.TechAssetData);
                 }
             }
-            _upgradeButton.interactable = isEnough;
+            _upgradeBtn.interactable = isEnough;
         }
 
         public void CleanUp()
         {
-            _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
+            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
         }
 
 
@@ -176,7 +153,10 @@ namespace SEF.UI
         public void RemoveOnUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent()
         {
-            _upgradeEvent?.Invoke(_index);
+            if (!(isUpgrade || isEndTech))
+                OnUpTechEvent();
+            else
+                _upgradeEvent?.Invoke(_index);
         }
 
 

@@ -15,7 +15,7 @@ namespace SEF.Data
         [SerializeField]
         private MineAbilityData[] _mineAbilityDataArray;
 
-        public int MaximumIndex => _mineAbilityDataArray.Length;
+        public int MaxTechValue => _mineAbilityDataArray.Length;
         public IAssetData GetTechAssetData(int index) => _mineAbilityDataArray[index].TechAssetData;
         public int GetMaxUpgradeData(int index) => _mineAbilityDataArray[index].DefaultMaxUpgradeValue;
         public IProcessData GetProcessData(int index) => _mineAbilityDataArray[index].ProcessData;

@@ -53,6 +53,10 @@ namespace SEF.Entity
             }
         }
 
+        public int NowTechValue => _nowIndex;
+
+        public int MaxTechValue => _data.MaxTechValue;
+
         public IAssetData UpgradeAssetData
         {
             get
@@ -104,7 +108,7 @@ namespace SEF.Entity
             OnProcessEntityEvent(this);
         }
 
-        public bool IsNextTech() => _nowIndex + 1 < _data.MaximumIndex;
+        public bool IsNextTech() => _nowIndex + 1 < _data.MaxTechValue;
         public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
         private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowIndex, _upgradeData);
 
