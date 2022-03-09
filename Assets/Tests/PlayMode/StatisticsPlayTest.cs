@@ -55,7 +55,7 @@ namespace SEF.Test
         public IEnumerator StatisticsPlayTest_CreateUnitStatisticsData()
         {
             int count = 0;
-            _gameSystem.AddProductUnitListener(delegate
+            _gameSystem.AddOnProductUnitListener(delegate
             {
                 count++;
             });
@@ -76,7 +76,7 @@ namespace SEF.Test
             _gameSystem.UpTechWorkshop(0, UnitTechData.Create_Test());
 
             int count = 0;
-            _gameSystem.AddProductUnitListener(delegate
+            _gameSystem.AddOnProductUnitListener(delegate
             {
                 count++;
             });
@@ -102,7 +102,7 @@ namespace SEF.Test
         {
             int count = 0;
             List<UnitActor> list = new List<UnitActor>();
-            _gameSystem.AddProductUnitListener(entity => 
+            _gameSystem.AddOnProductUnitListener(entity => 
             {
                 var actor = UnitActor.Create();
                 actor.SetData(entity);
@@ -141,7 +141,7 @@ namespace SEF.Test
 
             int count = 0;
             List<UnitActor> list = new List<UnitActor>();
-            _gameSystem.AddProductUnitListener(entity =>
+            _gameSystem.AddOnProductUnitListener(entity =>
             {
                 var actor = UnitActor.Create();
                 actor.SetData(entity);

@@ -52,7 +52,7 @@ namespace SEF.UI.Test
             unitEntity.UpTech(UnitData.Create_Test());
             var workshop = UIWorkshop_Test.Create();
             workshop.Initialize();
-            workshop.Instance.RefreshUnit(0, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(0, unitEntity, 0f);
             yield return new WaitForSeconds(1f);
             workshop.Dispose();
         }
@@ -66,15 +66,15 @@ namespace SEF.UI.Test
             unitEntity.UpTech(UnitData.Create_Test());
             var workshop = UIWorkshop_Test.Create();
             workshop.Initialize();
-            workshop.Instance.RefreshUnit(0, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(0, unitEntity, 0f);
             yield return new WaitForSeconds(0.5f);
-            workshop.Instance.RefreshUnit(1, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(1, unitEntity, 0f);
             yield return new WaitForSeconds(0.5f);
-            workshop.Instance.RefreshUnit(2, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(2, unitEntity, 0f);
             yield return new WaitForSeconds(0.5f);
-            workshop.Instance.RefreshUnit(3, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(3, unitEntity, 0f);
             yield return new WaitForSeconds(0.5f);
-            workshop.Instance.RefreshUnit(4, unitEntity, 0f);
+            workshop.Instance.RefreshEntity(4, unitEntity, 0f);
             yield return new WaitForSeconds(0.5f);
             workshop.Dispose();
         }

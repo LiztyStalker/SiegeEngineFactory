@@ -57,7 +57,7 @@ namespace SEF.UI.Test
             entity.SetData(VillageData.Create_Test());
             var system = UIVillage_Test.Create();
             system.Initialize();
-            system.Instance.RefreshVillage(0, entity);
+            system.Instance.RefreshEntity(0, entity);
             yield return new WaitForSeconds(1f);
             system.Dispose();
         }
@@ -77,15 +77,15 @@ namespace SEF.UI.Test
 
             var system = UIVillage_Test.Create();
             system.Initialize();
-            system.Instance.RefreshVillage(0, entity);
+            system.Instance.RefreshEntity(0, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshVillage(1, entity);
+            system.Instance.RefreshEntity(1, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshVillage(2, entity);
+            system.Instance.RefreshEntity(2, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshVillage(3, entity);
+            system.Instance.RefreshEntity(3, entity);
             yield return new WaitForSeconds(0.5f);
-            system.Instance.RefreshVillage(4, entity);
+            system.Instance.RefreshEntity(4, entity);
             yield return new WaitForSeconds(0.5f);
             system.Dispose();
         }

@@ -409,7 +409,7 @@ namespace SEF.Test
             var entity2 = QuestEntity.Create();
             entity2.SetData(data2);
 
-            _gameSystem.AddProductUnitListener(entity => { Debug.Log("Product"); });
+            _gameSystem.AddOnProductUnitListener(entity => { Debug.Log("Product"); });
 
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
@@ -418,7 +418,7 @@ namespace SEF.Test
             _gameSystem.RunProcess(1f);
             _gameSystem.RunProcess(1f);
 
-            _gameSystem.RemoveProductUnitListener(entity => { Debug.Log("Product"); });
+            _gameSystem.RemoveOnProductUnitListener(entity => { Debug.Log("Product"); });
 
         }
 
