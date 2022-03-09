@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
-  m_Name: QuestData_UpgradeVillage
+  m_Name: QuestData_WeeklyDestoryBoss
   m_EditorClassIdentifier: 
-  _key: UpgradeVillage
+  _key: WeeklyDestoryBoss
   _sortIndex: 3
-  _typeQuestGroup: 0
+  _isTest: 0
+  _typeQuestGroup: 1
   _icon: {fileID: 0}
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.UpgradeVillageConditionQuestData
-    _conditionValue: 5
+      _classTypeName: SEF.Quest.DestroyBossConditionQuestData
+    _conditionValue: 50
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1
-      _assetValue: 1
+      _assetValue: 10
   _questConditionDataArray: []

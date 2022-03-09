@@ -83,6 +83,7 @@ namespace SEF.UI
                 _rewardButton.interactable = (_hasGoal || !string.IsNullOrEmpty(entity.AddressKey));
                 _contentLabel.text = entity.Key;
                 _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
+                _slider.value = (float)entity.NowValue / (float)entity.GoalValue;
             }
         }
 

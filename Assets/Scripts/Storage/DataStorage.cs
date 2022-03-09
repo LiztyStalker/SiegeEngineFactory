@@ -37,9 +37,9 @@ namespace Storage
             InitializeDatasFromAssetDatabase<SmithyData>("Data/Smithy");
             InitializeDatasFromAssetDatabase<VillageData>("Data/Villages");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Daily");
-            //InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Weekly");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Weekly");
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Goal");
-            //InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challange");
+            InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challenge");
             InitializeDatasFromAssetDatabase<GameObject>("Prefabs/UI");
 #else
             InitializeDataFromAssetBundle<Sprite>("sprites", null);
@@ -51,9 +51,9 @@ namespace Storage
             InitializeDataFromAssetBundle<SmithyData>("smithies", "data");
             InitializeDataFromAssetBundle<VillageData>("villages", "data");
             InitializeDataFromAssetBundle<QuestData>("daily", "data/quests");
-            //InitializeDataFromAssetBundle<QuestData>("weekly", "data/quests");
+            InitializeDataFromAssetBundle<QuestData>("weekly", "data/quests");
             InitializeDataFromAssetBundle<QuestData>("goal", "data/quests");
-            //InitializeDataFromAssetBundle<QuestData>("challenge", "data/quests");
+            InitializeDataFromAssetBundle<QuestData>("challenge", "data/quests");
             InitializeDataFromAssetBundle<GameObject>("ui", null);
 #endif
         }

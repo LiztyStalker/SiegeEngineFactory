@@ -24,19 +24,10 @@ namespace SEF.UI
         private Text _sliderText;
 
         [SerializeField]
-        private Button _rewardButton;
-
-        [SerializeField]
-        private Image _rewardAssetIcon;
-
-        [SerializeField]
-        private Text _rewardValueLabel;
+        private UIAssetButton _rewardButton;
 
         [SerializeField]
         private GameObject _rewardedPanel;
-
-        [SerializeField]
-        private Text _rewardedLabel;
 
         private string _questKey;
         private string _addressKey;
@@ -75,8 +66,6 @@ namespace SEF.UI
             Debug.Assert(_slider != null, "_slider element 를 찾지 못했습니다");
 
             Debug.Assert(_rewardButton != null, "_rewardButton element 를 찾지 못했습니다");
-            Debug.Assert(_rewardAssetIcon != null, "_rewardAssetIcon element 를 찾지 못했습니다");
-            Debug.Assert(_rewardValueLabel != null, "_rewardValueLabel element 를 찾지 못했습니다");
 
             Debug.Assert(_rewardedPanel != null, "_rewardedPanel element 를 찾지 못했습니다");
 
@@ -101,7 +90,8 @@ namespace SEF.UI
             {
                 _rewardedPanel.SetActive(true);
                 _rewardButton.interactable = false;
-                _rewardedLabel.text = "완료";
+                _rewardButton.SetLabel("완료");
+                _rewardButton.SetEmpty();
             }
             else
             {
@@ -109,12 +99,14 @@ namespace SEF.UI
                 _rewardButton.interactable = (!string.IsNullOrEmpty(_addressKey));
 
                 bool isRewardLabel = (_hasGoal || string.IsNullOrEmpty(_addressKey));
-                _rewardedLabel.text = (isRewardLabel) ? "보상" : "이동";
+                _rewardButton.SetLabel((isRewardLabel) ? "보상" : "이동");
+                _rewardButton.SetData(entity.GetRewardAssetData());
             }
 
             _contentLabel.text = entity.Key;
 
             _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
+            _slider.value = (float)entity.NowValue / (float)entity.GoalValue;
 
         }
 

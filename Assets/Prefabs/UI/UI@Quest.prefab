@@ -729,8 +729,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5898326344737176669}
-  - component: {fileID: 5898326344737176667}
-  - component: {fileID: 5898326344737176668}
+  - component: {fileID: 5274955991905054596}
+  - component: {fileID: 4382388197962544616}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -757,7 +757,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &5898326344737176667
+--- !u!114 &5274955991905054596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5898326344737176668
+--- !u!114 &4382388197962544616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -796,7 +796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 1
+  m_VerticalFit: 2
 --- !u!1 &5898326344812243406
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
-  m_Name: QuestData_DestroyEnemy
+  m_Name: QuestData_DailyDestroyEnemy
   m_EditorClassIdentifier: 
-  _key: DestroyEnemy
-  _sortIndex: 1
+  _key: DailyDestroyEnemy
+  _sortIndex: 2
+  _isTest: 0
   _typeQuestGroup: 0
   _icon: {fileID: 0}
   _isMultipleQuest: 0
@@ -24,5 +25,5 @@ MonoBehaviour:
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1
-      _assetValue: 1
+      _assetValue: 10
   _questConditionDataArray: []

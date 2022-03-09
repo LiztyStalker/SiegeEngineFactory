@@ -110,7 +110,7 @@ namespace SEF.UI
         }
 
         public void RefreshQuest(QuestEntity entity)
-        {            
+        {
             if (entity.TypeQuestGroup == _typeQuestGroup)
             {
                 var key = entity.Key;
@@ -120,6 +120,7 @@ namespace SEF.UI
                     line.Initialize();
                     line.AddOnRewardListener(OnRewardEvent);
                     line.transform.SetParent(_scrollView.content);
+                    line.transform.localScale = Vector3.one;
                     _dic.Add(key, line);
                 }
                 _dic[key].RefreshQuestLine(entity);
