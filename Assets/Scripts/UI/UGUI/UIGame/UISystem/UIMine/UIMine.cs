@@ -15,7 +15,7 @@ namespace SEF.UI
 
         private int _lineCount = 0;
 
-        private UIMineExpend _uiMineExpend;
+        private UIMineExpand _expandLine;
 
         [SerializeField]
         private ScrollRect _scrollView;
@@ -51,13 +51,13 @@ namespace SEF.UI
             
             Debug.Assert(_scrollView != null, "_scrollView element 를 찾지 못했습니다");
 
-            CreateExpendLine();
+            CreateExpandLine();
         }
 
         public void CleanUp()
         {
-            _uiMineExpend.RemoveOnExpendListener(OnExpendEvent);
-            _uiMineExpend.CleanUp();
+            _expandLine.RemoveOnExpandListener(OnExpandEvent);
+            _expandLine.CleanUp();
 
             foreach (var value in _dic.Values)
             {
@@ -91,7 +91,7 @@ namespace SEF.UI
                 _dic.Add(index, line);
             }
             _dic[index].RefreshMineLine(entity);
-            ChangeExpendLine();
+            ChangeExpandLine();
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -102,22 +102,22 @@ namespace SEF.UI
             }
         }
 
-        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiMineExpend.RefreshExpend(assetData, isActive);
+        public void RefreshExpand(IAssetData assetData, bool isActive) => _expandLine.RefreshExpand(assetData, isActive);
 
-        private void CreateExpendLine()
+        private void CreateExpandLine()
         {
-            _uiMineExpend = UIMineExpend.Create();
-            _uiMineExpend.Initialize();
-            _uiMineExpend.AddOnExpendListener(OnExpendEvent);
-            _uiMineExpend.transform.SetParent(_scrollView.content);
-            _uiMineExpend.transform.SetAsLastSibling();
+            _expandLine = UIMineExpand.Create();
+            _expandLine.Initialize();
+            _expandLine.AddOnExpandListener(OnExpandEvent);
+            _expandLine.transform.SetParent(_scrollView.content);
+            _expandLine.transform.SetAsLastSibling();
         }
 
-        private void ChangeExpendLine()
+        private void ChangeExpandLine()
         {
             if (_lineCount != _scrollView.content.childCount)
             {
-                _uiMineExpend.transform.SetAsLastSibling();
+                _expandLine.transform.SetAsLastSibling();
             }
             _lineCount = _scrollView.content.childCount;
         }
@@ -142,12 +142,12 @@ namespace SEF.UI
         }
 
 
-        private System.Action _expendEvent;
-        public void AddOnExpendListener(System.Action act) => _expendEvent += act;
-        public void RemoveOnExpendListener(System.Action act) => _expendEvent -= act;
-        private void OnExpendEvent()
+        private System.Action _expandEvent;
+        public void AddOnExpandListener(System.Action act) => _expandEvent += act;
+        public void RemoveOnExpandListener(System.Action act) => _expandEvent -= act;
+        private void OnExpandEvent()
         {
-            _expendEvent?.Invoke();
+            _expandEvent?.Invoke();
         }
 
 

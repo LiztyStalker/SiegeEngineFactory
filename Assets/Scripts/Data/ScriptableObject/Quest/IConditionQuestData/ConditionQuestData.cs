@@ -88,12 +88,12 @@ namespace SEF.Quest
         public string AddressKey => typeof(UIWorkshop).Name;
     }
 
-    public class ExpendWorkshopLineConditionQuestData : IConditionQuestData
+    public class ExpandWorkshopLineConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UIWorkshop).Name;
     }
 
-    public class AccumulativelyExpendWorkshopLineConditionQuestData : IConditionQuestData
+    public class AccumulativelyExpandWorkshopLineConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UIWorkshop).Name;
     }
@@ -157,12 +157,12 @@ namespace SEF.Quest
     {
         public string AddressKey => typeof(UISmithy).Name;
     }
-    public class ExpendMineConditionQuestData : IConditionQuestData
+    public class ExpandMineConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UISmithy).Name;
     }
 
-    public class AccumulativelyExpendMineConditionQuestData : IConditionQuestData
+    public class AccumulativelyExpandMineConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UISmithy).Name;
     }

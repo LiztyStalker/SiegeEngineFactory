@@ -36,7 +36,7 @@ namespace SEF.Statistics
     public class TestUpgradeUnitStatisticsData : IStatisticsData { }
 #endif
 
-    public class ExpendWorkshopLineStatisticsData : IStatisticsData { }
+    public class ExpandWorkshopLineStatisticsData : IStatisticsData { }
 
     #endregion
 
@@ -68,7 +68,7 @@ namespace SEF.Statistics
     public class TechVillageStatisticsData : IStatisticsData { }
     public class UpgradeMineStatisticsData : IStatisticsData { }
     public class TechMineStatisticsData : IStatisticsData { }
-    public class ExpendMineStatisticsData : IStatisticsData { }
+    public class ExpandMineStatisticsData : IStatisticsData { }
 
 
 

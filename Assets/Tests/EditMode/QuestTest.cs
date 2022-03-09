@@ -478,8 +478,8 @@ namespace SEF.Test
         [Test]
         public void QuestIntegrationTest_ExpendWorkshopLine_And_Accumulatively()
         {
-            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ExpendWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
-            var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyExpendWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data1 = QuestData.Create_Test("InstantTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(ExpandWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
+            var data2 = QuestData.Create_Test("AccumulativeryTest", QuestData.TYPE_QUEST_GROUP.Daily, typeof(AccumulativelyExpandWorkshopLineConditionQuestData), 3, typeof(GoldAssetData), 100);
             var entity1 = QuestEntity.Create();
             entity1.SetData(data1);
             var entity2 = QuestEntity.Create();
@@ -488,9 +488,9 @@ namespace SEF.Test
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity1);
             _gameSystem.AddQuestEntity(QuestData.TYPE_QUEST_GROUP.Daily, entity2);
 
-            _gameSystem.ExpendWorkshop();
-            _gameSystem.ExpendWorkshop();
-            _gameSystem.ExpendWorkshop();
+            _gameSystem.ExpandWorkshop();
+            _gameSystem.ExpandWorkshop();
+            _gameSystem.ExpandWorkshop();
         }
 
         #endregion

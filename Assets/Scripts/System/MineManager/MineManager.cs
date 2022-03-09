@@ -63,25 +63,25 @@ namespace SEF.Manager
             return _list[index].UpTech();
         }
 
-        private IAssetData _expendAssetData;
-        public IAssetData ExpendAssetData
+        private IAssetData _expandAssetData;
+        public IAssetData ExpandAssetData
         {
             get
             {
-                if (_expendAssetData == null)
+                if (_expandAssetData == null)
                 {
                     var assetData = NumberDataUtility.Create<GoldAssetData>();
                     assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count + 1).ToString();
-                    _expendAssetData = assetData;
+                    _expandAssetData = assetData;
                 }
-                return _expendAssetData;
+                return _expandAssetData;
             }
         }
 
-        public int Expend()
+        public int Expand()
         {
             CreateLine();
-            _expendAssetData = null;
+            _expandAssetData = null;
             return _list.Count;
         }
 

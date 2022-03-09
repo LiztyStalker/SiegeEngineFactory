@@ -416,15 +416,15 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator StatisticsPlayTest_ExpendWorkshopLineStatisticsData()
         {
-            _gameSystem.ExpendWorkshop();
-            _gameSystem.ExpendWorkshop();
-            _gameSystem.ExpendWorkshop();
-            _gameSystem.ExpendWorkshop();
+            _gameSystem.ExpandWorkshop();
+            _gameSystem.ExpandWorkshop();
+            _gameSystem.ExpandWorkshop();
+            _gameSystem.ExpandWorkshop();
 
             yield return null;
 
-            Debug.Log(_gameSystem.GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
-            Assert.IsTrue(_gameSystem.GetStatisticsValue<ExpendWorkshopLineStatisticsData>() == 5);
+            Debug.Log(_gameSystem.GetStatisticsValue<ExpandWorkshopLineStatisticsData>());
+            Assert.IsTrue(_gameSystem.GetStatisticsValue<ExpandWorkshopLineStatisticsData>() == 5);
         }
 
         #endregion

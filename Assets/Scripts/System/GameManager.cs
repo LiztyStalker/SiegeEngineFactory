@@ -79,7 +79,7 @@ namespace SEF.Manager
             _gameSystem.AddOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
-            _gameSystem.AddOnRefreshExpendListener(_uiGame.RefreshExpand);
+            _gameSystem.AddOnRefreshExpandListener(_uiGame.RefreshExpand);
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
@@ -88,7 +88,7 @@ namespace SEF.Manager
 
             _uiGame.AddOnUpgradeWorkshopListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
-            _uiGame.AddOnExpandWorkshopListener(_gameSystem.ExpendWorkshop);
+            _uiGame.AddOnExpandWorkshopListener(_gameSystem.ExpandWorkshop);
 
             _uiGame.AddOnUpgradeSmithyListener(_gameSystem.UpgradeSmithy);
             _uiGame.AddOnUpTechSmithyListener(_gameSystem.UpTechSmithy);
@@ -98,7 +98,7 @@ namespace SEF.Manager
 
             _uiGame.AddOnUpgradeMineListener(_gameSystem.UpgradeMine);
             _uiGame.AddOnUpTechMineListener(_gameSystem.UpTechMine);
-            _uiGame.AddOnExpandMineListener(_gameSystem.ExpendMine);
+            _uiGame.AddOnExpandMineListener(_gameSystem.ExpandMine);
 
             _uiGame.AddOnRefreshQuestListener(_gameSystem.RefreshQuest);
             _uiGame.AddOnRewardQuestListener(_gameSystem.GetRewardAssetData);
@@ -134,7 +134,7 @@ namespace SEF.Manager
             _gameSystem.RemoveOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.RemoveOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
-            _gameSystem.RemoveOnRefreshExpendListener(_uiGame.RefreshExpand);
+            _gameSystem.RemoveOnRefreshExpandListener(_uiGame.RefreshExpand);
 
             _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
@@ -143,7 +143,7 @@ namespace SEF.Manager
 
             _uiGame.RemoveOnUpgradeWorkshopListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
-            _uiGame.RemoveOnExpandWorkshopListener(_gameSystem.ExpendWorkshop);
+            _uiGame.RemoveOnExpandWorkshopListener(_gameSystem.ExpandWorkshop);
 
             _uiGame.RemoveOnUpgradeSmithyListener(_gameSystem.UpgradeSmithy);
             _uiGame.RemoveOnUpTechSmithyListener(_gameSystem.UpTechSmithy);
@@ -153,7 +153,7 @@ namespace SEF.Manager
 
             _uiGame.RemoveOnUpgradeMineListener(_gameSystem.UpgradeMine);
             _uiGame.RemoveOnUpTechMineListener(_gameSystem.UpTechMine);
-            _uiGame.RemoveOnExpandMineListener(_gameSystem.ExpendMine);
+            _uiGame.RemoveOnExpandMineListener(_gameSystem.ExpandMine);
 
             _uiGame.RemoveOnRewardQuestListener(_gameSystem.GetRewardAssetData);
 

@@ -58,7 +58,7 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator WorkshopManagerTest_Expend()
         {
-            _workshopManager.ExpendWorkshop_Test();
+            _workshopManager.ExpandWorkshop_Test();
             Assert.IsTrue(_workshopManager.Count == 2, "WorkshopLine이 증축되지 않았습니다");
             yield return null;
         }
@@ -66,10 +66,10 @@ namespace SEF.Test
         [UnityTest]
         public IEnumerator WorkshopManagerTest_RunProcess_5_Line_for_20_Product()
         {
-            _workshopManager.ExpendWorkshop_Test();
-            _workshopManager.ExpendWorkshop_Test();
-            _workshopManager.ExpendWorkshop_Test();
-            _workshopManager.ExpendWorkshop_Test();
+            _workshopManager.ExpandWorkshop_Test();
+            _workshopManager.ExpandWorkshop_Test();
+            _workshopManager.ExpandWorkshop_Test();
+            _workshopManager.ExpandWorkshop_Test();
             Assert.IsTrue(_workshopManager.Count == 5, "WorkshopLine이 증축되지 않았습니다");
             yield return null;
 

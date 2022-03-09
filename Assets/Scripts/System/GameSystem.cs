@@ -462,20 +462,20 @@ namespace SEF.Manager
 
         }
 
-        public void ExpendWorkshop()
+        public void ExpandWorkshop()
         {
-            var assetData = _workshopManager.ExpendAssetData;
-            int count = _workshopManager.Expend();
+            var assetData = _workshopManager.ExpandAssetData;
+            int count = _workshopManager.Expand();
 
             SubjectAsset(assetData);
 
             //통계 적용
-            SetStatisticsData<ExpendWorkshopLineStatisticsData>(count);
+            SetStatisticsData<ExpandWorkshopLineStatisticsData>(count);
 
             //퀘스트 적용
-            SetQuestValue<ExpendWorkshopLineConditionQuestData>(count);
+            SetQuestValue<ExpandWorkshopLineConditionQuestData>(count);
             //누적 퀘스트 적용
-            SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
+            SetQuestValue<AccumulativelyExpandWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpandWorkshopLineStatisticsData>());
 
             _workshopManager.Refresh();
         }
@@ -642,20 +642,20 @@ namespace SEF.Manager
             SetQuestValue<AccumulativelyTechMineConditionQuestData>((int)GetStatisticsValue<TechMineStatisticsData>());
         }
 
-        public void ExpendMine()
+        public void ExpandMine()
         {
-            var assetData = _mineManager.ExpendAssetData;
-            int count = _mineManager.Expend();
+            var assetData = _mineManager.ExpandAssetData;
+            int count = _mineManager.Expand();
 
             SubjectAsset(assetData);
 
             //통계 적용
-            SetStatisticsData<ExpendMineStatisticsData>(count);
+            SetStatisticsData<ExpandMineStatisticsData>(count);
 
             //퀘스트 적용
-            SetQuestValue<ExpendMineConditionQuestData>(count);
+            SetQuestValue<ExpandMineConditionQuestData>(count);
             //누적 퀘스트 적용
-            SetQuestValue<AccumulativelyExpendMineConditionQuestData>((int)GetStatisticsValue<ExpendMineStatisticsData>());
+            SetQuestValue<AccumulativelyExpandMineConditionQuestData>((int)GetStatisticsValue<ExpandMineStatisticsData>());
 
             _mineManager.Refresh();
         }
@@ -819,15 +819,15 @@ namespace SEF.Manager
 
 
 
-        private System.Action<IAssetData, bool> _refreshExpendEvent;
-        public void AddOnRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent += act;
-        public void RemoveOnRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent -= act;
-        private void OnRefreshExpendEvent(IAssetData assetData)
+        private System.Action<IAssetData, bool> _refreshExpandEvent;
+        public void AddOnRefreshExpandListener(System.Action<IAssetData, bool> act) => _refreshExpandEvent += act;
+        public void RemoveOnRefreshExpandListener(System.Action<IAssetData, bool> act) => _refreshExpandEvent -= act;
+        private void OnRefreshExpandEvent(IAssetData assetData)
         {
-            var isActive = assetData.AssetValue >= _workshopManager.ExpendAssetData.AssetValue;
-            _refreshExpendEvent?.Invoke(_workshopManager.ExpendAssetData, isActive);
+            var isActive = assetData.AssetValue >= _workshopManager.ExpandAssetData.AssetValue;
+            _refreshExpandEvent?.Invoke(_workshopManager.ExpandAssetData, isActive);
 
-            //MineExpend 적용 필요
+            //MineExpand 적용 필요
 
         }
 
@@ -842,7 +842,7 @@ namespace SEF.Manager
         private void OnRefreshAssetDataEvent(IAssetData assetData)
         {
             _refreshAsseData?.Invoke(assetData);
-            OnRefreshExpendEvent(assetData);
+            OnRefreshExpandEvent(assetData);
         }
 
 

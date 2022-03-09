@@ -64,26 +64,26 @@ namespace SEF.Manager
             return _list[index].Upgrade(out key);
         }
 
-        private IAssetData _expendAssetData;
+        private IAssetData _expandAssetData;
 
-        public IAssetData ExpendAssetData
+        public IAssetData ExpandAssetData
         {
             get
             {
-                if(_expendAssetData == null)
+                if(_expandAssetData == null)
                 {
                     var assetData = NumberDataUtility.Create<GoldAssetData>();
                     assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count).ToString();
-                    _expendAssetData = assetData;
+                    _expandAssetData = assetData;
                 }
-                return _expendAssetData;
+                return _expandAssetData;
             }
         }
 
-        public int Expend() 
+        public int Expand() 
         {
             CreateLine();
-            _expendAssetData = null;
+            _expandAssetData = null;
             return _list.Count;
         }
 
@@ -207,7 +207,7 @@ namespace SEF.Manager
         /// <summary>
         /// 증축 테스트
         /// </summary>
-        public void ExpendWorkshop_Test()
+        public void ExpandWorkshop_Test()
         {
             var line = CreateLine();
             line.UpTech(UnitData.Create_Test());

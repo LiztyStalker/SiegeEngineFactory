@@ -254,7 +254,7 @@ namespace SEF.Statistics
             _dic.Add(typeof(ArrivedLevelStatisticsData), "누적 레벨 도달");
             _dic.Add(typeof(MaxArrivedLevelStatisticsData), "최대 레벨 도달");
 
-            _dic.Add(typeof(ExpendWorkshopLineStatisticsData), "제작소 라인 증축 수");
+            _dic.Add(typeof(ExpandWorkshopLineStatisticsData), "제작소 라인 증축 수");
 
             _dic.Add(typeof(UpgradeVillageStatisticsData), "마을 업글 진행 수");
             _dic.Add(typeof(TechVillageStatisticsData), "마을 테크 진행 수");
