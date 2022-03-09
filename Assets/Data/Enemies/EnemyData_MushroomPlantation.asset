@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_MushroomPlantation
   m_EditorClassIdentifier: 
   _key: MushroomPlantation
-  _sortIndex: 16
+  _sortIndex: 17
   _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: MushroomPlantation_SkeletonData
@@ -23,23 +23,24 @@ MonoBehaviour:
   _scale: 1
   _startHealthValue:
     _valueText: 100
-  _increaseLevelHealthValue: 1
+  _increaseLevelHealthValue: 2
   _increaseLevelHealthRate: 0.125
-  _increaseWaveHealthValue: 1
+  _increaseWaveHealthValue: 0
   _increaseWaveHealthRate: 0.125
   _startDamageValue:
-    _valueText: 10
+    _valueText: 20
   _increaseDamageValue: 1
-  _increaseDamageRate: 0.125
+  _increaseDamageRate: 0.2
   _attackCount: 1
   _attackDelay: 1
-  _attackBulletKey: Arrow
+  _attackBulletKey: 
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _attackerDataList: []
   _startRewardAssetValue:
     _valueText: 10
   _increaseLevelRewardAssetValue: 1
-  _increaseLevelRewardAssetRate: 1
+  _increaseLevelRewardAssetRate: 0.125
   _increaseWaveRewardAssetValue: 1
-  _increaseWaveRewardAssetRate: 1
+  _increaseWaveRewardAssetRate: 0.125
+  _appearRate: 3

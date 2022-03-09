@@ -23,14 +23,14 @@ MonoBehaviour:
   _scale: 1
   _startHealthValue:
     _valueText: 100
-  _increaseLevelHealthValue: 1
+  _increaseLevelHealthValue: 2
   _increaseLevelHealthRate: 0.125
-  _increaseWaveHealthValue: 1
+  _increaseWaveHealthValue: 0
   _increaseWaveHealthRate: 0.125
   _startDamageValue:
-    _valueText: 10
+    _valueText: 20
   _increaseDamageValue: 1
-  _increaseDamageRate: 0.125
+  _increaseDamageRate: 0.2
   _attackCount: 1
   _attackDelay: 1
   _attackBulletKey: Arrow
@@ -39,7 +39,7 @@ MonoBehaviour:
   _attackerDataList: []
   _startRewardAssetValue:
     _valueText: 10
-  _increaseLevelRewardAssetValue: 1
-  _increaseLevelRewardAssetRate: 1
-  _increaseWaveRewardAssetValue: 1
-  _increaseWaveRewardAssetRate: 1
+  _increaseLevelRewardAssetValue: 2
+  _increaseLevelRewardAssetRate: 0.125
+  _increaseWaveRewardAssetValue: 0
+  _increaseWaveRewardAssetRate: 0.125
