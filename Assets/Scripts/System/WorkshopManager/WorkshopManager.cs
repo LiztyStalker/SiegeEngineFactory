@@ -80,12 +80,11 @@ namespace SEF.Manager
             }
         }
 
-        public int ExpendWorkshop() 
+        public int Expend() 
         {
             CreateLine();
             _expendAssetData = null;
             return _list.Count;
-            //return ExpendAssetData to Count
         }
 
         public IAssetData UpTechWorkshop(int index, UnitTechData data)
