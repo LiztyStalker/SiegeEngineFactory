@@ -148,6 +148,26 @@ namespace SEF.Quest
         public string AddressKey => typeof(UIMine).Name;
     }
 
+    public class TechMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UISmithy).Name;
+    }
+
+    public class AccumulativelyTechMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UISmithy).Name;
+    }
+    public class ExpendMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UISmithy).Name;
+    }
+
+    public class AccumulativelyExpendMineConditionQuestData : IConditionQuestData
+    {
+        public string AddressKey => typeof(UISmithy).Name;
+    }
+
+
 
     //제작하지 않음
     public class UpgradeCommanderConditionQuestData : IConditionQuestData
