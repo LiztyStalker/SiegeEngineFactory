@@ -171,7 +171,7 @@ namespace SEF.UI
         }     
 
 
-        public void RefreshBlacksmith(int index, SmithyEntity entity)
+        public void RefreshSmithy(int index, SmithyEntity entity)
         {
             var ui = GetSystemPanel<UISmithy>();
             ui.RefreshEntity(index, entity);
@@ -197,16 +197,22 @@ namespace SEF.UI
             }
         }
 
-        public void RefreshExpand(IAssetData assetData, bool isActive)
+        public void RefreshExpandWorkshop(IAssetData assetData, bool isActive)
         {
-            var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshExpand(assetData, isActive);
+            var ui = GetSystemPanel<UIWorkshop>();
+            ui.RefreshExpand(assetData, isActive);
         }
 
-#endregion
+        public void RefreshExpandMine(IAssetData assetData, bool isActive)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.RefreshExpand(assetData, isActive);
+        }
+
+        #endregion
 
 
-#region ##### Listener #####
+        #region ##### Listener #####
         public void AddOnUpgradeWorkshopListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIWorkshop>();

@@ -110,8 +110,9 @@ namespace SEF.UI
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
-        public void RefreshExpand(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpand(assetData, isActive);
-        public void RefreshSmithy(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
+        public void RefreshExpandWorkshop(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpandWorkshop(assetData, isActive);
+        public void RefreshExpandMine(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpandMine(assetData, isActive);
+        public void RefreshSmithy(int index, SmithyEntity entity) => _uiSystem.RefreshSmithy(index, entity);
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
         public void RefreshMine(int index, MineEntity entity) => _uiSystem.RefreshMine(index, entity);
 

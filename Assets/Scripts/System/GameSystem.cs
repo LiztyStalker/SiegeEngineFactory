@@ -819,18 +819,24 @@ namespace SEF.Manager
 
 
 
-        private System.Action<IAssetData, bool> _refreshExpandEvent;
-        public void AddOnRefreshExpandListener(System.Action<IAssetData, bool> act) => _refreshExpandEvent += act;
-        public void RemoveOnRefreshExpandListener(System.Action<IAssetData, bool> act) => _refreshExpandEvent -= act;
-        private void OnRefreshExpandEvent(IAssetData assetData)
+        private System.Action<IAssetData, bool> _refreshExpandWorkshopEvent;
+        public void AddOnRefreshExpandWorkshopListener(System.Action<IAssetData, bool> act) => _refreshExpandWorkshopEvent += act;
+        public void RemoveOnRefreshExpandWorkshopListener(System.Action<IAssetData, bool> act) => _refreshExpandWorkshopEvent -= act;
+        private void OnRefreshExpandWorkshopEvent(IAssetData assetData)
         {
             var isActive = assetData.AssetValue >= _workshopManager.ExpandAssetData.AssetValue;
-            _refreshExpandEvent?.Invoke(_workshopManager.ExpandAssetData, isActive);
-
-            //MineExpand 적용 필요
-
+            _refreshExpandWorkshopEvent?.Invoke(_workshopManager.ExpandAssetData, isActive);
         }
 
+
+        private System.Action<IAssetData, bool> _refreshExpandMineEvent;
+        public void AddOnRefreshExpandMineListener(System.Action<IAssetData, bool> act) => _refreshExpandMineEvent += act;
+        public void RemoveOnRefreshExpandMineListener(System.Action<IAssetData, bool> act) => _refreshExpandMineEvent -= act;
+        private void OnRefreshExpandMineEvent(IAssetData assetData)
+        {
+            var isActive = assetData.AssetValue >= _mineManager.ExpandAssetData.AssetValue;
+            _refreshExpandMineEvent?.Invoke(_mineManager.ExpandAssetData, isActive);
+        }
 
 
         public void AddOnRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
@@ -842,7 +848,9 @@ namespace SEF.Manager
         private void OnRefreshAssetDataEvent(IAssetData assetData)
         {
             _refreshAsseData?.Invoke(assetData);
-            OnRefreshExpandEvent(assetData);
+
+            OnRefreshExpandWorkshopEvent(assetData);
+            OnRefreshExpandMineEvent(assetData);
         }
 
 

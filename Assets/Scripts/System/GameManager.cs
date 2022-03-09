@@ -79,7 +79,8 @@ namespace SEF.Manager
             _gameSystem.AddOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.AddOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
-            _gameSystem.AddOnRefreshExpandListener(_uiGame.RefreshExpand);
+            _gameSystem.AddOnRefreshExpandWorkshopListener(_uiGame.RefreshExpandWorkshop);
+            _gameSystem.AddOnRefreshExpandMineListener(_uiGame.RefreshExpandMine);
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
@@ -134,7 +135,8 @@ namespace SEF.Manager
             _gameSystem.RemoveOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
             _gameSystem.RemoveOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.RemoveOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
-            _gameSystem.RemoveOnRefreshExpandListener(_uiGame.RefreshExpand);
+            _gameSystem.RemoveOnRefreshExpandWorkshopListener(_uiGame.RefreshExpandWorkshop);
+            _gameSystem.RemoveOnRefreshExpandMineListener(_uiGame.RefreshExpandMine);
 
             _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
