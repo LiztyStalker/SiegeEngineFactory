@@ -13,6 +13,8 @@ namespace SEF.UI
         void Show();
         void Hide();
         void RefreshAssetEntity(AssetPackage assetEntity);
+        void AddOnShowListener(System.Action act);
+        void RemoveOnShowListener(System.Action act);
     }
 
     public class UISystem : MonoBehaviour
@@ -213,6 +215,23 @@ namespace SEF.UI
 
 
         #region ##### Listener #####
+
+        public void AddOnShowListener(System.Action act)
+        {
+            for(int i = 0; i < _list.Count; i++)
+            {
+                _list[i].AddOnShowListener(act);
+            }
+        }
+
+        public void RemoveOnShowListener(System.Action act)
+        {
+            for (int i = 0; i < _list.Count; i++)
+            {
+                _list[i].RemoveOnShowListener(act);
+            }
+        }
+
         public void AddOnUpgradeWorkshopListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIWorkshop>();

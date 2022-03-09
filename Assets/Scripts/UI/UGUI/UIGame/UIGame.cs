@@ -129,6 +129,8 @@ namespace SEF.UI
         }
 
         #region ##### Listener #####
+        public void AddOnShowListener(System.Action act) => _uiSystem.AddOnShowListener(act);
+        public void RemoveOnShowListener(System.Action act) => _uiSystem.RemoveOnShowListener(act);
 
         public void AddOnUpgradeWorkshopListener(System.Action<int> act) => _uiSystem.AddOnUpgradeWorkshopListener(act);
         public void RemoveOnUpgradeWorkshopListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeWorkshopListener(act);

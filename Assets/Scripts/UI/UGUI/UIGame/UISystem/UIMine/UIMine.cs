@@ -70,6 +70,7 @@ namespace SEF.UI
 
         public void Show()
         {
+            OnShowEvent();
             gameObject.SetActive(true);
         }
 
@@ -123,6 +124,14 @@ namespace SEF.UI
         }
 
         #region ##### Listener #####
+
+
+        private System.Action _showEvent;
+        public void AddOnShowListener(System.Action act) => _showEvent += act;
+        public void RemoveOnShowListener(System.Action act) => _showEvent -= act;
+        private void OnShowEvent() => _showEvent?.Invoke();
+
+
 
 
         private System.Action<int> _upgradeEvent;

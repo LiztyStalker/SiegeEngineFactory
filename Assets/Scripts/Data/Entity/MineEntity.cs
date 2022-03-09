@@ -30,6 +30,8 @@ namespace SEF.Entity
 
     public struct MineEntity : IProcessProvider
     {
+        private const int DEFAULT_MAX_UPGRADE = 10;
+
         //Member
         private MineData _data;
         private int _nowTechValue;
@@ -45,14 +47,17 @@ namespace SEF.Entity
         public string Ability => _data.Key;
 
         public int NowUpgradeValue => _upgradeData.Value;
-        public int MaxUpgradeValue
+
+        public int UpgradableValue
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowTechValue)));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(DEFAULT_MAX_UPGRADE));
                 return (int)data.Value;
             }
         }
+
+        public int MaxUpgradeValue => _data.GetMaxUpgradeData(_nowTechValue);
 
         public int NowTechValue => _nowTechValue;
 
@@ -110,6 +115,7 @@ namespace SEF.Entity
         }
 
         public bool IsNextTech() => _nowTechValue + 1 < _data.MaxTechValue;
+        public bool IsUpgradable() => NowUpgradeValue < UpgradableValue;
         public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
         private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
 

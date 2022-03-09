@@ -76,12 +76,14 @@ namespace SEF.UI
 
             _upgradeBtn.onClick.AddListener(OnUpgradeEvent);
 
+            _upgradeBtn.SetRepeat(true);
             _activatePanel.SetActive(true);
 
         }
 
         private bool isUpgrade = false;
         private bool isEndTech = false;
+        private bool isUpgradable = false;
 
         public void RefreshMineLine(MineEntity entity)
         {
@@ -92,8 +94,11 @@ namespace SEF.UI
             _contentLabel.text = entity.Content;
             _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
 
-            //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
+
+
             isEndTech = false;
+
+            //최대 업그레이드
             if (entity.IsMaxUpgrade())
             {
                 isUpgrade = false;
@@ -115,9 +120,17 @@ namespace SEF.UI
             {
                 isUpgrade = true;
                 _upgradeBtn.SetData(entity.UpgradeAssetData);
-                _upgradeBtn.SetLabel("업그레이드");
+                if (entity.IsUpgradable())
+                {
+                    isUpgradable = true;
+                    _upgradeBtn.SetLabel("업그레이드");
+                }
+                else
+                {
+                    isUpgradable = false;
+                    _upgradeBtn.SetLabel("한계 도달");
+                }
             }
-
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -128,7 +141,14 @@ namespace SEF.UI
             {
                 if (isUpgrade)
                 {
-                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    if (isUpgradable)
+                    {
+                        isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    }
+                    else
+                    {
+                        isEnough = false;
+                    }
                 }
                 else
                 {
