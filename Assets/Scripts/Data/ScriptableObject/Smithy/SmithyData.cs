@@ -17,7 +17,7 @@ namespace SEF.Data
         [SerializeField]
         private SmithyAbillityData[] _smithyAbilityDataArray;
 
-        public int MaximumIndex => _smithyAbilityDataArray.Length;
+        public int MaxTechValue => _smithyAbilityDataArray.Length;
         public IAssetData GetTechAssetData(int index) => _smithyAbilityDataArray[index].TechAssetData;
         public int GetMaxUpgradeData(int index) => _smithyAbilityDataArray[index].DefaultMaxUpgradeValue;
         public IStatusData GetStatusData(int index) => _smithyAbilityDataArray[index].StatusData;

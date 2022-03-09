@@ -10,18 +10,18 @@ namespace SEF.Entity
     public class VillageEntityStorableData : StorableData
     {
         [UnityEngine.SerializeField] private string _key;
-        [UnityEngine.SerializeField] private int _upgradeValue;
-        [UnityEngine.SerializeField] private int _nowIndex;
+        [UnityEngine.SerializeField] private int _nowUpgradeValue;
+        [UnityEngine.SerializeField] private int _nowTechValue;
 
         public string Key => _key;
-        public int UpgradeValue => _upgradeValue;
-        public int NowIndex => _nowIndex;
+        public int NowUpgradeValue => _nowUpgradeValue;
+        public int NowTechValue => _nowTechValue;
 
-        internal void SetData(string key, int value, int nowIndex)
+        internal void SetData(string key, int nowUpgradeValue, int nowTechValue)
         {
             _key = key;
-            _upgradeValue = value;
-            _nowIndex = nowIndex;
+            _nowUpgradeValue = nowUpgradeValue;
+            _nowTechValue = nowTechValue;
             Children = null;
         }
     }
@@ -31,7 +31,7 @@ namespace SEF.Entity
     {
         //Member
         private VillageData _data;
-        private int _nowIndex;
+        private int _nowTechValue;
 
         //Lazy Member
         private UpgradeData _upgradeData;
@@ -49,10 +49,13 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeVillageStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowIndex)));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeVillageStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowTechValue)));
                 return (int)data.Value;
             }
         }
+
+        public int NowTechValue => _nowTechValue;
+        public int MaxTechValue => _data.MaxTechValue;
 
         public IAssetData UpgradeAssetData
         {
@@ -65,21 +68,21 @@ namespace SEF.Entity
                 return _upgradeAssetData;
             }
         }
-        public IAssetData TechAssetData => _data.GetTechAssetData(_nowIndex);
+        public IAssetData TechAssetData => _data.GetTechAssetData(_nowTechValue);
 
         public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
 
         public void Initialize()
         {
             _upgradeData = NumberDataUtility.Create<UpgradeData>();
-            _nowIndex = 0;
+            _nowTechValue = 0;
         }
 
         public void CleanUp()
         {
             _data = null;
             _upgradeData = null;
-            _nowIndex = 0;
+            _nowTechValue = 0;
         }
 
         public void SetData(VillageData data)
@@ -100,33 +103,33 @@ namespace SEF.Entity
         //업그레이드 초기화
         public void UpTech()
         {
-            _nowIndex++;
+            _nowTechValue++;
             _upgradeData.SetValue(0);
         }
 
-        public bool IsNextTech() => _nowIndex + 1 < _data.MaximumIndex;
+        public bool IsNextTech() => _nowTechValue + 1 < _data.MaxTechValue;
 
         private void SetStatusEntity()
         {
-            var entity = new StatusEntity(_data.GetStatusData(_nowIndex), _upgradeData);
+            var entity = new StatusEntity(_data.GetStatusData(_nowTechValue), _upgradeData);
             StatusPackage.Current.SetStatusEntity(this, entity);
         }
 
-        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowIndex, _upgradeData);
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
 
 
         #region ##### StorableData #####
         public StorableData GetStorableData()
         {
             var data = new VillageEntityStorableData();
-            data.SetData(_data.Key, NowUpgradeValue, _nowIndex);
+            data.SetData(_data.Key, NowUpgradeValue, _nowTechValue);
             return data;
         }
 
-        public void SetStorableData(UpgradeData upgradeData, int nowIndex)
+        public void SetStorableData(UpgradeData upgradeData, int nowTechValue)
         {
             _upgradeData = upgradeData;
-            _nowIndex = nowIndex;
+            _nowTechValue = nowTechValue;
         }
         #endregion
 

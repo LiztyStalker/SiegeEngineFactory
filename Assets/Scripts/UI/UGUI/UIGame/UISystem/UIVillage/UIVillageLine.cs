@@ -93,10 +93,8 @@ namespace SEF.UI
             _nameLabel.text = entity.Name;
             _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue} / {entity.MaxUpgradeValue}";
             _contentLabel.text = entity.Content;
-            _abilityLabel.text = entity.Ability;
-
-            //            _uiFillable.FillAmount = nowTime / unitData.ProductTime;
-
+            _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
+            
             //MaxUpgrade이면 테크로 변경됨
             isEndTech = false;
             if (entity.IsMaxUpgrade())

@@ -15,7 +15,7 @@ namespace SEF.Data
         [SerializeField]
         private VillageAbillityData[] _villageAbilityDataArray;
 
-        public int MaximumIndex => _villageAbilityDataArray.Length;
+        public int MaxTechValue => _villageAbilityDataArray.Length;
         public IAssetData GetTechAssetData(int index) => _villageAbilityDataArray[index].TechAssetData;
         public int GetMaxUpgradeData(int index) => _villageAbilityDataArray[index].DefaultMaxUpgradeValue;
         public IStatusData GetStatusData(int index) => _villageAbilityDataArray[index].StatusData;

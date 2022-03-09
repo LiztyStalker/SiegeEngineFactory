@@ -11,17 +11,18 @@ namespace SEF.Entity
     public class MineEntityStorableData : StorableData
     {
         [UnityEngine.SerializeField] private string _key;
-        [UnityEngine.SerializeField] private int _upgradeValue;
-        [UnityEngine.SerializeField] private int _nowIndex;
+        [UnityEngine.SerializeField] private int _nowUpgradeValue;
+        [UnityEngine.SerializeField] private int _nowTechValue;
 
         public string Key => _key;
-        public int UpgradeValue => _upgradeValue;
+        public int NowUpgradeValue => _nowUpgradeValue;
+        public int NowTechValue => _nowTechValue;
 
-        internal void SetData(string key, int value, int nowIndex)
+        internal void SetData(string key, int nowUpgradeValue, int nowTechValue)
         {
             _key = key;
-            _upgradeValue = value;
-            _nowIndex = nowIndex;
+            _nowUpgradeValue = nowUpgradeValue;
+            _nowTechValue = nowTechValue;
             Children = null;
         }
     }
@@ -31,7 +32,7 @@ namespace SEF.Entity
     {
         //Member
         private MineData _data;
-        private int _nowIndex;
+        private int _nowTechValue;
 
         //Lazy Member
         private UpgradeData _upgradeData;
@@ -48,12 +49,12 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowIndex)));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeMineStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowTechValue)));
                 return (int)data.Value;
             }
         }
 
-        public int NowTechValue => _nowIndex;
+        public int NowTechValue => _nowTechValue;
 
         public int MaxTechValue => _data.MaxTechValue;
 
@@ -69,19 +70,19 @@ namespace SEF.Entity
             }
         }
 
-        public IAssetData TechAssetData => _data.GetTechAssetData(_nowIndex);
+        public IAssetData TechAssetData => _data.GetTechAssetData(_nowTechValue);
 
 
         public void Initialize()
         {
             _upgradeData = NumberDataUtility.Create<UpgradeData>();
-            _nowIndex = 0;
+            _nowTechValue = 0;
         }
         public void CleanUp()
         {
             _data = null;
             _upgradeData = null;
-            _nowIndex = 0;
+            _nowTechValue = 0;
         }
 
         public void SetData(MineData data)
@@ -102,19 +103,19 @@ namespace SEF.Entity
         //업그레이드 초기화
         public void UpTech()
         {
-            _nowIndex++;
+            _nowTechValue++;
             _upgradeData.SetValue(0);
 
             OnProcessEntityEvent(this);
         }
 
-        public bool IsNextTech() => _nowIndex + 1 < _data.MaxTechValue;
+        public bool IsNextTech() => _nowTechValue + 1 < _data.MaxTechValue;
         public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
-        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowIndex, _upgradeData);
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
 
         public IAssetData RewardOffline(System.TimeSpan timeSpan)
         {
-            var processData = _data.GetProcessData(_nowIndex);
+            var processData = _data.GetProcessData(_nowTechValue);
             var processCount = (int)(timeSpan.TotalSeconds / processData.ProcessTime);
             return ((AssetProcessData)processData).GetAssetData(_upgradeData, processCount);           
         }
@@ -126,7 +127,7 @@ namespace SEF.Entity
 
         private void OnProcessEntityEvent(IProcessProvider provider)
         {
-            var entity = new ProcessEntity(_data.GetProcessData(_nowIndex), _upgradeData);
+            var entity = new ProcessEntity(_data.GetProcessData(_nowTechValue), _upgradeData);
             _processEntityEvent?.Invoke(provider, entity);
         }
 
@@ -138,13 +139,14 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var data = new MineEntityStorableData();
-            data.SetData(_data.Key, NowUpgradeValue, _nowIndex);
+            data.SetData(_data.Key, NowUpgradeValue, _nowTechValue);
             return data;
         }
 
-        public void SetStorableData(UpgradeData upgradeData)
+        public void SetStorableData(UpgradeData upgradeData, int nowTechValue)
         {
             _upgradeData = upgradeData;
+            _nowTechValue = nowTechValue;
         }
         #endregion
 

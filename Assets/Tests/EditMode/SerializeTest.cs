@@ -316,10 +316,10 @@ namespace SEF.Test
             LoadFileData(data =>
             {
                 var des = (SmithyEntityStorableData)data;
-                Debug.Log(des.UpgradeValue);
+                Debug.Log(des.NowUpgradeValue);
 
                 var upgradeData = new UpgradeData();
-                upgradeData.SetValue(des.UpgradeValue);
+                upgradeData.SetValue(des.NowUpgradeValue);
 
                 var entity = new SmithyEntity();
                 entity.SetStorableData(upgradeData, 0);
@@ -344,10 +344,10 @@ namespace SEF.Test
             LoadFileData(data =>
             {
                 var des = (SmithyEntityStorableData)data;
-                Debug.Log(des.UpgradeValue);
+                Debug.Log(des.NowUpgradeValue);
 
                 var upgradeData = new UpgradeData();
-                upgradeData.SetValue(des.UpgradeValue);
+                upgradeData.SetValue(des.NowUpgradeValue);
 
                 var entity = new SmithyEntity();
                 entity.SetStorableData(upgradeData, 0);

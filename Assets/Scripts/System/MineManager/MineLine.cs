@@ -118,9 +118,9 @@ namespace SEF.Manager
             var entityStorableData = (MineEntityStorableData)storableData.Children[0];
 
             var upgradeData = new UpgradeData();
-            upgradeData.SetValue(entityStorableData.UpgradeValue);
+            upgradeData.SetValue(entityStorableData.NowUpgradeValue);
 
-            _entity.SetStorableData(upgradeData);
+            _entity.SetStorableData(upgradeData, entityStorableData.NowTechValue);
             Refresh();
         }
 
