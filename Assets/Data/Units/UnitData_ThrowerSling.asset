@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ThrowerSling
   m_EditorClassIdentifier: 
   _key: ThrowerSling
-  _sortIndex: 1
+  _sortIndex: 7
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
@@ -22,26 +22,32 @@ MonoBehaviour:
   _scale: 1
   _group: 0
   _startHealthValue:
-    _valueText: 100
+    _valueText: 75
   _increaseHealthValue: 1
-  _increaseHealthRate: 0.125
-  _productTime: 1
+  _increaseHealthRate: 0.1
+  _productTime: 3
   _isAttack: 0
   _attackValue:
-    _valueText: 15
+    _valueText: 25
   _increaseAttackValue: 1
   _increaseAttackRate: 0.125
   _typeAttackRange: 0
   _attackPopulation: 0
   _attackCount: 1
-  _attackDelay: 1
-  _attackBulletKey: Arrow
+  _attackDelay: 0.9
+  _attackBulletKey: Sling
   _attackerDataList: []
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _startUpgradeAsset:
-    _valueText: 10
+    _valueText: 20
   _increaseUpgradeAssetValue: 1
   _increaseUpgradeAssetRate: 0.125
-  _defaultMaxUpgradeValue: 10
-  _unitTechDataArray: []
+  _defaultMaxUpgradeValue: 25
+  _unitTechDataArray:
+  - _typeTechTree: 1
+    _techUnitKey: ThrowerBigSling
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 2A

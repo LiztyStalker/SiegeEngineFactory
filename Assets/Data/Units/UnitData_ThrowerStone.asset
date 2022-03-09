@@ -22,20 +22,20 @@ MonoBehaviour:
   _scale: 1
   _group: 0
   _startHealthValue:
-    _valueText: 100
+    _valueText: 50
   _increaseHealthValue: 1
   _increaseHealthRate: 0.125
-  _productTime: 1
+  _productTime: 3
   _isAttack: 0
   _attackValue:
-    _valueText: 30
+    _valueText: 25
   _increaseAttackValue: 1
   _increaseAttackRate: 0.125
   _typeAttackRange: 0
   _attackPopulation: 0
   _attackCount: 1
   _attackDelay: 1
-  _attackBulletKey: Arrow
+  _attackBulletKey: Stone
   _attackerDataList: []
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
@@ -45,15 +45,21 @@ MonoBehaviour:
   _increaseUpgradeAssetRate: 0.125
   _defaultMaxUpgradeValue: 10
   _unitTechDataArray:
-  - _typeTechTree: 0
+  - _typeTechTree: 2
+    _techUnitKey: Ram
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 1A
+  - _typeTechTree: 1
     _techUnitKey: ThrowerSling
     _serializedTechAssetData:
       _typeAssetData: Gold
       _assetData: 0
-      _assetValue: 1000
-  - _typeTechTree: 2
+      _assetValue: 1A
+  - _typeTechTree: 0
     _techUnitKey: ThrowerSpear
     _serializedTechAssetData:
       _typeAssetData: Gold
       _assetData: 0
-      _assetValue: 1000
+      _assetValue: 1A

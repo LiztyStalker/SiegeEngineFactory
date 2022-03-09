@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a85091110bfe28419cca6fbd044e2d9, type: 3}
-  m_Name: UnitData_ThrowerSpearTool
+  m_Name: UnitData_ThrowerBigSling
   m_EditorClassIdentifier: 
-  _key: ThrowerSpearTool
-  _sortIndex: 13
+  _key: ThrowerBigSling
+  _sortIndex: 8
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
-  _spineModelKey: ThrowerSpearTool_SkeletonData
+  _spineModelKey: ThrowerBigSling_SkeletonData
   _spineSkinKey: 
   _scale: 1
-  _group: 3
+  _group: 0
   _startHealthValue:
-    _valueText: 70
+    _valueText: 100
   _increaseHealthValue: 1
   _increaseHealthRate: 0.1
   _productTime: 3
   _isAttack: 0
   _attackValue:
-    _valueText: 45
+    _valueText: 28
   _increaseAttackValue: 1
-  _increaseAttackRate: 0.15
+  _increaseAttackRate: 0.125
   _typeAttackRange: 0
   _attackPopulation: 0
   _attackCount: 1
-  _attackDelay: 2
-  _attackBulletKey: 
+  _attackDelay: 0.85
+  _attackBulletKey: Sling
   _attackerDataList: []
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   _defaultMaxUpgradeValue: 50
   _unitTechDataArray:
   - _typeTechTree: 0
-    _techUnitKey: HandCrossbow
+    _techUnitKey: SimpleCaterpult
     _serializedTechAssetData:
       _typeAssetData: Gold
       _assetData: 0
