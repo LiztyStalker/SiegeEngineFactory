@@ -1,10 +1,10 @@
 namespace SEF.UI
 {
+    using Data;
     using Entity;
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
-    using Data;
-    using System.Collections.Generic;
 
     public class UIWorkshopLine : MonoBehaviour
     {
@@ -30,47 +30,21 @@ namespace SEF.UI
 
         [SerializeField]
         private Text _levelValueLabel;
-        //[SerializeField]
-        //private Text _dpsSlideLabel;
-        //[SerializeField]
-        //private Text _dpsLabel;
-        //[SerializeField]
-        //private Text _dpsValueLabel;
-        //[SerializeField]
-        //private Text _dpsUpLabel;
 
-        //[SerializeField]
-        //private Text _healthLabel;
         [SerializeField]
         private Text _healthValueLabel;
-        //[SerializeField]
-        //private Text _healthUpLabel;
 
-        //[SerializeField]
-        //private Text _attackLabel;
         [SerializeField]
         private Text _attackValueLabel;
-        //[SerializeField]
-        //private Text _attackUpLabel;
 
-        //[SerializeField]
-        //private Text _productLabel;
         [SerializeField]
         private Text _productValueLabel;
-        //[SerializeField]
-        //private Text _attackDelayLabel;
         [SerializeField]
         private Text _attackDelayValueLabel;
-        //[SerializeField]
-        //private Text _attackCountLabel;
         [SerializeField]
         private Text _attackCountValueLabel;
-        //[SerializeField]
-        //private Text _attackTypeLabel;
         [SerializeField]
         private Text _attackTypeValueLabel;
-
-        //private UIFillable _uiFillable;
 
         [SerializeField]
         private UIAssetButton _upgradeButton;
@@ -117,17 +91,11 @@ namespace SEF.UI
             Debug.Assert(_typeLabel != null, "_typeLabel element 를 찾지 못했습니다");
             Debug.Assert(_levelValueLabel != null, "_levelValueLabel element 를 찾지 못했습니다");
 
-            //Debug.Assert(_healthLabel != null, "_healthLabel element 를 찾지 못했습니다");
             Debug.Assert(_healthValueLabel != null, "_healthValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_attackLabel != null, "_attackLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackValueLabel != null, "_attackValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_productLabel != null, "_productLabel element 를 찾지 못했습니다");
             Debug.Assert(_productValueLabel != null, "_productValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_attackDelayLabel != null, "_attackDelayLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackDelayValueLabel != null, "_attackDelayValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_attackCountLabel != null, "_attackCountLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackCountValueLabel != null, "_attackCountValueLabel element 를 찾지 못했습니다");
-            //Debug.Assert(_attackTypeLabel != null, "_attackTypeLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackTypeValueLabel != null, "_attackTypeValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
 
@@ -139,26 +107,12 @@ namespace SEF.UI
             _nameLabel.text = "이름";
             _groupLabel.text = "그룹";
             _typeLabel.text = "타입";
-            //_healthLabel.text = "체력";
             _healthValueLabel.text = "0";
-            //_healthUpLabel.text = "(0)";
-            //_attackLabel.text = "공격";
             _attackValueLabel.text = "0";
-            //_attackUpLabel.text = "(0)";
-            //_productLabel.text = "생산";
             _productValueLabel.text = "1.000s";
-            //_attackDelayLabel.text = "공격딜레이";
             _attackDelayValueLabel.text = "1.000s";
-            //_attackCountLabel.text = "공격횟수";
             _attackCountValueLabel.text = "1";
-            //_attackTypeLabel.text = "공격타입";
             _attackTypeValueLabel.text = "일반";
-            //_uiFillable.FillAmount = 0;
-
-            //_dpsValueLabel.text = "0";
-            //_dpsUpLabel.text = "(0)";
-
-            //_expendAssetIcon = Texture
 
             _levelValueLabel.text = "1";
 
@@ -167,13 +121,6 @@ namespace SEF.UI
             _techCancelButton.onClick.AddListener(OnCancelTechEvent);
 
             _activatePanel.SetActive(true);
-
-            //_attackUpLabel.gameObject.SetActive(false);
-            //_healthUpLabel.gameObject.SetActive(false);
-            //_dpsSlideLabel.gameObject.SetActive(false);
-            //_dpsLabel.gameObject.SetActive(false);
-            //_dpsValueLabel.gameObject.SetActive(false);
-            //_dpsUpLabel.gameObject.SetActive(false);
 
             _upgradeButton.SetRepeat(true);
 
@@ -205,13 +152,7 @@ namespace SEF.UI
 
             _levelValueLabel.text = $"{entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
 
-            //_uiFillable.FillAmount = nowTime / unitData.ProductTime;
-
             _productSlider.value = nowTime / entity.ProductTime;
-
-            //_upgradeValueLabel.text = _unitEntity.UpgradeAssetData.GetValue();
-
-
 
             isEndTech = false;
 
@@ -255,20 +196,10 @@ namespace SEF.UI
                 {
                     //무조건 테크 가능
                     isEnough = true;
-                }
-                //각 버튼 활성 비활성
-                //else
-                //{
-                //    isEnough = assetEntity.IsEnough(_entity.TechAssetData);
-                //}
+                }               
             }
 
             _upgradeButton.interactable = isEnough;
-//            _upgradeButton.SetEnabled(isEnough);
-
-            //Debug.Log("Refresh " + assetEntity);
-//            var isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
-//            _upgradeButton.SetEnabled(isEnough);
         }
 
 
@@ -284,7 +215,6 @@ namespace SEF.UI
             for (int i = 0; i < _techButtons.Count; i++)
             {
                 _techButtons[i].gameObject.SetActive(false);
-//                _techButtons[i].style.display = DisplayStyle.None;
             }
 
             for (int i = 0; i < arr.Length; i++)
@@ -331,7 +261,6 @@ namespace SEF.UI
         public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent -= act;
         private void OnUpTechEvent(Button button) 
         {
-
             for (int i = 0; i < _techButtons.Count; i++)
             {
                 if(_techButtons[i] == button)
@@ -339,18 +268,7 @@ namespace SEF.UI
                     _uptechEvent?.Invoke(_index, _entity.UnitData.UnitTechDataArray[i]);
                 }
             }
-
-
-            //_uptechEvent?.Invoke(_index, UnitData.Create_Test());
             HideTechSelector();
-        }
-
-        private System.Action _expendEvent;
-        public void AddExpendListener(System.Action act) => _expendEvent += act;
-        public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
-        private void OnExpendEvent()
-        {
-            _expendEvent?.Invoke();
         }
 
         private void OnCancelTechEvent()

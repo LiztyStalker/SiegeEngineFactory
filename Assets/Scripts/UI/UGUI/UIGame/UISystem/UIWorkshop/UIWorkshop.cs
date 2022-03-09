@@ -15,7 +15,7 @@ namespace SEF.UI
 
         private int _lineCount = 0;
 
-        private UIWorkshopExpend _workshopExpend;
+        private UIWorkshopExpand _expandLine;
 
         [SerializeField]
         private ScrollRect _scrollView;
@@ -49,19 +49,18 @@ namespace SEF.UI
             }
             Debug.Assert(_scrollView != null, "_scrollView element 를 찾지 못했습니다");
 
-            CreateExpendWorkshopLine();
+            CreateExpandLine();
         }
 
         public void CleanUp()
         {
-            _workshopExpend.RemoveOnExpendListener(OnExpendEvent);
-            _workshopExpend.CleanUp();
+            _expandLine.RemoveOnExpandListener(OnExpandEvent);
+            _expandLine.CleanUp();
 
             foreach (var value in _dic.Values)
             {
                 value.RemoveUpgradeListener(OnUpgradeEvent);
                 value.RemoveUpTechListener(OnUpTechEvent);
-                value.RemoveExpendListener(OnExpendEvent);
                 value.CleanUp();
             }
             _dic.Clear();
@@ -91,7 +90,7 @@ namespace SEF.UI
                 _dic.Add(index, line);
             }
             _dic[index].RefreshUnit(unitEntity, nowTime);
-            ChangeExpendWorkshopLine();
+            ChangeExpandLine();
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -102,22 +101,22 @@ namespace SEF.UI
             }
         }
 
-        public void RefreshExpend(IAssetData assetData, bool isActive) => _workshopExpend.RefreshExpend(assetData, isActive);
+        public void RefreshExpand(IAssetData assetData, bool isActive) => _expandLine.RefreshExpand(assetData, isActive);
 
-        private void CreateExpendWorkshopLine()
+        private void CreateExpandLine()
         {
-            _workshopExpend = UIWorkshopExpend.Create();
-            _workshopExpend.Initialize();
-            _workshopExpend.AddOnExpendListener(OnExpendEvent);
-            _workshopExpend.transform.SetParent(_scrollView.content);
-            _workshopExpend.transform.SetAsLastSibling();
+            _expandLine = UIWorkshopExpand.Create();
+            _expandLine.Initialize();
+            _expandLine.AddOnExpandListener(OnExpandEvent);
+            _expandLine.transform.SetParent(_scrollView.content);
+            _expandLine.transform.SetAsLastSibling();
         }
 
-        private void ChangeExpendWorkshopLine()
+        private void ChangeExpandLine()
         {
             if (_lineCount != _scrollView.content.childCount)
             {
-                _workshopExpend.transform.SetAsLastSibling();
+                _expandLine.transform.SetAsLastSibling();
             }
             _lineCount = _scrollView.content.childCount;
         }
@@ -141,12 +140,12 @@ namespace SEF.UI
             _uptechEvent?.Invoke(index, data);
         }
 
-        private System.Action _expendEvent;
-        public void AddOnExpendListener(System.Action act) => _expendEvent += act;
-        public void RemoveOnExpendListener(System.Action act) => _expendEvent -= act;
-        private void OnExpendEvent()
+        private System.Action _expandEvent;
+        public void AddOnExpandListener(System.Action act) => _expandEvent += act;
+        public void RemoveOnExpandListener(System.Action act) => _expandEvent -= act;
+        private void OnExpandEvent()
         {
-            _expendEvent?.Invoke();
+            _expandEvent?.Invoke();
         }
 
 #endregion

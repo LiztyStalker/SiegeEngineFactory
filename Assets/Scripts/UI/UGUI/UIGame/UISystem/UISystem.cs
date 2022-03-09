@@ -197,10 +197,10 @@ namespace SEF.UI
             }
         }
 
-        public void RefreshExpend(IAssetData assetData, bool isActive)
+        public void RefreshExpand(IAssetData assetData, bool isActive)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshExpend(assetData, isActive);
+            uiWorkshop.RefreshExpand(assetData, isActive);
         }
 
 #endregion
@@ -227,15 +227,15 @@ namespace SEF.UI
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
             uiWorkshop.RemoveOnUpTechListener(act);
         }
-        public void AddOnExpendWorkshopListener(System.Action act)
+        public void AddOnExpandWorkshopListener(System.Action act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.AddOnExpendListener(act);
+            uiWorkshop.AddOnExpandListener(act);
         }
-        public void RemoveOnExpendWorkshopListener(System.Action act)
+        public void RemoveOnExpandWorkshopListener(System.Action act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RemoveOnExpendListener(act);
+            uiWorkshop.RemoveOnExpandListener(act);
         }
 
 
@@ -309,15 +309,15 @@ namespace SEF.UI
             var ui = GetSystemPanel<UIMine>();
             ui.RemoveOnUpTechListener(act);
         }
-        public void AddOnExpendMineListener(System.Action act)
+        public void AddOnExpandMineListener(System.Action act)
         {
             var ui = GetSystemPanel<UIMine>();
-            ui.AddOnExpendListener(act);
+            ui.AddOnExpandListener(act);
         }
-        public void RemoveOnExpendMineListener(System.Action act)
+        public void RemoveOnExpandMineListener(System.Action act)
         {
             var ui = GetSystemPanel<UIMine>();
-            ui.RemoveOnExpendListener(act);
+            ui.RemoveOnExpandListener(act);
         }
 
         #endregion

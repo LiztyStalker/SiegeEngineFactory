@@ -1,12 +1,12 @@
 namespace SEF.UI
 {
+    using Data;
+    using Entity;
+    using SEF.Manager;
+    using Unit;
     using UnityEngine;
     using UnityEngine.UI;
-    using Entity;
-    using Data;
-    using Unit;
     using Utility.Address;
-    using SEF.Manager;
 
     public class UIGame : MonoBehaviour
     {
@@ -110,7 +110,7 @@ namespace SEF.UI
 
         public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime) => _uiSystem.RefreshUnit(index, unitEntity, nowTime);
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData) => _uiPlay.RefreshNextEnemyUnit(enemyActor, levelWaveData);
-        public void RefreshExpend(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpend(assetData, isActive);
+        public void RefreshExpand(IAssetData assetData, bool isActive) => _uiSystem.RefreshExpand(assetData, isActive);
         public void RefreshSmithy(int index, SmithyEntity entity) => _uiSystem.RefreshBlacksmith(index, entity);
         public void RefreshVillage(int index, VillageEntity entity) => _uiSystem.RefreshVillage(index, entity);
         public void RefreshMine(int index, MineEntity entity) => _uiSystem.RefreshMine(index, entity);
@@ -133,8 +133,8 @@ namespace SEF.UI
         public void RemoveOnUpgradeWorkshopListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeWorkshopListener(act);
         public void AddOnUpTechWorkshopListener(System.Action<int, UnitTechData> act) => _uiSystem.AddOnUpTechWorkshopListener(act);
         public void RemoveOnUpTechWorkshopListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveOnUpTechWorkshopListener(act);
-        public void AddOnExpendWorkshopListener(System.Action act) => _uiSystem.AddOnExpendWorkshopListener(act);
-        public void RemoveOnExpendWorkshopListener(System.Action act) => _uiSystem.RemoveOnExpendWorkshopListener(act);
+        public void AddOnExpandWorkshopListener(System.Action act) => _uiSystem.AddOnExpandWorkshopListener(act);
+        public void RemoveOnExpandWorkshopListener(System.Action act) => _uiSystem.RemoveOnExpandWorkshopListener(act);
 
 
         public void AddOnUpgradeSmithyListener(System.Action<int> act) => _uiSystem.AddOnUpgradeSmithyListener(act);
@@ -153,8 +153,8 @@ namespace SEF.UI
         public void RemoveOnUpgradeMineListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeMineListener(act);
         public void AddOnUpTechMineListener(System.Action<int> act) => _uiSystem.AddOnUpTechMineListener(act);
         public void RemoveOnUpTechMineListener(System.Action<int> act) => _uiSystem.RemoveOnUpTechMineListener(act);
-        public void AddOnExpendMineListener(System.Action act) => _uiSystem.AddOnExpendMineListener(act);
-        public void RemoveOnExpendMineListener(System.Action act) => _uiSystem.RemoveOnExpendMineListener(act);
+        public void AddOnExpandMineListener(System.Action act) => _uiSystem.AddOnExpandMineListener(act);
+        public void RemoveOnExpandMineListener(System.Action act) => _uiSystem.RemoveOnExpandMineListener(act);
 
 
 
