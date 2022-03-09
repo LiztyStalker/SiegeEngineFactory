@@ -70,31 +70,31 @@ namespace SEF.Manager
 
             //Event 연결
             //RefreshEntity 통합 필요?
-            _gameSystem.AddRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.AddOnRefreshUnitListener(_uiGame.RefreshUnit);
             _gameSystem.AddOnRefreshSmithyListener(_uiGame.RefreshSmithy);
             _gameSystem.AddOnRefreshVillageListener(_uiGame.RefreshVillage);
             _gameSystem.AddOnRefreshMineListener(_uiGame.RefreshMine);
 
-            _gameSystem.AddRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
-            _gameSystem.AddRefreshAssetDataListener(_uiGame.RefreshAssetData);
-            _gameSystem.AddProductUnitListener(_unitManager.ProductUnitActor);
+            _gameSystem.AddOnRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.AddOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
+            _gameSystem.AddOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.AddOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
-            _gameSystem.AddRefreshExpendListener(_uiGame.RefreshExpend);
+            _gameSystem.AddOnRefreshExpendListener(_uiGame.RefreshExpend);
 
             _unitManager.AddOnHitListener(_uiGame.ShowHit);
             _unitManager.AddOnDestoryedListener(OnDestroyedEvent);
             _unitManager.AddOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.AddOnRefreshPopulationListener(_gameSystem.SetAsset);
 
-            _uiGame.AddOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.AddOnUpgradeWorkshopListener(_gameSystem.UpgradeWorkshop);
             _uiGame.AddOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
             _uiGame.AddOnExpendWorkshopListener(_gameSystem.ExpendWorkshop);
 
-            _uiGame.AddOnSmithyUpgradeListener(_gameSystem.UpgradeSmithy);
-            _uiGame.AddOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
+            _uiGame.AddOnUpgradeSmithyListener(_gameSystem.UpgradeSmithy);
+            _uiGame.AddOnUpTechSmithyListener(_gameSystem.UpTechSmithy);
 
-            _uiGame.AddOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
-            _uiGame.AddOnVillageUpTechListener(_gameSystem.UpTechVillage);
+            _uiGame.AddOnUpgradeVillageListener(_gameSystem.UpgradeVillage);
+            _uiGame.AddOnUpTechVillageListener(_gameSystem.UpTechVillage);
 
             _uiGame.AddOnUpgradeMineListener(_gameSystem.UpgradeMine);
             _uiGame.AddOnUpTechMineListener(_gameSystem.UpTechMine);
@@ -125,30 +125,31 @@ namespace SEF.Manager
         private void CleanUp()
         {
             //Event 해제
-            _gameSystem.RemoveRefreshUnitListener(_uiGame.RefreshUnit);
+            _gameSystem.RemoveOnRefreshUnitListener(_uiGame.RefreshUnit);
             _gameSystem.RemoveOnRefreshSmithyListener(_uiGame.RefreshSmithy);
             _gameSystem.RemoveOnRefreshVillageListener(_uiGame.RefreshVillage);
             _gameSystem.RemoveOnRefreshMineListener(_uiGame.RefreshMine);
 
-            _gameSystem.RemoveRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
-            _gameSystem.RemoveRefreshAssetDataListener(_uiGame.RefreshAssetData);
-            _gameSystem.RemoveProductUnitListener(_unitManager.ProductUnitActor);
+            _gameSystem.RemoveOnRefreshAssetPackageListener(_uiGame.RefreshAssetEntity);
+            _gameSystem.RemoveOnRefreshAssetDataListener(_uiGame.RefreshAssetData);
+            _gameSystem.RemoveOnProductUnitListener(_unitManager.ProductUnitActor);
             _gameSystem.RemoveOnRefreshQuestEntityListener(_uiGame.RefreshQuest);
+            _gameSystem.RemoveOnRefreshExpendListener(_uiGame.RefreshExpend);
 
             _unitManager.RemoveOnHitListener(_uiGame.ShowHit);
             _unitManager.RemoveOnDestoryedListener(OnDestroyedEvent);
             _unitManager.RemoveOnNextEnemyListener(OnNextEnemyEvent);
             _unitManager.RemoveOnRefreshPopulationListener(_gameSystem.SetAsset);
 
-            _uiGame.RemoveOnWorkshopUpgradeListener(_gameSystem.UpgradeWorkshop);
+            _uiGame.RemoveOnUpgradeWorkshopListener(_gameSystem.UpgradeWorkshop);
             _uiGame.RemoveOnUpTechWorkshopListener(_gameSystem.UpTechWorkshop);
             _uiGame.RemoveOnExpendWorkshopListener(_gameSystem.ExpendWorkshop);
 
-            _uiGame.RemoveOnSmithyUpgradeListener(_gameSystem.UpgradeSmithy);
-            _uiGame.RemoveOnSmithyUpTechListener(_gameSystem.UpTechSmithy);
+            _uiGame.RemoveOnUpgradeSmithyListener(_gameSystem.UpgradeSmithy);
+            _uiGame.RemoveOnUpTechSmithyListener(_gameSystem.UpTechSmithy);
 
-            _uiGame.RemoveOnVillageUpgradeListener(_gameSystem.UpgradeVillage);
-            _uiGame.RemoveOnVillageUpTechListener(_gameSystem.UpTechVillage);
+            _uiGame.RemoveOnUpgradeVillageListener(_gameSystem.UpgradeVillage);
+            _uiGame.RemoveOnUpTechVillageListener(_gameSystem.UpTechVillage);
 
             _uiGame.RemoveOnUpgradeMineListener(_gameSystem.UpgradeMine);
             _uiGame.RemoveOnUpTechMineListener(_gameSystem.UpTechMine);

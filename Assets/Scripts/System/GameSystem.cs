@@ -465,7 +465,7 @@ namespace SEF.Manager
         public void ExpendWorkshop()
         {
             var assetData = _workshopManager.ExpendAssetData;
-            int count = _workshopManager.ExpendWorkshop();
+            int count = _workshopManager.Expend();
 
             SubjectAsset(assetData);
 
@@ -476,6 +476,8 @@ namespace SEF.Manager
             SetQuestValue<ExpendWorkshopLineConditionQuestData>(count);
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelyExpendWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpendWorkshopLineStatisticsData>());
+
+            _workshopManager.Refresh();
         }
 
 
@@ -654,6 +656,8 @@ namespace SEF.Manager
             SetQuestValue<ExpendMineConditionQuestData>(count);
             //누적 퀘스트 적용
             SetQuestValue<AccumulativelyExpendMineConditionQuestData>((int)GetStatisticsValue<ExpendMineStatisticsData>());
+
+            _mineManager.Refresh();
         }
         #endregion
 
@@ -750,8 +754,8 @@ namespace SEF.Manager
         //IEntityResult
         //UnitEntityResult = UI와 System간 통신용 데이터
         //index, UnitEntity, float nowTime, bool isUpgrade, bool isTech
-        public void AddRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.AddRefreshListener(act);
-        public void RemoveRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.RemoveRefreshListener(act);
+        public void AddOnRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.AddRefreshListener(act);
+        public void RemoveOnRefreshUnitListener(System.Action<int, UnitEntity, float> act) => _workshopManager.RemoveRefreshListener(act);
         //업글
         //자원
         //한계
@@ -768,7 +772,7 @@ namespace SEF.Manager
         public void RemoveOnRefreshMineListener(System.Action<int, MineEntity> act) => _mineManager.RemoveOnRefreshListener(act);
 
 
-        public void AddProductUnitListener(System.Action<UnitEntity> act)
+        public void AddOnProductUnitListener(System.Action<UnitEntity> act)
         {
             _workshopManager.AddProductUnitListener(entity =>
             {
@@ -791,7 +795,7 @@ namespace SEF.Manager
 
             });            
         }
-        public void RemoveProductUnitListener(System.Action<UnitEntity> act)
+        public void RemoveOnProductUnitListener(System.Action<UnitEntity> act)
         {
             _workshopManager.RemoveProductUnitListener(entity =>
             {
@@ -816,22 +820,25 @@ namespace SEF.Manager
 
 
         private System.Action<IAssetData, bool> _refreshExpendEvent;
-        public void AddRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent += act;
-        public void RemoveRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent -= act;
+        public void AddOnRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent += act;
+        public void RemoveOnRefreshExpendListener(System.Action<IAssetData, bool> act) => _refreshExpendEvent -= act;
         private void OnRefreshExpendEvent(IAssetData assetData)
         {
             var isActive = assetData.AssetValue >= _workshopManager.ExpendAssetData.AssetValue;
             _refreshExpendEvent?.Invoke(_workshopManager.ExpendAssetData, isActive);
+
+            //MineExpend 적용 필요
+
         }
 
 
 
-        public void AddRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
-        public void RemoveRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.RemoveRefreshAssetEntityListener(act);
+        public void AddOnRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.AddRefreshAssetEntityListener(act);
+        public void RemoveOnRefreshAssetPackageListener(System.Action<AssetPackage> act) => _assetPackage.RemoveRefreshAssetEntityListener(act);
 
         private System.Action<IAssetData> _refreshAsseData;
-        public void AddRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;
-        public void RemoveRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData -= act;
+        public void AddOnRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData += act;
+        public void RemoveOnRefreshAssetDataListener(System.Action<IAssetData> act) => _refreshAsseData -= act;
         private void OnRefreshAssetDataEvent(IAssetData assetData)
         {
             _refreshAsseData?.Invoke(assetData);
