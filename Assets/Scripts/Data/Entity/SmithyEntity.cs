@@ -31,6 +31,8 @@ namespace SEF.Entity
 
     public struct SmithyEntity : IStatusProvider
     {
+        private const int DEFAULT_MAX_UPGRADE = 10;
+
         //Member
         private SmithyData _data;
         private int _nowTechValue;
@@ -45,14 +47,16 @@ namespace SEF.Entity
         public string Content => _data.Key;
         public string Ability => _data.Key;
         public int NowUpgradeValue => _upgradeData.Value;
-        public int MaxUpgradeValue
+        public int UpgradableValue
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeSmithyStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.GetMaxUpgradeData(_nowTechValue)));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeSmithyStatusData, UniversalBigNumberData>(new UniversalBigNumberData(DEFAULT_MAX_UPGRADE));
                 return (int)data.Value;
             }
         }
+        public int MaxUpgradeValue => _data.GetMaxUpgradeData(_nowTechValue);
+
 
         public int NowTechValue => _nowTechValue;
         public int MaxTechValue => _data.MaxTechValue;
@@ -106,17 +110,16 @@ namespace SEF.Entity
         }
 
         public bool IsNextTech() => _nowTechValue + 1 < _data.MaxTechValue;
+        public bool IsUpgradable() => NowUpgradeValue < UpgradableValue;
+        public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
+        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
+
 
         private void SetStatusEntity()
         {
             var entity = new StatusEntity(_data.GetStatusData(_nowTechValue), _upgradeData);
             StatusPackage.Current.SetStatusEntity(this, entity);
         }
-
-        private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
-
-        public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
-
 
 
         #region ##### StorableData #####

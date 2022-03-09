@@ -47,7 +47,6 @@ namespace SEF.Entity
         public string Ability => _data.Key;
 
         public int NowUpgradeValue => _upgradeData.Value;
-
         public int UpgradableValue
         {
             get
@@ -56,11 +55,9 @@ namespace SEF.Entity
                 return (int)data.Value;
             }
         }
-
         public int MaxUpgradeValue => _data.GetMaxUpgradeData(_nowTechValue);
 
         public int NowTechValue => _nowTechValue;
-
         public int MaxTechValue => _data.MaxTechValue;
 
         public IAssetData UpgradeAssetData
@@ -117,6 +114,7 @@ namespace SEF.Entity
         public bool IsNextTech() => _nowTechValue + 1 < _data.MaxTechValue;
         public bool IsUpgradable() => NowUpgradeValue < UpgradableValue;
         public bool IsMaxUpgrade() => NowUpgradeValue >= MaxUpgradeValue;
+
         private IAssetData CalculateUpgradeData() => _data.GetUpgradeAssetData(_nowTechValue, _upgradeData);
 
         public IAssetData RewardOffline(System.TimeSpan timeSpan)

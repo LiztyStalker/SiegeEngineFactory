@@ -5,6 +5,7 @@ namespace SEF.UI
     using UnityEngine.UI;
     using Data;
     using Entity;
+    using System;
 
     public class UIWorkshop : MonoBehaviour, ISystemPanel
     {
@@ -70,6 +71,7 @@ namespace SEF.UI
         public void Show()
         {
             gameObject.SetActive(true);
+            OnShowEvent();
         }
 
         public void Hide()
@@ -148,7 +150,13 @@ namespace SEF.UI
             _expandEvent?.Invoke();
         }
 
-#endregion
+
+        private System.Action _showEvent;
+        public void AddOnShowListener(Action act) => _showEvent += act;
+        public void RemoveOnShowListener(Action act) => _showEvent -= act;
+        private void OnShowEvent() => _showEvent?.Invoke();
+
+        #endregion
 
 
     }

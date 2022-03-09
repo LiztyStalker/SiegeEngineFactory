@@ -4,6 +4,7 @@ namespace SEF.UI
     using UnityEngine;
     using UnityEngine.UI;
     using Entity;
+    using System;
 
     public class UISmithy : MonoBehaviour, ISystemPanel
     {
@@ -59,6 +60,7 @@ namespace SEF.UI
 
         public void Show()
         {
+            OnShowEvent();
             gameObject.SetActive(true);
         }
 
@@ -66,8 +68,6 @@ namespace SEF.UI
         {
             gameObject.SetActive(false);
         }
-
-        //private bool IsView() => this.style.display == DisplayStyle.Flex;
 
         public void RefreshEntity(int index, SmithyEntity entity)
         {
@@ -112,7 +112,13 @@ namespace SEF.UI
             _uptechEvent?.Invoke(index);
         }
 
-#endregion
+
+        private System.Action _showEvent;
+        public void AddOnShowListener(Action act) => _showEvent += act;
+        public void RemoveOnShowListener(Action act) => _showEvent -= act;
+        private void OnShowEvent() => _showEvent?.Invoke();
+
+        #endregion
 
 
     }

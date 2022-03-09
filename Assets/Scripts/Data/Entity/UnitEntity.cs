@@ -32,9 +32,10 @@ namespace SEF.Entity
     [System.Serializable]
     public struct UnitEntity : IEntity
     {
+        private const int DEFAULT_MAX_UPGRADE = 10;
 
         //Data Member
-        private UnitData _unitData;
+        private UnitData _data;
         private UpgradeData _upgradeData;
 
         //Lazy Data Member
@@ -42,23 +43,26 @@ namespace SEF.Entity
         private HealthData _healthData;
         private DamageData _damageData;
 
-        public UnitData UnitData => _unitData;
+        public UnitData UnitData => _data;
         public UpgradeData UpgradeData => _upgradeData;
         public int Population => 1; //_unitData.Population;
         public int NowUpgradeValue => _upgradeData.Value;
-        public int MaxUpgradeValue
+        public int UpgradableValue
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeUnitStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.DefaultMaxUpgradeValue));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<IncreaseMaxUpgradeUnitStatusData, UniversalBigNumberData>(new UniversalBigNumberData(DEFAULT_MAX_UPGRADE));
                 return (int)data.Value;
             }
         }
+
+        public int MaxUpgradeValue => _data.DefaultMaxUpgradeValue;
+
         public float AttackDelay
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.AttackDelay));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitDamageDelayStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.AttackDelay));
                 return (float)data.Value;
             }
         }
@@ -67,7 +71,7 @@ namespace SEF.Entity
         {
             get
             {
-                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_unitData.ProductTime));
+                var data = StatusPackage.Current.GetStatusDataToBigNumberData<UnitProductTimeStatusData, UniversalBigNumberData>(new UniversalBigNumberData(_data.ProductTime));
                 return (float)data.Value;
             }
         }
@@ -108,8 +112,9 @@ namespace SEF.Entity
                 return _upgradeAssetData;
             }
         }
-        public bool IsMaxUpgrade() => _upgradeData.Value >= _unitData.DefaultMaxUpgradeValue;
-        public bool IsNextTech() => _unitData.UnitTechDataArray != null && _unitData.UnitTechDataArray.Length != 0;
+        public bool IsNextTech() => _data.UnitTechDataArray != null && _data.UnitTechDataArray.Length != 0;
+        public bool IsUpgradable() => NowUpgradeValue < UpgradableValue;
+        public bool IsMaxUpgrade() => _upgradeData.Value >= _data.DefaultMaxUpgradeValue;
 
         public void Initialize()
         {
@@ -118,14 +123,14 @@ namespace SEF.Entity
         }
         public void CleanUp()
         {
-            _unitData = null;
+            _data = null;
             _upgradeData = null;
             _damageData = null;
         }
 
         public void UpTech(UnitData unitData)
         {
-            _unitData = unitData;
+            _data = unitData;
             _upgradeData.Initialize();
             _upgradeData.SetValue(0);
         }
@@ -142,21 +147,21 @@ namespace SEF.Entity
         private IAssetData CalculateUpgradeData()
         {
             var assetData = new GoldAssetData();
-            assetData.SetAssetData(_unitData, _upgradeData);
+            assetData.SetAssetData(_data, _upgradeData);
             return assetData;
         }
 
         private HealthData CalculateHealthData()
         {
             var assetData = new HealthData();
-            assetData.SetAssetData(_unitData, _upgradeData);
+            assetData.SetAssetData(_data, _upgradeData);
             return assetData;
         }
 
         private DamageData CalculateAttackData()
         {
             var assetData = new DamageData();
-            assetData.SetAssetData(_unitData, _upgradeData);
+            assetData.SetAssetData(_data, _upgradeData);
             return assetData;
         }
 
@@ -165,13 +170,13 @@ namespace SEF.Entity
         public StorableData GetStorableData()
         {
             var _storableData = new UnitEntityStorableData();
-            _storableData.SetData(_unitData.Key, _upgradeData.Value);
+            _storableData.SetData(_data.Key, _upgradeData.Value);
             return _storableData;
         }
 
         public void SetStorableData(UnitData unitData, UpgradeData upgradeData)
         {
-            _unitData = unitData;
+            _data = unitData;
             _upgradeData = upgradeData;
         }
 

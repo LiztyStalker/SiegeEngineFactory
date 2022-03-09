@@ -1283,7 +1283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3e79e778bd72841be8c5cea16bd512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _activatePanel: {fileID: 3115399758736898844}
   _icon: {fileID: 3115399759255618771}
   _nameLabel: {fileID: 3115399758867739761}
   _groupLabel: {fileID: 3115399760430215387}
@@ -1296,7 +1295,7 @@ MonoBehaviour:
   _attackDelayValueLabel: {fileID: 3115399760563179203}
   _attackCountValueLabel: {fileID: 3115399758675473285}
   _attackTypeValueLabel: {fileID: 3115399759968743126}
-  _upgradeButton: {fileID: 1195560085494355005}
+  _upgradeBtn: {fileID: 1195560085494355005}
   _techPanel: {fileID: 3115399758889330199}
   _techLayout: {fileID: 3115399758958288004}
   _techCancelButton: {fileID: 3115399759174232671}
@@ -1983,6 +1982,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3115399758736898847}
     m_Modifications:
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321233594366, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4495944321257842758, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
       propertyPath: m_Name
       value: UI@AssetButton
@@ -2069,6 +2092,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4495944321257842759, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495944321931271862, guid: 661a30f76c442404eae4b63308be44b4, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

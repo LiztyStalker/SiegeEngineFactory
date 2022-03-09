@@ -4,6 +4,7 @@ namespace SEF.UI
     using UnityEngine;
     using UnityEngine.UI;
     using Entity;
+    using System;
 
     public class UIVillage : MonoBehaviour, ISystemPanel
     {
@@ -57,6 +58,7 @@ namespace SEF.UI
 
         public void Show()
         {
+            OnShowEvent();
             gameObject.SetActive(true);
         }
 
@@ -108,7 +110,12 @@ namespace SEF.UI
         {
             _uptechEvent?.Invoke(index);
         }
-#endregion
+
+        private System.Action _showEvent;
+        public void AddOnShowListener(Action act) => _showEvent += act;
+        public void RemoveOnShowListener(Action act) => _showEvent -= act;
+        private void OnShowEvent() => _showEvent?.Invoke();
+        #endregion
 
 
     }

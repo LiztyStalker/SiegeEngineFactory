@@ -44,7 +44,7 @@ namespace SEF.UI
         private Text _attackTypeValueLabel;
 
         [SerializeField]
-        private UIAssetButton _upgradeButton;
+        private UIAssetButton _upgradeBtn;
 
         [SerializeField]
         private GameObject _techPanel;
@@ -93,7 +93,7 @@ namespace SEF.UI
             Debug.Assert(_attackDelayValueLabel != null, "_attackDelayValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackCountValueLabel != null, "_attackCountValueLabel element 를 찾지 못했습니다");
             Debug.Assert(_attackTypeValueLabel != null, "_attackTypeValueLabel element 를 찾지 못했습니다");
-            Debug.Assert(_upgradeButton != null, "_upgradeButton element 를 찾지 못했습니다");
+            Debug.Assert(_upgradeBtn != null, "_upgradeButton element 를 찾지 못했습니다");
 
             Debug.Assert(_techPanel != null, "_techPanel element 를 찾지 못했습니다");
             Debug.Assert(_techLayout != null, "_techLayout element 를 찾지 못했습니다");
@@ -112,10 +112,10 @@ namespace SEF.UI
 
             _levelValueLabel.text = "1";
 
-            _upgradeButton.onClick.AddListener(OnUpgradeEvent);
+            _upgradeBtn.onClick.AddListener(OnUpgradeEvent);
             _techCancelButton.onClick.AddListener(OnCancelTechEvent);
 
-            _upgradeButton.SetRepeat(true);
+            _upgradeBtn.SetRepeat(true);
 
             HideTechSelector();
         }
@@ -128,6 +128,7 @@ namespace SEF.UI
 
         private bool isUpgrade = false;
         private bool isEndTech = false;
+        private bool isUpgradable = false;
 
         public void RefreshUnit(UnitEntity entity, float nowTime)
         {
@@ -153,25 +154,32 @@ namespace SEF.UI
             {
                 isUpgrade = false;
 
+                _upgradeBtn.SetEmpty();
                 //다음 테크 있음
                 if (entity.IsNextTech())
                 {
-                    _upgradeButton.SetLabel("테크");
-                    _upgradeButton.SetEmpty();
+                    _upgradeBtn.SetLabel("테크");
                 }
                 //최종 테크
                 else
                 {
                     isEndTech = true;
-                    _upgradeButton.SetLabel("-");
-                    _upgradeButton.SetEmpty();
                 }
             }
             else
             {
                 isUpgrade = true;
-                _upgradeButton.SetLabel("업그레이드");
-                _upgradeButton.SetData(entity.UpgradeAssetData);
+                _upgradeBtn.SetData(entity.UpgradeAssetData);
+                if (entity.IsUpgradable())
+                {
+                    isUpgradable = true;
+                    _upgradeBtn.SetLabel("업그레이드");
+                }
+                else
+                {
+                    isUpgradable = false;
+                    _upgradeBtn.SetLabel("한계 도달");
+                }
             }
         }
 
@@ -183,22 +191,28 @@ namespace SEF.UI
             {
                 if (isUpgrade)
                 {
-                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    if (isUpgradable)
+                    {
+                        isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    }
+                    else
+                    {
+                        isEnough = false;
+                    }
                 }
                 else
                 {
-                    //무조건 테크 가능
                     isEnough = true;
-                }               
+                }
             }
 
-            _upgradeButton.interactable = isEnough;
+            _upgradeBtn.interactable = isEnough;
         }
 
 
         public void CleanUp()
         {
-            _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
+            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
             _techCancelButton.onClick.RemoveListener(OnCancelTechEvent);
         }
 

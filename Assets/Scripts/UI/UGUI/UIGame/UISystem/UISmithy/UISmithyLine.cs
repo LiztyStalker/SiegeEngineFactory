@@ -87,6 +87,7 @@ namespace SEF.UI
 
         private bool isUpgrade = false;
         private bool isEndTech = false;
+        private bool isUpgradable = false;
 
         public void RefreshSmithyLine(SmithyEntity entity)
         {
@@ -99,6 +100,8 @@ namespace SEF.UI
 
             //MaxUpgrade이면 테크로 변경됨
             isEndTech = false;
+
+            //최대 업그레이드
             if (entity.IsMaxUpgrade())
             {
                 isUpgrade = false;
@@ -120,7 +123,16 @@ namespace SEF.UI
             {
                 isUpgrade = true;
                 _upgradeBtn.SetData(entity.UpgradeAssetData);
-                _upgradeBtn.SetLabel("업그레이드");
+                if (entity.IsUpgradable())
+                {
+                    isUpgradable = true;
+                    _upgradeBtn.SetLabel("업그레이드");
+                }
+                else
+                {
+                    isUpgradable = false;
+                    _upgradeBtn.SetLabel("한계 도달");
+                }
             }
         }
 
@@ -132,7 +144,14 @@ namespace SEF.UI
             {
                 if (isUpgrade)
                 {
-                    isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    if (isUpgradable)
+                    {
+                        isEnough = assetEntity.IsEnough(_entity.UpgradeAssetData);
+                    }
+                    else
+                    {
+                        isEnough = false;
+                    }
                 }
                 else
                 {
