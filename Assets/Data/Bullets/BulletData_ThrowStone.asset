@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 027ea39421f8d4745a430e55d6ca1a5d, type: 3}
-  m_Name: BulletData_Arrow
+  m_Name: BulletData_ThrowStone
   m_EditorClassIdentifier: 
-  _key: Arrow
-  _sortIndex: 0
+  _key: ThrowStone
+  _sortIndex: 2
   _isTest: 0
-  _bulletPrefab: {fileID: 8224898997281834776, guid: 2179b25cb9c8dbb4cb76fad894298a10, type: 3}
-  _bulletPrefabKey: Bullet_Arrow
+  _bulletPrefab: {fileID: 0}
+  _bulletPrefabKey: 
   _typeBulletAction: 0
   _arriveEffectData: {fileID: 0}
   _arriveEffectDataKey: 
   _movementSpeed: 1
   _height: 0
-  _isRotate: 1
+  _isRotate: 0
