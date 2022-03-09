@@ -34,12 +34,13 @@ namespace SEF.UI
         public void Initialize()
         {            
             _expendBtn.onClick.AddListener(OnExpendEvent);
+            _expendBtn.SetLabel("확장");
         }
 
         public void RefreshExpend(IAssetData assetData, bool isActive)
         {
-            _expendBtn.SetData(assetData);
             _expendBtn.interactable = isActive;
+            _expendBtn.SetData(assetData);
             _expendBtn.SetLabel("확장");
         }
 

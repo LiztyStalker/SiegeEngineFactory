@@ -129,22 +129,32 @@ namespace SEF.UI
 
         #region ##### Listener #####
 
-        public void AddOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.AddOnWorkshopUpgradeListener(act);
-        public void RemoveOnWorkshopUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnWorkshopUpgradeListener(act);
-        public void AddOnUpWorkshopTechListener(System.Action<int, UnitTechData> act) => _uiSystem.AddUpTechListener(act);
-        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveUpTechListener(act);
-        public void AddOnWorkshopExpendListener(System.Action act) => _uiSystem.AddExpendListener(act);
-        public void RemoveExpendListener(System.Action act) => _uiSystem.RemoveExpendListener(act);
-        public void AddOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpgradeListener(act);
-        public void RemoveOnSmithyUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpgradeListener(act);
-        public void AddOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.AddOnSmithyUpTechListener(act);
-        public void RemoveOnSmithyUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnSmithyUpTechListener(act);
-        public void AddOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.AddOnVillageUpgradeListener(act);
-        public void RemoveOnVillageUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpgradeListener(act);
-        public void AddOnVillageUpTechListener(System.Action<int> act) => _uiSystem.AddOnVillageUpTechListener(act);
-        public void RemoveOnVillageUpTechListener(System.Action<int> act) => _uiSystem.RemoveOnVillageUpTechListener(act);
-        public void AddOnMineUpgradeListener(System.Action<int> act) => _uiSystem.AddOnMineUpgradeListener(act);
-        public void RemoveOnMineUpgradeListener(System.Action<int> act) => _uiSystem.RemoveOnMineUpgradeListener(act);
+        public void AddOnUpgradeWorkshopListener(System.Action<int> act) => _uiSystem.AddOnUpgradeWorkshopListener(act);
+        public void RemoveOnUpgradeWorkshopListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeWorkshopListener(act);
+        public void AddOnUpTechWorkshopListener(System.Action<int, UnitTechData> act) => _uiSystem.AddOnUpTechWorkshopListener(act);
+        public void RemoveOnUpTechWorkshopListener(System.Action<int, UnitTechData> act) => _uiSystem.RemoveOnUpTechWorkshopListener(act);
+        public void AddOnExpendWorkshopListener(System.Action act) => _uiSystem.AddOnExpendWorkshopListener(act);
+        public void RemoveOnExpendWorkshopListener(System.Action act) => _uiSystem.RemoveOnExpendWorkshopListener(act);
+
+
+        public void AddOnUpgradeSmithyListener(System.Action<int> act) => _uiSystem.AddOnUpgradeSmithyListener(act);
+        public void RemoveOnUpgradeSmithyListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeSmithyListener(act);
+        public void AddOnUpTechSmithyListener(System.Action<int> act) => _uiSystem.AddOnUpTechSmithyListener(act);
+        public void RemoveOnUpTechSmithyListener(System.Action<int> act) => _uiSystem.RemoveOnUpTechSmithyListener(act);
+
+
+        public void AddOnUpgradeVillageListener(System.Action<int> act) => _uiSystem.AddOnUpgradeVillageListener(act);
+        public void RemoveOnUpgradeVillageListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeVillageListener(act);
+        public void AddOnUpTechVillageListener(System.Action<int> act) => _uiSystem.AddOnUpTechVillageListener(act);
+        public void RemoveOnUpTechVillageListener(System.Action<int> act) => _uiSystem.RemoveOnUpTechVillageListener(act);
+
+
+        public void AddOnUpgradeMineListener(System.Action<int> act) => _uiSystem.AddOnUpgradeMineListener(act);
+        public void RemoveOnUpgradeMineListener(System.Action<int> act) => _uiSystem.RemoveOnUpgradeMineListener(act);
+        public void AddOnUpTechMineListener(System.Action<int> act) => _uiSystem.AddOnUpTechMineListener(act);
+        public void RemoveOnUpTechMineListener(System.Action<int> act) => _uiSystem.RemoveOnUpTechMineListener(act);
+        public void AddOnExpendMineListener(System.Action act) => _uiSystem.AddOnExpendMineListener(act);
+        public void RemoveOnExpendMineListener(System.Action act) => _uiSystem.RemoveOnExpendMineListener(act);
 
 
 
@@ -175,14 +185,8 @@ namespace SEF.UI
                 _addressDictionary.ShowAddress(addressKey);
             }
         }
-        public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
-        {
-            _uiQuest.AddOnRefreshListener(act);
-        }
-        public void RemoveOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act)
-        {
-            _uiQuest.RemoveOnRefreshListener(act);
-        }
+        public void AddOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.AddOnRefreshListener(act);
+        public void RemoveOnRefreshQuestListener(System.Action<QuestData.TYPE_QUEST_GROUP> act) => _uiQuest.RemoveOnRefreshListener(act);
         #endregion
 
     }

@@ -170,8 +170,6 @@ namespace SEF.UI
         public void CleanUp()
         {
             _upgradeButton.onClick.RemoveListener(OnUpgradeEvent);
-            //_upgradeButton.UnregisterCallback<ClickEvent>(OnUpgradeEvent);
-            //_icon = null;
         }
 
 

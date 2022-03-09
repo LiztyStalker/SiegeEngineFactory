@@ -16,7 +16,6 @@ namespace SEF.UI
         private int _lineCount = 0;
 
         private UIWorkshopExpend _workshopExpend;
-        //prviate UIWorkshopExpendLine // 분리 필요
 
         [SerializeField]
         private ScrollRect _scrollView;
@@ -55,7 +54,7 @@ namespace SEF.UI
 
         public void CleanUp()
         {
-            _workshopExpend.RemoveExpendListener(OnExpendEvent);
+            _workshopExpend.RemoveOnExpendListener(OnExpendEvent);
             _workshopExpend.CleanUp();
 
             foreach (var value in _dic.Values)
@@ -79,7 +78,7 @@ namespace SEF.UI
             gameObject.SetActive(false);
         }
 
-        public void RefreshUnit(int index, UnitEntity unitEntity, float nowTime)
+        public void RefreshEntity(int index, UnitEntity unitEntity, float nowTime)
         {
             if (!_dic.ContainsKey(index))
             {
@@ -109,7 +108,7 @@ namespace SEF.UI
         {
             _workshopExpend = UIWorkshopExpend.Create();
             _workshopExpend.Initialize();
-            _workshopExpend.AddExpendListener(OnExpendEvent);
+            _workshopExpend.AddOnExpendListener(OnExpendEvent);
             _workshopExpend.transform.SetParent(_scrollView.content);
             _workshopExpend.transform.SetAsLastSibling();
         }
@@ -127,24 +126,24 @@ namespace SEF.UI
 
 
         private System.Action<int> _upgradeEvent;
-        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
-        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
+        public void AddOnUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveOnUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(int index)
         {
             _upgradeEvent?.Invoke(index);
         }
 
         private System.Action<int, UnitTechData> _uptechEvent;
-        public void AddUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent += act;
-        public void RemoveUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent -= act;
+        public void AddOnUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent += act;
+        public void RemoveOnUpTechListener(System.Action<int, UnitTechData> act) => _uptechEvent -= act;
         private void OnUpTechEvent(int index, UnitTechData data)
         {
             _uptechEvent?.Invoke(index, data);
         }
 
         private System.Action _expendEvent;
-        public void AddExpendListener(System.Action act) => _expendEvent += act;
-        public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
+        public void AddOnExpendListener(System.Action act) => _expendEvent += act;
+        public void RemoveOnExpendListener(System.Action act) => _expendEvent -= act;
         private void OnExpendEvent()
         {
             _expendEvent?.Invoke();

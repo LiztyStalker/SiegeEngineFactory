@@ -69,7 +69,7 @@ namespace SEF.UI
 
         //private bool IsView() => this.style.display == DisplayStyle.Flex;
 
-        public void RefreshSmithy(int index, SmithyEntity entity)
+        public void RefreshEntity(int index, SmithyEntity entity)
         {
             if (!_dic.ContainsKey(index))
             {
@@ -96,8 +96,8 @@ namespace SEF.UI
 
 
         private System.Action<int> _upgradeEvent;
-        public void AddUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
-        public void RemoveUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
+        public void AddOnUpgradeListener(System.Action<int> act) => _upgradeEvent += act;
+        public void RemoveOnUpgradeListener(System.Action<int> act) => _upgradeEvent -= act;
         private void OnUpgradeEvent(int index)
         {
             _upgradeEvent?.Invoke(index);

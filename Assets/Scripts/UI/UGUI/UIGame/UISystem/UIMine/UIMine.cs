@@ -78,7 +78,7 @@ namespace SEF.UI
             gameObject.SetActive(false);
         }
 
-        public void RefreshMine(int index, MineEntity entity)
+        public void RefreshEntity(int index, MineEntity entity)
         {
             if (!_dic.ContainsKey(index))
             {

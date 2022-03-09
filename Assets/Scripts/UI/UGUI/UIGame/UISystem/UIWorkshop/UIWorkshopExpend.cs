@@ -9,11 +9,7 @@ namespace SEF.UI
         private readonly static string UGUI_NAME = "UI@WorkshopExpend";
 
         [SerializeField]
-        private Button _expendButton;
-        [SerializeField]
-        private Image _expendAssetIcon;
-        [SerializeField]
-        private Text _expendValueLabel;
+        private UIAssetButton _expendBtn;
 
         public static UIWorkshopExpend Create()
         {
@@ -38,20 +34,19 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            _expendValueLabel.text = "0";
-            _expendButton.onClick.AddListener(OnExpendEvent);
+            _expendBtn.onClick.AddListener(OnExpendEvent);
         }
 
         public void RefreshExpend(IAssetData assetData, bool isActive)
         {
-            //_expendAssetIcon.sprite = null;
-            _expendValueLabel.text = assetData.GetValue();
-            _expendButton.interactable = isActive;
+            _expendBtn.SetData(assetData);
+            _expendBtn.interactable = isActive;
+            _expendBtn.SetLabel("È®Àå");
         }
 
         public void CleanUp()
         {
-            _expendButton.onClick.RemoveListener(OnExpendEvent);
+            _expendBtn.onClick.RemoveListener(OnExpendEvent);
         }
 
 
@@ -60,8 +55,8 @@ namespace SEF.UI
 
 
         private System.Action _expendEvent;
-        public void AddExpendListener(System.Action act) => _expendEvent += act;
-        public void RemoveExpendListener(System.Action act) => _expendEvent -= act;
+        public void AddOnExpendListener(System.Action act) => _expendEvent += act;
+        public void RemoveOnExpendListener(System.Action act) => _expendEvent -= act;
         private void OnExpendEvent()
         {
             _expendEvent?.Invoke();

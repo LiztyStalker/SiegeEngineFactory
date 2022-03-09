@@ -167,31 +167,30 @@ namespace SEF.UI
         public void RefreshUnit(int index, UnitEntity entity, float nowTime)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RefreshUnit(index, entity, nowTime);
+            uiWorkshop.RefreshEntity(index, entity, nowTime);
         }     
 
 
         public void RefreshBlacksmith(int index, SmithyEntity entity)
         {
             var ui = GetSystemPanel<UISmithy>();
-            ui.RefreshSmithy(index, entity);
+            ui.RefreshEntity(index, entity);
         }
 
         public void RefreshVillage(int index, VillageEntity entity)
         {
             var ui = GetSystemPanel<UIVillage>();
-            ui.RefreshVillage(index, entity);
+            ui.RefreshEntity(index, entity);
         }
 
         public void RefreshMine(int index, MineEntity entity)
         {
             var ui = GetSystemPanel<UIMine>();
-            ui.RefreshMine(index, entity);
+            ui.RefreshEntity(index, entity);
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
         {
-
             for (int i = 0; i < _list.Count; i++)
             {
                 _list[i].RefreshAssetEntity(assetEntity);
@@ -208,100 +207,120 @@ namespace SEF.UI
 
 
 #region ##### Listener #####
-        public void AddOnWorkshopUpgradeListener(System.Action<int> act)
+        public void AddOnUpgradeWorkshopListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIWorkshop>();
-            ui.AddUpgradeListener(act);
+            ui.AddOnUpgradeListener(act);
         }
-        public void RemoveOnWorkshopUpgradeListener(System.Action<int> act)
+        public void RemoveOnUpgradeWorkshopListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIWorkshop>();
-            ui.RemoveUpgradeListener(act);
+            ui.RemoveOnUpgradeListener(act);
         }
-        public void AddUpTechListener(System.Action<int, UnitTechData> act)
+        public void AddOnUpTechWorkshopListener(System.Action<int, UnitTechData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.AddUpTechListener(act);
+            uiWorkshop.AddOnUpTechListener(act);
         }
-        public void RemoveUpTechListener(System.Action<int, UnitTechData> act)
+        public void RemoveOnUpTechWorkshopListener(System.Action<int, UnitTechData> act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RemoveUpTechListener(act);
+            uiWorkshop.RemoveOnUpTechListener(act);
         }
-        public void AddExpendListener(System.Action act)
+        public void AddOnExpendWorkshopListener(System.Action act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.AddExpendListener(act);
+            uiWorkshop.AddOnExpendListener(act);
         }
-        public void RemoveExpendListener(System.Action act)
+        public void RemoveOnExpendWorkshopListener(System.Action act)
         {
             var uiWorkshop = GetSystemPanel<UIWorkshop>();
-            uiWorkshop.RemoveExpendListener(act);
+            uiWorkshop.RemoveOnExpendListener(act);
         }
 
 
 
-        public void AddOnSmithyUpgradeListener(System.Action<int> act)
+        public void AddOnUpgradeSmithyListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
-            ui.AddUpgradeListener(act);
+            ui.AddOnUpgradeListener(act);
         }
-        public void RemoveOnSmithyUpgradeListener(System.Action<int> act)
+        public void RemoveOnUpgradeSmithyListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
-            ui.RemoveUpgradeListener(act);
+            ui.RemoveOnUpgradeListener(act);
         }
 
-        public void AddOnSmithyUpTechListener(System.Action<int> act)
+        public void AddOnUpTechSmithyListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
             ui.AddOnUpTechListener(act);
         }
-        public void RemoveOnSmithyUpTechListener(System.Action<int> act)
+        public void RemoveOnUpTechSmithyListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UISmithy>();
             ui.RemoveOnUpTechListener(act);
         }
 
 
-        public void AddOnVillageUpgradeListener(System.Action<int> act)
+        public void AddOnUpgradeVillageListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIVillage>();
-            ui.AddUpgradeListener(act);
+            ui.AddOnUpgradeListener(act);
         }
-        public void RemoveOnVillageUpgradeListener(System.Action<int> act)
+        public void RemoveOnUpgradeVillageListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIVillage>();
-            ui.RemoveUpgradeListener(act);
+            ui.RemoveOnUpgradeListener(act);
         }
 
 
-        public void AddOnVillageUpTechListener(System.Action<int> act)
+        public void AddOnUpTechVillageListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIVillage>();
             ui.AddOnUpTechListener(act);
         }
 
-        public void RemoveOnVillageUpTechListener(System.Action<int> act)
+        public void RemoveOnUpTechVillageListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIVillage>();
             ui.RemoveOnUpTechListener(act);
         }
 
 
-        public void AddOnMineUpgradeListener(System.Action<int> act)
+        public void AddOnUpgradeMineListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIMine>();
-            ui.AddUpgradeListener(act);
+            ui.AddOnUpgradeListener(act);
         }
-        public void RemoveOnMineUpgradeListener(System.Action<int> act)
+        public void RemoveOnUpgradeMineListener(System.Action<int> act)
         {
             var ui = GetSystemPanel<UIMine>();
-            ui.RemoveUpgradeListener(act);
+            ui.RemoveOnUpgradeListener(act);
         }
 
+        public void AddOnUpTechMineListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.AddOnUpTechListener(act);
+        }
+        public void RemoveOnUpTechMineListener(System.Action<int> act)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.RemoveOnUpTechListener(act);
+        }
+        public void AddOnExpendMineListener(System.Action act)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.AddOnExpendListener(act);
+        }
+        public void RemoveOnExpendMineListener(System.Action act)
+        {
+            var ui = GetSystemPanel<UIMine>();
+            ui.RemoveOnExpendListener(act);
+        }
 
-#endregion
+        #endregion
     }
 
 
