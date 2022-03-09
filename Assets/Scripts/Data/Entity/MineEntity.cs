@@ -83,12 +83,7 @@ namespace SEF.Entity
         public void SetData(MineData data)
         {
             _data = data;
-        }
-
-        public void SetData(MineData data, UpgradeData upgradeData)
-        {
-            _data = data;
-            _upgradeData = upgradeData;
+            OnProcessEntityEvent(this);
         }
 
         public void Upgrade()
@@ -105,6 +100,8 @@ namespace SEF.Entity
         {
             _nowIndex++;
             _upgradeData.SetValue(0);
+
+            OnProcessEntityEvent(this);
         }
 
         public bool IsNextTech() => _nowIndex + 1 < _data.MaximumIndex;

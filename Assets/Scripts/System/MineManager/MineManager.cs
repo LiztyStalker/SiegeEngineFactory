@@ -71,7 +71,7 @@ namespace SEF.Manager
                 if (_expendAssetData == null)
                 {
                     var assetData = NumberDataUtility.Create<GoldAssetData>();
-                    assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count).ToString();
+                    assetData.ValueText = System.Numerics.BigInteger.Pow(1000, _list.Count + 1).ToString();
                     _expendAssetData = assetData;
                 }
                 return _expendAssetData;
@@ -114,7 +114,9 @@ namespace SEF.Manager
 
         private MineData GetMineData()
         {
-            return DataStorage.Instance.GetDataOrNull<MineData>("Mine");
+            var data = DataStorage.Instance.GetDataOrNull<MineData>("MineData_Mine", null, null);
+            Debug.Log(data);
+            return data;
         }
 
 

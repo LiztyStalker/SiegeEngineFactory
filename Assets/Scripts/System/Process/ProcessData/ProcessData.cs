@@ -21,7 +21,7 @@ namespace SEF.Process
         public IAssetData GetAssetData(UpgradeData upgradeData)
         {
             var data = (IAssetData)_assetData.Clone();
-            data.SetIsolationInterest(_increaseValue, upgradeData.Value);
+            data.SetIsolationInterest(_increaseValue, 0f, upgradeData.Value);
             return data;
         }
 
