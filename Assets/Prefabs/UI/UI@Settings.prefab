@@ -3882,7 +3882,7 @@ MonoBehaviour:
   _langRightButton: {fileID: 9133940502132392734}
   _langLabel: {fileID: 9133940502898016734}
   _uiHitActivateToggle: {fileID: 4661901068381428316}
-  _effectActivateToggle: {fileID: 0}
+  _effectActivateToggle: {fileID: 697036671088599259}
   _saveButton: {fileID: 9133940502860559561}
   _loadButton: {fileID: 9133940502676769389}
   _gpgsButton: {fileID: 9133940501698643615}
