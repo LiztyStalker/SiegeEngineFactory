@@ -27,8 +27,72 @@ MonoBehaviour:
       _assetData: 0
       _assetValue: 100
     _defaultMaxUpgradeValue: 10
-    _increaseUpgradeValue: 1
-    _increaseUpgradeRate: 0.125
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 1A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxPopulationStatusData
+      _typeStatusValue: 0
+      _startValue: 5
+      _increaseValue: 5
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 200
+    _defaultMaxUpgradeValue: 25
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 4A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxPopulationStatusData
+      _typeStatusValue: 0
+      _startValue: 5
+      _increaseValue: 5
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 300
+    _defaultMaxUpgradeValue: 50
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 12A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxPopulationStatusData
+      _typeStatusValue: 0
+      _startValue: 5
+      _increaseValue: 5
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 400
+    _defaultMaxUpgradeValue: 100
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 40A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxPopulationStatusData
+      _typeStatusValue: 0
+      _startValue: 5
+      _increaseValue: 5
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 500
+    _defaultMaxUpgradeValue: 200
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
     _serializedTechAssetData:
       _typeAssetData: 
       _assetData: 0
