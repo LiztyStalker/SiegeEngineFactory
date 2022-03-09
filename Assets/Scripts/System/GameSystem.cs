@@ -473,9 +473,9 @@ namespace SEF.Manager
             SetStatisticsData<ExpandWorkshopLineStatisticsData>(count);
 
             //퀘스트 적용
-            SetQuestValue<ExpandWorkshopLineConditionQuestData>(count);
+            SetQuestValue<ExpandWorkshopConditionQuestData>(count);
             //누적 퀘스트 적용
-            SetQuestValue<AccumulativelyExpandWorkshopLineConditionQuestData>((int)GetStatisticsValue<ExpandWorkshopLineStatisticsData>());
+            SetQuestValue<AccumulativelyExpandWorkshopConditionQuestData>((int)GetStatisticsValue<ExpandWorkshopLineStatisticsData>());
 
             _workshopManager.Refresh();
         }

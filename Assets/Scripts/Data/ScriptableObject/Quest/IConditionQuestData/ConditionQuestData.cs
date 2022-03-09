@@ -88,12 +88,12 @@ namespace SEF.Quest
         public string AddressKey => typeof(UIWorkshop).Name;
     }
 
-    public class ExpandWorkshopLineConditionQuestData : IConditionQuestData
+    public class ExpandWorkshopConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UIWorkshop).Name;
     }
 
-    public class AccumulativelyExpandWorkshopLineConditionQuestData : IConditionQuestData
+    public class AccumulativelyExpandWorkshopConditionQuestData : IConditionQuestData
     {
         public string AddressKey => typeof(UIWorkshop).Name;
     }
@@ -319,6 +319,8 @@ namespace SEF.Quest
             _dic.Add(typeof(AccumulativelyUpgradeUnitConditionQuestData), "누적 유닛 업그레이드");
             _dic.Add(typeof(TechUnitConditionQuestData), "유닛 테크");
             _dic.Add(typeof(AccumulativelyTechUnitConditionQuestData), "누적 유닛 테크");
+            _dic.Add(typeof(ExpandWorkshopConditionQuestData), "제작소 확장");
+            _dic.Add(typeof(AccumulativelyExpandWorkshopConditionQuestData), "누적 제작소 확장");
 
             _dic.Add(typeof(UpgradeSmithyConditionQuestData), "대장간 업그레이드");
             _dic.Add(typeof(AccumulativelyUpgradeSmithyConditionQuestData), "누적 대장간 업그레이드");
@@ -329,6 +331,13 @@ namespace SEF.Quest
             _dic.Add(typeof(AccumulativelyUpgradeVillageConditionQuestData), "누적 마을 업그레이드");
             _dic.Add(typeof(TechVillageConditionQuestData), "마을 테크");
             _dic.Add(typeof(AccumulativelyTechVillageConditionQuestData), "누적 마을 테크");
+
+            _dic.Add(typeof(UpgradeMineConditionQuestData), "광산 업그레이드");
+            _dic.Add(typeof(AccumulativelyUpgradeMineConditionQuestData), "누적 광산 업그레이드");
+            _dic.Add(typeof(TechMineConditionQuestData), "광산 테크");
+            _dic.Add(typeof(AccumulativelyTechMineConditionQuestData), "누적 광산 테크");
+            _dic.Add(typeof(ExpandMineConditionQuestData), "광산 확장");
+            _dic.Add(typeof(AccumulativelyExpandMineConditionQuestData), "누적 광산 확장");
 
             _dic.Add(typeof(UpgradeCommanderConditionQuestData), "지휘관 업그레이드 (미개발)");
             _dic.Add(typeof(AccumulativelyUpgradeCommanderConditionQuestData), "누적 지휘관 업그레이드 (미개발)");
