@@ -13,9 +13,6 @@ namespace SEF.UI
         private int _index;
 
         [SerializeField]
-        private GameObject _activatePanel;
-
-        [SerializeField]
         private Image _icon;
 
         [SerializeField]
@@ -84,7 +81,6 @@ namespace SEF.UI
 
         public void Initialize()
         {
-            Debug.Assert(_activatePanel != null, "_activatePanel element 를 찾지 못했습니다");
             Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
             Debug.Assert(_nameLabel != null, "_nameLabel element 를 찾지 못했습니다");
             Debug.Assert(_groupLabel != null, "_groupLabel element 를 찾지 못했습니다");
@@ -106,7 +102,7 @@ namespace SEF.UI
 
             _nameLabel.text = "이름";
             _groupLabel.text = "그룹";
-            _typeLabel.text = "타입";
+            _typeLabel.text = "";
             _healthValueLabel.text = "0";
             _attackValueLabel.text = "0";
             _productValueLabel.text = "1.000s";
@@ -116,11 +112,8 @@ namespace SEF.UI
 
             _levelValueLabel.text = "1";
 
-
             _upgradeButton.onClick.AddListener(OnUpgradeEvent);
             _techCancelButton.onClick.AddListener(OnCancelTechEvent);
-
-            _activatePanel.SetActive(true);
 
             _upgradeButton.SetRepeat(true);
 
@@ -143,14 +136,14 @@ namespace SEF.UI
             var unitData = entity.UnitData;
             _nameLabel.text = unitData.name;
             _groupLabel.text = unitData.Group.ToString();
-            _healthValueLabel.text = _entity.HealthData.GetValue();
-            _attackValueLabel.text = _entity.DamageData.GetValue();
-            _productValueLabel.text = $"{unitData.ProductTime}s";
-            _attackDelayValueLabel.text = $"{unitData.AttackDelay}s";
-            _attackCountValueLabel.text = unitData.AttackCount.ToString();
-            _attackTypeValueLabel.text = unitData.TypeAttackRange.ToString();
+            _healthValueLabel.text = $"체력 : { _entity.HealthData.GetValue()}";
+            _attackValueLabel.text = $"공격력 : {_entity.DamageData.GetValue()}";
+            _productValueLabel.text = $"생산시간 : {unitData.ProductTime}s";
+            _attackDelayValueLabel.text = $"공격딜레이 : {unitData.AttackDelay}s";
+            _attackCountValueLabel.text = $"공격횟수 {unitData.AttackCount}";
+            _attackTypeValueLabel.text = $"공격타입 {unitData.TypeAttackRange}";
 
-            _levelValueLabel.text = $"{entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
+            _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
 
             _productSlider.value = nowTime / entity.ProductTime;
 
