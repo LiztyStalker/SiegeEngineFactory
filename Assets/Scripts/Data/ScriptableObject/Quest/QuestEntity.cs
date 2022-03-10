@@ -26,7 +26,6 @@ namespace SEF.Entity
         public void SetData(string key, int value, int index, bool rewarded)
         {
             _key = key;
-//            _value = value.ToString();
             _value = value;
             _index = index;
             _rewarded = rewarded;
@@ -48,6 +47,7 @@ namespace SEF.Entity
         public int GoalValue => _data.GetGoalValue(_nowIndex);
         public bool HasRewarded => _hasRewarded;
         public string AddressKey => _data.GetAddressKey(_nowIndex);
+        public int NowIndex => _nowIndex;
 
         public void Initialize()
         {

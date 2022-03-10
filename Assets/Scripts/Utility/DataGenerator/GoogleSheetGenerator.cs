@@ -7,6 +7,8 @@ namespace Utility.Generator
     using GoogleSheetsToUnity;
     using System.Linq;
     using Utility.Data;
+    using LitJson;
+    using System.Text;
 
     public class GoogleSheetGenerator
     {
@@ -14,6 +16,127 @@ namespace Utility.Generator
 
 
         #region ##### CreateAndUpdate #####
+
+        public static void CreateAndUpdateTextAsset(string sheetkey, string worksheet, string dataPath, string bundleName = null)
+        {
+            GSTU_Search gstuSearcher = new GSTU_Search(sheetkey, worksheet);
+            SpreadsheetManager.Read(gstuSearcher, sheet =>
+            {
+                OnCreateAndUpdateTextAssetEvent(sheet, worksheet, dataPath, bundleName, gstuSearcher.titleRow);
+            });
+        }
+
+
+        private static void OnCreateAndUpdateTextAssetEvent(GstuSpreadSheet sheet, string worksheet, string dataPath, string bundleName, int startRow)
+        {
+            Dictionary<string, List<Dictionary<string, Dictionary<string, string>>>> _dic = new Dictionary<string, List<Dictionary<string, Dictionary<string, string>>>>(); 
+
+            //헤더에 맞춰서 데이터 구조 제작
+
+
+            string[] arr = new string[1];
+
+            string tmpkey = "";
+            int length = 0;
+
+
+
+
+            //{"data":
+            //    {"accupgradeunit" : Dictionary
+            //		[{"values" : List, Dictionary
+            //            {"Korean_Name : 0}, Dictionary
+            //            { Korean_Description: 0},						
+            //	  		  {"English_Name : 0}, 
+            //            { English_Description: 0}
+            //      }
+            //		],
+            //		[
+            //      ...
+            //      ]
+            //    }
+            //{
+
+
+
+            ////첫줄은 헤더 및 키 라인
+            ///Key_2 Kor Eng
+            ////두번째 줄부터 데이터
+            for (int c = startRow; c < sheet.RowCount + startRow; c++)
+            {
+                if (sheet.rows.ContainsKey(c))
+                {
+                    var row = sheet.rows[c];
+                    var key = row[0].value; //0 = Header
+
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        //첫라인이면 헤더 설정
+                        if (c == startRow)
+                        {
+                            var split = key.Split('_');
+                            length = int.Parse(split[1]);
+
+                            //키라인을 제외하고 적용
+                            arr = new string[row.Count - 1];
+                            for(int i = 0; i < row.Count - 1; i++)
+                            {
+                                arr[i] = row[i + 1].value;
+                            }
+                        }
+                        //두번째부터 데이터라인
+                        else
+                        {
+                            //key가 같으면
+                            if(tmpkey == key)
+                            {
+                                _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
+
+                                _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
+
+                                for (int i = 0; i < row.Count - 1; i++)
+                                {
+                                    _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
+                                }
+                            }
+                            //key가 다르면
+                            else
+                            {
+                                if (!_dic.ContainsKey(key)) 
+                                {
+                                    _dic.Add(key, new List<Dictionary<string, Dictionary<string, string>>>());
+                                }
+
+                                _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
+
+                                _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
+
+                                for (int i = 0; i < row.Count - 1; i++)
+                                {
+                                    _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //AssetDatabase.WriteTextAsset();
+
+            Debug.Log(JsonMapper.ToJson(_dic));
+
+            TextAsset textAsset = new TextAsset(JsonMapper.ToJson(_dic));
+
+            System.IO.File.WriteAllText($"{dataPath}/{worksheet}.txt", textAsset.text);
+
+            UnityEditor.AssetImporter importer = UnityEditor.AssetImporter.GetAtPath($"{dataPath}/{worksheet}.txt");
+            importer.SetAssetBundleNameAndVariant(bundleName, "");
+            AssetDatabase.SaveAssets();
+
+
+            Debug.Log("Create And Update TextAsset End");
+        }
+
+
 
         /// <summary>
         /// 생성 및 갱신
@@ -139,6 +262,10 @@ namespace Utility.Generator
             SpreadsheetManager.Write(gstuSearcher, new ValueRange(saveList), endCallback);
         }
 
+        private class T
+        {
+        }
+
         #endregion
 
 
@@ -146,3 +273,4 @@ namespace Utility.Generator
     }
 }
 #endif
+

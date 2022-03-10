@@ -103,7 +103,7 @@ namespace SEF.UI
                 _rewardButton.SetData(entity.GetRewardAssetData());
             }
 
-            _contentLabel.text = entity.Key;
+            _contentLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("Quest_Challenge_Data_Tr", entity.Key, "Korean_Name", entity.NowIndex);
 
             _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
             _slider.value = (float)entity.NowValue / (float)entity.GoalValue;
