@@ -35,6 +35,12 @@ namespace SEF.Test
             Debug.Log(TranslateStorage.Instance.GetTranslateData("Quest_Challenge_Data_Tr", "AccUpgradeUnit", "Korean_Name", 0));
         }
 
+        [Test]
+        public void TranslatorTest_GetTranslateData_System()
+        {
+            Debug.Log(TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Ok", "Korean"));
+        }
+
     }
 }
 #endif

@@ -37,7 +37,6 @@ namespace Utility.Generator
             string[] arr = new string[1];
 
             string tmpkey = "";
-            int length = 0;
 
 
 
@@ -75,7 +74,6 @@ namespace Utility.Generator
                         if (c == startRow)
                         {
                             var split = key.Split('_');
-                            length = int.Parse(split[1]);
 
                             //키라인을 제외하고 적용
                             arr = new string[row.Count - 1];
@@ -128,6 +126,7 @@ namespace Utility.Generator
 
             System.IO.File.WriteAllText($"{dataPath}/{worksheet}.txt", textAsset.text);
 
+            //바로 적용되지 않음
             UnityEditor.AssetImporter importer = UnityEditor.AssetImporter.GetAtPath($"{dataPath}/{worksheet}.txt");
             importer.SetAssetBundleNameAndVariant(bundleName, "");
             AssetDatabase.SaveAssets();

@@ -29,22 +29,26 @@ namespace Storage
 
             for(int i = 0; i < arr.Length; i++)
             {
+                Debug.Log(arr[i].name);
                 _dic.Add(arr[i].name, JsonMapper.ToObject(arr[i].text));
             }
         }
 
-        public string GetTranslateData(string title, string key, string verb, int index = 0)
+        public string GetTranslateData(string title, string key, string verb = null, int index = 0)
         {
             if (_dic.ContainsKey(title))
             {
+                //Debug.Log(title);
                 var dicTitle = _dic[title];
                 if (dicTitle.ContainsKey(key))
                 {
+                    //Debug.Log(key);
                     var dicKey = dicTitle[key];
                     if (dicKey.IsArray)
                     {
+                        //Debug.Log(index);
                         var dicValues = dicKey[index]["values"];
-                        //verb = "Language_Verb"
+                        //verb = "Language_Verb" Gamesettings - CurrentLanguage
                         if (dicValues.ContainsKey(verb))
                         {
                             //Debug.Log(verb);
@@ -53,11 +57,28 @@ namespace Storage
                     }
                 }
             }
+#if UNITY_EDITOR
+            return "-";
+#else
             return null;
+#endif
         }
         public static void Dispose()
         {
             _instance = null;
         }
+
+
+        #region ##### Listener #####
+
+        private System.Action _changedTranslateEvent;
+        public void AddOnChangedTranslateListener(System.Action act) => _changedTranslateEvent += act;
+        public void RemoveOnChangedTranslateListener(System.Action act) => _changedTranslateEvent -= act;
+        private void OnChangedTranslateEvent()
+        {
+            _changedTranslateEvent?.Invoke();
+        }
+
+        #endregion
     }
 }
