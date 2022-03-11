@@ -51,12 +51,12 @@ namespace Utility.Generator
             ///Key_2 Kor Eng
             ////두번째 줄부터 데이터
 
-            var keys = sheet.rows.SecondaryKeys.ToArray();
+            var keys = sheet.rows.PrimaryValues.ToArray();
 
             for (int c = 0; c < keys.Length; c++)
             {
-                var key = keys[c];
-                var row = sheet.rows[key];
+                var row = keys[c];
+                var key = row[0].value;
 
                 if (!string.IsNullOrEmpty(key))
                 {
@@ -102,6 +102,7 @@ namespace Utility.Generator
                                 Debug.Log(row[i + 1].value);
                                 _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
                             }
+                            tmpkey = key;
                         }
                     }
                 }                
@@ -145,12 +146,15 @@ namespace Utility.Generator
             T tmpData = null;
             int index = 0;
 
-            var keys = sheet.rows.SecondaryKeys.ToArray();
+            var keys = sheet.rows.PrimaryValues.ToArray();
 
             for (int c = 0; c < keys.Length; c++, index++)
             {
-                var key = keys[c];
-                var row = sheet.rows[key];
+                var row = keys[c];
+                var key = row[0].value;
+                //var row = sheet.rows[key];
+
+                Debug.Log(row[0].value);
 
                 //연계 퀘스트 - 키가 같음
                 if (tmpData != null && tmpData.Key == key)

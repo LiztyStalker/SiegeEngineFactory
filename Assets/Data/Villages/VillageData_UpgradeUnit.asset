@@ -13,10 +13,74 @@ MonoBehaviour:
   m_Name: VillageData_UpgradeUnit
   m_EditorClassIdentifier: 
   _key: UpgradeUnit
-  _sortIndex: 1
+  _sortIndex: 5
   _isTest: 0
   _icon: {fileID: 0}
   _villageAbilityDataArray:
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 10
+      _increaseValue: 10
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 100
+    _defaultMaxUpgradeValue: 10
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 1A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 20
+      _increaseValue: 20
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 200
+    _defaultMaxUpgradeValue: 25
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 4A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 30
+      _increaseValue: 30
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 300
+    _defaultMaxUpgradeValue: 50
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 12A
+  - _serializedStatusData:
+      _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
+      _typeStatusValue: 0
+      _startValue: 40
+      _increaseValue: 40
+    _serializedAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 400
+    _defaultMaxUpgradeValue: 100
+    _increaseUpgradeValue: 10
+    _increaseUpgradeRate: 0.25
+    _serializedTechAssetData:
+      _typeAssetData: Gold
+      _assetData: 0
+      _assetValue: 40A
   - _serializedStatusData:
       _classTypeName: SEF.Data.IncreaseMaxUpgradeUnitStatusData
       _typeStatusValue: 0
