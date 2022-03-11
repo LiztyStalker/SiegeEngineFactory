@@ -121,6 +121,19 @@ namespace SEF.UI
         }
 
 
+        private void OnEnable()
+        {
+            Storage.TranslateStorage.Instance.AddOnChangedTranslateListener(SetText);
+        }
+
+        private void OnDisable()
+        {
+            Storage.TranslateStorage.Instance.RemoveOnChangedTranslateListener(SetText);
+        }
+
+
+
+
         private UnitEntity _entity;
         //UI가 오브젝트를 가지고 있으면 안됨
         //차후에 WorkshopManager에서 가져오는 것을 목표로 함
@@ -133,9 +146,14 @@ namespace SEF.UI
         public void RefreshUnit(UnitEntity entity, float nowTime)
         {
             _entity = entity;
+            _productSlider.value = nowTime / _entity.ProductTime;
+            SetText();
+        }
 
-            var unitData = entity.UnitData;
-            _nameLabel.text = entity.Name;
+        private void SetText()
+        {
+            var unitData = _entity.UnitData;
+            _nameLabel.text = _entity.Name;
             _groupLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_UnitGroup_{unitData.Group}");
             _healthValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Health")} : { _entity.HealthData.GetValue()}";
             _attackValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Damage")} : {_entity.DamageData.GetValue()}";
@@ -144,19 +162,17 @@ namespace SEF.UI
             _attackCountValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_AttackCount")} : {unitData.AttackCount}";
             _attackTypeValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_TypeAttack")} : {Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_UnitTypeAttack_{unitData.TypeAttackRange}")}";
 
-            _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
-
-            _productSlider.value = nowTime / entity.ProductTime;
+            _levelValueLabel.text = $"Lv : {_entity.NowUpgradeValue}/{_entity.MaxUpgradeValue}";
 
             isEndTech = false;
 
-            if (entity.IsMaxUpgrade())
+            if (_entity.IsMaxUpgrade())
             {
                 isUpgrade = false;
 
                 _upgradeBtn.SetEmpty();
                 //다음 테크 있음
-                if (entity.IsNextTech())
+                if (_entity.IsNextTech())
                 {
                     _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Tech"));
                 }
@@ -169,8 +185,8 @@ namespace SEF.UI
             else
             {
                 isUpgrade = true;
-                _upgradeBtn.SetData(entity.UpgradeAssetData);
-                if (entity.IsUpgradable())
+                _upgradeBtn.SetData(_entity.UpgradeAssetData);
+                if (_entity.IsUpgradable())
                 {
                     isUpgradable = true;
                     _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Upgrade"));

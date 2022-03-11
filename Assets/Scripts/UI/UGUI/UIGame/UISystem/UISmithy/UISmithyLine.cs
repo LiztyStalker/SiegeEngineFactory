@@ -55,6 +55,22 @@ namespace SEF.UI
         }
 
 
+        public void CleanUp()
+        {
+            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
+        }
+
+
+        private void OnEnable()
+        {
+            Storage.TranslateStorage.Instance.AddOnChangedTranslateListener(SetText);
+        }
+
+        private void OnDisable()
+        {
+            Storage.TranslateStorage.Instance.RemoveOnChangedTranslateListener(SetText);
+        }
+
 
         public void Initialize()
         {
@@ -82,34 +98,26 @@ namespace SEF.UI
             _activatePanel.SetActive(true);
         }
 
-
-
-
-        private bool isUpgrade = false;
-        private bool isEndTech = false;
-        private bool isUpgradable = false;
-
-        public void RefreshSmithyLine(SmithyEntity entity)
+        private void SetText()
         {
-            _entity = entity;
 
-            _nameLabel.text = entity.Name;
-            _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue} / {entity.MaxUpgradeValue}";
-            _contentLabel.text = entity.Description;
-            _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
+            _nameLabel.text = _entity.Name;
+            _levelValueLabel.text = $"Lv : {_entity.NowUpgradeValue} / {_entity.MaxUpgradeValue}";
+            _contentLabel.text = _entity.Description;
+            _abilityLabel.text = $"Tech : {_entity.NowTechValue} / {_entity.MaxTechValue}";
 
             //MaxUpgrade이면 테크로 변경됨
             isEndTech = false;
 
             //최대 업그레이드
-            if (entity.IsMaxUpgrade())
+            if (_entity.IsMaxUpgrade())
             {
                 isUpgrade = false;
 
                 //다음 테크 있음
-                if (entity.IsNextTech())
+                if (_entity.IsNextTech())
                 {
-                    _upgradeBtn.SetData(entity.TechAssetData);
+                    _upgradeBtn.SetData(_entity.TechAssetData);
                     _upgradeBtn.SetLabel("테크");
                 }
                 //최종 테크
@@ -122,8 +130,8 @@ namespace SEF.UI
             else
             {
                 isUpgrade = true;
-                _upgradeBtn.SetData(entity.UpgradeAssetData);
-                if (entity.IsUpgradable())
+                _upgradeBtn.SetData(_entity.UpgradeAssetData);
+                if (_entity.IsUpgradable())
                 {
                     isUpgradable = true;
                     _upgradeBtn.SetLabel("업그레이드");
@@ -134,6 +142,19 @@ namespace SEF.UI
                     _upgradeBtn.SetLabel("한계 도달");
                 }
             }
+        }
+
+
+
+
+        private bool isUpgrade = false;
+        private bool isEndTech = false;
+        private bool isUpgradable = false;
+
+        public void RefreshSmithyLine(SmithyEntity entity)
+        {
+            _entity = entity;
+            SetText();
         }
 
         public void RefreshAssetEntity(AssetPackage assetEntity)
@@ -160,12 +181,6 @@ namespace SEF.UI
             }
             _upgradeBtn.interactable = isEnough;
         }
-
-        public void CleanUp()
-        {
-            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
-        }
-
 
 
         #region ##### Listener #####

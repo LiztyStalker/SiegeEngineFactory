@@ -83,6 +83,23 @@ namespace SEF.UI
         }
 
 
+        public void CleanUp()
+        {
+            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
+        }
+
+
+        private void OnEnable()
+        {
+            Storage.TranslateStorage.Instance.AddOnChangedTranslateListener(SetText);
+        }
+
+        private void OnDisable()
+        {
+            Storage.TranslateStorage.Instance.RemoveOnChangedTranslateListener(SetText);
+        }
+
+
         private bool isUpgrade = false;
         private bool isEndTech = false;
         private bool isUpgradable = false;
@@ -90,25 +107,74 @@ namespace SEF.UI
         public void RefreshVillageLine(VillageEntity entity)
         {
             _entity = entity;
+            SetText();
 
-            _nameLabel.text = entity.Name;
-            _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue} / {entity.MaxUpgradeValue}";
-            _contentLabel.text = entity.Description;
-            _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
+            //_nameLabel.text = _entity.Name;
+            //_levelValueLabel.text = $"Lv : {_entity.NowUpgradeValue} / {_entity.MaxUpgradeValue}";
+            //_contentLabel.text = _entity.Description;
+            //_abilityLabel.text = $"Tech : {_entity.NowTechValue} / {_entity.MaxTechValue}";
+
+
+            ////MaxUpgrade이면 테크로 변경됨
+            //isEndTech = false;
+
+            ////최대 업그레이드
+            //if (_entity.IsMaxUpgrade())
+            //{
+            //    isUpgrade = false;
+
+            //    //다음 테크 있음
+            //    if (_entity.IsNextTech())
+            //    {
+            //        _upgradeBtn.SetData(_entity.TechAssetData);
+            //        _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Tech"));
+            //    }
+            //    //최종 테크
+            //    else
+            //    {
+            //        isEndTech = true;
+            //        _upgradeBtn.SetEmpty();
+            //    }
+            //}
+            //else
+            //{
+            //    isUpgrade = true;
+            //    _upgradeBtn.SetData(_entity.UpgradeAssetData);
+            //    if (_entity.IsUpgradable())
+            //    {
+            //        isUpgradable = true;
+            //        _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Upgrade"));
+            //    }
+            //    else
+            //    {
+            //        isUpgradable = false;
+            //        _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Limit"));
+            //    }
+            //}
+        }
+
+        private void SetText()
+        {
+            //버튼 활성화와 텍스트 분리 필요
+
+            _nameLabel.text = _entity.Name;
+            _levelValueLabel.text = $"Lv : {_entity.NowUpgradeValue} / {_entity.MaxUpgradeValue}";
+            _contentLabel.text = _entity.Description;
+            _abilityLabel.text = $"Tech : {_entity.NowTechValue} / {_entity.MaxTechValue}";
 
 
             //MaxUpgrade이면 테크로 변경됨
             isEndTech = false;
 
             //최대 업그레이드
-            if (entity.IsMaxUpgrade())
+            if (_entity.IsMaxUpgrade())
             {
                 isUpgrade = false;
 
                 //다음 테크 있음
-                if (entity.IsNextTech())
+                if (_entity.IsNextTech())
                 {
-                    _upgradeBtn.SetData(entity.TechAssetData);
+                    _upgradeBtn.SetData(_entity.TechAssetData);
                     _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Tech"));
                 }
                 //최종 테크
@@ -121,8 +187,8 @@ namespace SEF.UI
             else
             {
                 isUpgrade = true;
-                _upgradeBtn.SetData(entity.UpgradeAssetData);
-                if (entity.IsUpgradable())
+                _upgradeBtn.SetData(_entity.UpgradeAssetData);
+                if (_entity.IsUpgradable())
                 {
                     isUpgradable = true;
                     _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Upgrade"));
@@ -160,11 +226,7 @@ namespace SEF.UI
             _upgradeBtn.interactable = isEnough;
         }
 
-        public void CleanUp()
-        {
-            _upgradeBtn.onClick.RemoveListener(OnUpgradeEvent);
-        }
-
+      
 
 
 #region ##### Listener #####

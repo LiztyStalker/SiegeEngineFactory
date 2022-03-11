@@ -64,7 +64,7 @@ namespace Storage
 
         public void NextLanguageIndex()
         {
-            if (_languageIndex + 1 > _gameLangData.UsableLanguages.Length)
+            if (_languageIndex + 1 >= _gameLangData.UsableLanguages.Length)
             {
                 _languageIndex = 0;
             }
