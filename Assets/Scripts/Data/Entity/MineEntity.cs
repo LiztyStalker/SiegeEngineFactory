@@ -41,10 +41,9 @@ namespace SEF.Entity
         private IAssetData _upgradeAssetData;
 
         //번역 작업 필요 - TranslatorStorage
-        public string Name => _data.Key;
         public string Key => _data.Key;
-        public string Content => _data.Key;
-        public string Ability => _data.Key;
+        public string Name => Storage.TranslateStorage.Instance.GetTranslateData("Mine_Data_Tr", Key, "Name");
+        public string Description => string.Format(Storage.TranslateStorage.Instance.GetTranslateData("Mine_Data_Tr", Key, "Description", NowTechValue), _data.GetProcessData(_nowTechValue).ProcessTime, _data.GetProcessData(_nowTechValue).GetAssetData(_upgradeData).GetValue());
 
         public int NowUpgradeValue => _upgradeData.Value;
         public int UpgradableValue

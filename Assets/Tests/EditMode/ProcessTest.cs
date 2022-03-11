@@ -20,6 +20,11 @@ namespace SEF.Test
         {
             public float ProcessTime => 1f;
 
+            public IAssetData GetAssetData(UpgradeData upgradeData)
+            {
+                return null;
+            }
+
             public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
             }
@@ -29,12 +34,20 @@ namespace SEF.Test
             public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
             }
+            public IAssetData GetAssetData(UpgradeData upgradeData)
+            {
+                return null;
+            }
 
         }
         private class Test3 : IProcessData {
             public float ProcessTime => 3f;
             public void SetValue(IAssetData data, float increaseValue, float processTime)
             {
+            }
+            public IAssetData GetAssetData(UpgradeData upgradeData)
+            {
+                return null;
             }
         }
 

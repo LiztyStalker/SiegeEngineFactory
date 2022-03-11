@@ -8,13 +8,9 @@ namespace Utility.Generator
     using System.Linq;
     using Utility.Data;
     using LitJson;
-    using System.Text;
 
     public class GoogleSheetGenerator
     {
-
-
-
         #region ##### CreateAndUpdate #####
 
         public static void CreateAndUpdateTextAsset(string sheetkey, string worksheet, string dataPath, string bundleName = null)
@@ -31,23 +27,18 @@ namespace Utility.Generator
         {
             Dictionary<string, List<Dictionary<string, Dictionary<string, string>>>> _dic = new Dictionary<string, List<Dictionary<string, Dictionary<string, string>>>>(); 
 
-            //헤더에 맞춰서 데이터 구조 제작
-
-
             string[] arr = new string[1];
 
             string tmpkey = "";
 
-
-
-
+            //Structure
             //{"data":
-            //    {"accupgradeunit" : Dictionary
+            //    {"key" : Dictionary
             //		[{"values" : List, Dictionary
-            //            {"Korean_Name : 0}, Dictionary
-            //            { Korean_Description: 0},						
-            //	  		  {"English_Name : 0}, 
-            //            { English_Description: 0}
+            //            {"Language_000 : 0}, Dictionary
+            //            { Language_001 : 0},						
+            //	  		  {"Language_000 : 0}, 
+            //            { Language_001 : 0}
             //      }
             //		],
             //		[
@@ -55,8 +46,6 @@ namespace Utility.Generator
             //      ]
             //    }
             //{
-
-
 
             ////첫줄은 헤더 및 키 라인
             ///Key_2 Kor Eng
@@ -73,8 +62,6 @@ namespace Utility.Generator
                         //첫라인이면 헤더 설정
                         if (c == startRow)
                         {
-                            var split = key.Split('_');
-
                             //키라인을 제외하고 적용
                             arr = new string[row.Count - 1];
                             for(int i = 0; i < row.Count - 1; i++)
@@ -118,7 +105,6 @@ namespace Utility.Generator
                     }
                 }
             }
-            //AssetDatabase.WriteTextAsset();
 
             Debug.Log(JsonMapper.ToJson(_dic));
 
@@ -126,11 +112,12 @@ namespace Utility.Generator
 
             System.IO.File.WriteAllText($"{dataPath}/{worksheet}.txt", textAsset.text);
 
+            AssetDatabase.Refresh();
+
             //바로 적용되지 않음
             UnityEditor.AssetImporter importer = UnityEditor.AssetImporter.GetAtPath($"{dataPath}/{worksheet}.txt");
             importer.SetAssetBundleNameAndVariant(bundleName, "");
             AssetDatabase.SaveAssets();
-
 
             Debug.Log("Create And Update TextAsset End");
         }
@@ -261,14 +248,7 @@ namespace Utility.Generator
             SpreadsheetManager.Write(gstuSearcher, new ValueRange(saveList), endCallback);
         }
 
-        private class T
-        {
-        }
-
         #endregion
-
-
-
     }
 }
 #endif

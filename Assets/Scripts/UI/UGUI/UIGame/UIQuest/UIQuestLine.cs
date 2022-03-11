@@ -62,16 +62,14 @@ namespace SEF.UI
             //Debug.Assert(_icon != null, "icon element 를 찾지 못했습니다");
 
             Debug.Assert(_contentLabel != null, "_contentLabel element 를 찾지 못했습니다");
-
             Debug.Assert(_slider != null, "_slider element 를 찾지 못했습니다");
-
             Debug.Assert(_rewardButton != null, "_rewardButton element 를 찾지 못했습니다");
-
             Debug.Assert(_rewardedPanel != null, "_rewardedPanel element 를 찾지 못했습니다");
 
 
             //_icon
-            _contentLabel.text = "설명";
+            _contentLabel.text = "-";
+            _sliderText.text = "-";
 
             _rewardButton.onClick.AddListener(OnRewardClickedEvent);
 
@@ -90,7 +88,7 @@ namespace SEF.UI
             {
                 _rewardedPanel.SetActive(true);
                 _rewardButton.interactable = false;
-                _rewardButton.SetLabel("완료");
+                _rewardButton.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Apply"));
                 _rewardButton.SetEmpty();
             }
             else
@@ -99,11 +97,13 @@ namespace SEF.UI
                 _rewardButton.interactable = (!string.IsNullOrEmpty(_addressKey));
 
                 bool isRewardLabel = (_hasGoal || string.IsNullOrEmpty(_addressKey));
-                _rewardButton.SetLabel((isRewardLabel) ? "보상" : "이동");
+                _rewardButton.SetLabel((isRewardLabel) ? 
+                    Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Reward") : 
+                    Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Move"));
                 _rewardButton.SetData(entity.GetRewardAssetData());
             }
 
-            _contentLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("Quest_Challenge_Data_Tr", entity.Key, "Korean_Name", entity.NowIndex);
+            _contentLabel.text = Storage.TranslateStorage.Instance.GetTranslateData(entity.TranslateKey, entity.Key, "Name", entity.NowIndex);
 
             _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
             _slider.value = (float)entity.NowValue / (float)entity.GoalValue;

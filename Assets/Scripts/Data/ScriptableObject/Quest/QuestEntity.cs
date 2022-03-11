@@ -49,6 +49,8 @@ namespace SEF.Entity
         public string AddressKey => _data.GetAddressKey(_nowIndex);
         public int NowIndex => _nowIndex;
 
+        public string TranslateKey => $"Quest_{TypeQuestGroup}_Data_Tr";
+
         public void Initialize()
         {
             Clear();

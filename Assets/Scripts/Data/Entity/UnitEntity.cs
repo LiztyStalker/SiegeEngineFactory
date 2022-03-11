@@ -46,6 +46,10 @@ namespace SEF.Entity
         public UnitData UnitData => _data;
         public UpgradeData UpgradeData => _upgradeData;
         public int Population => 1; //_unitData.Population;
+
+        public string Name => Storage.TranslateStorage.Instance.GetTranslateData("Unit_Data_Tr", _data.Key, "Name");
+        public string Description => Storage.TranslateStorage.Instance.GetTranslateData("Unit_Data_Tr", _data.Key, "Description");
+
         public int NowUpgradeValue => _upgradeData.Value;
         public int UpgradableValue
         {

@@ -47,6 +47,12 @@ namespace SEF.UI
 #endif
         }
 
+        private new void Awake()
+        {
+            _valueLabel.text = "-";
+            _buttonText.text = "-";
+        }
+
         public void SetData(IAssetData data)
         {
             var icon = Storage.DataStorage.Instance.GetDataOrNull<Sprite>($"Icon_{data.GetType().Name}", null, null);

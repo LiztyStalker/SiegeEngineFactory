@@ -48,11 +48,14 @@ namespace Storage
                     {
                         //Debug.Log(index);
                         var dicValues = dicKey[index]["values"];
+
+                        var langVerb = "Korean" + ((!string.IsNullOrEmpty(verb)) ? $"_{verb}" : null);
+
                         //verb = "Language_Verb" Gamesettings - CurrentLanguage
-                        if (dicValues.ContainsKey(verb))
+                        if (dicValues.ContainsKey(langVerb))
                         {
                             //Debug.Log(verb);
-                            return dicValues[verb].ToString();
+                            return dicValues[langVerb].ToString();
                         }
                     }
                 }

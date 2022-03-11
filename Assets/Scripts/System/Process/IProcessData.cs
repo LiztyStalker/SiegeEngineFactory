@@ -9,5 +9,6 @@ namespace SEF.Process
     {
         float ProcessTime { get; }
         public void SetValue(IAssetData data, float increaseValue, float processTime);
+        public IAssetData GetAssetData(UpgradeData upgradeData);
     }
 }

@@ -123,6 +123,9 @@ namespace SEF.UI
             _lineCount = _scrollView.content.childCount;
         }
 
+
+
+
         #region ##### Listener #####
 
 
@@ -142,6 +145,9 @@ namespace SEF.UI
             _upgradeEvent?.Invoke(index);
         }
 
+
+
+
         private System.Action<int> _techEvent;
         public void AddOnUpTechListener(System.Action<int> act) => _techEvent += act;
         public void RemoveOnUpTechListener(System.Action<int> act) => _techEvent -= act;
@@ -149,6 +155,8 @@ namespace SEF.UI
         {
             _techEvent?.Invoke(index);
         }
+
+
 
 
         private System.Action _expandEvent;

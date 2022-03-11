@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _title: System_Tr
   _key: Sys_Mine
-  _verb: Korean
+  _verb: 
   _index: 0
 --- !u!1 &1778047986809262016
 GameObject:
@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 1778047986809262019}
   - component: {fileID: 1778047986809262018}
   - component: {fileID: 7245037759627690470}
+  - component: {fileID: 4972097708784403427}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -402,6 +403,22 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &4972097708784403427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778047986809262016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d592e011c6426cb4c88bbab3b62d0f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: System_Tr
+  _key: Sys_Workshop
+  _verb: 
+  _index: 0
 --- !u!1 &1778047986926519743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,6 +1045,7 @@ GameObject:
   - component: {fileID: 1778047987583930901}
   - component: {fileID: 1778047987583930900}
   - component: {fileID: 7874033811901852180}
+  - component: {fileID: 6676275876054691870}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1111,6 +1129,22 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &6676275876054691870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778047987583930898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d592e011c6426cb4c88bbab3b62d0f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: System_Tr
+  _key: Sys_Smithy
+  _verb: 
+  _index: 0
 --- !u!1 &1778047987700554086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,6 +1278,7 @@ GameObject:
   - component: {fileID: 1778047987720086569}
   - component: {fileID: 1778047987720086568}
   - component: {fileID: 3151326982746709521}
+  - component: {fileID: 2917524507518058531}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1327,6 +1362,22 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &2917524507518058531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778047987720086566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d592e011c6426cb4c88bbab3b62d0f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: System_Tr
+  _key: Sys_Village
+  _verb: 
+  _index: 0
 --- !u!1001 &1778047986317252496
 PrefabInstance:
   m_ObjectHideFlags: 0

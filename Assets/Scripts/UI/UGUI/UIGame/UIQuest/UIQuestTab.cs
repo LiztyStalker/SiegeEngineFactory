@@ -67,7 +67,7 @@ namespace SEF.UI
             {
                 _hasGoal = false;
                 _contentLabel.text = "";
-                _rewardButton.GetComponentInChildren<Text>().text = "완료";
+                _rewardButton.GetComponentInChildren<Text>().text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Apply");
                 _rewardButton.interactable = false;
                 _sliderText.text = $"-";
                 _slider.value = 1f;
@@ -79,9 +79,11 @@ namespace SEF.UI
                 _hasGoal = entity.HasQuestGoal();
 
                 bool isRewardLabel = (_hasGoal || string.IsNullOrEmpty(_addressKey));
-                _rewardButton.GetComponentInChildren<Text>().text = (isRewardLabel) ? "보상" : "이동";
+                _rewardButton.GetComponentInChildren<Text>().text = (isRewardLabel) ? 
+                    Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Reward") :
+                    Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Move") ;
                 _rewardButton.interactable = (_hasGoal || !string.IsNullOrEmpty(entity.AddressKey));
-                _contentLabel.text = entity.Key;
+                _contentLabel.text = Storage.TranslateStorage.Instance.GetTranslateData(entity.TranslateKey, entity.Key, "Name", entity.NowIndex);
                 _sliderText.text = $"{entity.NowValue} / {entity.GoalValue}";
                 _slider.value = (float)entity.NowValue / (float)entity.GoalValue;
             }
@@ -95,8 +97,6 @@ namespace SEF.UI
         public void RemoveOnRewardListener(System.Action<QuestData.TYPE_QUEST_GROUP, string, string, bool> act) => _rewardEvent -= act;
         private void OnRewardClickedEvent()
         {
-            //바로가기
-            //보상받기
             _rewardEvent?.Invoke(QuestData.TYPE_QUEST_GROUP.Goal, _questKey, _addressKey, _hasGoal);
         }
 

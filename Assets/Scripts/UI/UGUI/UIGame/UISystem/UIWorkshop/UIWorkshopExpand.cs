@@ -41,7 +41,7 @@ namespace SEF.UI
         {
             _expandBtn.SetData(assetData);
             _expandBtn.interactable = isActive;
-            _expandBtn.SetLabel("»Æ¿Â");
+            _expandBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Expand"));
         }
 
         public void CleanUp()

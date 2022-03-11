@@ -135,14 +135,14 @@ namespace SEF.UI
             _entity = entity;
 
             var unitData = entity.UnitData;
-            _nameLabel.text = unitData.name;
-            _groupLabel.text = unitData.Group.ToString();
-            _healthValueLabel.text = $"체력 : { _entity.HealthData.GetValue()}";
-            _attackValueLabel.text = $"공격력 : {_entity.DamageData.GetValue()}";
-            _productValueLabel.text = $"생산시간 : {unitData.ProductTime}s";
-            _attackDelayValueLabel.text = $"공격딜레이 : {unitData.AttackDelay}s";
-            _attackCountValueLabel.text = $"공격횟수 {unitData.AttackCount}";
-            _attackTypeValueLabel.text = $"공격타입 {unitData.TypeAttackRange}";
+            _nameLabel.text = entity.Name;
+            _groupLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_UnitGroup_{unitData.Group}");
+            _healthValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Health")} : { _entity.HealthData.GetValue()}";
+            _attackValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Damage")} : {_entity.DamageData.GetValue()}";
+            _productValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_ProductTime")} : {unitData.ProductTime}s";
+            _attackDelayValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_AttackDelay")} : {unitData.AttackDelay}s";
+            _attackCountValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_AttackCount")} : {unitData.AttackCount}";
+            _attackTypeValueLabel.text = $"{Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_TypeAttack")} : {Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_UnitTypeAttack_{unitData.TypeAttackRange}")}";
 
             _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue}/{entity.MaxUpgradeValue}";
 
@@ -158,7 +158,7 @@ namespace SEF.UI
                 //다음 테크 있음
                 if (entity.IsNextTech())
                 {
-                    _upgradeBtn.SetLabel("테크");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Tech"));
                 }
                 //최종 테크
                 else
@@ -173,12 +173,12 @@ namespace SEF.UI
                 if (entity.IsUpgradable())
                 {
                     isUpgradable = true;
-                    _upgradeBtn.SetLabel("업그레이드");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Upgrade"));
                 }
                 else
                 {
                     isUpgradable = false;
-                    _upgradeBtn.SetLabel("한계 도달");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Limit"));
                 }
             }
         }

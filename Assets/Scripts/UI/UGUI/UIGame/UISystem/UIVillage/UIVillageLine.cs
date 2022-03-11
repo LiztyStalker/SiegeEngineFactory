@@ -70,12 +70,13 @@ namespace SEF.UI
 
             //_icon
 
-            _nameLabel.text = "이름";
-            _levelValueLabel.text = "1";
-            _contentLabel.text = "설명";
-            _abilityLabel.text = "능력";
+            _nameLabel.text = "-";
+            _levelValueLabel.text = "-";
+            _contentLabel.text = "-";
+            _abilityLabel.text = "-";
 
             _upgradeBtn.onClick.AddListener(OnUpgradeEvent);
+
             _upgradeBtn.SetRepeat(true);
             _activatePanel.SetActive(true);
 
@@ -88,16 +89,15 @@ namespace SEF.UI
 
         public void RefreshVillageLine(VillageEntity entity)
         {
-
             _entity = entity;
 
             _nameLabel.text = entity.Name;
             _levelValueLabel.text = $"Lv : {entity.NowUpgradeValue} / {entity.MaxUpgradeValue}";
-            _contentLabel.text = entity.Content;
+            _contentLabel.text = entity.Description;
             _abilityLabel.text = $"Tech : {entity.NowTechValue} / {entity.MaxTechValue}";
 
-            //MaxUpgrade이면 테크로 변경됨
 
+            //MaxUpgrade이면 테크로 변경됨
             isEndTech = false;
 
             //최대 업그레이드
@@ -109,7 +109,7 @@ namespace SEF.UI
                 if (entity.IsNextTech())
                 {
                     _upgradeBtn.SetData(entity.TechAssetData);
-                    _upgradeBtn.SetLabel("테크");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Tech"));
                 }
                 //최종 테크
                 else
@@ -125,12 +125,12 @@ namespace SEF.UI
                 if (entity.IsUpgradable())
                 {
                     isUpgradable = true;
-                    _upgradeBtn.SetLabel("업그레이드");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Upgrade"));
                 }
                 else
                 {
                     isUpgradable = false;
-                    _upgradeBtn.SetLabel("한계 도달");
+                    _upgradeBtn.SetLabel(Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Limit"));
                 }
             }
         }

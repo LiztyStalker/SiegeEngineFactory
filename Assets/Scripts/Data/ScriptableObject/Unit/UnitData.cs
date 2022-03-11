@@ -8,8 +8,25 @@ namespace SEF.Data
     [CreateAssetMenu(fileName = "UnitData", menuName = "ScriptableObjects/UnitData")]    
     public class UnitData : ScriptableObjectData
     {
-        public enum TYPE_UNIT_GROUP { Thrower, Ram, Ballista, Catapult, MuzzleLoading, Mortar, BreechLoading, RunOutCylinder, Missile}
-        public enum TYPE_ATTACK_RANGE { Gun, Howitzer, Mortar, Melee}
+        public enum TYPE_UNIT_GROUP 
+        { 
+            Thrower, 
+            Ram, 
+            Ballista, 
+            Catapult, 
+            MuzzleLoading, 
+            Mortar, 
+            BreechLoading, 
+            RunOutCylinder, 
+            Missile
+        }
+        public enum TYPE_ATTACK_RANGE 
+        { 
+            Gun, 
+            Howitzer, 
+            Mortar, 
+            Melee
+        }
         public enum TYPE_TECH_TREE {
             AttackValue,
             AttackDelay,
