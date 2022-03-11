@@ -115,6 +115,17 @@ namespace SEF.UI
             UnRegisterEvents();
         }
 
+
+        private void OnEnable()
+        {
+            Storage.TranslateStorage.Instance.AddOnChangedTranslateListener(SetText);
+        }
+
+        public void OnDisable()
+        {
+            Storage.TranslateStorage.Instance.RemoveOnChangedTranslateListener(SetText);
+        }
+
         private void RegisterEvents()
         {
             _bgmSlider.onValueChanged.AddListener(OnBGMEvent);
@@ -161,35 +172,38 @@ namespace SEF.UI
 
         private void OnBGMEvent(float value)
         {
-            Debug.Log(value);
-            _bgmVolumeLabel.text = value.ToString();
+            _bgmVolumeLabel.text = string.Format("{0:d0}", (value * 100f));
         }
 
         private void OnSFXEvent(float value)
         {
-            _sfxVolumeLabel.text = value.ToString();
+            _sfxVolumeLabel.text = string.Format("{0:d0}", (value * 100f));
         }
 
         private void OnFrameEvent(float value)
         {
-            _frameValueLabel.text = value.ToString();
+            _frameValueLabel.text = string.Format("{0:d0}", (value * 100f));
         }
 
         private void OnLeftLanguageEvent() 
         {
-            SetLanguageLabel();
-            Storage.TranslateStorage.Instance.ChangedLanguage();
+            Storage.TranslateStorage.Instance.PrevLanguageIndex();
         }
 
         private void OnRightLanguageEvent() 
         {
-            SetLanguageLabel();
-            Storage.TranslateStorage.Instance.ChangedLanguage();
+            Storage.TranslateStorage.Instance.NextLanguageIndex();
         }
 
         private void SetLanguageLabel()
         {
-            _langLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_Lang_{Storage.TranslateStorage.Instance.NowLanguage()}");
+            _langLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Settings_Language");
+        }
+
+        private void SetToggleText()
+        {
+            _uiHitActivateToggle.GetComponentInChildren<Text>().text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Settings_Hit"); ;
+            _effectActivateToggle.GetComponentInChildren<Text>().text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", "Sys_Settings_Effect"); ;
         }
 
         private void OnHitToggleEvent(bool isOn) 
@@ -222,9 +236,16 @@ namespace SEF.UI
         }
 
 
+        private void SetText()
+        {
+            SetLanguageLabel();
+            SetToggleText();
+        }
+
         public void Show(System.Action closedCallback = null)
         {
             gameObject.SetActive(true);
+            SetText();
             _closedEvent = closedCallback;
         }
 
@@ -274,7 +295,6 @@ namespace SEF.UI
             _frameValueLabel.text = _frameSlider.value.ToString();
 
             //Translator에서 가져오기 - 이미 불러와져 있음
-            SetLanguageLabel();
             Storage.TranslateStorage.Instance.ChangedLanguage();
 
             _uiHitActivateToggle.isOn = (PlayerPrefs.GetInt(SETTINGS_HIT_KEY, 1) == 1) ? true : false;

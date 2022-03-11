@@ -3879,7 +3879,7 @@ MonoBehaviour:
   _frameSlider: {fileID: 9133940501614559927}
   _frameValueLabel: {fileID: 9133940501571228741}
   _langLeftButton: {fileID: 9133940502132392734}
-  _langRightButton: {fileID: 9133940502132392734}
+  _langRightButton: {fileID: 9133940502405042277}
   _langLabel: {fileID: 9133940502898016734}
   _uiHitActivateToggle: {fileID: 4661901068381428316}
   _effectActivateToggle: {fileID: 697036671088599259}

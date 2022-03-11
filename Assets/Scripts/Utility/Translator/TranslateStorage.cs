@@ -41,10 +41,12 @@ namespace Storage
             }
 
             _gameLangData = DataStorage.Instance.GetDataOrNull<UtilityManager.GameLanguageData>("GameLanguageData", null, null);
+
             Load();
         }
         public SystemLanguage NowLanguage()
         {
+            Debug.Log(_languageIndex);
             return _gameLangData.UsableLanguages[_languageIndex];
         }
         public void PrevLanguageIndex()
@@ -57,11 +59,12 @@ namespace Storage
             {
                 _languageIndex--;
             }
+            OnChangedTranslateEvent();
         }
 
         public void NextLanguageIndex()
         {
-            if (_languageIndex + 1 >= _gameLangData.UsableLanguages.Length)
+            if (_languageIndex + 1 > _gameLangData.UsableLanguages.Length)
             {
                 _languageIndex = 0;
             }
@@ -69,6 +72,7 @@ namespace Storage
             {
                 _languageIndex++;
             }
+            OnChangedTranslateEvent();
         }
 
         public void ChangedLanguage()
@@ -110,7 +114,7 @@ namespace Storage
                         //Debug.Log(index);
                         var dicValues = dicKey[index]["values"];
 
-                        var langVerb = "Korean" + ((!string.IsNullOrEmpty(verb)) ? $"_{verb}" : null);
+                        var langVerb = NowLanguage().ToString() + ((!string.IsNullOrEmpty(verb)) ? $"_{verb}" : null);
 
                         //verb = "Language_Verb" Gamesettings - CurrentLanguage
                         if (dicValues.ContainsKey(langVerb))
