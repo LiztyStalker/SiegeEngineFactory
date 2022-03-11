@@ -10,7 +10,6 @@ namespace SEF.UI
         private readonly string SETTINGS_BGM_KEY = "BGM_VALUE";
         private readonly string SETTINGS_SFX_KEY = "SFX_VALUE";
         private readonly string SETTINGS_FRAME_KEY = "FRAME_VALUE";
-        private readonly string SETTINGS_LANGUAGE_KEY = "LANGUAGE";
         private readonly string SETTINGS_HIT_KEY = "ISHIT";
         private readonly string SETTINGS_EFFECT_KEY = "ISEFFECT";
 
@@ -123,7 +122,7 @@ namespace SEF.UI
             _frameSlider.onValueChanged.AddListener(OnFrameEvent);
 
             _langLeftButton.onClick.AddListener(OnLeftLanguageEvent);
-            _langRightButton.onClick.AddListener(OnLeftLanguageEvent);
+            _langRightButton.onClick.AddListener(OnRightLanguageEvent);
 
 
             _uiHitActivateToggle.onValueChanged.AddListener(OnHitToggleEvent);
@@ -145,7 +144,7 @@ namespace SEF.UI
             _frameSlider.onValueChanged.RemoveListener(OnFrameEvent);
 
             _langLeftButton.onClick.RemoveListener(OnLeftLanguageEvent);
-            _langRightButton.onClick.RemoveListener(OnLeftLanguageEvent);
+            _langRightButton.onClick.RemoveListener(OnRightLanguageEvent);
 
 
             _uiHitActivateToggle.onValueChanged.RemoveListener(OnHitToggleEvent);
@@ -178,13 +177,19 @@ namespace SEF.UI
 
         private void OnLeftLanguageEvent() 
         {
-            _langLabel.text = "";
-            Debug.Log("Language Left Button");
+            SetLanguageLabel();
+            Storage.TranslateStorage.Instance.ChangedLanguage();
         }
+
         private void OnRightLanguageEvent() 
         {
-            _langLabel.text = "";
-            Debug.Log("Language Right Button");
+            SetLanguageLabel();
+            Storage.TranslateStorage.Instance.ChangedLanguage();
+        }
+
+        private void SetLanguageLabel()
+        {
+            _langLabel.text = Storage.TranslateStorage.Instance.GetTranslateData("System_Tr", $"Sys_Lang_{Storage.TranslateStorage.Instance.NowLanguage()}");
         }
 
         private void OnHitToggleEvent(bool isOn) 
@@ -268,7 +273,9 @@ namespace SEF.UI
             _frameSlider.value = (float)PlayerPrefs.GetInt(SETTINGS_FRAME_KEY, 30);
             _frameValueLabel.text = _frameSlider.value.ToString();
 
-            _langLabel.text = PlayerPrefs.GetString(SETTINGS_LANGUAGE_KEY, "Korean");
+            //Translator에서 가져오기 - 이미 불러와져 있음
+            SetLanguageLabel();
+            Storage.TranslateStorage.Instance.ChangedLanguage();
 
             _uiHitActivateToggle.isOn = (PlayerPrefs.GetInt(SETTINGS_HIT_KEY, 1) == 1) ? true : false;
             _effectActivateToggle.isOn = (PlayerPrefs.GetInt(SETTINGS_EFFECT_KEY, 1) == 1) ? true : false;
@@ -279,7 +286,10 @@ namespace SEF.UI
             PlayerPrefs.SetInt(SETTINGS_BGM_KEY, (int)_bgmSlider.value);
             PlayerPrefs.SetInt(SETTINGS_SFX_KEY, (int)_sfxSlider.value);
             PlayerPrefs.SetInt(SETTINGS_FRAME_KEY, (int)_frameSlider.value);
-            PlayerPrefs.SetString(SETTINGS_LANGUAGE_KEY, _langLabel.text);
+
+            //Translator에서 저장하기
+            Storage.TranslateStorage.Instance.Save();
+
             PlayerPrefs.SetInt(SETTINGS_HIT_KEY, (_uiHitActivateToggle.isOn) ? 1 : 0);
             PlayerPrefs.SetInt(SETTINGS_EFFECT_KEY, (_effectActivateToggle.isOn) ? 1 : 0);
         }

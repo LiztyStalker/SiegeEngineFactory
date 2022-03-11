@@ -28,13 +28,15 @@ namespace SEF.Entity
 
     public struct EnemyEntity : IEntity
     {
-        private EnemyData _enemyData;
+        private EnemyData _data;
         private LevelWaveData _levelWaveData;
-        public EnemyData EnemyData => _enemyData;
+        public EnemyData EnemyData => _data;
 
         private HealthData _healthData;
         private DamageData _attackData;
         private IAssetData _rewardAssetData;
+
+        public string Name => Storage.TranslateStorage.Instance.GetTranslateData("Enemy_Data_Tr", _data.Key, "Name");
 
         public HealthData HealthData
         {
@@ -79,13 +81,13 @@ namespace SEF.Entity
         }
         public void CleanUp()
         {
-            _enemyData = null;
+            _data = null;
             _levelWaveData = null;
         }
 
         public void SetData(EnemyData enemyData, LevelWaveData levelWaveData)
         {
-            _enemyData = enemyData;
+            _data = enemyData;
             _levelWaveData = levelWaveData;
             _attackData = null;
             _healthData = null;
@@ -95,7 +97,7 @@ namespace SEF.Entity
 #if UNITY_EDITOR || UNITY_INCLUDE_TESTS
         public void SetData_Test(EnemyData enemyData)
         {
-            _enemyData = enemyData;
+            _data = enemyData;
             _attackData = null;
             _healthData = null;
             _rewardAssetData = null;
@@ -116,20 +118,20 @@ namespace SEF.Entity
         private HealthData CalculateHealthData()
         {
             var assetData = new HealthData();
-            assetData.SetAssetData(_enemyData, _levelWaveData);
+            assetData.SetAssetData(_data, _levelWaveData);
             return assetData;
         }
 
         private DamageData CalculateAttackData()
         {
             var assetData = new DamageData();
-            assetData.SetAssetData(_enemyData, _levelWaveData);
+            assetData.SetAssetData(_data, _levelWaveData);
             return assetData;
         }
         private IAssetData CalculateRewardAssetData()
         {
             var assetData = new GoldAssetData();
-            assetData.SetAssetData(_enemyData, _levelWaveData);
+            assetData.SetAssetData(_data, _levelWaveData);
             return assetData;
         }
 
@@ -137,7 +139,7 @@ namespace SEF.Entity
         public Utility.IO.StorableData GetStorableData()
         {
             var data = new EnemyEntityStorableData();
-            data.SetData(_enemyData.Key, _levelWaveData.Value);
+            data.SetData(_data.Key, _levelWaveData.Value);
             return data;
         }
         #endregion

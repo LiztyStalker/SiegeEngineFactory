@@ -81,14 +81,14 @@ namespace SEF.UI
             if (playActor is UnitActor)
                 _uiHealthContainer.ShowUnitHealthData(playActor.NowHealthRate(), playActor.transform.position);
             else if (playActor is EnemyActor)
-                _uiHealthContainer.ShowEnemyHealthData(playActor.Key, ((EnemyActor)playActor).NowHealthValue(), playActor.NowHealthRate());
+                _uiHealthContainer.ShowEnemyHealthData(((EnemyActor)playActor).Name, ((EnemyActor)playActor).NowHealthValue(), playActor.NowHealthRate());
         }
 
         
         //EnemyEntity, float, LevelWaveData
         public void RefreshNextEnemyUnit(EnemyActor enemyActor, LevelWaveData levelWaveData)
         {
-            _uiHealthContainer.ShowEnemyHealthData(enemyActor.Key, enemyActor.NowHealthValue(), enemyActor.NowHealthRate());
+            _uiHealthContainer.ShowEnemyHealthData(enemyActor.Name, enemyActor.NowHealthValue(), enemyActor.NowHealthRate());
             _uiLevelWave.ShowLevelWave(levelWaveData.GetLevel(), levelWaveData.GetWave());
 
             TYPE_ENEMY_GROUP typeEnemyGroup = TYPE_ENEMY_GROUP.Normal;

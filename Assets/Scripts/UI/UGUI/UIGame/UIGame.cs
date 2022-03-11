@@ -23,6 +23,9 @@ namespace SEF.UI
         [SerializeField]
         private Button _questButton;
 
+        [SerializeField]
+        private Button _settingsButton;
+
         public static UIGame Create()
         {
             var uiGame = FindObjectOfType<UIGame>();
@@ -75,12 +78,14 @@ namespace SEF.UI
             _addressDictionary.AddAddresses(_uiSystem.GetAddresses());
 
             _questButton.onClick.AddListener(_uiQuest.Show);
+            _settingsButton.onClick.AddListener(delegate { UICommon.Current.ShowSettings(); });
 
         }
 
         public void CleanUp()
         {
             _questButton.onClick.RemoveListener(_uiQuest.Show);
+            _settingsButton.onClick.RemoveAllListeners();
 
             _addressDictionary.CleanUp();
 

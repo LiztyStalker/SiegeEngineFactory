@@ -42,6 +42,7 @@ namespace Storage
             InitializeDatasFromAssetDatabase<QuestData>("Data/Quests/Challenge");
             InitializeDatasFromAssetDatabase<GameObject>("Prefabs/UI");
             InitializeDatasFromAssetDatabase<TextAsset>("TextAssets");
+            InitializeDatasFromAssetDatabase<GameLanguageData>("Data/GameLanguage");
 #else
             InitializeDataFromAssetBundle<Sprite>("sprites", null);
             InitializeDataFromAssetBundle<SkeletonDataAsset>("spines", null);
@@ -57,6 +58,7 @@ namespace Storage
             InitializeDataFromAssetBundle<QuestData>("challenge", "data/quests");
             InitializeDataFromAssetBundle<GameObject>("ui", null);
             InitializeDataFromAssetBundle<TextAsset>("textassets", null);
+            InitializeDataFromAssetBundle<GameLanguageData>("language", "data");
 #endif
         }
 

@@ -6,9 +6,17 @@ namespace Storage
 
     public class TranslateStorage
     {
+        private readonly string SETTINGS_LANGUAGE_KEY = "LANGUAGE_KEY";
+
+
+
         private static TranslateStorage _instance;
 
         private Dictionary<string, JsonData> _dic;
+
+        private UtilityManager.GameLanguageData _gameLangData;
+
+        private int _languageIndex = 0;
 
         public static TranslateStorage Instance
         {
@@ -29,9 +37,62 @@ namespace Storage
 
             for(int i = 0; i < arr.Length; i++)
             {
-                Debug.Log(arr[i].name);
                 _dic.Add(arr[i].name, JsonMapper.ToObject(arr[i].text));
             }
+
+            _gameLangData = DataStorage.Instance.GetDataOrNull<UtilityManager.GameLanguageData>("GameLanguageData", null, null);
+            Load();
+        }
+        public SystemLanguage NowLanguage()
+        {
+            return _gameLangData.UsableLanguages[_languageIndex];
+        }
+        public void PrevLanguageIndex()
+        {
+            if(_languageIndex - 1 < 0)
+            {
+                _languageIndex = _gameLangData.UsableLanguages.Length - 1;
+            }
+            else
+            {
+                _languageIndex--;
+            }
+        }
+
+        public void NextLanguageIndex()
+        {
+            if (_languageIndex + 1 >= _gameLangData.UsableLanguages.Length)
+            {
+                _languageIndex = 0;
+            }
+            else
+            {
+                _languageIndex++;
+            }
+        }
+
+        public void ChangedLanguage()
+        {
+            OnChangedTranslateEvent();
+        }
+
+        public void Load() 
+        {
+            var language = PlayerPrefs.GetString(SETTINGS_LANGUAGE_KEY, SystemLanguage.Korean.ToString());
+            for(int i = 0; i < _gameLangData.UsableLanguages.Length; i++)
+            {
+                if(_gameLangData.UsableLanguages[i].ToString() == language)
+                {
+                    _languageIndex = i;
+                    return;
+                }
+            }
+            _languageIndex = 0;
+
+        }
+        public void Save() 
+        {
+            PlayerPrefs.SetString(SETTINGS_LANGUAGE_KEY, _gameLangData.UsableLanguages[_languageIndex].ToString());
         }
 
         public string GetTranslateData(string title, string key, string verb = null, int index = 0)
