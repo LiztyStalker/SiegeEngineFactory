@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_CharcoalBurner
   m_EditorClassIdentifier: 
   _key: CharcoalBurner
-  _sortIndex: 15
+  _sortIndex: 14
   _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: CharcoalBurner_SkeletonData

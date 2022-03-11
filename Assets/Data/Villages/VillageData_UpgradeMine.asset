@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VillageData_UpgradeMine
   m_EditorClassIdentifier: 
   _key: UpgradeMine
-  _sortIndex: 24
+  _sortIndex: 4
   _isTest: 0
   _icon: {fileID: 0}
   _villageAbilityDataArray:
@@ -25,11 +25,11 @@ MonoBehaviour:
     _serializedAssetData:
       _typeAssetData: Gold
       _assetData: 0
-      _assetValue: 100
+      _assetValue: 500
     _defaultMaxUpgradeValue: 10
     _increaseUpgradeValue: 10
     _increaseUpgradeRate: 0.25
     _serializedTechAssetData:
-      _typeAssetData: Gold
+      _typeAssetData: 
       _assetData: 0
-      _assetValue: 1A
+      _assetValue: 

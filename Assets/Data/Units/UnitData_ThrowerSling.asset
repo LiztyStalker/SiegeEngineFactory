@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ThrowerSling
   m_EditorClassIdentifier: 
   _key: ThrowerSling
-  _sortIndex: 7
+  _sortIndex: 5
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

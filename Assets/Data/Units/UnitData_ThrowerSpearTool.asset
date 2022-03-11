@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ThrowerSpearTool
   m_EditorClassIdentifier: 
   _key: ThrowerSpearTool
-  _sortIndex: 13
+  _sortIndex: 10
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

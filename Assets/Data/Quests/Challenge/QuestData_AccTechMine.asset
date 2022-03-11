@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46cdef1addd1ca941a428201620ac6e2, type: 3}
-  m_Name: QuestData_AccExpandWorkshop
+  m_Name: QuestData_AccTechMine
   m_EditorClassIdentifier: 
-  _key: AccExpandWorkshop
-  _sortIndex: 2
+  _key: AccTechMine
+  _sortIndex: 9
   _isTest: 0
   _typeQuestGroup: 2
   _icon: {fileID: 0}
   _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyExpandWorkshopConditionQuestData
-    _conditionValue: 10
+      _classTypeName: SEF.Quest.AccumulativelyTechMineConditionQuestData
+    _conditionValue: 100
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1

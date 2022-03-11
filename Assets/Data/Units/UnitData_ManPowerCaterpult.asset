@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ManPowerCaterpult
   m_EditorClassIdentifier: 
   _key: ManPowerCaterpult
-  _sortIndex: 10
+  _sortIndex: 8
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

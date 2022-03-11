@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_SimpleCaterpult
   m_EditorClassIdentifier: 
   _key: SimpleCaterpult
-  _sortIndex: 9
+  _sortIndex: 7
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

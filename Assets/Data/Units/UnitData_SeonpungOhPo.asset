@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_SeonpungOhPo
   m_EditorClassIdentifier: 
   _key: SeonpungOhPo
-  _sortIndex: 36
+  _sortIndex: 28
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

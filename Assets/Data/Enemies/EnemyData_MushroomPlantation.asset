@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_MushroomPlantation
   m_EditorClassIdentifier: 
   _key: MushroomPlantation
-  _sortIndex: 17
+  _sortIndex: 16
   _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: MushroomPlantation_SkeletonData

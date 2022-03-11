@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_Ram
   m_EditorClassIdentifier: 
   _key: Ram
-  _sortIndex: 2
+  _sortIndex: 1
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

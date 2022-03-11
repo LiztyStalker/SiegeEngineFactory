@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_WoodenWorkShop
   m_EditorClassIdentifier: 
   _key: WoodenWorkShop
-  _sortIndex: 18
+  _sortIndex: 17
   _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: WoodenWorkShop_SkeletonData

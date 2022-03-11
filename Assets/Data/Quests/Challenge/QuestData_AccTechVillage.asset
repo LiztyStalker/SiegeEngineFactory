@@ -13,87 +13,17 @@ MonoBehaviour:
   m_Name: QuestData_AccTechVillage
   m_EditorClassIdentifier: 
   _key: AccTechVillage
-  _sortIndex: 72
+  _sortIndex: 7
   _isTest: 0
   _typeQuestGroup: 2
   _icon: {fileID: 0}
-  _isMultipleQuest: 1
+  _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: 
-    _conditionValue: 0
-    _serializedAssetData:
-      _typeAssetData: 
-      _assetData: 0
-      _assetValue: 
-  _questConditionDataArray:
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 5
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 10
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 25
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 50
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 100
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 150
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 200
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 250
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
-    _conditionValue: 300
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
       _classTypeName: SEF.Quest.AccumulativelyTechVillageConditionQuestData
     _conditionValue: 400
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1
       _assetValue: 10
+  _questConditionDataArray: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_HeavyRam
   m_EditorClassIdentifier: 
   _key: HeavyRam
-  _sortIndex: 19
+  _sortIndex: 15
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

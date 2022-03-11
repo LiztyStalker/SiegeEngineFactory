@@ -18,7 +18,7 @@ MonoBehaviour:
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: Hideout_SkeletonData
   _spineSkinKey: 
-  _group: 2
+  _group: 3
   _typeLevelTheme: 1
   _scale: 1
   _startHealthValue:
@@ -33,13 +33,14 @@ MonoBehaviour:
   _increaseDamageRate: 0.2
   _attackCount: 1
   _attackDelay: 1
-  _attackBulletKey: Arrow
+  _attackBulletKey: 
   _attackBulletData: {fileID: 0}
   _bulletScale: 0
   _attackerDataList: []
   _startRewardAssetValue:
     _valueText: 10
-  _increaseLevelRewardAssetValue: 2
+  _increaseLevelRewardAssetValue: 1
   _increaseLevelRewardAssetRate: 0.125
-  _increaseWaveRewardAssetValue: 0
+  _increaseWaveRewardAssetValue: 1
   _increaseWaveRewardAssetRate: 0.125
+  _appearRate: 1

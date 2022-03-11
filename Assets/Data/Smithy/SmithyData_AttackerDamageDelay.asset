@@ -9,19 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1683322482863d84db7ac3d0fdae25e6, type: 3}
-  m_Name: VillageData_Population
+  m_Script: {fileID: 11500000, guid: 7311407be61c63b479298e8f0cddc8c7, type: 3}
+  m_Name: SmithyData_AttackerDamageDelay
   m_EditorClassIdentifier: 
-  _key: Population
-  _sortIndex: 0
+  _key: AttackerDamageDelay
+  _sortIndex: 5
   _isTest: 0
   _icon: {fileID: 0}
-  _villageAbilityDataArray:
+  _smithyAbilityDataArray:
   - _serializedStatusData:
-      _classTypeName: SEF.Data.IncreaseMaxPopulationStatusData
-      _typeStatusValue: 0
-      _startValue: 5
-      _increaseValue: 5
+      _classTypeName: SEF.Data.AttackerDamageDelayStatusData
+      _typeStatusValue: 1
+      _startValue: 0.05
+      _increaseValue: 0.05
     _serializedAssetData:
       _typeAssetData: Gold
       _assetData: 0

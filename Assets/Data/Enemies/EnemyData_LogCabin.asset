@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_LogCabin
   m_EditorClassIdentifier: 
   _key: LogCabin
-  _sortIndex: 11
+  _sortIndex: 10
   _isTest: 0
   _skeletonDataAsset: {fileID: 0}
   _spineModelKey: LogCabin_SkeletonData

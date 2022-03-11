@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ChargeRam
   m_EditorClassIdentifier: 
   _key: ChargeRam
-  _sortIndex: 23
+  _sortIndex: 18
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

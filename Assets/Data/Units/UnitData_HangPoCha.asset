@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_HangPoCha
   m_EditorClassIdentifier: 
   _key: HangPoCha
-  _sortIndex: 39
+  _sortIndex: 30
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

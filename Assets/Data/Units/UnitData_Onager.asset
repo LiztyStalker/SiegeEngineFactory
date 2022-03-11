@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_Onager
   m_EditorClassIdentifier: 
   _key: Onager
-  _sortIndex: 28
+  _sortIndex: 22
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

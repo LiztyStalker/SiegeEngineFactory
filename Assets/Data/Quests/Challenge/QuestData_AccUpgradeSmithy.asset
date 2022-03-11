@@ -13,87 +13,17 @@ MonoBehaviour:
   m_Name: QuestData_AccUpgradeSmithy
   m_EditorClassIdentifier: 
   _key: AccUpgradeSmithy
-  _sortIndex: 39
+  _sortIndex: 4
   _isTest: 0
   _typeQuestGroup: 2
   _icon: {fileID: 0}
-  _isMultipleQuest: 1
+  _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: 
-    _conditionValue: 0
-    _serializedAssetData:
-      _typeAssetData: 
-      _assetData: 0
-      _assetValue: 
-  _questConditionDataArray:
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 10
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 50
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 100
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 250
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 500
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 1000
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 2500
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 5000
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
-    _conditionValue: 10000
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
       _classTypeName: SEF.Quest.AccumulativelyUpgradeSmithyConditionQuestData
     _conditionValue: 25000
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1
       _assetValue: 10
+  _questConditionDataArray: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_Mangonel
   m_EditorClassIdentifier: 
   _key: Mangonel
-  _sortIndex: 27
+  _sortIndex: 21
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

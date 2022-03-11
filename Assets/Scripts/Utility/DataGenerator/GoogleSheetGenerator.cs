@@ -50,60 +50,61 @@ namespace Utility.Generator
             ////첫줄은 헤더 및 키 라인
             ///Key_2 Kor Eng
             ////두번째 줄부터 데이터
-            for (int c = startRow; c < sheet.RowCount + startRow; c++)
-            {
-                if (sheet.rows.ContainsKey(c))
-                {
-                    var row = sheet.rows[c];
-                    var key = row[0].value; //0 = Header
 
-                    if (!string.IsNullOrEmpty(key))
+            var keys = sheet.rows.SecondaryKeys.ToArray();
+
+            for (int c = 0; c < keys.Length; c++)
+            {
+                var key = keys[c];
+                var row = sheet.rows[key];
+
+                if (!string.IsNullOrEmpty(key))
+                {
+                    //첫라인이면 헤더 설정
+                    if (c == 0)
                     {
-                        //첫라인이면 헤더 설정
-                        if (c == startRow)
+                        //키라인을 제외하고 적용
+                        arr = new string[row.Count - 1];
+                        for(int i = 0; i < row.Count - 1; i++)
                         {
-                            //키라인을 제외하고 적용
-                            arr = new string[row.Count - 1];
-                            for(int i = 0; i < row.Count - 1; i++)
+                            arr[i] = row[i + 1].value;
+                        }
+                    }
+                    //두번째부터 데이터라인
+                    else
+                    {
+                        //key가 같으면
+                        if(tmpkey == key)
+                        {
+                            _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
+
+                            _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
+
+                            for (int i = 0; i < row.Count - 1; i++)
                             {
-                                arr[i] = row[i + 1].value;
+                                _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
                             }
                         }
-                        //두번째부터 데이터라인
+                        //key가 다르면
                         else
                         {
-                            //key가 같으면
-                            if(tmpkey == key)
+                            if (!_dic.ContainsKey(key)) 
                             {
-                                _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
-
-                                _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
-
-                                for (int i = 0; i < row.Count - 1; i++)
-                                {
-                                    _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
-                                }
+                                _dic.Add(key, new List<Dictionary<string, Dictionary<string, string>>>());
                             }
-                            //key가 다르면
-                            else
+
+                            _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
+
+                            _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
+
+                            for (int i = 0; i < row.Count - 1; i++)
                             {
-                                if (!_dic.ContainsKey(key)) 
-                                {
-                                    _dic.Add(key, new List<Dictionary<string, Dictionary<string, string>>>());
-                                }
-
-                                _dic[key].Add(new Dictionary<string, Dictionary<string, string>>());
-
-                                _dic[key][_dic[key].Count - 1].Add("values", new Dictionary<string, string>());
-
-                                for (int i = 0; i < row.Count - 1; i++)
-                                {
-                                    _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
-                                }
+                                Debug.Log(row[i + 1].value);
+                                _dic[key][_dic[key].Count - 1]["values"].Add(arr[i], row[i + 1].value);
                             }
                         }
                     }
-                }
+                }                
             }
 
             Debug.Log(JsonMapper.ToJson(_dic));
@@ -143,57 +144,55 @@ namespace Utility.Generator
         {
             T tmpData = null;
             int index = 0;
-            for (int c = startRow; c < sheet.RowCount + startRow; c++, index++)
+
+            var keys = sheet.rows.SecondaryKeys.ToArray();
+
+            for (int c = 0; c < keys.Length; c++, index++)
             {
+                var key = keys[c];
+                var row = sheet.rows[key];
 
-                if (sheet.rows.ContainsKey(c))
+                //연계 퀘스트 - 키가 같음
+                if (tmpData != null && tmpData.Key == key)
                 {
-                    var row = sheet.rows[c];
-                    var key = row[0].value; //0 = Key
-
-                    if (!string.IsNullOrEmpty(key))
-                    {
-                        //연계 퀘스트 - 키가 같음
-                        if (tmpData != null && tmpData.Key == key)
-                        {
-                            tmpData.AddData(row.Select(cell => cell.value).ToArray());
-                            EditorUtility.SetDirty(tmpData);
-                        }
-                        else
-                        {
-                            tmpData = null;
-                            //try
-                            //{
-                            var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
-
-                            if (data == null)
-                            {
-                                data = ScriptableObject.CreateInstance<T>();
-                                data.SetSortIndex(index);
-                                data.SetData(row.Select(cell => cell.value).ToArray());
-                                AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
-                                data.SetAssetBundle(bundleName);
-                                EditorUtility.SetDirty(data);
-                                AssetDatabase.SaveAssets();
-                            }
-                            else
-                            {
-                                data.SetSortIndex(index);
-                                data.SetData(row.Select(cell => cell.value).ToArray());
-                                data.SetAssetBundle(bundleName);
-                                EditorUtility.SetDirty(data);
-                            }
-
-                            tmpData = data;
-                        }
-                        //}
-                        //catch (System.Exception e)
-                        //{
-                        //    Debug.LogWarning(e.Message);
-                        //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
-                        //}
-                    }
+                    tmpData.AddData(row.Select(cell => cell.value).ToArray());
+                    EditorUtility.SetDirty(tmpData);
                 }
+                else
+                {
+                    tmpData = null;
+                    //try
+                    //{
+                    var data = AssetDatabase.LoadAssetAtPath<T>($"{dataPath}/{typeof(T).Name}_{key}.asset");
+
+                    if (data == null)
+                    {
+                        data = ScriptableObject.CreateInstance<T>();
+                        data.SetSortIndex(index);
+                        data.SetData(row.Select(cell => cell.value).ToArray());
+                        AssetDatabase.CreateAsset(data, $"{dataPath}/{typeof(T).Name}_{key}.asset");
+                        data.SetAssetBundle(bundleName);
+                        EditorUtility.SetDirty(data);
+                        AssetDatabase.SaveAssets();
+                    }
+                    else
+                    {
+                        data.SetSortIndex(index);
+                        data.SetData(row.Select(cell => cell.value).ToArray());
+                        data.SetAssetBundle(bundleName);
+                        EditorUtility.SetDirty(data);
+                    }
+
+                    tmpData = data;
+                }
+                //}
+                //catch (System.Exception e)
+                //{
+                //    Debug.LogWarning(e.Message);
+                //    AssetDatabase.DeleteAsset($"{dataPath}/{typeof(T).Name}_{key}.asset");
+                //}
+                
+                
             }
             Debug.Log("Create And Update End");
         }
@@ -212,7 +211,10 @@ namespace Utility.Generator
         /// <param name="dataPath"></param>
         public static void UploadAllData<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData
         {
-            Upload<T>(sheetkey, worksheet, dataPath, endCallback);
+            Debug.LogWarning("사용하지 않음");
+            //개별적으로 업데이트하도록 수정 필요
+            //해당 데이터의 인덱스를 기억할 필요 있음
+            //Upload<T>(sheetkey, worksheet, dataPath, endCallback);
         }
 
         private static void Upload<T>(string sheetkey, string worksheet, string dataPath, UnityEngine.Events.UnityAction endCallback = null) where T : ScriptableObjectData

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_ShieldRam
   m_EditorClassIdentifier: 
   _key: ShieldRam
-  _sortIndex: 3
+  _sortIndex: 2
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}

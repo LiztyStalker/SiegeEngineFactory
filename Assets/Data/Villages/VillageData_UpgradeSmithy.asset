@@ -13,74 +13,10 @@ MonoBehaviour:
   m_Name: VillageData_UpgradeSmithy
   m_EditorClassIdentifier: 
   _key: UpgradeSmithy
-  _sortIndex: 12
+  _sortIndex: 2
   _isTest: 0
   _icon: {fileID: 0}
   _villageAbilityDataArray:
-  - _serializedStatusData:
-      _classTypeName: SEF.Data.IncreaseMaxUpgradeSmithyStatusData
-      _typeStatusValue: 0
-      _startValue: 10
-      _increaseValue: 10
-    _serializedAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 100
-    _defaultMaxUpgradeValue: 10
-    _increaseUpgradeValue: 10
-    _increaseUpgradeRate: 0.25
-    _serializedTechAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 1A
-  - _serializedStatusData:
-      _classTypeName: SEF.Data.IncreaseMaxUpgradeSmithyStatusData
-      _typeStatusValue: 0
-      _startValue: 10
-      _increaseValue: 10
-    _serializedAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 200
-    _defaultMaxUpgradeValue: 10
-    _increaseUpgradeValue: 10
-    _increaseUpgradeRate: 0.25
-    _serializedTechAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 4A
-  - _serializedStatusData:
-      _classTypeName: SEF.Data.IncreaseMaxUpgradeSmithyStatusData
-      _typeStatusValue: 0
-      _startValue: 10
-      _increaseValue: 10
-    _serializedAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 300
-    _defaultMaxUpgradeValue: 10
-    _increaseUpgradeValue: 10
-    _increaseUpgradeRate: 0.25
-    _serializedTechAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 12A
-  - _serializedStatusData:
-      _classTypeName: SEF.Data.IncreaseMaxUpgradeSmithyStatusData
-      _typeStatusValue: 0
-      _startValue: 10
-      _increaseValue: 10
-    _serializedAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 400
-    _defaultMaxUpgradeValue: 10
-    _increaseUpgradeValue: 10
-    _increaseUpgradeRate: 0.25
-    _serializedTechAssetData:
-      _typeAssetData: Gold
-      _assetData: 0
-      _assetValue: 40A
   - _serializedStatusData:
       _classTypeName: SEF.Data.IncreaseMaxUpgradeSmithyStatusData
       _typeStatusValue: 0

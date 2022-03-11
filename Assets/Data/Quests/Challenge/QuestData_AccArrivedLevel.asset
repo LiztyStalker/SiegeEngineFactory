@@ -13,87 +13,17 @@ MonoBehaviour:
   m_Name: QuestData_AccArrivedLevel
   m_EditorClassIdentifier: 
   _key: AccArrivedLevel
-  _sortIndex: 28
+  _sortIndex: 3
   _isTest: 0
   _typeQuestGroup: 2
   _icon: {fileID: 0}
-  _isMultipleQuest: 1
+  _isMultipleQuest: 0
   _questConditionData:
     _serializedConditionQuestData:
-      _classTypeName: 
-    _conditionValue: 0
-    _serializedAssetData:
-      _typeAssetData: 
-      _assetData: 0
-      _assetValue: 
-  _questConditionDataArray:
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 50
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 100
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 200
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 300
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 400
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 500
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 600
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 700
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
-      _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
-    _conditionValue: 800
-    _serializedAssetData:
-      _typeAssetData: Meteorite
-      _assetData: 1
-      _assetValue: 10
-  - _serializedConditionQuestData:
       _classTypeName: SEF.Quest.AccumulativelyArrivedLevelConditionQuestData
     _conditionValue: 900
     _serializedAssetData:
       _typeAssetData: Meteorite
       _assetData: 1
       _assetValue: 10
+  _questConditionDataArray: []

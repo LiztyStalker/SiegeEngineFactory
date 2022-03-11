@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UnitData_Trebuchet
   m_EditorClassIdentifier: 
   _key: Trebuchet
-  _sortIndex: 30
+  _sortIndex: 24
   _isTest: 0
   _icon: {fileID: 0}
   _skeletonDataAsset: {fileID: 0}
